@@ -99,13 +99,22 @@ namespace TelegramSchema
             }
             
             await writer.WriteAsync("\n  updates: {\n");
-            foreach (var updateConstructors in types["Update"])
-            {
-                await writer.WriteAsync($"    on(predicate: '{updateConstructors.predicate}', cb: UpdateResolver<Update.{updateConstructors.predicate}>): void;\n");
-            }
+            await WriteOnUpdates(writer, "Update", types);
+            await WriteOnUpdates(writer, "Updates", types);
+            await WriteOnUpdates(writer, "User", types);
+            await WriteOnUpdates(writer, "Chat", types);
             await writer.WriteAsync("  }\n");
 
             await writer.WriteAsync("}\n");
+        }
+
+        private static async Task WriteOnUpdates(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        {
+            foreach (var updateConstructors in types[type])
+            {
+                await writer.WriteAsync(
+                    $"    on(predicate: '{updateConstructors.predicate}', cb: UpdateResolver<{type}.{updateConstructors.predicate}>): void;\n");
+            }
         }
 
         private static bool IsPrimitiveType(string type)
