@@ -31,12 +31,6 @@ namespace TelegramSchema
             await writer.WriteAsync("/* the tool instead.                                                                       */\n");
             await writer.WriteAsync("/*******************************************************************************************/\n\n");
 
-            await writer.WriteAsync("/**\n");
-            await writer.WriteAsync(" * Transform a type with required fields to type with `min` property with the corresponding meaning\n");
-            await writer.WriteAsync(" * Ref: https://core.telegram.org/api/min\n");
-            await writer.WriteAsync(" */\n");
-            await writer.WriteAsync("export type WithMin<T> = { id: number } & ({ min: false } & T | { min: true } & Partial<T>);\n\n");
-            
             await WriteConstructors(writer, typeOrder, types);
             await WriteMethods(writer, schema.methods, typeOrder, types);
         }
@@ -61,16 +55,15 @@ namespace TelegramSchema
                 await writer.WriteAsync($"export namespace {typeName} {{\n");
                 foreach (var constructor in types[type])
                 {
-                    var withMin = constructor.@params.Any(p => p.name == "min");
                     await writer.WriteAsync(
-                        $"  export type {FixConstructorName(constructor.predicate)} = {(withMin ? "WithMin<" : "")}{{\n");
+                        $"  export type {FixConstructorName(constructor.predicate)} = {{\n");
                     await writer.WriteAsync($"    _: '{constructor.predicate}',\n");
                     foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
                     {
                         await writer.WriteAsync($"    {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type)},\n");
                     }
 
-                    await writer.WriteAsync($"  }}{(withMin ? ">" : "")};\n");
+                    await writer.WriteAsync("  };\n");
                 }
 
                 await writer.WriteAsync("}\n\n");
