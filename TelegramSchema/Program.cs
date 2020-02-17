@@ -31,8 +31,6 @@ namespace TelegramSchema
             await writer.WriteAsync("/* the tool instead.                                                                       */\n");
             await writer.WriteAsync("/*******************************************************************************************/\n\n");
 
-            await writer.WriteAsync("import { ClientError } from 'client/worker.types';\n\n");
-
             await writer.WriteAsync("/**\n");
             await writer.WriteAsync(" * Transform a type with required fields to type with `min` property with the corresponding meaning\n");
             await writer.WriteAsync(" * Ref: https://core.telegram.org/api/min\n");
@@ -94,10 +92,7 @@ namespace TelegramSchema
                 await writer.WriteAsync("};\n\n");
             }
 
-            await writer.WriteAsync("type RequestResolver<T> = (err: ClientError | null, res?: T) => void;\n");
-            await writer.WriteAsync("type UpdateResolver<T> = (res?: T) => void;\n\n");
-
-            await writer.WriteAsync("interface MethodDeclMap {\n\n");
+            await writer.WriteAsync("export interface MethodDeclMap {\n");
             foreach (var method in methods)
             {
                 var methodName = FixMethodName(method.method);
@@ -105,27 +100,19 @@ namespace TelegramSchema
             }
             await writer.WriteAsync("}\n\n");
 
-            await writer.WriteAsync("export interface Client {\n");
-            
-            await writer.WriteAsync($"  call<M extends keyof MethodDeclMap>(method: M, data: MethodDeclMap[M]['req'], cb?: RequestResolver<MethodDeclMap[M]['res']>): void;\n");
-            await writer.WriteAsync($"  call<M extends keyof MethodDeclMap>(method: M, data: MethodDeclMap[M]['req'], headers: Record<string, unknown>, cb?: RequestResolver<MethodDeclMap[M]['res']>): void;\n");
-            
-            await writer.WriteAsync("\n  updates: {\n");
-            await WriteOnUpdates(writer, "Update", types);
-            await WriteOnUpdates(writer, "Updates", types);
-            await WriteOnUpdates(writer, "User", types);
-            await WriteOnUpdates(writer, "Chat", types);
-            await writer.WriteAsync("  }\n");
-
+            await writer.WriteAsync("export interface UpdateDeclMap {\n");
+            await WriteUpdateDeclarations(writer, "Update", types);
+            await WriteUpdateDeclarations(writer, "Updates", types);
+            await WriteUpdateDeclarations(writer, "User", types);
+            await WriteUpdateDeclarations(writer, "Chat", types);
             await writer.WriteAsync("}\n");
         }
 
-        private static async Task WriteOnUpdates(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        private static async Task WriteUpdateDeclarations(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
         {
             foreach (var updateConstructors in types[type])
             {
-                await writer.WriteAsync(
-                    $"    on(predicate: '{updateConstructors.predicate}', cb: UpdateResolver<{type}.{updateConstructors.predicate}>): void;\n");
+                await writer.WriteAsync($"  '{updateConstructors.predicate}': {type}.{updateConstructors.predicate};\n");
             }
         }
 
