@@ -43,7 +43,7 @@ namespace TelegramSchema
             {
                 var typeName = FixTypeName(type);
 
-                await writer.WriteAsync($"/**\n * Ref: https://core.telegram.org/type/{type}\n */\n");
+                await writer.WriteAsync($"/**\n * @link https://core.telegram.org/type/{type}\n */\n");
                 await writer.WriteAsync($"export type {typeName} =\n");
                 foreach (var constructor in types[type])
                 {
