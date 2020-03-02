@@ -11,17 +11,18 @@ namespace TelegramSchema
     {
         static void Main(string[] args)
         {
-            GenerateTs("layer105", true);
-            GenerateTs("layer108", true);
-            GenerateTs("mtproto", false);
+            const string outputFolder = "../../../../output";
+            GenerateTs(outputFolder, "layer105", true);
+            GenerateTs(outputFolder, "layer108", true);
+            GenerateTs(outputFolder, "mtproto", false);
         }
 
-        private static void GenerateTs(string schemaName, bool genRefs)
+        private static void GenerateTs(string outputFolder, string schemaName, bool genRefs)
         {
             var schemaString = File.ReadAllText($"{schemaName}.json");
             var schema = JsonSerializer.Deserialize<Schema>(schemaString);
 
-            using var fileStream = File.Open($"{schemaName}.ts", FileMode.Create);
+            using var fileStream = File.Open(Path.Combine(outputFolder, $"{schemaName}.ts"), FileMode.Create);
             using var writer = new StreamWriter(fileStream);
 
             var (typeOrder, types) = BuildTypes(schema);
