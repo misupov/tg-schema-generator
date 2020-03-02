@@ -4,54 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace TelegramSchema
 {
     static class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            await GenerateTs("layer105", true);
-            await GenerateTs("mtproto", false);
+            GenerateTs("layer105", true);
+            GenerateTs("mtproto", false);
         }
 
-        private static async Task GenerateTs(string schemaName, bool genRefs)
+        private static void GenerateTs(string schemaName, bool genRefs)
         {
-            var schemaString = await File.ReadAllTextAsync($"{schemaName}.json");
+            var schemaString = File.ReadAllText($"{schemaName}.json");
             var schema = JsonSerializer.Deserialize<Schema>(schemaString);
 
-            await using var fileStream = File.Open($"{schemaName}.ts", FileMode.Create);
-            await using var writer = new StreamWriter(fileStream);
+            using var fileStream = File.Open($"{schemaName}.ts", FileMode.Create);
+            using var writer = new StreamWriter(fileStream);
 
             var (typeOrder, types) = BuildTypes(schema);
 
-            await writer.WriteAsync("/* eslint-disable max-len */\n");
-            await writer.WriteAsync("/* eslint-disable semi-style */\n");
-            await writer.WriteAsync("/* eslint-disable spaced-comment */\n\n");
+            writer.Write("/* eslint-disable max-len */\n");
+            writer.Write("/* eslint-disable semi-style */\n");
+            writer.Write("/* eslint-disable spaced-comment */\n\n");
 
-            await writer.WriteAsync("/*******************************************************************************************/\n");
-            await writer.WriteAsync("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */\n");
-            await writer.WriteAsync("/*                                                                                         */\n");
-            await writer.WriteAsync("/* Do not make changes to this file unless you know what you are doing -- modify           */\n");
-            await writer.WriteAsync("/* the tool instead.                                                                       */\n");
-            await writer.WriteAsync("/*                                                                                         */\n");
-            await writer.WriteAsync("/* Source: " + $"{schemaName}.json".PadRight(80, ' ') + "*/\n");
-            await writer.WriteAsync("/*                                                                                         */\n");
-            await writer.WriteAsync("/*******************************************************************************************/\n\n");
+            writer.Write("/*******************************************************************************************/\n");
+            writer.Write("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */\n");
+            writer.Write("/*                                                                                         */\n");
+            writer.Write("/* Do not make changes to this file unless you know what you are doing -- modify           */\n");
+            writer.Write("/* the tool instead.                                                                       */\n");
+            writer.Write("/*                                                                                         */\n");
+            writer.Write("/* Source: " + $"{schemaName}.json".PadRight(80, ' ') + "*/\n");
+            writer.Write("/*                                                                                         */\n");
+            writer.Write("/*******************************************************************************************/\n\n");
 
-            await WriteConstructors(writer, genRefs, typeOrder, types, schema.constructors);
-            await WriteMethods(writer, schema.methods, schema.constructors, typeOrder, types);
+            WriteConstructors(writer, genRefs, typeOrder, types, schema.constructors);
+            WriteMethods(writer, schema.methods, schema.constructors, types);
         }
 
-        private static async Task WriteConstructors(
+        private static void WriteConstructors(
             TextWriter writer,
             bool genRefs,
             IEnumerable<string> typeOrder,
             IReadOnlyDictionary<string, HashSet<Constructor>> types,
             Constructor[] constructors)
         {
-            await writer.WriteAsync("/* CONSTRUCTORS */\n\n");
+            writer.Write("/* CONSTRUCTORS */\n\n");
             
             foreach (var type in typeOrder.Where(t => !IsPrimitiveType(t)))
             {
@@ -59,88 +58,88 @@ namespace TelegramSchema
 
                 if (genRefs)
                 {
-                    await writer.WriteAsync($"/**\n * Ref: https://core.telegram.org/type/{type}\n */\n");
+                    writer.Write($"/**\n * Ref: https://core.telegram.org/type/{type}\n */\n");
                 }
 
-                await writer.WriteAsync($"export type {typeName} =\n");
+                writer.Write($"export type {typeName} =\n");
                 if (types[type].Count == 0)
                 {
-                    await writer.WriteAsync("{}");
+                    writer.Write("{}");
                 }
                 foreach (var constructor in types[type])
                 {
-                    await writer.WriteAsync($"  | {typeName}.{FixConstructorName(constructor.predicate)}\n");
+                    writer.Write($"  | {typeName}.{FixConstructorName(constructor.predicate)}\n");
                 }
 
-                await writer.WriteAsync(";\n\n");
+                writer.Write(";\n\n");
 
-                await writer.WriteAsync($"export namespace {typeName} {{\n");
+                writer.Write($"export namespace {typeName} {{\n");
                 foreach (var constructor in types[type])
                 {
-                    await writer.WriteAsync($"  export type {FixConstructorName(constructor.predicate)} = {{\n");
-                    await writer.WriteAsync($"    _: '{constructor.predicate}',\n");
+                    writer.Write($"  export type {FixConstructorName(constructor.predicate)} = {{\n");
+                    writer.Write($"    _: '{constructor.predicate}',\n");
                     foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
                     {
-                        await writer.WriteAsync($"    {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
+                        writer.Write($"    {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
                     }
 
-                    await writer.WriteAsync("  };\n");
+                    writer.Write("  };\n");
                 }
 
-                await writer.WriteAsync("}\n\n");
+                writer.Write("}\n\n");
             }
             
-            await writer.WriteAsync("export interface ConstructorDeclMap {\n");
+            writer.Write("export interface ConstructorDeclMap {\n");
             foreach (var constructor in constructors)
             {
                 if (!IsPrimitiveType(constructor.type))
                 {
-                    await writer.WriteAsync($"  '{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor.predicate)},\n");
+                    writer.Write($"  '{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor.predicate)},\n");
                 }
             }
-            await writer.WriteAsync("}\n\n");
+            writer.Write("}\n\n");
         }
 
-        private static async Task WriteMethods(TextWriter writer, Method[] methods, Constructor[] constructors, IEnumerable<string> typeOrder, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        private static void WriteMethods(TextWriter writer, Method[] methods, Constructor[] constructors, IReadOnlyDictionary<string, HashSet<Constructor>> types)
         {
-            await writer.WriteAsync("/* METHODS */\n\n");
+            writer.Write("/* METHODS */\n\n");
 
             foreach (var method in methods)
             {
                 var methodName = FixMethodName(method.method);
-                await writer.WriteAsync($"export type {methodName} = {{\n");
+                writer.Write($"export type {methodName} = {{\n");
                 foreach (var parameter in method.@params.Where(p => p.name != "flags"))
                 {
-                    await writer.WriteAsync($"  {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
+                    writer.Write($"  {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
                 }
-                await writer.WriteAsync("};\n\n");
+                writer.Write("};\n\n");
             }
 
-            await writer.WriteAsync("export interface MethodDeclMap {\n");
+            writer.Write("export interface MethodDeclMap {\n");
             foreach (var method in methods)
             {
                 var requestType = FixMethodName(method.method);
                 var responseType = types.ContainsKey(method.type) ? FormatType(method.type, constructors) : "any";
-                await writer.WriteAsync($"  '{method.method}': {{ req: {requestType}, res: {responseType} }},\n");
+                writer.Write($"  '{method.method}': {{ req: {requestType}, res: {responseType} }},\n");
             }
-            await writer.WriteAsync("}\n");
+            writer.Write("}\n");
 
             if (types.ContainsKey("Update"))
             {
-                await writer.WriteAsync("\nexport interface UpdateDeclMap {\n");
-                await WriteUpdateDeclarations(writer, "Update", types);
-                await WriteUpdateDeclarations(writer, "Updates", types);
-                await WriteUpdateDeclarations(writer, "User", types);
-                await WriteUpdateDeclarations(writer, "Chat", types);
-                await writer.WriteAsync("}\n");
+                writer.Write("\nexport interface UpdateDeclMap {\n");
+                WriteUpdateDeclarations(writer, "Update", types);
+                WriteUpdateDeclarations(writer, "Updates", types);
+                WriteUpdateDeclarations(writer, "User", types);
+                WriteUpdateDeclarations(writer, "Chat", types);
+                writer.Write("}\n");
             }
         }
 
-        private static async Task WriteUpdateDeclarations(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        private static void WriteUpdateDeclarations(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
         {
             foreach (var updateConstructors in types[type])
             {
-                await writer.WriteAsync($"  '{updateConstructors.predicate}': {type}.{updateConstructors.predicate};\n");
+                writer.Write($"  '{updateConstructors.predicate}': {type}.{updateConstructors.predicate};\n");
             }
         }
 
