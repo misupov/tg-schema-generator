@@ -12,6 +12,7 @@ namespace TelegramSchema
         static void Main(string[] args)
         {
             GenerateTs("layer105", true);
+            GenerateTs("layer108", true);
             GenerateTs("mtproto", false);
         }
 
