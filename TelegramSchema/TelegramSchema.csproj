@@ -7,7 +7,15 @@
 
     <ItemGroup>
       <None Remove="layer105.json" />
+      <None Remove="layer108.json" />
+      <None Remove="mtproto.json" />
       <Content Include="layer105.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="layer108.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="mtproto.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
