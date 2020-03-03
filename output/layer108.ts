@@ -15,7 +15,7 @@
 /* CONSTRUCTORS */
 
 /**
- * Ref: https://core.telegram.org/type/Error
+ * @link https://core.telegram.org/type/Error
  */
 export type Error =
   | Error.error
@@ -30,7 +30,7 @@ export namespace Error {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPeer
+ * @link https://core.telegram.org/type/InputPeer
  */
 export type InputPeer =
   | InputPeer.inputPeerEmpty
@@ -78,7 +78,7 @@ export namespace InputPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputUser
+ * @link https://core.telegram.org/type/InputUser
  */
 export type InputUser =
   | InputUser.inputUserEmpty
@@ -108,7 +108,7 @@ export namespace InputUser {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputContact
+ * @link https://core.telegram.org/type/InputContact
  */
 export type InputContact =
   | InputContact.inputPhoneContact
@@ -125,7 +125,7 @@ export namespace InputContact {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputFile
+ * @link https://core.telegram.org/type/InputFile
  */
 export type InputFile =
   | InputFile.inputFile
@@ -149,7 +149,7 @@ export namespace InputFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputMedia
+ * @link https://core.telegram.org/type/InputMedia
  */
 export type InputMedia =
   | InputMedia.inputMediaEmpty
@@ -262,7 +262,7 @@ export namespace InputMedia {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputChatPhoto
+ * @link https://core.telegram.org/type/InputChatPhoto
  */
 export type InputChatPhoto =
   | InputChatPhoto.inputChatPhotoEmpty
@@ -285,7 +285,7 @@ export namespace InputChatPhoto {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputGeoPoint
+ * @link https://core.telegram.org/type/InputGeoPoint
  */
 export type InputGeoPoint =
   | InputGeoPoint.inputGeoPointEmpty
@@ -304,7 +304,7 @@ export namespace InputGeoPoint {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPhoto
+ * @link https://core.telegram.org/type/InputPhoto
  */
 export type InputPhoto =
   | InputPhoto.inputPhotoEmpty
@@ -324,7 +324,7 @@ export namespace InputPhoto {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputFileLocation
+ * @link https://core.telegram.org/type/InputFileLocation
  */
 export type InputFileLocation =
   | InputFileLocation.inputFileLocation
@@ -398,7 +398,7 @@ export namespace InputFileLocation {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Peer
+ * @link https://core.telegram.org/type/Peer
  */
 export type Peer =
   | Peer.peerUser
@@ -422,7 +422,7 @@ export namespace Peer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/storage.FileType
+ * @link https://core.telegram.org/type/storage.FileType
  */
 export type StorageFileType =
   | StorageFileType.storageFileUnknown
@@ -471,7 +471,7 @@ export namespace StorageFileType {
 }
 
 /**
- * Ref: https://core.telegram.org/type/User
+ * @link https://core.telegram.org/type/User
  */
 export type User =
   | User.userEmpty
@@ -514,7 +514,7 @@ export namespace User {
 }
 
 /**
- * Ref: https://core.telegram.org/type/UserProfilePhoto
+ * @link https://core.telegram.org/type/UserProfilePhoto
  */
 export type UserProfilePhoto =
   | UserProfilePhoto.userProfilePhotoEmpty
@@ -535,7 +535,7 @@ export namespace UserProfilePhoto {
 }
 
 /**
- * Ref: https://core.telegram.org/type/UserStatus
+ * @link https://core.telegram.org/type/UserStatus
  */
 export type UserStatus =
   | UserStatus.userStatusEmpty
@@ -570,7 +570,7 @@ export namespace UserStatus {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Chat
+ * @link https://core.telegram.org/type/Chat
  */
 export type Chat =
   | Chat.chatEmpty
@@ -645,7 +645,7 @@ export namespace Chat {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatFull
+ * @link https://core.telegram.org/type/ChatFull
  */
 export type ChatFull =
   | ChatFull.chatFull
@@ -705,7 +705,7 @@ export namespace ChatFull {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatParticipant
+ * @link https://core.telegram.org/type/ChatParticipant
  */
 export type ChatParticipant =
   | ChatParticipant.chatParticipant
@@ -733,7 +733,7 @@ export namespace ChatParticipant {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatParticipants
+ * @link https://core.telegram.org/type/ChatParticipants
  */
 export type ChatParticipants =
   | ChatParticipants.chatParticipantsForbidden
@@ -755,7 +755,7 @@ export namespace ChatParticipants {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatPhoto
+ * @link https://core.telegram.org/type/ChatPhoto
  */
 export type ChatPhoto =
   | ChatPhoto.chatPhotoEmpty
@@ -775,7 +775,7 @@ export namespace ChatPhoto {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Message
+ * @link https://core.telegram.org/type/Message
  */
 export type Message =
   | Message.messageEmpty
@@ -833,7 +833,7 @@ export namespace Message {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessageMedia
+ * @link https://core.telegram.org/type/MessageMedia
  */
 export type MessageMedia =
   | MessageMedia.messageMediaEmpty
@@ -921,7 +921,7 @@ export namespace MessageMedia {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessageAction
+ * @link https://core.telegram.org/type/MessageAction
  */
 export type MessageAction =
   | MessageAction.messageActionEmpty
@@ -1052,7 +1052,7 @@ export namespace MessageAction {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Dialog
+ * @link https://core.telegram.org/type/Dialog
  */
 export type Dialog =
   | Dialog.dialog
@@ -1089,7 +1089,7 @@ export namespace Dialog {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Photo
+ * @link https://core.telegram.org/type/Photo
  */
 export type Photo =
   | Photo.photoEmpty
@@ -1114,7 +1114,7 @@ export namespace Photo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PhotoSize
+ * @link https://core.telegram.org/type/PhotoSize
  */
 export type PhotoSize =
   | PhotoSize.photoSizeEmpty
@@ -1152,7 +1152,7 @@ export namespace PhotoSize {
 }
 
 /**
- * Ref: https://core.telegram.org/type/GeoPoint
+ * @link https://core.telegram.org/type/GeoPoint
  */
 export type GeoPoint =
   | GeoPoint.geoPointEmpty
@@ -1172,7 +1172,7 @@ export namespace GeoPoint {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.SentCode
+ * @link https://core.telegram.org/type/auth.SentCode
  */
 export type AuthSentCode =
   | AuthSentCode.authSentCode
@@ -1189,7 +1189,7 @@ export namespace AuthSentCode {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.Authorization
+ * @link https://core.telegram.org/type/auth.Authorization
  */
 export type AuthAuthorization =
   | AuthAuthorization.authAuthorization
@@ -1209,7 +1209,7 @@ export namespace AuthAuthorization {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.ExportedAuthorization
+ * @link https://core.telegram.org/type/auth.ExportedAuthorization
  */
 export type AuthExportedAuthorization =
   | AuthExportedAuthorization.authExportedAuthorization
@@ -1224,7 +1224,7 @@ export namespace AuthExportedAuthorization {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputNotifyPeer
+ * @link https://core.telegram.org/type/InputNotifyPeer
  */
 export type InputNotifyPeer =
   | InputNotifyPeer.inputNotifyPeer
@@ -1250,7 +1250,7 @@ export namespace InputNotifyPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPeerNotifySettings
+ * @link https://core.telegram.org/type/InputPeerNotifySettings
  */
 export type InputPeerNotifySettings =
   | InputPeerNotifySettings.inputPeerNotifySettings
@@ -1267,7 +1267,7 @@ export namespace InputPeerNotifySettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PeerNotifySettings
+ * @link https://core.telegram.org/type/PeerNotifySettings
  */
 export type PeerNotifySettings =
   | PeerNotifySettings.peerNotifySettings
@@ -1284,7 +1284,7 @@ export namespace PeerNotifySettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PeerSettings
+ * @link https://core.telegram.org/type/PeerSettings
  */
 export type PeerSettings =
   | PeerSettings.peerSettings
@@ -1303,7 +1303,7 @@ export namespace PeerSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WallPaper
+ * @link https://core.telegram.org/type/WallPaper
  */
 export type WallPaper =
   | WallPaper.wallPaper
@@ -1332,7 +1332,7 @@ export namespace WallPaper {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ReportReason
+ * @link https://core.telegram.org/type/ReportReason
  */
 export type ReportReason =
   | ReportReason.inputReportReasonSpam
@@ -1370,7 +1370,7 @@ export namespace ReportReason {
 }
 
 /**
- * Ref: https://core.telegram.org/type/UserFull
+ * @link https://core.telegram.org/type/UserFull
  */
 export type UserFull =
   | UserFull.userFull
@@ -1397,7 +1397,7 @@ export namespace UserFull {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Contact
+ * @link https://core.telegram.org/type/Contact
  */
 export type Contact =
   | Contact.contact
@@ -1412,7 +1412,7 @@ export namespace Contact {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ImportedContact
+ * @link https://core.telegram.org/type/ImportedContact
  */
 export type ImportedContact =
   | ImportedContact.importedContact
@@ -1427,7 +1427,7 @@ export namespace ImportedContact {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ContactBlocked
+ * @link https://core.telegram.org/type/ContactBlocked
  */
 export type ContactBlocked =
   | ContactBlocked.contactBlocked
@@ -1442,7 +1442,7 @@ export namespace ContactBlocked {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ContactStatus
+ * @link https://core.telegram.org/type/ContactStatus
  */
 export type ContactStatus =
   | ContactStatus.contactStatus
@@ -1457,7 +1457,7 @@ export namespace ContactStatus {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.Contacts
+ * @link https://core.telegram.org/type/contacts.Contacts
  */
 export type ContactsContacts =
   | ContactsContacts.contactsContactsNotModified
@@ -1477,7 +1477,7 @@ export namespace ContactsContacts {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.ImportedContacts
+ * @link https://core.telegram.org/type/contacts.ImportedContacts
  */
 export type ContactsImportedContacts =
   | ContactsImportedContacts.contactsImportedContacts
@@ -1494,7 +1494,7 @@ export namespace ContactsImportedContacts {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.Blocked
+ * @link https://core.telegram.org/type/contacts.Blocked
  */
 export type ContactsBlocked =
   | ContactsBlocked.contactsBlocked
@@ -1516,7 +1516,7 @@ export namespace ContactsBlocked {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.Dialogs
+ * @link https://core.telegram.org/type/messages.Dialogs
  */
 export type MessagesDialogs =
   | MessagesDialogs.messagesDialogs
@@ -1547,7 +1547,7 @@ export namespace MessagesDialogs {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.Messages
+ * @link https://core.telegram.org/type/messages.Messages
  */
 export type MessagesMessages =
   | MessagesMessages.messagesMessages
@@ -1588,7 +1588,7 @@ export namespace MessagesMessages {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.Chats
+ * @link https://core.telegram.org/type/messages.Chats
  */
 export type MessagesChats =
   | MessagesChats.messagesChats
@@ -1608,7 +1608,7 @@ export namespace MessagesChats {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.ChatFull
+ * @link https://core.telegram.org/type/messages.ChatFull
  */
 export type MessagesChatFull =
   | MessagesChatFull.messagesChatFull
@@ -1624,7 +1624,7 @@ export namespace MessagesChatFull {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.AffectedHistory
+ * @link https://core.telegram.org/type/messages.AffectedHistory
  */
 export type MessagesAffectedHistory =
   | MessagesAffectedHistory.messagesAffectedHistory
@@ -1640,7 +1640,7 @@ export namespace MessagesAffectedHistory {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessagesFilter
+ * @link https://core.telegram.org/type/MessagesFilter
  */
 export type MessagesFilter =
   | MessagesFilter.inputMessagesFilterEmpty
@@ -1714,7 +1714,7 @@ export namespace MessagesFilter {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Update
+ * @link https://core.telegram.org/type/Update
  */
 export type Update =
   | Update.updateNewMessage
@@ -2214,7 +2214,7 @@ export namespace Update {
 }
 
 /**
- * Ref: https://core.telegram.org/type/updates.State
+ * @link https://core.telegram.org/type/updates.State
  */
 export type UpdatesState =
   | UpdatesState.updatesState
@@ -2232,7 +2232,7 @@ export namespace UpdatesState {
 }
 
 /**
- * Ref: https://core.telegram.org/type/updates.Difference
+ * @link https://core.telegram.org/type/updates.Difference
  */
 export type UpdatesDifference =
   | UpdatesDifference.updatesDifferenceEmpty
@@ -2272,7 +2272,7 @@ export namespace UpdatesDifference {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Updates
+ * @link https://core.telegram.org/type/Updates
  */
 export type Updates =
   | Updates.updatesTooLong
@@ -2358,7 +2358,7 @@ export namespace Updates {
 }
 
 /**
- * Ref: https://core.telegram.org/type/photos.Photos
+ * @link https://core.telegram.org/type/photos.Photos
  */
 export type PhotosPhotos =
   | PhotosPhotos.photosPhotos
@@ -2380,7 +2380,7 @@ export namespace PhotosPhotos {
 }
 
 /**
- * Ref: https://core.telegram.org/type/photos.Photo
+ * @link https://core.telegram.org/type/photos.Photo
  */
 export type PhotosPhoto =
   | PhotosPhoto.photosPhoto
@@ -2395,7 +2395,7 @@ export namespace PhotosPhoto {
 }
 
 /**
- * Ref: https://core.telegram.org/type/upload.File
+ * @link https://core.telegram.org/type/upload.File
  */
 export type UploadFile =
   | UploadFile.uploadFile
@@ -2420,7 +2420,7 @@ export namespace UploadFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/DcOption
+ * @link https://core.telegram.org/type/DcOption
  */
 export type DcOption =
   | DcOption.dcOption
@@ -2442,7 +2442,7 @@ export namespace DcOption {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Config
+ * @link https://core.telegram.org/type/Config
  */
 export type Config =
   | Config.config
@@ -2506,7 +2506,7 @@ export namespace Config {
 }
 
 /**
- * Ref: https://core.telegram.org/type/NearestDc
+ * @link https://core.telegram.org/type/NearestDc
  */
 export type NearestDc =
   | NearestDc.nearestDc
@@ -2522,7 +2522,7 @@ export namespace NearestDc {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.AppUpdate
+ * @link https://core.telegram.org/type/help.AppUpdate
  */
 export type HelpAppUpdate =
   | HelpAppUpdate.helpAppUpdate
@@ -2546,7 +2546,7 @@ export namespace HelpAppUpdate {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.InviteText
+ * @link https://core.telegram.org/type/help.InviteText
  */
 export type HelpInviteText =
   | HelpInviteText.helpInviteText
@@ -2560,7 +2560,7 @@ export namespace HelpInviteText {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EncryptedChat
+ * @link https://core.telegram.org/type/EncryptedChat
  */
 export type EncryptedChat =
   | EncryptedChat.encryptedChatEmpty
@@ -2609,7 +2609,7 @@ export namespace EncryptedChat {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputEncryptedChat
+ * @link https://core.telegram.org/type/InputEncryptedChat
  */
 export type InputEncryptedChat =
   | InputEncryptedChat.inputEncryptedChat
@@ -2624,7 +2624,7 @@ export namespace InputEncryptedChat {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EncryptedFile
+ * @link https://core.telegram.org/type/EncryptedFile
  */
 export type EncryptedFile =
   | EncryptedFile.encryptedFileEmpty
@@ -2646,7 +2646,7 @@ export namespace EncryptedFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputEncryptedFile
+ * @link https://core.telegram.org/type/InputEncryptedFile
  */
 export type InputEncryptedFile =
   | InputEncryptedFile.inputEncryptedFileEmpty
@@ -2680,7 +2680,7 @@ export namespace InputEncryptedFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EncryptedMessage
+ * @link https://core.telegram.org/type/EncryptedMessage
  */
 export type EncryptedMessage =
   | EncryptedMessage.encryptedMessage
@@ -2706,7 +2706,7 @@ export namespace EncryptedMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.DhConfig
+ * @link https://core.telegram.org/type/messages.DhConfig
  */
 export type MessagesDhConfig =
   | MessagesDhConfig.messagesDhConfigNotModified
@@ -2728,7 +2728,7 @@ export namespace MessagesDhConfig {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.SentEncryptedMessage
+ * @link https://core.telegram.org/type/messages.SentEncryptedMessage
  */
 export type MessagesSentEncryptedMessage =
   | MessagesSentEncryptedMessage.messagesSentEncryptedMessage
@@ -2748,7 +2748,7 @@ export namespace MessagesSentEncryptedMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputDocument
+ * @link https://core.telegram.org/type/InputDocument
  */
 export type InputDocument =
   | InputDocument.inputDocumentEmpty
@@ -2768,7 +2768,7 @@ export namespace InputDocument {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Document
+ * @link https://core.telegram.org/type/Document
  */
 export type Document =
   | Document.documentEmpty
@@ -2795,7 +2795,7 @@ export namespace Document {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.Support
+ * @link https://core.telegram.org/type/help.Support
  */
 export type HelpSupport =
   | HelpSupport.helpSupport
@@ -2810,7 +2810,7 @@ export namespace HelpSupport {
 }
 
 /**
- * Ref: https://core.telegram.org/type/NotifyPeer
+ * @link https://core.telegram.org/type/NotifyPeer
  */
 export type NotifyPeer =
   | NotifyPeer.notifyPeer
@@ -2836,7 +2836,7 @@ export namespace NotifyPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SendMessageAction
+ * @link https://core.telegram.org/type/SendMessageAction
  */
 export type SendMessageAction =
   | SendMessageAction.sendMessageTypingAction
@@ -2902,7 +2902,7 @@ export namespace SendMessageAction {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.Found
+ * @link https://core.telegram.org/type/contacts.Found
  */
 export type ContactsFound =
   | ContactsFound.contactsFound
@@ -2919,7 +2919,7 @@ export namespace ContactsFound {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPrivacyKey
+ * @link https://core.telegram.org/type/InputPrivacyKey
  */
 export type InputPrivacyKey =
   | InputPrivacyKey.inputPrivacyKeyStatusTimestamp
@@ -2960,7 +2960,7 @@ export namespace InputPrivacyKey {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PrivacyKey
+ * @link https://core.telegram.org/type/PrivacyKey
  */
 export type PrivacyKey =
   | PrivacyKey.privacyKeyStatusTimestamp
@@ -3001,7 +3001,7 @@ export namespace PrivacyKey {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPrivacyRule
+ * @link https://core.telegram.org/type/InputPrivacyRule
  */
 export type InputPrivacyRule =
   | InputPrivacyRule.inputPrivacyValueAllowContacts
@@ -3046,7 +3046,7 @@ export namespace InputPrivacyRule {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PrivacyRule
+ * @link https://core.telegram.org/type/PrivacyRule
  */
 export type PrivacyRule =
   | PrivacyRule.privacyValueAllowContacts
@@ -3091,7 +3091,7 @@ export namespace PrivacyRule {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.PrivacyRules
+ * @link https://core.telegram.org/type/account.PrivacyRules
  */
 export type AccountPrivacyRules =
   | AccountPrivacyRules.accountPrivacyRules
@@ -3107,7 +3107,7 @@ export namespace AccountPrivacyRules {
 }
 
 /**
- * Ref: https://core.telegram.org/type/AccountDaysTTL
+ * @link https://core.telegram.org/type/AccountDaysTTL
  */
 export type AccountDaysTTL =
   | AccountDaysTTL.accountDaysTTL
@@ -3121,7 +3121,7 @@ export namespace AccountDaysTTL {
 }
 
 /**
- * Ref: https://core.telegram.org/type/DocumentAttribute
+ * @link https://core.telegram.org/type/DocumentAttribute
  */
 export type DocumentAttribute =
   | DocumentAttribute.documentAttributeImageSize
@@ -3175,7 +3175,7 @@ export namespace DocumentAttribute {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.Stickers
+ * @link https://core.telegram.org/type/messages.Stickers
  */
 export type MessagesStickers =
   | MessagesStickers.messagesStickersNotModified
@@ -3194,7 +3194,7 @@ export namespace MessagesStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/StickerPack
+ * @link https://core.telegram.org/type/StickerPack
  */
 export type StickerPack =
   | StickerPack.stickerPack
@@ -3209,7 +3209,7 @@ export namespace StickerPack {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.AllStickers
+ * @link https://core.telegram.org/type/messages.AllStickers
  */
 export type MessagesAllStickers =
   | MessagesAllStickers.messagesAllStickersNotModified
@@ -3228,7 +3228,7 @@ export namespace MessagesAllStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.AffectedMessages
+ * @link https://core.telegram.org/type/messages.AffectedMessages
  */
 export type MessagesAffectedMessages =
   | MessagesAffectedMessages.messagesAffectedMessages
@@ -3243,7 +3243,7 @@ export namespace MessagesAffectedMessages {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WebPage
+ * @link https://core.telegram.org/type/WebPage
  */
 export type WebPage =
   | WebPage.webPageEmpty
@@ -3289,7 +3289,7 @@ export namespace WebPage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Authorization
+ * @link https://core.telegram.org/type/Authorization
  */
 export type Authorization =
   | Authorization.authorization
@@ -3317,7 +3317,7 @@ export namespace Authorization {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.Authorizations
+ * @link https://core.telegram.org/type/account.Authorizations
  */
 export type AccountAuthorizations =
   | AccountAuthorizations.accountAuthorizations
@@ -3331,7 +3331,7 @@ export namespace AccountAuthorizations {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.Password
+ * @link https://core.telegram.org/type/account.Password
  */
 export type AccountPassword =
   | AccountPassword.accountPassword
@@ -3355,7 +3355,7 @@ export namespace AccountPassword {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.PasswordSettings
+ * @link https://core.telegram.org/type/account.PasswordSettings
  */
 export type AccountPasswordSettings =
   | AccountPasswordSettings.accountPasswordSettings
@@ -3370,7 +3370,7 @@ export namespace AccountPasswordSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.PasswordInputSettings
+ * @link https://core.telegram.org/type/account.PasswordInputSettings
  */
 export type AccountPasswordInputSettings =
   | AccountPasswordInputSettings.accountPasswordInputSettings
@@ -3388,7 +3388,7 @@ export namespace AccountPasswordInputSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.PasswordRecovery
+ * @link https://core.telegram.org/type/auth.PasswordRecovery
  */
 export type AuthPasswordRecovery =
   | AuthPasswordRecovery.authPasswordRecovery
@@ -3402,7 +3402,7 @@ export namespace AuthPasswordRecovery {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ReceivedNotifyMessage
+ * @link https://core.telegram.org/type/ReceivedNotifyMessage
  */
 export type ReceivedNotifyMessage =
   | ReceivedNotifyMessage.receivedNotifyMessage
@@ -3416,7 +3416,7 @@ export namespace ReceivedNotifyMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ExportedChatInvite
+ * @link https://core.telegram.org/type/ExportedChatInvite
  */
 export type ExportedChatInvite =
   | ExportedChatInvite.chatInviteEmpty
@@ -3434,7 +3434,7 @@ export namespace ExportedChatInvite {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatInvite
+ * @link https://core.telegram.org/type/ChatInvite
  */
 export type ChatInvite =
   | ChatInvite.chatInviteAlready
@@ -3460,7 +3460,7 @@ export namespace ChatInvite {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputStickerSet
+ * @link https://core.telegram.org/type/InputStickerSet
  */
 export type InputStickerSet =
   | InputStickerSet.inputStickerSetEmpty
@@ -3488,7 +3488,7 @@ export namespace InputStickerSet {
 }
 
 /**
- * Ref: https://core.telegram.org/type/StickerSet
+ * @link https://core.telegram.org/type/StickerSet
  */
 export type StickerSet =
   | StickerSet.stickerSet
@@ -3514,7 +3514,7 @@ export namespace StickerSet {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.StickerSet
+ * @link https://core.telegram.org/type/messages.StickerSet
  */
 export type MessagesStickerSet =
   | MessagesStickerSet.messagesStickerSet
@@ -3530,7 +3530,7 @@ export namespace MessagesStickerSet {
 }
 
 /**
- * Ref: https://core.telegram.org/type/BotCommand
+ * @link https://core.telegram.org/type/BotCommand
  */
 export type BotCommand =
   | BotCommand.botCommand
@@ -3545,7 +3545,7 @@ export namespace BotCommand {
 }
 
 /**
- * Ref: https://core.telegram.org/type/BotInfo
+ * @link https://core.telegram.org/type/BotInfo
  */
 export type BotInfo =
   | BotInfo.botInfo
@@ -3561,7 +3561,7 @@ export namespace BotInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/KeyboardButton
+ * @link https://core.telegram.org/type/KeyboardButton
  */
 export type KeyboardButton =
   | KeyboardButton.keyboardButton
@@ -3631,7 +3631,7 @@ export namespace KeyboardButton {
 }
 
 /**
- * Ref: https://core.telegram.org/type/KeyboardButtonRow
+ * @link https://core.telegram.org/type/KeyboardButtonRow
  */
 export type KeyboardButtonRow =
   | KeyboardButtonRow.keyboardButtonRow
@@ -3645,7 +3645,7 @@ export namespace KeyboardButtonRow {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ReplyMarkup
+ * @link https://core.telegram.org/type/ReplyMarkup
  */
 export type ReplyMarkup =
   | ReplyMarkup.replyKeyboardHide
@@ -3678,7 +3678,7 @@ export namespace ReplyMarkup {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessageEntity
+ * @link https://core.telegram.org/type/MessageEntity
  */
 export type MessageEntity =
   | MessageEntity.messageEntityUnknown
@@ -3799,7 +3799,7 @@ export namespace MessageEntity {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputChannel
+ * @link https://core.telegram.org/type/InputChannel
  */
 export type InputChannel =
   | InputChannel.inputChannelEmpty
@@ -3825,7 +3825,7 @@ export namespace InputChannel {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.ResolvedPeer
+ * @link https://core.telegram.org/type/contacts.ResolvedPeer
  */
 export type ContactsResolvedPeer =
   | ContactsResolvedPeer.contactsResolvedPeer
@@ -3841,7 +3841,7 @@ export namespace ContactsResolvedPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessageRange
+ * @link https://core.telegram.org/type/MessageRange
  */
 export type MessageRange =
   | MessageRange.messageRange
@@ -3856,7 +3856,7 @@ export namespace MessageRange {
 }
 
 /**
- * Ref: https://core.telegram.org/type/updates.ChannelDifference
+ * @link https://core.telegram.org/type/updates.ChannelDifference
  */
 export type UpdatesChannelDifference =
   | UpdatesChannelDifference.updatesChannelDifferenceEmpty
@@ -3893,7 +3893,7 @@ export namespace UpdatesChannelDifference {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelMessagesFilter
+ * @link https://core.telegram.org/type/ChannelMessagesFilter
  */
 export type ChannelMessagesFilter =
   | ChannelMessagesFilter.channelMessagesFilterEmpty
@@ -3912,7 +3912,7 @@ export namespace ChannelMessagesFilter {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelParticipant
+ * @link https://core.telegram.org/type/ChannelParticipant
  */
 export type ChannelParticipant =
   | ChannelParticipant.channelParticipant
@@ -3961,7 +3961,7 @@ export namespace ChannelParticipant {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelParticipantsFilter
+ * @link https://core.telegram.org/type/ChannelParticipantsFilter
  */
 export type ChannelParticipantsFilter =
   | ChannelParticipantsFilter.channelParticipantsRecent
@@ -4002,7 +4002,7 @@ export namespace ChannelParticipantsFilter {
 }
 
 /**
- * Ref: https://core.telegram.org/type/channels.ChannelParticipants
+ * @link https://core.telegram.org/type/channels.ChannelParticipants
  */
 export type ChannelsChannelParticipants =
   | ChannelsChannelParticipants.channelsChannelParticipants
@@ -4022,7 +4022,7 @@ export namespace ChannelsChannelParticipants {
 }
 
 /**
- * Ref: https://core.telegram.org/type/channels.ChannelParticipant
+ * @link https://core.telegram.org/type/channels.ChannelParticipant
  */
 export type ChannelsChannelParticipant =
   | ChannelsChannelParticipant.channelsChannelParticipant
@@ -4037,7 +4037,7 @@ export namespace ChannelsChannelParticipant {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.TermsOfService
+ * @link https://core.telegram.org/type/help.TermsOfService
  */
 export type HelpTermsOfService =
   | HelpTermsOfService.helpTermsOfService
@@ -4055,7 +4055,7 @@ export namespace HelpTermsOfService {
 }
 
 /**
- * Ref: https://core.telegram.org/type/FoundGif
+ * @link https://core.telegram.org/type/FoundGif
  */
 export type FoundGif =
   | FoundGif.foundGif
@@ -4081,7 +4081,7 @@ export namespace FoundGif {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.FoundGifs
+ * @link https://core.telegram.org/type/messages.FoundGifs
  */
 export type MessagesFoundGifs =
   | MessagesFoundGifs.messagesFoundGifs
@@ -4096,7 +4096,7 @@ export namespace MessagesFoundGifs {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.SavedGifs
+ * @link https://core.telegram.org/type/messages.SavedGifs
  */
 export type MessagesSavedGifs =
   | MessagesSavedGifs.messagesSavedGifsNotModified
@@ -4115,7 +4115,7 @@ export namespace MessagesSavedGifs {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputBotInlineMessage
+ * @link https://core.telegram.org/type/InputBotInlineMessage
  */
 export type InputBotInlineMessage =
   | InputBotInlineMessage.inputBotInlineMessageMediaAuto
@@ -4171,7 +4171,7 @@ export namespace InputBotInlineMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputBotInlineResult
+ * @link https://core.telegram.org/type/InputBotInlineResult
  */
 export type InputBotInlineResult =
   | InputBotInlineResult.inputBotInlineResult
@@ -4217,7 +4217,7 @@ export namespace InputBotInlineResult {
 }
 
 /**
- * Ref: https://core.telegram.org/type/BotInlineMessage
+ * @link https://core.telegram.org/type/BotInlineMessage
  */
 export type BotInlineMessage =
   | BotInlineMessage.botInlineMessageMediaAuto
@@ -4268,7 +4268,7 @@ export namespace BotInlineMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/BotInlineResult
+ * @link https://core.telegram.org/type/BotInlineResult
  */
 export type BotInlineResult =
   | BotInlineResult.botInlineResult
@@ -4300,7 +4300,7 @@ export namespace BotInlineResult {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.BotResults
+ * @link https://core.telegram.org/type/messages.BotResults
  */
 export type MessagesBotResults =
   | MessagesBotResults.messagesBotResults
@@ -4320,7 +4320,7 @@ export namespace MessagesBotResults {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ExportedMessageLink
+ * @link https://core.telegram.org/type/ExportedMessageLink
  */
 export type ExportedMessageLink =
   | ExportedMessageLink.exportedMessageLink
@@ -4335,7 +4335,7 @@ export namespace ExportedMessageLink {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MessageFwdHeader
+ * @link https://core.telegram.org/type/MessageFwdHeader
  */
 export type MessageFwdHeader =
   | MessageFwdHeader.messageFwdHeader
@@ -4356,7 +4356,7 @@ export namespace MessageFwdHeader {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.CodeType
+ * @link https://core.telegram.org/type/auth.CodeType
  */
 export type AuthCodeType =
   | AuthCodeType.authCodeTypeSms
@@ -4377,7 +4377,7 @@ export namespace AuthCodeType {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.SentCodeType
+ * @link https://core.telegram.org/type/auth.SentCodeType
  */
 export type AuthSentCodeType =
   | AuthSentCodeType.authSentCodeTypeApp
@@ -4406,7 +4406,7 @@ export namespace AuthSentCodeType {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.BotCallbackAnswer
+ * @link https://core.telegram.org/type/messages.BotCallbackAnswer
  */
 export type MessagesBotCallbackAnswer =
   | MessagesBotCallbackAnswer.messagesBotCallbackAnswer
@@ -4425,7 +4425,7 @@ export namespace MessagesBotCallbackAnswer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.MessageEditData
+ * @link https://core.telegram.org/type/messages.MessageEditData
  */
 export type MessagesMessageEditData =
   | MessagesMessageEditData.messagesMessageEditData
@@ -4439,7 +4439,7 @@ export namespace MessagesMessageEditData {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputBotInlineMessageID
+ * @link https://core.telegram.org/type/InputBotInlineMessageID
  */
 export type InputBotInlineMessageID =
   | InputBotInlineMessageID.inputBotInlineMessageID
@@ -4455,7 +4455,7 @@ export namespace InputBotInlineMessageID {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InlineBotSwitchPM
+ * @link https://core.telegram.org/type/InlineBotSwitchPM
  */
 export type InlineBotSwitchPM =
   | InlineBotSwitchPM.inlineBotSwitchPM
@@ -4470,7 +4470,7 @@ export namespace InlineBotSwitchPM {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.PeerDialogs
+ * @link https://core.telegram.org/type/messages.PeerDialogs
  */
 export type MessagesPeerDialogs =
   | MessagesPeerDialogs.messagesPeerDialogs
@@ -4488,7 +4488,7 @@ export namespace MessagesPeerDialogs {
 }
 
 /**
- * Ref: https://core.telegram.org/type/TopPeer
+ * @link https://core.telegram.org/type/TopPeer
  */
 export type TopPeer =
   | TopPeer.topPeer
@@ -4503,7 +4503,7 @@ export namespace TopPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/TopPeerCategory
+ * @link https://core.telegram.org/type/TopPeerCategory
  */
 export type TopPeerCategory =
   | TopPeerCategory.topPeerCategoryBotsPM
@@ -4544,7 +4544,7 @@ export namespace TopPeerCategory {
 }
 
 /**
- * Ref: https://core.telegram.org/type/TopPeerCategoryPeers
+ * @link https://core.telegram.org/type/TopPeerCategoryPeers
  */
 export type TopPeerCategoryPeers =
   | TopPeerCategoryPeers.topPeerCategoryPeers
@@ -4560,7 +4560,7 @@ export namespace TopPeerCategoryPeers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/contacts.TopPeers
+ * @link https://core.telegram.org/type/contacts.TopPeers
  */
 export type ContactsTopPeers =
   | ContactsTopPeers.contactsTopPeersNotModified
@@ -4584,7 +4584,7 @@ export namespace ContactsTopPeers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/DraftMessage
+ * @link https://core.telegram.org/type/DraftMessage
  */
 export type DraftMessage =
   | DraftMessage.draftMessageEmpty
@@ -4607,7 +4607,7 @@ export namespace DraftMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.FeaturedStickers
+ * @link https://core.telegram.org/type/messages.FeaturedStickers
  */
 export type MessagesFeaturedStickers =
   | MessagesFeaturedStickers.messagesFeaturedStickersNotModified
@@ -4627,7 +4627,7 @@ export namespace MessagesFeaturedStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.RecentStickers
+ * @link https://core.telegram.org/type/messages.RecentStickers
  */
 export type MessagesRecentStickers =
   | MessagesRecentStickers.messagesRecentStickersNotModified
@@ -4648,7 +4648,7 @@ export namespace MessagesRecentStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.ArchivedStickers
+ * @link https://core.telegram.org/type/messages.ArchivedStickers
  */
 export type MessagesArchivedStickers =
   | MessagesArchivedStickers.messagesArchivedStickers
@@ -4663,7 +4663,7 @@ export namespace MessagesArchivedStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.StickerSetInstallResult
+ * @link https://core.telegram.org/type/messages.StickerSetInstallResult
  */
 export type MessagesStickerSetInstallResult =
   | MessagesStickerSetInstallResult.messagesStickerSetInstallResultSuccess
@@ -4681,7 +4681,7 @@ export namespace MessagesStickerSetInstallResult {
 }
 
 /**
- * Ref: https://core.telegram.org/type/StickerSetCovered
+ * @link https://core.telegram.org/type/StickerSetCovered
  */
 export type StickerSetCovered =
   | StickerSetCovered.stickerSetCovered
@@ -4702,7 +4702,7 @@ export namespace StickerSetCovered {
 }
 
 /**
- * Ref: https://core.telegram.org/type/MaskCoords
+ * @link https://core.telegram.org/type/MaskCoords
  */
 export type MaskCoords =
   | MaskCoords.maskCoords
@@ -4719,7 +4719,7 @@ export namespace MaskCoords {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputStickeredMedia
+ * @link https://core.telegram.org/type/InputStickeredMedia
  */
 export type InputStickeredMedia =
   | InputStickeredMedia.inputStickeredMediaPhoto
@@ -4738,7 +4738,7 @@ export namespace InputStickeredMedia {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Game
+ * @link https://core.telegram.org/type/Game
  */
 export type Game =
   | Game.game
@@ -4758,7 +4758,7 @@ export namespace Game {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputGame
+ * @link https://core.telegram.org/type/InputGame
  */
 export type InputGame =
   | InputGame.inputGameID
@@ -4779,7 +4779,7 @@ export namespace InputGame {
 }
 
 /**
- * Ref: https://core.telegram.org/type/HighScore
+ * @link https://core.telegram.org/type/HighScore
  */
 export type HighScore =
   | HighScore.highScore
@@ -4795,7 +4795,7 @@ export namespace HighScore {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.HighScores
+ * @link https://core.telegram.org/type/messages.HighScores
  */
 export type MessagesHighScores =
   | MessagesHighScores.messagesHighScores
@@ -4810,7 +4810,7 @@ export namespace MessagesHighScores {
 }
 
 /**
- * Ref: https://core.telegram.org/type/RichText
+ * @link https://core.telegram.org/type/RichText
  */
 export type RichText =
   | RichText.textEmpty
@@ -4905,7 +4905,7 @@ export namespace RichText {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageBlock
+ * @link https://core.telegram.org/type/PageBlock
  */
 export type PageBlock =
   | PageBlock.pageBlockUnsupported
@@ -5093,7 +5093,7 @@ export namespace PageBlock {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PhoneCallDiscardReason
+ * @link https://core.telegram.org/type/PhoneCallDiscardReason
  */
 export type PhoneCallDiscardReason =
   | PhoneCallDiscardReason.phoneCallDiscardReasonMissed
@@ -5118,7 +5118,7 @@ export namespace PhoneCallDiscardReason {
 }
 
 /**
- * Ref: https://core.telegram.org/type/DataJSON
+ * @link https://core.telegram.org/type/DataJSON
  */
 export type DataJSON =
   | DataJSON.dataJSON
@@ -5132,7 +5132,7 @@ export namespace DataJSON {
 }
 
 /**
- * Ref: https://core.telegram.org/type/LabeledPrice
+ * @link https://core.telegram.org/type/LabeledPrice
  */
 export type LabeledPrice =
   | LabeledPrice.labeledPrice
@@ -5147,7 +5147,7 @@ export namespace LabeledPrice {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Invoice
+ * @link https://core.telegram.org/type/Invoice
  */
 export type Invoice =
   | Invoice.invoice
@@ -5170,7 +5170,7 @@ export namespace Invoice {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PaymentCharge
+ * @link https://core.telegram.org/type/PaymentCharge
  */
 export type PaymentCharge =
   | PaymentCharge.paymentCharge
@@ -5185,7 +5185,7 @@ export namespace PaymentCharge {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PostAddress
+ * @link https://core.telegram.org/type/PostAddress
  */
 export type PostAddress =
   | PostAddress.postAddress
@@ -5204,7 +5204,7 @@ export namespace PostAddress {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PaymentRequestedInfo
+ * @link https://core.telegram.org/type/PaymentRequestedInfo
  */
 export type PaymentRequestedInfo =
   | PaymentRequestedInfo.paymentRequestedInfo
@@ -5221,7 +5221,7 @@ export namespace PaymentRequestedInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PaymentSavedCredentials
+ * @link https://core.telegram.org/type/PaymentSavedCredentials
  */
 export type PaymentSavedCredentials =
   | PaymentSavedCredentials.paymentSavedCredentialsCard
@@ -5236,7 +5236,7 @@ export namespace PaymentSavedCredentials {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WebDocument
+ * @link https://core.telegram.org/type/WebDocument
  */
 export type WebDocument =
   | WebDocument.webDocument
@@ -5262,7 +5262,7 @@ export namespace WebDocument {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputWebDocument
+ * @link https://core.telegram.org/type/InputWebDocument
  */
 export type InputWebDocument =
   | InputWebDocument.inputWebDocument
@@ -5279,7 +5279,7 @@ export namespace InputWebDocument {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputWebFileLocation
+ * @link https://core.telegram.org/type/InputWebFileLocation
  */
 export type InputWebFileLocation =
   | InputWebFileLocation.inputWebFileLocation
@@ -5304,7 +5304,7 @@ export namespace InputWebFileLocation {
 }
 
 /**
- * Ref: https://core.telegram.org/type/upload.WebFile
+ * @link https://core.telegram.org/type/upload.WebFile
  */
 export type UploadWebFile =
   | UploadWebFile.uploadWebFile
@@ -5322,7 +5322,7 @@ export namespace UploadWebFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/payments.PaymentForm
+ * @link https://core.telegram.org/type/payments.PaymentForm
  */
 export type PaymentsPaymentForm =
   | PaymentsPaymentForm.paymentsPaymentForm
@@ -5346,7 +5346,7 @@ export namespace PaymentsPaymentForm {
 }
 
 /**
- * Ref: https://core.telegram.org/type/payments.ValidatedRequestedInfo
+ * @link https://core.telegram.org/type/payments.ValidatedRequestedInfo
  */
 export type PaymentsValidatedRequestedInfo =
   | PaymentsValidatedRequestedInfo.paymentsValidatedRequestedInfo
@@ -5361,7 +5361,7 @@ export namespace PaymentsValidatedRequestedInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/payments.PaymentResult
+ * @link https://core.telegram.org/type/payments.PaymentResult
  */
 export type PaymentsPaymentResult =
   | PaymentsPaymentResult.paymentsPaymentResult
@@ -5380,7 +5380,7 @@ export namespace PaymentsPaymentResult {
 }
 
 /**
- * Ref: https://core.telegram.org/type/payments.PaymentReceipt
+ * @link https://core.telegram.org/type/payments.PaymentReceipt
  */
 export type PaymentsPaymentReceipt =
   | PaymentsPaymentReceipt.paymentsPaymentReceipt
@@ -5403,7 +5403,7 @@ export namespace PaymentsPaymentReceipt {
 }
 
 /**
- * Ref: https://core.telegram.org/type/payments.SavedInfo
+ * @link https://core.telegram.org/type/payments.SavedInfo
  */
 export type PaymentsSavedInfo =
   | PaymentsSavedInfo.paymentsSavedInfo
@@ -5418,7 +5418,7 @@ export namespace PaymentsSavedInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPaymentCredentials
+ * @link https://core.telegram.org/type/InputPaymentCredentials
  */
 export type InputPaymentCredentials =
   | InputPaymentCredentials.inputPaymentCredentialsSaved
@@ -5450,7 +5450,7 @@ export namespace InputPaymentCredentials {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.TmpPassword
+ * @link https://core.telegram.org/type/account.TmpPassword
  */
 export type AccountTmpPassword =
   | AccountTmpPassword.accountTmpPassword
@@ -5465,7 +5465,7 @@ export namespace AccountTmpPassword {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ShippingOption
+ * @link https://core.telegram.org/type/ShippingOption
  */
 export type ShippingOption =
   | ShippingOption.shippingOption
@@ -5481,7 +5481,7 @@ export namespace ShippingOption {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputStickerSetItem
+ * @link https://core.telegram.org/type/InputStickerSetItem
  */
 export type InputStickerSetItem =
   | InputStickerSetItem.inputStickerSetItem
@@ -5497,7 +5497,7 @@ export namespace InputStickerSetItem {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputPhoneCall
+ * @link https://core.telegram.org/type/InputPhoneCall
  */
 export type InputPhoneCall =
   | InputPhoneCall.inputPhoneCall
@@ -5512,7 +5512,7 @@ export namespace InputPhoneCall {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PhoneCall
+ * @link https://core.telegram.org/type/PhoneCall
  */
 export type PhoneCall =
   | PhoneCall.phoneCallEmpty
@@ -5587,7 +5587,7 @@ export namespace PhoneCall {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PhoneConnection
+ * @link https://core.telegram.org/type/PhoneConnection
  */
 export type PhoneConnection =
   | PhoneConnection.phoneConnection
@@ -5605,7 +5605,7 @@ export namespace PhoneConnection {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PhoneCallProtocol
+ * @link https://core.telegram.org/type/PhoneCallProtocol
  */
 export type PhoneCallProtocol =
   | PhoneCallProtocol.phoneCallProtocol
@@ -5622,7 +5622,7 @@ export namespace PhoneCallProtocol {
 }
 
 /**
- * Ref: https://core.telegram.org/type/phone.PhoneCall
+ * @link https://core.telegram.org/type/phone.PhoneCall
  */
 export type PhonePhoneCall =
   | PhonePhoneCall.phonePhoneCall
@@ -5637,7 +5637,7 @@ export namespace PhonePhoneCall {
 }
 
 /**
- * Ref: https://core.telegram.org/type/upload.CdnFile
+ * @link https://core.telegram.org/type/upload.CdnFile
  */
 export type UploadCdnFile =
   | UploadCdnFile.uploadCdnFileReuploadNeeded
@@ -5656,7 +5656,7 @@ export namespace UploadCdnFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/CdnPublicKey
+ * @link https://core.telegram.org/type/CdnPublicKey
  */
 export type CdnPublicKey =
   | CdnPublicKey.cdnPublicKey
@@ -5671,7 +5671,7 @@ export namespace CdnPublicKey {
 }
 
 /**
- * Ref: https://core.telegram.org/type/CdnConfig
+ * @link https://core.telegram.org/type/CdnConfig
  */
 export type CdnConfig =
   | CdnConfig.cdnConfig
@@ -5685,7 +5685,7 @@ export namespace CdnConfig {
 }
 
 /**
- * Ref: https://core.telegram.org/type/LangPackString
+ * @link https://core.telegram.org/type/LangPackString
  */
 export type LangPackString =
   | LangPackString.langPackString
@@ -5716,7 +5716,7 @@ export namespace LangPackString {
 }
 
 /**
- * Ref: https://core.telegram.org/type/LangPackDifference
+ * @link https://core.telegram.org/type/LangPackDifference
  */
 export type LangPackDifference =
   | LangPackDifference.langPackDifference
@@ -5733,7 +5733,7 @@ export namespace LangPackDifference {
 }
 
 /**
- * Ref: https://core.telegram.org/type/LangPackLanguage
+ * @link https://core.telegram.org/type/LangPackLanguage
  */
 export type LangPackLanguage =
   | LangPackLanguage.langPackLanguage
@@ -5757,7 +5757,7 @@ export namespace LangPackLanguage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelAdminLogEventAction
+ * @link https://core.telegram.org/type/ChannelAdminLogEventAction
  */
 export type ChannelAdminLogEventAction =
   | ChannelAdminLogEventAction.channelAdminLogEventActionChangeTitle
@@ -5881,7 +5881,7 @@ export namespace ChannelAdminLogEventAction {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelAdminLogEvent
+ * @link https://core.telegram.org/type/ChannelAdminLogEvent
  */
 export type ChannelAdminLogEvent =
   | ChannelAdminLogEvent.channelAdminLogEvent
@@ -5898,7 +5898,7 @@ export namespace ChannelAdminLogEvent {
 }
 
 /**
- * Ref: https://core.telegram.org/type/channels.AdminLogResults
+ * @link https://core.telegram.org/type/channels.AdminLogResults
  */
 export type ChannelsAdminLogResults =
   | ChannelsAdminLogResults.channelsAdminLogResults
@@ -5914,7 +5914,7 @@ export namespace ChannelsAdminLogResults {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelAdminLogEventsFilter
+ * @link https://core.telegram.org/type/ChannelAdminLogEventsFilter
  */
 export type ChannelAdminLogEventsFilter =
   | ChannelAdminLogEventsFilter.channelAdminLogEventsFilter
@@ -5941,7 +5941,7 @@ export namespace ChannelAdminLogEventsFilter {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PopularContact
+ * @link https://core.telegram.org/type/PopularContact
  */
 export type PopularContact =
   | PopularContact.popularContact
@@ -5956,7 +5956,7 @@ export namespace PopularContact {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.FavedStickers
+ * @link https://core.telegram.org/type/messages.FavedStickers
  */
 export type MessagesFavedStickers =
   | MessagesFavedStickers.messagesFavedStickersNotModified
@@ -5976,7 +5976,7 @@ export namespace MessagesFavedStickers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/RecentMeUrl
+ * @link https://core.telegram.org/type/RecentMeUrl
  */
 export type RecentMeUrl =
   | RecentMeUrl.recentMeUrlUnknown
@@ -6014,7 +6014,7 @@ export namespace RecentMeUrl {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.RecentMeUrls
+ * @link https://core.telegram.org/type/help.RecentMeUrls
  */
 export type HelpRecentMeUrls =
   | HelpRecentMeUrls.helpRecentMeUrls
@@ -6030,7 +6030,7 @@ export namespace HelpRecentMeUrls {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputSingleMedia
+ * @link https://core.telegram.org/type/InputSingleMedia
  */
 export type InputSingleMedia =
   | InputSingleMedia.inputSingleMedia
@@ -6047,7 +6047,7 @@ export namespace InputSingleMedia {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WebAuthorization
+ * @link https://core.telegram.org/type/WebAuthorization
  */
 export type WebAuthorization =
   | WebAuthorization.webAuthorization
@@ -6069,7 +6069,7 @@ export namespace WebAuthorization {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.WebAuthorizations
+ * @link https://core.telegram.org/type/account.WebAuthorizations
  */
 export type AccountWebAuthorizations =
   | AccountWebAuthorizations.accountWebAuthorizations
@@ -6084,7 +6084,7 @@ export namespace AccountWebAuthorizations {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputMessage
+ * @link https://core.telegram.org/type/InputMessage
  */
 export type InputMessage =
   | InputMessage.inputMessageID
@@ -6107,7 +6107,7 @@ export namespace InputMessage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputDialogPeer
+ * @link https://core.telegram.org/type/InputDialogPeer
  */
 export type InputDialogPeer =
   | InputDialogPeer.inputDialogPeer
@@ -6126,7 +6126,7 @@ export namespace InputDialogPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/DialogPeer
+ * @link https://core.telegram.org/type/DialogPeer
  */
 export type DialogPeer =
   | DialogPeer.dialogPeer
@@ -6145,7 +6145,7 @@ export namespace DialogPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.FoundStickerSets
+ * @link https://core.telegram.org/type/messages.FoundStickerSets
  */
 export type MessagesFoundStickerSets =
   | MessagesFoundStickerSets.messagesFoundStickerSetsNotModified
@@ -6164,7 +6164,7 @@ export namespace MessagesFoundStickerSets {
 }
 
 /**
- * Ref: https://core.telegram.org/type/FileHash
+ * @link https://core.telegram.org/type/FileHash
  */
 export type FileHash =
   | FileHash.fileHash
@@ -6180,7 +6180,7 @@ export namespace FileHash {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputClientProxy
+ * @link https://core.telegram.org/type/InputClientProxy
  */
 export type InputClientProxy =
   | InputClientProxy.inputClientProxy
@@ -6195,7 +6195,7 @@ export namespace InputClientProxy {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.ProxyData
+ * @link https://core.telegram.org/type/help.ProxyData
  */
 export type HelpProxyData =
   | HelpProxyData.helpProxyDataEmpty
@@ -6217,7 +6217,7 @@ export namespace HelpProxyData {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.TermsOfServiceUpdate
+ * @link https://core.telegram.org/type/help.TermsOfServiceUpdate
  */
 export type HelpTermsOfServiceUpdate =
   | HelpTermsOfServiceUpdate.helpTermsOfServiceUpdateEmpty
@@ -6237,7 +6237,7 @@ export namespace HelpTermsOfServiceUpdate {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputSecureFile
+ * @link https://core.telegram.org/type/InputSecureFile
  */
 export type InputSecureFile =
   | InputSecureFile.inputSecureFileUploaded
@@ -6261,7 +6261,7 @@ export namespace InputSecureFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureFile
+ * @link https://core.telegram.org/type/SecureFile
  */
 export type SecureFile =
   | SecureFile.secureFileEmpty
@@ -6285,7 +6285,7 @@ export namespace SecureFile {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureData
+ * @link https://core.telegram.org/type/SecureData
  */
 export type SecureData =
   | SecureData.secureData
@@ -6301,7 +6301,7 @@ export namespace SecureData {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecurePlainData
+ * @link https://core.telegram.org/type/SecurePlainData
  */
 export type SecurePlainData =
   | SecurePlainData.securePlainPhone
@@ -6320,7 +6320,7 @@ export namespace SecurePlainData {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureValueType
+ * @link https://core.telegram.org/type/SecureValueType
  */
 export type SecureValueType =
   | SecureValueType.secureValueTypePersonalDetails
@@ -6381,7 +6381,7 @@ export namespace SecureValueType {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureValue
+ * @link https://core.telegram.org/type/SecureValue
  */
 export type SecureValue =
   | SecureValue.secureValue
@@ -6403,7 +6403,7 @@ export namespace SecureValue {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputSecureValue
+ * @link https://core.telegram.org/type/InputSecureValue
  */
 export type InputSecureValue =
   | InputSecureValue.inputSecureValue
@@ -6424,7 +6424,7 @@ export namespace InputSecureValue {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureValueHash
+ * @link https://core.telegram.org/type/SecureValueHash
  */
 export type SecureValueHash =
   | SecureValueHash.secureValueHash
@@ -6439,7 +6439,7 @@ export namespace SecureValueHash {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureValueError
+ * @link https://core.telegram.org/type/SecureValueError
  */
 export type SecureValueError =
   | SecureValueError.secureValueErrorData
@@ -6512,7 +6512,7 @@ export namespace SecureValueError {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureCredentialsEncrypted
+ * @link https://core.telegram.org/type/SecureCredentialsEncrypted
  */
 export type SecureCredentialsEncrypted =
   | SecureCredentialsEncrypted.secureCredentialsEncrypted
@@ -6528,7 +6528,7 @@ export namespace SecureCredentialsEncrypted {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.AuthorizationForm
+ * @link https://core.telegram.org/type/account.AuthorizationForm
  */
 export type AccountAuthorizationForm =
   | AccountAuthorizationForm.accountAuthorizationForm
@@ -6546,7 +6546,7 @@ export namespace AccountAuthorizationForm {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.SentEmailCode
+ * @link https://core.telegram.org/type/account.SentEmailCode
  */
 export type AccountSentEmailCode =
   | AccountSentEmailCode.accountSentEmailCode
@@ -6561,7 +6561,7 @@ export namespace AccountSentEmailCode {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.DeepLinkInfo
+ * @link https://core.telegram.org/type/help.DeepLinkInfo
  */
 export type HelpDeepLinkInfo =
   | HelpDeepLinkInfo.helpDeepLinkInfoEmpty
@@ -6581,7 +6581,7 @@ export namespace HelpDeepLinkInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SavedContact
+ * @link https://core.telegram.org/type/SavedContact
  */
 export type SavedContact =
   | SavedContact.savedPhoneContact
@@ -6598,7 +6598,7 @@ export namespace SavedContact {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.Takeout
+ * @link https://core.telegram.org/type/account.Takeout
  */
 export type AccountTakeout =
   | AccountTakeout.accountTakeout
@@ -6612,7 +6612,7 @@ export namespace AccountTakeout {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PasswordKdfAlgo
+ * @link https://core.telegram.org/type/PasswordKdfAlgo
  */
 export type PasswordKdfAlgo =
   | PasswordKdfAlgo.passwordKdfAlgoUnknown
@@ -6633,7 +6633,7 @@ export namespace PasswordKdfAlgo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecurePasswordKdfAlgo
+ * @link https://core.telegram.org/type/SecurePasswordKdfAlgo
  */
 export type SecurePasswordKdfAlgo =
   | SecurePasswordKdfAlgo.securePasswordKdfAlgoUnknown
@@ -6656,7 +6656,7 @@ export namespace SecurePasswordKdfAlgo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureSecretSettings
+ * @link https://core.telegram.org/type/SecureSecretSettings
  */
 export type SecureSecretSettings =
   | SecureSecretSettings.secureSecretSettings
@@ -6672,7 +6672,7 @@ export namespace SecureSecretSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputCheckPasswordSRP
+ * @link https://core.telegram.org/type/InputCheckPasswordSRP
  */
 export type InputCheckPasswordSRP =
   | InputCheckPasswordSRP.inputCheckPasswordEmpty
@@ -6692,7 +6692,7 @@ export namespace InputCheckPasswordSRP {
 }
 
 /**
- * Ref: https://core.telegram.org/type/SecureRequiredType
+ * @link https://core.telegram.org/type/SecureRequiredType
  */
 export type SecureRequiredType =
   | SecureRequiredType.secureRequiredType
@@ -6714,7 +6714,7 @@ export namespace SecureRequiredType {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.PassportConfig
+ * @link https://core.telegram.org/type/help.PassportConfig
  */
 export type HelpPassportConfig =
   | HelpPassportConfig.helpPassportConfigNotModified
@@ -6733,7 +6733,7 @@ export namespace HelpPassportConfig {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputAppEvent
+ * @link https://core.telegram.org/type/InputAppEvent
  */
 export type InputAppEvent =
   | InputAppEvent.inputAppEvent
@@ -6750,7 +6750,7 @@ export namespace InputAppEvent {
 }
 
 /**
- * Ref: https://core.telegram.org/type/JSONObjectValue
+ * @link https://core.telegram.org/type/JSONObjectValue
  */
 export type JSONObjectValue =
   | JSONObjectValue.jsonObjectValue
@@ -6765,7 +6765,7 @@ export namespace JSONObjectValue {
 }
 
 /**
- * Ref: https://core.telegram.org/type/JSONValue
+ * @link https://core.telegram.org/type/JSONValue
  */
 export type JSONValue =
   | JSONValue.jsonNull
@@ -6803,7 +6803,7 @@ export namespace JSONValue {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageTableCell
+ * @link https://core.telegram.org/type/PageTableCell
  */
 export type PageTableCell =
   | PageTableCell.pageTableCell
@@ -6824,7 +6824,7 @@ export namespace PageTableCell {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageTableRow
+ * @link https://core.telegram.org/type/PageTableRow
  */
 export type PageTableRow =
   | PageTableRow.pageTableRow
@@ -6838,7 +6838,7 @@ export namespace PageTableRow {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageCaption
+ * @link https://core.telegram.org/type/PageCaption
  */
 export type PageCaption =
   | PageCaption.pageCaption
@@ -6853,7 +6853,7 @@ export namespace PageCaption {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageListItem
+ * @link https://core.telegram.org/type/PageListItem
  */
 export type PageListItem =
   | PageListItem.pageListItemText
@@ -6872,7 +6872,7 @@ export namespace PageListItem {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageListOrderedItem
+ * @link https://core.telegram.org/type/PageListOrderedItem
  */
 export type PageListOrderedItem =
   | PageListOrderedItem.pageListOrderedItemText
@@ -6893,7 +6893,7 @@ export namespace PageListOrderedItem {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PageRelatedArticle
+ * @link https://core.telegram.org/type/PageRelatedArticle
  */
 export type PageRelatedArticle =
   | PageRelatedArticle.pageRelatedArticle
@@ -6913,7 +6913,7 @@ export namespace PageRelatedArticle {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Page
+ * @link https://core.telegram.org/type/Page
  */
 export type Page =
   | Page.page
@@ -6933,7 +6933,7 @@ export namespace Page {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.SupportName
+ * @link https://core.telegram.org/type/help.SupportName
  */
 export type HelpSupportName =
   | HelpSupportName.helpSupportName
@@ -6947,7 +6947,7 @@ export namespace HelpSupportName {
 }
 
 /**
- * Ref: https://core.telegram.org/type/help.UserInfo
+ * @link https://core.telegram.org/type/help.UserInfo
  */
 export type HelpUserInfo =
   | HelpUserInfo.helpUserInfoEmpty
@@ -6968,7 +6968,7 @@ export namespace HelpUserInfo {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PollAnswer
+ * @link https://core.telegram.org/type/PollAnswer
  */
 export type PollAnswer =
   | PollAnswer.pollAnswer
@@ -6983,7 +6983,7 @@ export namespace PollAnswer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Poll
+ * @link https://core.telegram.org/type/Poll
  */
 export type Poll =
   | Poll.poll
@@ -7003,7 +7003,7 @@ export namespace Poll {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PollAnswerVoters
+ * @link https://core.telegram.org/type/PollAnswerVoters
  */
 export type PollAnswerVoters =
   | PollAnswerVoters.pollAnswerVoters
@@ -7020,7 +7020,7 @@ export namespace PollAnswerVoters {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PollResults
+ * @link https://core.telegram.org/type/PollResults
  */
 export type PollResults =
   | PollResults.pollResults
@@ -7036,7 +7036,7 @@ export namespace PollResults {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatOnlines
+ * @link https://core.telegram.org/type/ChatOnlines
  */
 export type ChatOnlines =
   | ChatOnlines.chatOnlines
@@ -7050,7 +7050,7 @@ export namespace ChatOnlines {
 }
 
 /**
- * Ref: https://core.telegram.org/type/StatsURL
+ * @link https://core.telegram.org/type/StatsURL
  */
 export type StatsURL =
   | StatsURL.statsURL
@@ -7064,7 +7064,7 @@ export namespace StatsURL {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatAdminRights
+ * @link https://core.telegram.org/type/ChatAdminRights
  */
 export type ChatAdminRights =
   | ChatAdminRights.chatAdminRights
@@ -7085,7 +7085,7 @@ export namespace ChatAdminRights {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChatBannedRights
+ * @link https://core.telegram.org/type/ChatBannedRights
  */
 export type ChatBannedRights =
   | ChatBannedRights.chatBannedRights
@@ -7111,7 +7111,7 @@ export namespace ChatBannedRights {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputWallPaper
+ * @link https://core.telegram.org/type/InputWallPaper
  */
 export type InputWallPaper =
   | InputWallPaper.inputWallPaper
@@ -7135,7 +7135,7 @@ export namespace InputWallPaper {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.WallPapers
+ * @link https://core.telegram.org/type/account.WallPapers
  */
 export type AccountWallPapers =
   | AccountWallPapers.accountWallPapersNotModified
@@ -7154,7 +7154,7 @@ export namespace AccountWallPapers {
 }
 
 /**
- * Ref: https://core.telegram.org/type/CodeSettings
+ * @link https://core.telegram.org/type/CodeSettings
  */
 export type CodeSettings =
   | CodeSettings.codeSettings
@@ -7170,7 +7170,7 @@ export namespace CodeSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WallPaperSettings
+ * @link https://core.telegram.org/type/WallPaperSettings
  */
 export type WallPaperSettings =
   | WallPaperSettings.wallPaperSettings
@@ -7189,7 +7189,7 @@ export namespace WallPaperSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/AutoDownloadSettings
+ * @link https://core.telegram.org/type/AutoDownloadSettings
  */
 export type AutoDownloadSettings =
   | AutoDownloadSettings.autoDownloadSettings
@@ -7210,7 +7210,7 @@ export namespace AutoDownloadSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.AutoDownloadSettings
+ * @link https://core.telegram.org/type/account.AutoDownloadSettings
  */
 export type AccountAutoDownloadSettings =
   | AccountAutoDownloadSettings.accountAutoDownloadSettings
@@ -7226,7 +7226,7 @@ export namespace AccountAutoDownloadSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EmojiKeyword
+ * @link https://core.telegram.org/type/EmojiKeyword
  */
 export type EmojiKeyword =
   | EmojiKeyword.emojiKeyword
@@ -7247,7 +7247,7 @@ export namespace EmojiKeyword {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EmojiKeywordsDifference
+ * @link https://core.telegram.org/type/EmojiKeywordsDifference
  */
 export type EmojiKeywordsDifference =
   | EmojiKeywordsDifference.emojiKeywordsDifference
@@ -7264,7 +7264,7 @@ export namespace EmojiKeywordsDifference {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EmojiURL
+ * @link https://core.telegram.org/type/EmojiURL
  */
 export type EmojiURL =
   | EmojiURL.emojiURL
@@ -7278,7 +7278,7 @@ export namespace EmojiURL {
 }
 
 /**
- * Ref: https://core.telegram.org/type/EmojiLanguage
+ * @link https://core.telegram.org/type/EmojiLanguage
  */
 export type EmojiLanguage =
   | EmojiLanguage.emojiLanguage
@@ -7292,7 +7292,7 @@ export namespace EmojiLanguage {
 }
 
 /**
- * Ref: https://core.telegram.org/type/FileLocation
+ * @link https://core.telegram.org/type/FileLocation
  */
 export type FileLocation =
   | FileLocation.fileLocationToBeDeprecated
@@ -7307,7 +7307,7 @@ export namespace FileLocation {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Folder
+ * @link https://core.telegram.org/type/Folder
  */
 export type Folder =
   | Folder.folder
@@ -7326,7 +7326,7 @@ export namespace Folder {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputFolderPeer
+ * @link https://core.telegram.org/type/InputFolderPeer
  */
 export type InputFolderPeer =
   | InputFolderPeer.inputFolderPeer
@@ -7341,7 +7341,7 @@ export namespace InputFolderPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/FolderPeer
+ * @link https://core.telegram.org/type/FolderPeer
  */
 export type FolderPeer =
   | FolderPeer.folderPeer
@@ -7356,7 +7356,7 @@ export namespace FolderPeer {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.SearchCounter
+ * @link https://core.telegram.org/type/messages.SearchCounter
  */
 export type MessagesSearchCounter =
   | MessagesSearchCounter.messagesSearchCounter
@@ -7372,7 +7372,7 @@ export namespace MessagesSearchCounter {
 }
 
 /**
- * Ref: https://core.telegram.org/type/UrlAuthResult
+ * @link https://core.telegram.org/type/UrlAuthResult
  */
 export type UrlAuthResult =
   | UrlAuthResult.urlAuthResultRequest
@@ -7397,7 +7397,7 @@ export namespace UrlAuthResult {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ChannelLocation
+ * @link https://core.telegram.org/type/ChannelLocation
  */
 export type ChannelLocation =
   | ChannelLocation.channelLocationEmpty
@@ -7416,7 +7416,7 @@ export namespace ChannelLocation {
 }
 
 /**
- * Ref: https://core.telegram.org/type/PeerLocated
+ * @link https://core.telegram.org/type/PeerLocated
  */
 export type PeerLocated =
   | PeerLocated.peerLocated
@@ -7432,7 +7432,7 @@ export namespace PeerLocated {
 }
 
 /**
- * Ref: https://core.telegram.org/type/RestrictionReason
+ * @link https://core.telegram.org/type/RestrictionReason
  */
 export type RestrictionReason =
   | RestrictionReason.restrictionReason
@@ -7448,7 +7448,7 @@ export namespace RestrictionReason {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputTheme
+ * @link https://core.telegram.org/type/InputTheme
  */
 export type InputTheme =
   | InputTheme.inputTheme
@@ -7468,7 +7468,7 @@ export namespace InputTheme {
 }
 
 /**
- * Ref: https://core.telegram.org/type/Theme
+ * @link https://core.telegram.org/type/Theme
  */
 export type Theme =
   | Theme.theme
@@ -7490,7 +7490,7 @@ export namespace Theme {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.Themes
+ * @link https://core.telegram.org/type/account.Themes
  */
 export type AccountThemes =
   | AccountThemes.accountThemesNotModified
@@ -7509,7 +7509,7 @@ export namespace AccountThemes {
 }
 
 /**
- * Ref: https://core.telegram.org/type/auth.LoginToken
+ * @link https://core.telegram.org/type/auth.LoginToken
  */
 export type AuthLoginToken =
   | AuthLoginToken.authLoginToken
@@ -7535,7 +7535,7 @@ export namespace AuthLoginToken {
 }
 
 /**
- * Ref: https://core.telegram.org/type/account.ContentSettings
+ * @link https://core.telegram.org/type/account.ContentSettings
  */
 export type AccountContentSettings =
   | AccountContentSettings.accountContentSettings
@@ -7550,7 +7550,7 @@ export namespace AccountContentSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/messages.InactiveChats
+ * @link https://core.telegram.org/type/messages.InactiveChats
  */
 export type MessagesInactiveChats =
   | MessagesInactiveChats.messagesInactiveChats
@@ -7566,7 +7566,7 @@ export namespace MessagesInactiveChats {
 }
 
 /**
- * Ref: https://core.telegram.org/type/BaseTheme
+ * @link https://core.telegram.org/type/BaseTheme
  */
 export type BaseTheme =
   | BaseTheme.baseThemeClassic
@@ -7595,7 +7595,7 @@ export namespace BaseTheme {
 }
 
 /**
- * Ref: https://core.telegram.org/type/InputThemeSettings
+ * @link https://core.telegram.org/type/InputThemeSettings
  */
 export type InputThemeSettings =
   | InputThemeSettings.inputThemeSettings
@@ -7614,7 +7614,7 @@ export namespace InputThemeSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/ThemeSettings
+ * @link https://core.telegram.org/type/ThemeSettings
  */
 export type ThemeSettings =
   | ThemeSettings.themeSettings
@@ -7632,7 +7632,7 @@ export namespace ThemeSettings {
 }
 
 /**
- * Ref: https://core.telegram.org/type/WebPageAttribute
+ * @link https://core.telegram.org/type/WebPageAttribute
  */
 export type WebPageAttribute =
   | WebPageAttribute.webPageAttributeTheme
