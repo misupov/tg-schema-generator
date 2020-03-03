@@ -60,7 +60,7 @@ namespace TelegramSchema
 
                 if (genRefs)
                 {
-                    writer.Write($"/**\n * Ref: https://core.telegram.org/type/{type}\n */\n");
+                    writer.Write($"/**\n * @link https://core.telegram.org/type/{type}\n */\n");
                 }
 
                 writer.Write($"export type {typeName} =\n");
