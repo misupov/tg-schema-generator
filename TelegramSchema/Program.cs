@@ -121,7 +121,7 @@ namespace TelegramSchema
             foreach (var method in methods)
             {
                 var requestType = FixMethodName(method.method);
-                var responseType = types.ContainsKey(method.type) ? FormatType(method.type, constructors) : "any";
+                var responseType = types.ContainsKey(UnwrapVector(method.type)) ? FormatType(method.type, constructors) : "any";
                 writer.Write($"  '{method.method}': {{ req: {requestType}, res: {responseType} }},\n");
             }
             writer.Write("}\n");
@@ -161,6 +161,12 @@ namespace TelegramSchema
         private static bool IsOptional(string type)
         {
             return type.StartsWith("flags.");
+        }
+
+        private static string UnwrapVector(string type)
+        {
+            var vectorMatch = Regex.Match(type, "Vector<(.+)>");
+            return vectorMatch.Success ? vectorMatch.Groups[1].Value : type;
         }
 
         private static string FixTypeName(string type)
