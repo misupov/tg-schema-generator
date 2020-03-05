@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,22 @@ using System.Text.RegularExpressions;
 
 namespace TelegramSchema
 {
+    class SpaceIndentedTextWriter : IndentedTextWriter
+    {
+        public SpaceIndentedTextWriter(TextWriter writer) : base(writer)
+        {
+        }
+
+        public SpaceIndentedTextWriter(TextWriter writer, string tabString) : base(writer, tabString)
+        {
+        }
+        
+        protected override void OutputTabs()
+        {
+            this.InnerWriter.Write(new string(' ', this.Indent * 2));
+        }
+    } 
+    
     static class Program
     {
         static void Main(string[] args)
@@ -15,17 +33,106 @@ namespace TelegramSchema
             GenerateTs(outputFolder, "layer105", true);
             GenerateTs(outputFolder, "layer108", true);
             GenerateTs(outputFolder, "mtproto", false);
+            GenerateTs(outputFolder, "end-to-end", false);
         }
 
         private static void GenerateTs(string outputFolder, string schemaName, bool genRefs)
         {
             var schemaString = File.ReadAllText($"{schemaName}.json");
             var schema = JsonSerializer.Deserialize<Schema>(schemaString);
-
-            using var fileStream = File.Open(Path.Combine(outputFolder, $"{schemaName}.ts"), FileMode.Create);
-            using var writer = new StreamWriter(fileStream);
-
             var (typeOrder, types) = BuildTypes(schema);
+
+            WriteParsers(outputFolder, schemaName, types, schema);
+            WriteTsDeclarations(outputFolder, schemaName, genRefs, typeOrder, types, schema);
+        }
+
+        private static void WriteParsers(
+            string outputFolder,
+            string schemaName,
+            IReadOnlyDictionary<string, HashSet<Constructor>> types,
+            Schema schema)
+        {
+            using var fileStream = File.Open(Path.Combine(outputFolder, $"{schemaName}.parser.ts"), FileMode.Create);
+            using var streamWriter = new StreamWriter(fileStream);
+            using var writer = new SpaceIndentedTextWriter(streamWriter);
+           
+            writer.Write("class MessageParser {\n");
+            writer.Indent++;
+            writer.Write("readInt(): number {}\n");
+            writer.Write("readLong(): string {}\n");
+            writer.Write("readString(): string {}\n");
+            writer.Write("readObject() {}\n");
+            writer.Write("private src: Bytes;\n");
+            writer.Write("private offset: number;\n\n");
+            foreach (var constructor in schema.constructors)
+            {
+                WriteParserConstructor(writer, constructor);
+            }
+        }
+
+        private static void WriteParserConstructor(IndentedTextWriter writer, Constructor constructor)
+        {
+            writer.Write(constructor.predicate.Replace('.', '_') + "() {\n");
+            writer.Indent++;
+            if (constructor.@params.Any(p => p.type == "#"))
+            {
+                writer.Write("const flags = this.readInt();\n");
+            }
+
+            writer.Write("return {\n");
+            writer.Indent++;
+            writer.Write("_: '" + constructor.predicate + "',\n");
+            foreach (var param in constructor.@params)
+            {
+                if (param.type != "#")
+                {
+                    writer.Write(param.name + ": " + FormatAccessor(param.type) + ",\n");
+                }
+            }
+            writer.Indent--;
+            writer.Write("}\n");
+            writer.Indent--;
+            writer.Write("}\n\n");
+        }
+
+        private static string FormatAccessor(string paramType)
+        {
+            var flagsMatch = Regex.Match(paramType, @"flags\.(.+)\?(.*)");
+            var bit = -1;
+            if (flagsMatch.Success)
+            {
+                bit = int.Parse(flagsMatch.Groups[1].Value);
+                paramType = flagsMatch.Groups[2].Value;
+            }
+            switch (paramType)
+            {
+                case "true": return bit >= 0 ? ("!!(flags & 0x" + (1 << bit) + ")") : FormatAccessorMandatory(paramType); 
+                default: return bit >= 0 ? (("(flags & 0x" + (1 << bit) + ") ? ") + FormatAccessorMandatory(paramType) + " : undefined") : FormatAccessorMandatory(paramType); 
+            }
+        }
+        
+        private static string FormatAccessorMandatory(string paramType)
+        {
+            switch (paramType)
+            {
+                case "int": return "this.readInt()";
+                case "long": return "this.readLong()";
+                case "string": return "this.readString()";
+                default: return "this.readObject()"; 
+            }
+        }
+
+        private static void WriteTsDeclarations(
+            string outputFolder,
+            string schemaName,
+            bool genRefs,
+            IEnumerable<string> typeOrder,
+            IReadOnlyDictionary<string, HashSet<Constructor>> types,
+            Schema schema)
+        {
+            using var fileStream = File.Open(Path.Combine(outputFolder, $"{schemaName}.d.ts"), FileMode.Create);
+            using var streamWriter = new StreamWriter(fileStream);
+            using var writer = new SpaceIndentedTextWriter(streamWriter);
 
             writer.Write("/* eslint-disable max-len */\n");
             writer.Write("/* eslint-disable semi-style */\n");
@@ -46,7 +153,7 @@ namespace TelegramSchema
         }
 
         private static void WriteConstructors(
-            TextWriter writer,
+            IndentedTextWriter writer,
             bool genRefs,
             IEnumerable<string> typeOrder,
             IReadOnlyDictionary<string, HashSet<Constructor>> types,
@@ -70,7 +177,7 @@ namespace TelegramSchema
                 }
                 foreach (var constructor in types[type])
                 {
-                    writer.Write($"  | {typeName}.{FixConstructorName(constructor.predicate)}\n");
+                    writer.Write($"  | {typeName}.{FixConstructorName(constructor.predicate)}{(constructor.layer > 0 ? constructor.layer.ToString() : "")}\n");
                 }
 
                 writer.Write(";\n\n");
@@ -78,31 +185,36 @@ namespace TelegramSchema
                 writer.Write($"export namespace {typeName} {{\n");
                 foreach (var constructor in types[type])
                 {
-                    writer.Write($"  export type {FixConstructorName(constructor.predicate)} = {{\n");
-                    writer.Write($"    _: '{constructor.predicate}',\n");
+                    writer.Indent++;
+                    writer.Write($"export type {FixConstructorName(constructor.predicate)}{(constructor.layer > 0 ? constructor.layer.ToString() : "")} = {{\n");
+                    writer.Indent++;
+                    writer.Write($"_: '{constructor.predicate}',\n");
                     foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
                     {
-                        writer.Write($"    {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
+                        writer.Write($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
                     }
-
-                    writer.Write("  };\n");
+                    writer.Indent--;
+                    writer.Write("};\n");
+                    writer.Indent--;
                 }
 
                 writer.Write("}\n\n");
             }
             
             writer.Write("export interface ConstructorDeclMap {\n");
+            writer.Indent++;
             foreach (var constructor in constructors)
             {
                 if (!IsPrimitiveType(constructor.type))
                 {
-                    writer.Write($"  '{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor.predicate)},\n");
+                    writer.Write($"'{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor.predicate)},\n");
                 }
             }
+            writer.Indent--;
             writer.Write("}\n\n");
         }
 
-        private static void WriteMethods(TextWriter writer, Method[] methods, Constructor[] constructors, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        private static void WriteMethods(IndentedTextWriter writer, Method[] methods, Constructor[] constructors, IReadOnlyDictionary<string, HashSet<Constructor>> types)
         {
             writer.Write("/* METHODS */\n\n");
 
@@ -110,38 +222,44 @@ namespace TelegramSchema
             {
                 var methodName = FixMethodName(method.method);
                 writer.Write($"export type {methodName} = {{\n");
+                writer.Indent++;
                 foreach (var parameter in method.@params.Where(p => p.name != "flags"))
                 {
-                    writer.Write($"  {parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
+                    writer.Write($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(parameter.type, constructors)},\n");
                 }
+                writer.Indent--;
                 writer.Write("};\n\n");
             }
 
             writer.Write("export interface MethodDeclMap {\n");
+            writer.Indent++;
             foreach (var method in methods)
             {
                 var requestType = FixMethodName(method.method);
                 var responseType = types.ContainsKey(UnwrapVector(method.type)) ? FormatType(method.type, constructors) : "any";
-                writer.Write($"  '{method.method}': {{ req: {requestType}, res: {responseType} }},\n");
+                writer.Write($"'{method.method}': {{ req: {requestType}, res: {responseType} }},\n");
             }
+            writer.Indent--;
             writer.Write("}\n");
 
             if (types.ContainsKey("Update"))
             {
                 writer.Write("\nexport interface UpdateDeclMap {\n");
+                writer.Indent++;
                 WriteUpdateDeclarations(writer, "Update", types);
                 WriteUpdateDeclarations(writer, "Updates", types);
                 WriteUpdateDeclarations(writer, "User", types);
                 WriteUpdateDeclarations(writer, "Chat", types);
+                writer.Indent--;
                 writer.Write("}\n");
             }
         }
 
-        private static void WriteUpdateDeclarations(TextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
+        private static void WriteUpdateDeclarations(IndentedTextWriter writer, string type, IReadOnlyDictionary<string, HashSet<Constructor>> types)
         {
             foreach (var updateConstructors in types[type])
             {
-                writer.Write($"  '{updateConstructors.predicate}': {type}.{updateConstructors.predicate};\n");
+                writer.Write($"'{updateConstructors.predicate}': {type}.{updateConstructors.predicate};\n");
             }
         }
 
