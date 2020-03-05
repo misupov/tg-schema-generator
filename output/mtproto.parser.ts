@@ -2,9 +2,55 @@ class MessageParser {
   readInt(): number {}
   readLong(): string {}
   readString(): string {}
-  readObject() {}
   private src: Bytes;
   private offset: number;
+
+  readObject() {
+    switch (this.readInt()) {
+      case 0x1cb5c415: return this.vector();
+      case 0x5162463: return this.resPQ();
+      case 0x83c95aec: return this.p_q_inner_data();
+      case 0xa9f55f95: return this.p_q_inner_data_dc();
+      case 0x3c6a84d4: return this.p_q_inner_data_temp();
+      case 0x56fddf88: return this.p_q_inner_data_temp_dc();
+      case 0x79cb045d: return this.server_DH_params_fail();
+      case 0xd0e8075c: return this.server_DH_params_ok();
+      case 0xb5890dba: return this.server_DH_inner_data();
+      case 0x6643b654: return this.client_DH_inner_data();
+      case 0x3bcbf734: return this.dh_gen_ok();
+      case 0x46dc1fb9: return this.dh_gen_retry();
+      case 0xa69dae02: return this.dh_gen_fail();
+      case 0xf35c6d01: return this.rpc_result();
+      case 0x2144ca19: return this.rpc_error();
+      case 0x5e2ad36e: return this.rpc_answer_unknown();
+      case 0xcd78e586: return this.rpc_answer_dropped_running();
+      case 0xa43ad8b7: return this.rpc_answer_dropped();
+      case 0x949d9dc: return this.future_salt();
+      case 0xae500895: return this.future_salts();
+      case 0x347773c5: return this.pong();
+      case 0x9ec20908: return this.new_session_created();
+      case 0x73f1f8dc: return this.msg_container();
+      case 0x5bb8e511: return this.message();
+      case 0xe06046b2: return this.msg_copy();
+      case 0x3072cfa1: return this.gzip_packed();
+      case 0x62d6b459: return this.msgs_ack();
+      case 0xa7eff811: return this.bad_msg_notification();
+      case 0xedab447b: return this.bad_server_salt();
+      case 0x7d861a08: return this.msg_resend_req();
+      case 0x8610baeb: return this.msg_resend_ans_req();
+      case 0xda69fb52: return this.msgs_state_req();
+      case 0x4deb57d: return this.msgs_state_info();
+      case 0x8cc0d131: return this.msgs_all_info();
+      case 0x276d3ec6: return this.msg_detailed_info();
+      case 0x809db6df: return this.msg_new_detailed_info();
+      case 0x75a3f765: return this.bind_auth_key_inner();
+      case 0xf660e1d4: return this.destroy_auth_key_ok();
+      case 0xa9f2259: return this.destroy_auth_key_none();
+      case 0xea109b13: return this.destroy_auth_key_fail();
+      case 0xe22045fc: return this.destroy_session_ok();
+      case 0x62d350c9: return this.destroy_session_none();
+    }
+  }
 
   vector() {
     return {

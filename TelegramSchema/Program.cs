@@ -61,9 +61,21 @@ namespace TelegramSchema
             writer.Write("readInt(): number {}\n");
             writer.Write("readLong(): string {}\n");
             writer.Write("readString(): string {}\n");
-            writer.Write("readObject() {}\n");
             writer.Write("private src: Bytes;\n");
             writer.Write("private offset: number;\n\n");
+            writer.Write("readObject() {\n");
+            writer.Indent++;
+            writer.Write("switch (this.readInt()) {\n");
+            writer.Indent++;
+            foreach (var constructor in schema.constructors)
+            {
+                writer.Write($"case 0x{int.Parse(constructor.id):x}: return this.{constructor.predicate.Replace('.', '_')}();\n");
+            }
+            writer.Indent--;
+            writer.Write("}\n");
+            writer.Indent--;
+            writer.Write("}\n\n");
+            
             foreach (var constructor in schema.constructors)
             {
                 WriteParserConstructor(writer, constructor);
