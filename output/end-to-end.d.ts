@@ -27,7 +27,7 @@ export namespace DecryptedMessage {
   export type decryptedMessage8 = {
     _: 'decryptedMessage',
     random_id: string,
-    random_bytes: string,
+    random_bytes: ArrayBuffer,
     message: string,
     media: DecryptedMessageMedia,
   };
@@ -62,7 +62,7 @@ export namespace DecryptedMessage {
   export type decryptedMessageService8 = {
     _: 'decryptedMessageService',
     random_id: string,
-    random_bytes: string,
+    random_bytes: ArrayBuffer,
     action: DecryptedMessageAction,
   };
   export type decryptedMessageService17 = {
@@ -96,42 +96,42 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaPhoto8 = {
     _: 'decryptedMessageMediaPhoto',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     w: number,
     h: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaPhoto45 = {
     _: 'decryptedMessageMediaPhoto',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     w: number,
     h: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
     caption: string,
   };
   export type decryptedMessageMediaVideo8 = {
     _: 'decryptedMessageMediaVideo',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     duration: number,
     w: number,
     h: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaVideo17 = {
     _: 'decryptedMessageMediaVideo',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     duration: number,
@@ -139,12 +139,12 @@ export namespace DecryptedMessageMedia {
     w: number,
     h: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaVideo45 = {
     _: 'decryptedMessageMediaVideo',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     duration: number,
@@ -152,8 +152,8 @@ export namespace DecryptedMessageMedia {
     w: number,
     h: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
     caption: string,
   };
   export type decryptedMessageMediaGeoPoint8 = {
@@ -170,24 +170,24 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaDocument8 = {
     _: 'decryptedMessageMediaDocument',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     file_name: string,
     mime_type: string,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaDocument45 = {
     _: 'decryptedMessageMediaDocument',
-    thumb: string,
+    thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
     mime_type: string,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
     attributes: DocumentAttribute[],
     caption: string,
   };
@@ -195,16 +195,16 @@ export namespace DecryptedMessageMedia {
     _: 'decryptedMessageMediaAudio',
     duration: number,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaAudio17 = {
     _: 'decryptedMessageMediaAudio',
     duration: number,
     mime_type: string,
     size: number,
-    key: string,
-    iv: string,
+    key: ArrayBuffer,
+    iv: ArrayBuffer,
   };
   export type decryptedMessageMediaExternalDocument23 = {
     _: 'decryptedMessageMediaExternalDocument',
@@ -284,12 +284,12 @@ export namespace DecryptedMessageAction {
   export type decryptedMessageActionRequestKey20 = {
     _: 'decryptedMessageActionRequestKey',
     exchange_id: string,
-    g_a: string,
+    g_a: ArrayBuffer,
   };
   export type decryptedMessageActionAcceptKey20 = {
     _: 'decryptedMessageActionAcceptKey',
     exchange_id: string,
-    g_b: string,
+    g_b: ArrayBuffer,
     key_fingerprint: string,
   };
   export type decryptedMessageActionAbortKey20 = {
@@ -313,7 +313,7 @@ export type DecryptedMessageLayer =
 export namespace DecryptedMessageLayer {
   export type decryptedMessageLayer17 = {
     _: 'decryptedMessageLayer',
-    random_bytes: string,
+    random_bytes: ArrayBuffer,
     layer: number,
     in_seq_no: number,
     out_seq_no: number,
@@ -432,7 +432,7 @@ export namespace DocumentAttribute {
     duration: number,
     title?: string,
     performer?: string,
-    waveform?: string,
+    waveform?: ArrayBuffer,
   };
   export type documentAttributeFilename23 = {
     _: 'documentAttributeFilename',
@@ -465,7 +465,7 @@ export namespace PhotoSize {
     location: FileLocation,
     w: number,
     h: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 

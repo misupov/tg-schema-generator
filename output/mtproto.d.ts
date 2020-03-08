@@ -23,7 +23,7 @@ export namespace ResPQ {
     _: 'resPQ',
     nonce: string,
     server_nonce: string,
-    pq: string,
+    pq: ArrayBuffer,
     server_public_key_fingerprints: string[],
   };
 }
@@ -37,18 +37,18 @@ export type P_Q_inner_data =
 export namespace P_Q_inner_data {
   export type p_q_inner_data = {
     _: 'p_q_inner_data',
-    pq: string,
-    p: string,
-    q: string,
+    pq: ArrayBuffer,
+    p: ArrayBuffer,
+    q: ArrayBuffer,
     nonce: string,
     server_nonce: string,
     new_nonce: string,
   };
   export type p_q_inner_data_dc = {
     _: 'p_q_inner_data_dc',
-    pq: string,
-    p: string,
-    q: string,
+    pq: ArrayBuffer,
+    p: ArrayBuffer,
+    q: ArrayBuffer,
     nonce: string,
     server_nonce: string,
     new_nonce: string,
@@ -56,9 +56,9 @@ export namespace P_Q_inner_data {
   };
   export type p_q_inner_data_temp = {
     _: 'p_q_inner_data_temp',
-    pq: string,
-    p: string,
-    q: string,
+    pq: ArrayBuffer,
+    p: ArrayBuffer,
+    q: ArrayBuffer,
     nonce: string,
     server_nonce: string,
     new_nonce: string,
@@ -73,9 +73,9 @@ export type P_Q_inner_d =
 export namespace P_Q_inner_d {
   export type p_q_inner_data_temp_dc = {
     _: 'p_q_inner_data_temp_dc',
-    pq: string,
-    p: string,
-    q: string,
+    pq: ArrayBuffer,
+    p: ArrayBuffer,
+    q: ArrayBuffer,
     nonce: string,
     server_nonce: string,
     new_nonce: string,
@@ -100,7 +100,7 @@ export namespace Server_DH_Params {
     _: 'server_DH_params_ok',
     nonce: string,
     server_nonce: string,
-    encrypted_answer: string,
+    encrypted_answer: ArrayBuffer,
   };
 }
 
@@ -114,8 +114,8 @@ export namespace Server_DH_inner_data {
     nonce: string,
     server_nonce: string,
     g: number,
-    dh_prime: string,
-    g_a: string,
+    dh_prime: ArrayBuffer,
+    g_a: ArrayBuffer,
     server_time: number,
   };
 }
@@ -130,7 +130,7 @@ export namespace Client_DH_Inner_Data {
     nonce: string,
     server_nonce: string,
     retry_id: string,
-    g_b: string,
+    g_b: ArrayBuffer,
   };
 }
 
@@ -300,7 +300,7 @@ export type Object =
 export namespace Object {
   export type gzip_packed = {
     _: 'gzip_packed',
-    packed_data: string,
+    packed_data: ArrayBuffer,
   };
 }
 
@@ -371,7 +371,7 @@ export namespace MsgsStateInfo {
   export type msgs_state_info = {
     _: 'msgs_state_info',
     req_msg_id: string,
-    info: string,
+    info: ArrayBuffer,
   };
 }
 
@@ -383,7 +383,7 @@ export namespace MsgsAllInfo {
   export type msgs_all_info = {
     _: 'msgs_all_info',
     msg_ids: string[],
-    info: string,
+    info: ArrayBuffer,
   };
 }
 
@@ -514,16 +514,16 @@ export type Req_pq_multi = {
 export type Req_DH_params = {
   nonce: string,
   server_nonce: string,
-  p: string,
-  q: string,
+  p: ArrayBuffer,
+  q: ArrayBuffer,
   public_key_fingerprint: string,
-  encrypted_data: string,
+  encrypted_data: ArrayBuffer,
 };
 
 export type Set_client_DH_params = {
   nonce: string,
   server_nonce: string,
-  encrypted_data: string,
+  encrypted_data: ArrayBuffer,
 };
 
 export type Rpc_drop_answer = {

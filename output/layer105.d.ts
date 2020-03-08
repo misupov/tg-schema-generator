@@ -244,7 +244,7 @@ export namespace InputMedia {
     description: string,
     photo?: InputWebDocument,
     invoice: Invoice,
-    payload: string,
+    payload: ArrayBuffer,
     provider: string,
     provider_data: DataJSON,
     start_param: string,
@@ -319,7 +319,7 @@ export namespace InputPhoto {
     _: 'inputPhoto',
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
   };
 }
 
@@ -343,7 +343,7 @@ export namespace InputFileLocation {
     volume_id: string,
     local_id: number,
     secret: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
   };
   export type inputEncryptedFileLocation = {
     _: 'inputEncryptedFileLocation',
@@ -354,7 +354,7 @@ export namespace InputFileLocation {
     _: 'inputDocumentFileLocation',
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
     thumb_size: string,
   };
   export type inputSecureFileLocation = {
@@ -369,7 +369,7 @@ export namespace InputFileLocation {
     _: 'inputPhotoFileLocation',
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
     thumb_size: string,
   };
   export type inputPeerPhotoFileLocation = {
@@ -999,7 +999,7 @@ export namespace MessageAction {
     _: 'messageActionPaymentSentMe',
     currency: string,
     total_amount: string,
-    payload: string,
+    payload: ArrayBuffer,
     info?: PaymentRequestedInfo,
     shipping_option_id?: string,
     charge: PaymentCharge,
@@ -1096,7 +1096,7 @@ export namespace Photo {
     has_stickers?: boolean,
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
     date: number,
     sizes: PhotoSize[],
     dc_id: number,
@@ -1132,12 +1132,12 @@ export namespace PhotoSize {
     location: FileLocation,
     w: number,
     h: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
   export type photoStrippedSize = {
     _: 'photoStrippedSize',
     type: string,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 
@@ -1209,7 +1209,7 @@ export namespace AuthExportedAuthorization {
   export type authExportedAuthorization = {
     _: 'auth.exportedAuthorization',
     id: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 
@@ -2015,7 +2015,7 @@ export namespace Update {
     peer: Peer,
     msg_id: number,
     chat_instance: string,
-    data?: string,
+    data?: ArrayBuffer,
     game_short_name?: string,
   };
   export type updateEditMessage = {
@@ -2030,7 +2030,7 @@ export namespace Update {
     user_id: number,
     msg_id: InputBotInlineMessageID,
     chat_instance: string,
-    data?: string,
+    data?: ArrayBuffer,
     game_short_name?: string,
   };
   export type updateReadChannelOutbox = {
@@ -2087,14 +2087,14 @@ export namespace Update {
     _: 'updateBotShippingQuery',
     query_id: string,
     user_id: number,
-    payload: string,
+    payload: ArrayBuffer,
     shipping_address: PostAddress,
   };
   export type updateBotPrecheckoutQuery = {
     _: 'updateBotPrecheckoutQuery',
     query_id: string,
     user_id: number,
-    payload: string,
+    payload: ArrayBuffer,
     info?: PaymentRequestedInfo,
     shipping_option_id?: string,
     currency: string,
@@ -2380,14 +2380,14 @@ export namespace UploadFile {
     _: 'upload.file',
     type: StorageFileType,
     mtime: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
   export type uploadFileCdnRedirect = {
     _: 'upload.fileCdnRedirect',
     dc_id: number,
-    file_token: string,
-    encryption_key: string,
-    encryption_iv: string,
+    file_token: ArrayBuffer,
+    encryption_key: ArrayBuffer,
+    encryption_iv: ArrayBuffer,
     file_hashes: FileHash[],
   };
 }
@@ -2410,7 +2410,7 @@ export namespace DcOption {
     id: number,
     ip_address: string,
     port: number,
-    secret?: string,
+    secret?: ArrayBuffer,
   };
 }
 
@@ -2563,7 +2563,7 @@ export namespace EncryptedChat {
     date: number,
     admin_id: number,
     participant_id: number,
-    g_a: string,
+    g_a: ArrayBuffer,
   };
   export type encryptedChat = {
     _: 'encryptedChat',
@@ -2572,7 +2572,7 @@ export namespace EncryptedChat {
     date: number,
     admin_id: number,
     participant_id: number,
-    g_a_or_b: string,
+    g_a_or_b: ArrayBuffer,
     key_fingerprint: string,
   };
   export type encryptedChatDiscarded = {
@@ -2666,7 +2666,7 @@ export namespace EncryptedMessage {
     random_id: string,
     chat_id: number,
     date: number,
-    bytes: string,
+    bytes: ArrayBuffer,
     file: EncryptedFile,
   };
   export type encryptedMessageService = {
@@ -2674,7 +2674,7 @@ export namespace EncryptedMessage {
     random_id: string,
     chat_id: number,
     date: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 
@@ -2689,14 +2689,14 @@ export type MessagesDhConfig =
 export namespace MessagesDhConfig {
   export type messagesDhConfigNotModified = {
     _: 'messages.dhConfigNotModified',
-    random: string,
+    random: ArrayBuffer,
   };
   export type messagesDhConfig = {
     _: 'messages.dhConfig',
     g: number,
-    p: string,
+    p: ArrayBuffer,
     version: number,
-    random: string,
+    random: ArrayBuffer,
   };
 }
 
@@ -2736,7 +2736,7 @@ export namespace InputDocument {
     _: 'inputDocument',
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
   };
 }
 
@@ -2757,7 +2757,7 @@ export namespace Document {
     _: 'document',
     id: string,
     access_hash: string,
-    file_reference: string,
+    file_reference: ArrayBuffer,
     date: number,
     mime_type: string,
     size: number,
@@ -3136,7 +3136,7 @@ export namespace DocumentAttribute {
     duration: number,
     title?: string,
     performer?: string,
-    waveform?: string,
+    waveform?: ArrayBuffer,
   };
   export type documentAttributeFilename = {
     _: 'documentAttributeFilename',
@@ -3317,13 +3317,13 @@ export namespace AccountPassword {
     has_secure_values?: boolean,
     has_password?: boolean,
     current_algo?: PasswordKdfAlgo,
-    srp_B?: string,
+    srp_B?: ArrayBuffer,
     srp_id?: string,
     hint?: string,
     email_unconfirmed_pattern?: string,
     new_algo: PasswordKdfAlgo,
     new_secure_algo: SecurePasswordKdfAlgo,
-    secure_random: string,
+    secure_random: ArrayBuffer,
   };
 }
 
@@ -3353,7 +3353,7 @@ export namespace AccountPasswordInputSettings {
   export type accountPasswordInputSettings = {
     _: 'account.passwordInputSettings',
     new_algo?: PasswordKdfAlgo,
-    new_password_hash?: string,
+    new_password_hash?: ArrayBuffer,
     hint?: string,
     email?: string,
     new_secure_settings?: SecureSecretSettings,
@@ -3562,7 +3562,7 @@ export namespace KeyboardButton {
   export type keyboardButtonCallback = {
     _: 'keyboardButtonCallback',
     text: string,
-    data: string,
+    data: ArrayBuffer,
   };
   export type keyboardButtonRequestPhone = {
     _: 'keyboardButtonRequestPhone',
@@ -5290,7 +5290,7 @@ export namespace UploadWebFile {
     mime_type: string,
     file_type: StorageFileType,
     mtime: number,
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 
@@ -5404,7 +5404,7 @@ export namespace InputPaymentCredentials {
   export type inputPaymentCredentialsSaved = {
     _: 'inputPaymentCredentialsSaved',
     id: string,
-    tmp_password: string,
+    tmp_password: ArrayBuffer,
   };
   export type inputPaymentCredentials = {
     _: 'inputPaymentCredentials',
@@ -5432,7 +5432,7 @@ export type AccountTmpPassword =
 export namespace AccountTmpPassword {
   export type accountTmpPassword = {
     _: 'account.tmpPassword',
-    tmp_password: string,
+    tmp_password: ArrayBuffer,
     valid_until: number,
   };
 }
@@ -5520,7 +5520,7 @@ export namespace PhoneCall {
     date: number,
     admin_id: number,
     participant_id: number,
-    g_a_hash: string,
+    g_a_hash: ArrayBuffer,
     protocol: PhoneCallProtocol,
   };
   export type phoneCallAccepted = {
@@ -5531,7 +5531,7 @@ export namespace PhoneCall {
     date: number,
     admin_id: number,
     participant_id: number,
-    g_b: string,
+    g_b: ArrayBuffer,
     protocol: PhoneCallProtocol,
   };
   export type phoneCall = {
@@ -5542,7 +5542,7 @@ export namespace PhoneCall {
     date: number,
     admin_id: number,
     participant_id: number,
-    g_a_or_b: string,
+    g_a_or_b: ArrayBuffer,
     key_fingerprint: string,
     protocol: PhoneCallProtocol,
     connections: PhoneConnection[],
@@ -5573,7 +5573,7 @@ export namespace PhoneConnection {
     ip: string,
     ipv6: string,
     port: number,
-    peer_tag: string,
+    peer_tag: ArrayBuffer,
   };
 }
 
@@ -5620,11 +5620,11 @@ export type UploadCdnFile =
 export namespace UploadCdnFile {
   export type uploadCdnFileReuploadNeeded = {
     _: 'upload.cdnFileReuploadNeeded',
-    request_token: string,
+    request_token: ArrayBuffer,
   };
   export type uploadCdnFile = {
     _: 'upload.cdnFile',
-    bytes: string,
+    bytes: ArrayBuffer,
   };
 }
 
@@ -6148,7 +6148,7 @@ export namespace FileHash {
     _: 'fileHash',
     offset: number,
     limit: number,
-    hash: string,
+    hash: ArrayBuffer,
   };
 }
 
@@ -6223,8 +6223,8 @@ export namespace InputSecureFile {
     id: string,
     parts: number,
     md5_checksum: string,
-    file_hash: string,
-    secret: string,
+    file_hash: ArrayBuffer,
+    secret: ArrayBuffer,
   };
   export type inputSecureFile = {
     _: 'inputSecureFile',
@@ -6252,8 +6252,8 @@ export namespace SecureFile {
     size: number,
     dc_id: number,
     date: number,
-    file_hash: string,
-    secret: string,
+    file_hash: ArrayBuffer,
+    secret: ArrayBuffer,
   };
 }
 
@@ -6267,9 +6267,9 @@ export type SecureData =
 export namespace SecureData {
   export type secureData = {
     _: 'secureData',
-    data: string,
-    data_hash: string,
-    secret: string,
+    data: ArrayBuffer,
+    data_hash: ArrayBuffer,
+    secret: ArrayBuffer,
   };
 }
 
@@ -6371,7 +6371,7 @@ export namespace SecureValue {
     translation?: SecureFile[],
     files?: SecureFile[],
     plain_data?: SecurePlainData,
-    hash: string,
+    hash: ArrayBuffer,
   };
 }
 
@@ -6407,7 +6407,7 @@ export namespace SecureValueHash {
   export type secureValueHash = {
     _: 'secureValueHash',
     type: SecureValueType,
-    hash: string,
+    hash: ArrayBuffer,
   };
 }
 
@@ -6430,56 +6430,56 @@ export namespace SecureValueError {
   export type secureValueErrorData = {
     _: 'secureValueErrorData',
     type: SecureValueType,
-    data_hash: string,
+    data_hash: ArrayBuffer,
     field: string,
     text: string,
   };
   export type secureValueErrorFrontSide = {
     _: 'secureValueErrorFrontSide',
     type: SecureValueType,
-    file_hash: string,
+    file_hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorReverseSide = {
     _: 'secureValueErrorReverseSide',
     type: SecureValueType,
-    file_hash: string,
+    file_hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorSelfie = {
     _: 'secureValueErrorSelfie',
     type: SecureValueType,
-    file_hash: string,
+    file_hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorFile = {
     _: 'secureValueErrorFile',
     type: SecureValueType,
-    file_hash: string,
+    file_hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorFiles = {
     _: 'secureValueErrorFiles',
     type: SecureValueType,
-    file_hash: string[],
+    file_hash: ArrayBuffer[],
     text: string,
   };
   export type secureValueError = {
     _: 'secureValueError',
     type: SecureValueType,
-    hash: string,
+    hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorTranslationFile = {
     _: 'secureValueErrorTranslationFile',
     type: SecureValueType,
-    file_hash: string,
+    file_hash: ArrayBuffer,
     text: string,
   };
   export type secureValueErrorTranslationFiles = {
     _: 'secureValueErrorTranslationFiles',
     type: SecureValueType,
-    file_hash: string[],
+    file_hash: ArrayBuffer[],
     text: string,
   };
 }
@@ -6494,9 +6494,9 @@ export type SecureCredentialsEncrypted =
 export namespace SecureCredentialsEncrypted {
   export type secureCredentialsEncrypted = {
     _: 'secureCredentialsEncrypted',
-    data: string,
-    hash: string,
-    secret: string,
+    data: ArrayBuffer,
+    hash: ArrayBuffer,
+    secret: ArrayBuffer,
   };
 }
 
@@ -6598,10 +6598,10 @@ export namespace PasswordKdfAlgo {
   };
   export type passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow = {
     _: 'passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow',
-    salt1: string,
-    salt2: string,
+    salt1: ArrayBuffer,
+    salt2: ArrayBuffer,
     g: number,
-    p: string,
+    p: ArrayBuffer,
   };
 }
 
@@ -6620,11 +6620,11 @@ export namespace SecurePasswordKdfAlgo {
   };
   export type securePasswordKdfAlgoPBKDF2HMACSHA512iter100000 = {
     _: 'securePasswordKdfAlgoPBKDF2HMACSHA512iter100000',
-    salt: string,
+    salt: ArrayBuffer,
   };
   export type securePasswordKdfAlgoSHA512 = {
     _: 'securePasswordKdfAlgoSHA512',
-    salt: string,
+    salt: ArrayBuffer,
   };
 }
 
@@ -6639,7 +6639,7 @@ export namespace SecureSecretSettings {
   export type secureSecretSettings = {
     _: 'secureSecretSettings',
     secure_algo: SecurePasswordKdfAlgo,
-    secure_secret: string,
+    secure_secret: ArrayBuffer,
     secure_secret_id: string,
   };
 }
@@ -6659,8 +6659,8 @@ export namespace InputCheckPasswordSRP {
   export type inputCheckPasswordSRP = {
     _: 'inputCheckPasswordSRP',
     srp_id: string,
-    A: string,
-    M1: string,
+    A: ArrayBuffer,
+    M1: ArrayBuffer,
   };
 }
 
@@ -6951,7 +6951,7 @@ export namespace PollAnswer {
   export type pollAnswer = {
     _: 'pollAnswer',
     text: string,
-    option: string,
+    option: ArrayBuffer,
   };
 }
 
@@ -6983,7 +6983,7 @@ export namespace PollAnswerVoters {
   export type pollAnswerVoters = {
     _: 'pollAnswerVoters',
     chosen?: boolean,
-    option: string,
+    option: ArrayBuffer,
     voters: number,
   };
 }
@@ -8297,14 +8297,14 @@ export type AuthExportAuthorization = {
 
 export type AuthImportAuthorization = {
   id: number,
-  bytes: string,
+  bytes: ArrayBuffer,
 };
 
 export type AuthBindTempAuthKey = {
   perm_auth_key_id: string,
   nonce: string,
   expires_at: number,
-  encrypted_message: string,
+  encrypted_message: ArrayBuffer,
 };
 
 export type AccountRegisterDevice = {
@@ -8312,7 +8312,7 @@ export type AccountRegisterDevice = {
   token_type: number,
   token: string,
   app_sandbox: boolean,
-  secret: string,
+  secret: ArrayBuffer,
   other_uids: number[],
 };
 
@@ -8576,7 +8576,7 @@ export type PhotosDeletePhotos = {
 export type UploadSaveFilePart = {
   file_id: string,
   file_part: number,
-  bytes: string,
+  bytes: ArrayBuffer,
 };
 
 export type UploadGetFile = {
@@ -8614,12 +8614,12 @@ export type MessagesGetDhConfig = {
 export type MessagesRequestEncryption = {
   user_id: InputUser,
   random_id: number,
-  g_a: string,
+  g_a: ArrayBuffer,
 };
 
 export type MessagesAcceptEncryption = {
   peer: InputEncryptedChat,
-  g_b: string,
+  g_b: ArrayBuffer,
   key_fingerprint: string,
 };
 
@@ -8640,20 +8640,20 @@ export type MessagesReadEncryptedHistory = {
 export type MessagesSendEncrypted = {
   peer: InputEncryptedChat,
   random_id: string,
-  data: string,
+  data: ArrayBuffer,
 };
 
 export type MessagesSendEncryptedFile = {
   peer: InputEncryptedChat,
   random_id: string,
-  data: string,
+  data: ArrayBuffer,
   file: InputEncryptedFile,
 };
 
 export type MessagesSendEncryptedService = {
   peer: InputEncryptedChat,
   random_id: string,
-  data: string,
+  data: ArrayBuffer,
 };
 
 export type MessagesReceivedQueue = {
@@ -8668,7 +8668,7 @@ export type UploadSaveBigFilePart = {
   file_id: string,
   file_part: number,
   file_total_parts: number,
-  bytes: string,
+  bytes: ArrayBuffer,
 };
 
 export type InitConnection = {
@@ -8976,7 +8976,7 @@ export type MessagesReorderStickerSets = {
 };
 
 export type MessagesGetDocumentByHash = {
-  sha256: string,
+  sha256: ArrayBuffer,
   size: number,
   mime_type: string,
 };
@@ -9076,7 +9076,7 @@ export type MessagesGetBotCallbackAnswer = {
   game?: boolean,
   peer: InputPeer,
   msg_id: number,
-  data?: string,
+  data?: ArrayBuffer,
 };
 
 export type MessagesSetBotCallbackAnswer = {
@@ -9336,19 +9336,19 @@ export type PhoneRequestCall = {
   video?: boolean,
   user_id: InputUser,
   random_id: number,
-  g_a_hash: string,
+  g_a_hash: ArrayBuffer,
   protocol: PhoneCallProtocol,
 };
 
 export type PhoneAcceptCall = {
   peer: InputPhoneCall,
-  g_b: string,
+  g_b: ArrayBuffer,
   protocol: PhoneCallProtocol,
 };
 
 export type PhoneConfirmCall = {
   peer: InputPhoneCall,
-  g_a: string,
+  g_a: ArrayBuffer,
   key_fingerprint: string,
   protocol: PhoneCallProtocol,
 };
@@ -9378,14 +9378,14 @@ export type PhoneSaveCallDebug = {
 };
 
 export type UploadGetCdnFile = {
-  file_token: string,
+  file_token: ArrayBuffer,
   offset: number,
   limit: number,
 };
 
 export type UploadReuploadCdnFile = {
-  file_token: string,
-  request_token: string,
+  file_token: ArrayBuffer,
+  request_token: ArrayBuffer,
 };
 
 export type HelpGetCdnConfig = {
@@ -9429,7 +9429,7 @@ export type ChannelsGetAdminLog = {
 };
 
 export type UploadGetCdnFileHashes = {
-  file_token: string,
+  file_token: ArrayBuffer,
   offset: number,
 };
 
@@ -9708,7 +9708,7 @@ export type AccountGetNotifyExceptions = {
 export type MessagesSendVote = {
   peer: InputPeer,
   msg_id: number,
-  options: string[],
+  options: ArrayBuffer[],
 };
 
 export type MessagesGetPollResults = {

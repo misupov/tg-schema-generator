@@ -1,7609 +1,3343 @@
-class MessageParser {
-  readInt(): number {}
-  readLong(): string {}
-  readString(): string {}
-  private src: Bytes;
-  private offset: number;
+interface ByteStream {
+  readInt32(): number;
+  readUint32(): number;
+  readInt64(): string;
+  readInt128(): string;
+  readInt256(): string;
+  readDouble(): number;
+  readString(): string;
+  readBytes(): ArrayBuffer;
+  revert(bytes: number): void;
+}
 
-  readObject() {
-    switch (this.readInt()) {
-      case 0xbc799737: return this.boolFalse();
-      case 0x997275b5: return this.boolTrue();
-      case 0x3fedd339: return this.true();
-      case 0x1cb5c415: return this.vector();
-      case 0xc4b9f9bb: return this.error();
-      case 0x56730bcc: return this.null();
-      case 0x7f3b18ea: return this.inputPeerEmpty();
-      case 0x7da07ec9: return this.inputPeerSelf();
-      case 0x179be863: return this.inputPeerChat();
-      case 0xb98886cf: return this.inputUserEmpty();
-      case 0xf7c1b13f: return this.inputUserSelf();
-      case 0xf392b7f4: return this.inputPhoneContact();
-      case 0xf52ff27f: return this.inputFile();
-      case 0x9664f57f: return this.inputMediaEmpty();
-      case 0x1e287d04: return this.inputMediaUploadedPhoto();
-      case 0xb3ba0635: return this.inputMediaPhoto();
-      case 0xf9c44144: return this.inputMediaGeoPoint();
-      case 0xf8ab7dfb: return this.inputMediaContact();
-      case 0x1ca48f57: return this.inputChatPhotoEmpty();
-      case 0x927c55b4: return this.inputChatUploadedPhoto();
-      case 0x8953ad37: return this.inputChatPhoto();
-      case 0xe4c123d6: return this.inputGeoPointEmpty();
-      case 0xf3b7acc9: return this.inputGeoPoint();
-      case 0x1cd7bf0d: return this.inputPhotoEmpty();
-      case 0x3bb3b94a: return this.inputPhoto();
-      case 0xdfdaabe1: return this.inputFileLocation();
-      case 0x9db1bc6d: return this.peerUser();
-      case 0xbad0e5bb: return this.peerChat();
-      case 0xaa963b05: return this.storage_fileUnknown();
-      case 0x40bc6f52: return this.storage_filePartial();
-      case 0x7efe0e: return this.storage_fileJpeg();
-      case 0xcae1aadf: return this.storage_fileGif();
-      case 0xa4f63c0: return this.storage_filePng();
-      case 0xae1e508d: return this.storage_filePdf();
-      case 0x528a0677: return this.storage_fileMp3();
-      case 0x4b09ebbc: return this.storage_fileMov();
-      case 0xb3cea0e4: return this.storage_fileMp4();
-      case 0x1081464c: return this.storage_fileWebp();
-      case 0x200250ba: return this.userEmpty();
-      case 0x4f11bae1: return this.userProfilePhotoEmpty();
-      case 0xecd75d8c: return this.userProfilePhoto();
-      case 0x9d05049: return this.userStatusEmpty();
-      case 0xedb93949: return this.userStatusOnline();
-      case 0x8c703f: return this.userStatusOffline();
-      case 0x9ba2d800: return this.chatEmpty();
-      case 0x3bda1bde: return this.chat();
-      case 0x7328bdb: return this.chatForbidden();
-      case 0x1b7c9db3: return this.chatFull();
-      case 0xc8d7493e: return this.chatParticipant();
-      case 0xfc900c2b: return this.chatParticipantsForbidden();
-      case 0x3f460fed: return this.chatParticipants();
-      case 0x37c1011c: return this.chatPhotoEmpty();
-      case 0x475cdbd5: return this.chatPhoto();
-      case 0x83e5de54: return this.messageEmpty();
-      case 0x452c0e65: return this.message();
-      case 0x9e19a1f6: return this.messageService();
-      case 0x3ded6320: return this.messageMediaEmpty();
-      case 0x695150d7: return this.messageMediaPhoto();
-      case 0x56e0d474: return this.messageMediaGeo();
-      case 0xcbf24940: return this.messageMediaContact();
-      case 0x9f84f49e: return this.messageMediaUnsupported();
-      case 0xb6aef7b0: return this.messageActionEmpty();
-      case 0xa6638b9a: return this.messageActionChatCreate();
-      case 0xb5a1ce5a: return this.messageActionChatEditTitle();
-      case 0x7fcb13a8: return this.messageActionChatEditPhoto();
-      case 0x95e3fbef: return this.messageActionChatDeletePhoto();
-      case 0x488a7337: return this.messageActionChatAddUser();
-      case 0xb2ae9b0c: return this.messageActionChatDeleteUser();
-      case 0x2c171f72: return this.dialog();
-      case 0x2331b22d: return this.photoEmpty();
-      case 0xd07504a5: return this.photo();
-      case 0xe17e23c: return this.photoSizeEmpty();
-      case 0x77bfb61b: return this.photoSize();
-      case 0xe9a734fa: return this.photoCachedSize();
-      case 0x1117dd5f: return this.geoPointEmpty();
-      case 0x296f104: return this.geoPoint();
-      case 0x5e002502: return this.auth_sentCode();
-      case 0xcd050916: return this.auth_authorization();
-      case 0xdf969c2d: return this.auth_exportedAuthorization();
-      case 0xb8bc5b0c: return this.inputNotifyPeer();
-      case 0x193b4417: return this.inputNotifyUsers();
-      case 0x4a95e84e: return this.inputNotifyChats();
-      case 0x9c3d198e: return this.inputPeerNotifySettings();
-      case 0xaf509d20: return this.peerNotifySettings();
-      case 0x818426cd: return this.peerSettings();
-      case 0xa437c3ed: return this.wallPaper();
-      case 0x58dbcab8: return this.inputReportReasonSpam();
-      case 0x1e22c78d: return this.inputReportReasonViolence();
-      case 0x2e59d922: return this.inputReportReasonPornography();
-      case 0xadf44ee3: return this.inputReportReasonChildAbuse();
-      case 0xe1746d0a: return this.inputReportReasonOther();
-      case 0xedf17c12: return this.userFull();
-      case 0xf911c994: return this.contact();
-      case 0xd0028438: return this.importedContact();
-      case 0x561bc879: return this.contactBlocked();
-      case 0xd3680c61: return this.contactStatus();
-      case 0xb74ba9d2: return this.contacts_contactsNotModified();
-      case 0xeae87e42: return this.contacts_contacts();
-      case 0x77d01c3b: return this.contacts_importedContacts();
-      case 0x1c138d15: return this.contacts_blocked();
-      case 0x900802a1: return this.contacts_blockedSlice();
-      case 0x15ba6c40: return this.messages_dialogs();
-      case 0x71e094f3: return this.messages_dialogsSlice();
-      case 0x8c718e87: return this.messages_messages();
-      case 0xc8edce1e: return this.messages_messagesSlice();
-      case 0x64ff9fd5: return this.messages_chats();
-      case 0xe5d7d19c: return this.messages_chatFull();
-      case 0xb45c69d1: return this.messages_affectedHistory();
-      case 0x57e2f66c: return this.inputMessagesFilterEmpty();
-      case 0x9609a51c: return this.inputMessagesFilterPhotos();
-      case 0x9fc00e65: return this.inputMessagesFilterVideo();
-      case 0x56e9f0e4: return this.inputMessagesFilterPhotoVideo();
-      case 0x9eddf188: return this.inputMessagesFilterDocument();
-      case 0x7ef0dd87: return this.inputMessagesFilterUrl();
-      case 0xffc86587: return this.inputMessagesFilterGif();
-      case 0x1f2b0afd: return this.updateNewMessage();
-      case 0x4e90bfd6: return this.updateMessageID();
-      case 0xa20db0e5: return this.updateDeleteMessages();
-      case 0x5c486927: return this.updateUserTyping();
-      case 0x9a65ea1f: return this.updateChatUserTyping();
-      case 0x7761198: return this.updateChatParticipants();
-      case 0x1bfbd823: return this.updateUserStatus();
-      case 0xa7332b73: return this.updateUserName();
-      case 0x95313b0c: return this.updateUserPhoto();
-      case 0xa56c2a3e: return this.updates_state();
-      case 0x5d75a138: return this.updates_differenceEmpty();
-      case 0xf49ca0: return this.updates_difference();
-      case 0xa8fb1981: return this.updates_differenceSlice();
-      case 0xe317af7e: return this.updatesTooLong();
-      case 0x914fbf11: return this.updateShortMessage();
-      case 0x16812688: return this.updateShortChatMessage();
-      case 0x78d4dec1: return this.updateShort();
-      case 0x725b04c3: return this.updatesCombined();
-      case 0x74ae4240: return this.updates();
-      case 0x8dca6aa5: return this.photos_photos();
-      case 0x15051f54: return this.photos_photosSlice();
-      case 0x20212ca8: return this.photos_photo();
-      case 0x96a18d5: return this.upload_file();
-      case 0x18b7a10d: return this.dcOption();
-      case 0x330b4067: return this.config();
-      case 0x8e1a1775: return this.nearestDc();
-      case 0x1da7158f: return this.help_appUpdate();
-      case 0xc45a6536: return this.help_noAppUpdate();
-      case 0x18cb9f78: return this.help_inviteText();
-      case 0x12bcbd9a: return this.updateNewEncryptedMessage();
-      case 0x1710f156: return this.updateEncryptedChatTyping();
-      case 0xb4a2e88d: return this.updateEncryption();
-      case 0x38fe25b7: return this.updateEncryptedMessagesRead();
-      case 0xab7ec0a0: return this.encryptedChatEmpty();
-      case 0x3bf703dc: return this.encryptedChatWaiting();
-      case 0xc878527e: return this.encryptedChatRequested();
-      case 0xfa56ce36: return this.encryptedChat();
-      case 0x13d6dd27: return this.encryptedChatDiscarded();
-      case 0xf141b5e1: return this.inputEncryptedChat();
-      case 0xc21f497e: return this.encryptedFileEmpty();
-      case 0x4a70994c: return this.encryptedFile();
-      case 0x1837c364: return this.inputEncryptedFileEmpty();
-      case 0x64bd0306: return this.inputEncryptedFileUploaded();
-      case 0x5a17b5e5: return this.inputEncryptedFile();
-      case 0xf5235d55: return this.inputEncryptedFileLocation();
-      case 0xed18c118: return this.encryptedMessage();
-      case 0x23734b06: return this.encryptedMessageService();
-      case 0xc0e24635: return this.messages_dhConfigNotModified();
-      case 0x2c221edd: return this.messages_dhConfig();
-      case 0x560f8935: return this.messages_sentEncryptedMessage();
-      case 0x9493ff32: return this.messages_sentEncryptedFile();
-      case 0xfa4f0bb5: return this.inputFileBig();
-      case 0x2dc173c8: return this.inputEncryptedFileBigUploaded();
-      case 0xea4b0e5c: return this.updateChatParticipantAdd();
-      case 0x6e5f8c22: return this.updateChatParticipantDelete();
-      case 0x8e5e9873: return this.updateDcOptions();
-      case 0x5b38c6c1: return this.inputMediaUploadedDocument();
-      case 0x23ab23d2: return this.inputMediaDocument();
-      case 0x9cb070d7: return this.messageMediaDocument();
-      case 0x72f0eaae: return this.inputDocumentEmpty();
-      case 0x1abfb575: return this.inputDocument();
-      case 0xbad07584: return this.inputDocumentFileLocation();
-      case 0x36f8c871: return this.documentEmpty();
-      case 0x9ba29cc1: return this.document();
-      case 0x17c6b5f6: return this.help_support();
-      case 0x9fd40bd8: return this.notifyPeer();
-      case 0xb4c83b4c: return this.notifyUsers();
-      case 0xc007cec3: return this.notifyChats();
-      case 0x80ece81a: return this.updateUserBlocked();
-      case 0xbec268ef: return this.updateNotifySettings();
-      case 0x16bf744e: return this.sendMessageTypingAction();
-      case 0xfd5ec8f5: return this.sendMessageCancelAction();
-      case 0xa187d66f: return this.sendMessageRecordVideoAction();
-      case 0xe9763aec: return this.sendMessageUploadVideoAction();
-      case 0xd52f73f7: return this.sendMessageRecordAudioAction();
-      case 0xf351d7ab: return this.sendMessageUploadAudioAction();
-      case 0xd1d34a26: return this.sendMessageUploadPhotoAction();
-      case 0xaa0cd9e4: return this.sendMessageUploadDocumentAction();
-      case 0x176f8ba1: return this.sendMessageGeoLocationAction();
-      case 0x628cbc6f: return this.sendMessageChooseContactAction();
-      case 0xb3134d9d: return this.contacts_found();
-      case 0xebe46819: return this.updateServiceNotification();
-      case 0xe26f42f1: return this.userStatusRecently();
-      case 0x7bf09fc: return this.userStatusLastWeek();
-      case 0x77ebc742: return this.userStatusLastMonth();
-      case 0xee3b272a: return this.updatePrivacy();
-      case 0x4f96cb18: return this.inputPrivacyKeyStatusTimestamp();
-      case 0xbc2eab30: return this.privacyKeyStatusTimestamp();
-      case 0xd09e07b: return this.inputPrivacyValueAllowContacts();
-      case 0x184b35ce: return this.inputPrivacyValueAllowAll();
-      case 0x131cc67f: return this.inputPrivacyValueAllowUsers();
-      case 0xba52007: return this.inputPrivacyValueDisallowContacts();
-      case 0xd66b66c9: return this.inputPrivacyValueDisallowAll();
-      case 0x90110467: return this.inputPrivacyValueDisallowUsers();
-      case 0xfffe1bac: return this.privacyValueAllowContacts();
-      case 0x65427b82: return this.privacyValueAllowAll();
-      case 0x4d5bbe0c: return this.privacyValueAllowUsers();
-      case 0xf888fa1a: return this.privacyValueDisallowContacts();
-      case 0x8b73e763: return this.privacyValueDisallowAll();
-      case 0xc7f49b7: return this.privacyValueDisallowUsers();
-      case 0x50a04e45: return this.account_privacyRules();
-      case 0xb8d0afdf: return this.accountDaysTTL();
-      case 0x12b9417b: return this.updateUserPhone();
-      case 0x6c37c15c: return this.documentAttributeImageSize();
-      case 0x11b58939: return this.documentAttributeAnimated();
-      case 0x6319d612: return this.documentAttributeSticker();
-      case 0xef02ce6: return this.documentAttributeVideo();
-      case 0x9852f9c6: return this.documentAttributeAudio();
-      case 0x15590068: return this.documentAttributeFilename();
-      case 0xf1749a22: return this.messages_stickersNotModified();
-      case 0xe4599bbd: return this.messages_stickers();
-      case 0x12b299d4: return this.stickerPack();
-      case 0xe86602c3: return this.messages_allStickersNotModified();
-      case 0xedfd405f: return this.messages_allStickers();
-      case 0x9c974fdf: return this.updateReadHistoryInbox();
-      case 0x2f2f21bf: return this.updateReadHistoryOutbox();
-      case 0x84d19185: return this.messages_affectedMessages();
-      case 0x7f891213: return this.updateWebPage();
-      case 0xeb1477e8: return this.webPageEmpty();
-      case 0xc586da1c: return this.webPagePending();
-      case 0xfa64e172: return this.webPage();
-      case 0xa32dd600: return this.messageMediaWebPage();
-      case 0xad01d61d: return this.authorization();
-      case 0x1250abde: return this.account_authorizations();
-      case 0xad2641f8: return this.account_password();
-      case 0x9a5c33e5: return this.account_passwordSettings();
-      case 0xc23727c9: return this.account_passwordInputSettings();
-      case 0x137948a5: return this.auth_passwordRecovery();
-      case 0xc13d1c11: return this.inputMediaVenue();
-      case 0x2ec0533f: return this.messageMediaVenue();
-      case 0xa384b779: return this.receivedNotifyMessage();
-      case 0x69df3769: return this.chatInviteEmpty();
-      case 0xfc2e05bc: return this.chatInviteExported();
-      case 0x5a686d7c: return this.chatInviteAlready();
-      case 0xdfc2f58e: return this.chatInvite();
-      case 0xf89cf5e8: return this.messageActionChatJoinedByLink();
-      case 0x68c13933: return this.updateReadMessagesContents();
-      case 0xffb62b95: return this.inputStickerSetEmpty();
-      case 0x9de7a269: return this.inputStickerSetID();
-      case 0x861cc8a0: return this.inputStickerSetShortName();
-      case 0xeeb46f27: return this.stickerSet();
-      case 0xb60a24a6: return this.messages_stickerSet();
-      case 0x938458c1: return this.user();
-      case 0xc27ac8c7: return this.botCommand();
-      case 0x98e81d3a: return this.botInfo();
-      case 0xa2fa4880: return this.keyboardButton();
-      case 0x77608b83: return this.keyboardButtonRow();
-      case 0xa03e5b85: return this.replyKeyboardHide();
-      case 0xf4108aa0: return this.replyKeyboardForceReply();
-      case 0x3502758c: return this.replyKeyboardMarkup();
-      case 0x7b8e7de6: return this.inputPeerUser();
-      case 0xd8292816: return this.inputUser();
-      case 0xbb92ba95: return this.messageEntityUnknown();
-      case 0xfa04579d: return this.messageEntityMention();
-      case 0x6f635b0d: return this.messageEntityHashtag();
-      case 0x6cef8ac7: return this.messageEntityBotCommand();
-      case 0x6ed02538: return this.messageEntityUrl();
-      case 0x64e475c2: return this.messageEntityEmail();
-      case 0xbd610bc9: return this.messageEntityBold();
-      case 0x826f8b60: return this.messageEntityItalic();
-      case 0x28a20571: return this.messageEntityCode();
-      case 0x73924be0: return this.messageEntityPre();
-      case 0x76a6d327: return this.messageEntityTextUrl();
-      case 0x11f1331c: return this.updateShortSentMessage();
-      case 0xee8c1e86: return this.inputChannelEmpty();
-      case 0xafeb712e: return this.inputChannel();
-      case 0xbddde532: return this.peerChannel();
-      case 0x20adaef8: return this.inputPeerChannel();
-      case 0xd31a961e: return this.channel();
-      case 0x289da732: return this.channelForbidden();
-      case 0x7f077ad9: return this.contacts_resolvedPeer();
-      case 0x2d895c74: return this.channelFull();
-      case 0xae30253: return this.messageRange();
-      case 0x99262e37: return this.messages_channelMessages();
-      case 0x95d2ac92: return this.messageActionChannelCreate();
-      case 0xeb0467fb: return this.updateChannelTooLong();
-      case 0xb6d45656: return this.updateChannel();
-      case 0x62ba04d9: return this.updateNewChannelMessage();
-      case 0x330b5424: return this.updateReadChannelInbox();
-      case 0xc37521c9: return this.updateDeleteChannelMessages();
-      case 0x98a12b4b: return this.updateChannelMessageViews();
-      case 0x3e11affb: return this.updates_channelDifferenceEmpty();
-      case 0xa4bcc6fe: return this.updates_channelDifferenceTooLong();
-      case 0x2064674e: return this.updates_channelDifference();
-      case 0x94d42ee7: return this.channelMessagesFilterEmpty();
-      case 0xcd77d957: return this.channelMessagesFilter();
-      case 0x15ebac1d: return this.channelParticipant();
-      case 0xa3289a6d: return this.channelParticipantSelf();
-      case 0x808d15a4: return this.channelParticipantCreator();
-      case 0xde3f3c79: return this.channelParticipantsRecent();
-      case 0xb4608969: return this.channelParticipantsAdmins();
-      case 0xa3b54985: return this.channelParticipantsKicked();
-      case 0xf56ee2a8: return this.channels_channelParticipants();
-      case 0xd0d9b163: return this.channels_channelParticipant();
-      case 0xda13538a: return this.chatParticipantCreator();
-      case 0xe2d6e436: return this.chatParticipantAdmin();
-      case 0xb6901959: return this.updateChatParticipantAdmin();
-      case 0x51bdb021: return this.messageActionChatMigrateTo();
-      case 0xb055eaee: return this.messageActionChannelMigrateFrom();
-      case 0xb0d1865b: return this.channelParticipantsBots();
-      case 0x780a0310: return this.help_termsOfService();
-      case 0x688a30aa: return this.updateNewStickerSet();
-      case 0xbb2d201: return this.updateStickerSetsOrder();
-      case 0x43ae3dec: return this.updateStickerSets();
-      case 0x162ecc1f: return this.foundGif();
-      case 0x9c750409: return this.foundGifCached();
-      case 0x4843b0fd: return this.inputMediaGifExternal();
-      case 0x450a1c0a: return this.messages_foundGifs();
-      case 0xe8025ca2: return this.messages_savedGifsNotModified();
-      case 0x2e0709a5: return this.messages_savedGifs();
-      case 0x9375341e: return this.updateSavedGifs();
-      case 0x3380c786: return this.inputBotInlineMessageMediaAuto();
-      case 0x3dcd7a87: return this.inputBotInlineMessageText();
-      case 0x88bf9319: return this.inputBotInlineResult();
-      case 0x764cf810: return this.botInlineMessageMediaAuto();
-      case 0x8c7f65e2: return this.botInlineMessageText();
-      case 0x11965f3a: return this.botInlineResult();
-      case 0x947ca848: return this.messages_botResults();
-      case 0x54826690: return this.updateBotInlineQuery();
-      case 0xe48f964: return this.updateBotInlineSend();
-      case 0x50f5c392: return this.inputMessagesFilterVoice();
-      case 0x3751b49e: return this.inputMessagesFilterMusic();
-      case 0xbdfb0426: return this.inputPrivacyKeyChatInvite();
-      case 0x500e6dfa: return this.privacyKeyChatInvite();
-      case 0x5dab1af4: return this.exportedMessageLink();
-      case 0xec338270: return this.messageFwdHeader();
-      case 0x1b3f4df7: return this.updateEditChannelMessage();
-      case 0x98592475: return this.updateChannelPinnedMessage();
-      case 0x94bd38ed: return this.messageActionPinMessage();
-      case 0x72a3158c: return this.auth_codeTypeSms();
-      case 0x741cd3e3: return this.auth_codeTypeCall();
-      case 0x226ccefb: return this.auth_codeTypeFlashCall();
-      case 0x3dbb5986: return this.auth_sentCodeTypeApp();
-      case 0xc000bba2: return this.auth_sentCodeTypeSms();
-      case 0x5353e5a7: return this.auth_sentCodeTypeCall();
-      case 0xab03c6d9: return this.auth_sentCodeTypeFlashCall();
-      case 0x258aff05: return this.keyboardButtonUrl();
-      case 0x683a5e46: return this.keyboardButtonCallback();
-      case 0xb16a6c29: return this.keyboardButtonRequestPhone();
-      case 0xfc796b3f: return this.keyboardButtonRequestGeoLocation();
-      case 0x568a748: return this.keyboardButtonSwitchInline();
-      case 0x48a30254: return this.replyInlineMarkup();
-      case 0x36585ea4: return this.messages_botCallbackAnswer();
-      case 0xe73547e1: return this.updateBotCallbackQuery();
-      case 0x26b5dde6: return this.messages_messageEditData();
-      case 0xe40370a3: return this.updateEditMessage();
-      case 0xc1b15d65: return this.inputBotInlineMessageMediaGeo();
-      case 0x417bbf11: return this.inputBotInlineMessageMediaVenue();
-      case 0xa6edbffd: return this.inputBotInlineMessageMediaContact();
-      case 0xb722de65: return this.botInlineMessageMediaGeo();
-      case 0x8a86659c: return this.botInlineMessageMediaVenue();
-      case 0x18d1cdc2: return this.botInlineMessageMediaContact();
-      case 0xa8d864a7: return this.inputBotInlineResultPhoto();
-      case 0xfff8fdc4: return this.inputBotInlineResultDocument();
-      case 0x17db940b: return this.botInlineMediaResult();
-      case 0x890c3d89: return this.inputBotInlineMessageID();
-      case 0xf9d27a5a: return this.updateInlineBotCallbackQuery();
-      case 0x3c20629f: return this.inlineBotSwitchPM();
-      case 0x3371c354: return this.messages_peerDialogs();
-      case 0xedcdc05b: return this.topPeer();
-      case 0xab661b5b: return this.topPeerCategoryBotsPM();
-      case 0x148677e2: return this.topPeerCategoryBotsInline();
-      case 0x637b7ed: return this.topPeerCategoryCorrespondents();
-      case 0xbd17a14a: return this.topPeerCategoryGroups();
-      case 0x161d9628: return this.topPeerCategoryChannels();
-      case 0xfb834291: return this.topPeerCategoryPeers();
-      case 0xde266ef5: return this.contacts_topPeersNotModified();
-      case 0x70b772a8: return this.contacts_topPeers();
-      case 0x352dca58: return this.messageEntityMentionName();
-      case 0x208e68c9: return this.inputMessageEntityMentionName();
-      case 0x3a20ecb8: return this.inputMessagesFilterChatPhotos();
-      case 0x25d6c9c7: return this.updateReadChannelOutbox();
-      case 0xee2bb969: return this.updateDraftMessage();
-      case 0x1b0c841a: return this.draftMessageEmpty();
-      case 0xfd8e711f: return this.draftMessage();
-      case 0x9fbab604: return this.messageActionHistoryClear();
-      case 0x4ede3cf: return this.messages_featuredStickersNotModified();
-      case 0xf89d88e5: return this.messages_featuredStickers();
-      case 0x571d2742: return this.updateReadFeaturedStickers();
-      case 0xb17f890: return this.messages_recentStickersNotModified();
-      case 0x22f3afb3: return this.messages_recentStickers();
-      case 0x9a422c20: return this.updateRecentStickers();
-      case 0x4fcba9c8: return this.messages_archivedStickers();
-      case 0x38641628: return this.messages_stickerSetInstallResultSuccess();
-      case 0x35e410a8: return this.messages_stickerSetInstallResultArchive();
-      case 0x6410a5d2: return this.stickerSetCovered();
-      case 0xa229dd06: return this.updateConfig();
-      case 0x3354678f: return this.updatePtsChanged();
-      case 0xe5bbfe1a: return this.inputMediaPhotoExternal();
-      case 0xfb52dc99: return this.inputMediaDocumentExternal();
-      case 0x3407e51b: return this.stickerSetMultiCovered();
-      case 0xaed6dbb2: return this.maskCoords();
-      case 0x9801d2f7: return this.documentAttributeHasStickers();
-      case 0x4a992157: return this.inputStickeredMediaPhoto();
-      case 0x438865b: return this.inputStickeredMediaDocument();
-      case 0xbdf9653b: return this.game();
-      case 0x4fa417f2: return this.inputBotInlineResultGame();
-      case 0x4b425864: return this.inputBotInlineMessageGame();
-      case 0xfdb19008: return this.messageMediaGame();
-      case 0xd33f43f3: return this.inputMediaGame();
-      case 0x32c3e77: return this.inputGameID();
-      case 0xc331e80a: return this.inputGameShortName();
-      case 0x50f41ccf: return this.keyboardButtonGame();
-      case 0x92a72876: return this.messageActionGameScore();
-      case 0x58fffcd0: return this.highScore();
-      case 0x9a3bfd99: return this.messages_highScores();
-      case 0x4afe8f6d: return this.updates_differenceTooLong();
-      case 0x40771900: return this.updateChannelWebPage();
-      case 0x9cd81144: return this.messages_chatsSlice();
-      case 0xdc3d824f: return this.textEmpty();
-      case 0x744694e0: return this.textPlain();
-      case 0x6724abc4: return this.textBold();
-      case 0xd912a59c: return this.textItalic();
-      case 0xc12622c4: return this.textUnderline();
-      case 0x9bf8bb95: return this.textStrike();
-      case 0x6c3f19b9: return this.textFixed();
-      case 0x3c2884c1: return this.textUrl();
-      case 0xde5a0dd6: return this.textEmail();
-      case 0x7e6260d7: return this.textConcat();
-      case 0x13567e8a: return this.pageBlockUnsupported();
-      case 0x70abc3fd: return this.pageBlockTitle();
-      case 0x8ffa9a1f: return this.pageBlockSubtitle();
-      case 0xbaafe5e0: return this.pageBlockAuthorDate();
-      case 0xbfd064ec: return this.pageBlockHeader();
-      case 0xf12bb6e1: return this.pageBlockSubheader();
-      case 0x467a0766: return this.pageBlockParagraph();
-      case 0xc070d93e: return this.pageBlockPreformatted();
-      case 0x48870999: return this.pageBlockFooter();
-      case 0xdb20b188: return this.pageBlockDivider();
-      case 0xce0d37b0: return this.pageBlockAnchor();
-      case 0xe4e88011: return this.pageBlockList();
-      case 0x263d7c26: return this.pageBlockBlockquote();
-      case 0x4f4456d3: return this.pageBlockPullquote();
-      case 0x1759c560: return this.pageBlockPhoto();
-      case 0x7c8fe7b6: return this.pageBlockVideo();
-      case 0x39f23300: return this.pageBlockCover();
-      case 0xa8718dc5: return this.pageBlockEmbed();
-      case 0xf259a80b: return this.pageBlockEmbedPost();
-      case 0x65a0fa4d: return this.pageBlockCollage();
-      case 0x31f9590: return this.pageBlockSlideshow();
-      case 0x85849473: return this.webPageNotModified();
-      case 0xfabadc5f: return this.inputPrivacyKeyPhoneCall();
-      case 0x3d662b7b: return this.privacyKeyPhoneCall();
-      case 0xdd6a8f48: return this.sendMessageGamePlayAction();
-      case 0x85e42301: return this.phoneCallDiscardReasonMissed();
-      case 0xe095c1a0: return this.phoneCallDiscardReasonDisconnect();
-      case 0x57adc690: return this.phoneCallDiscardReasonHangup();
-      case 0xfaf7e8c9: return this.phoneCallDiscardReasonBusy();
-      case 0x6e6fe51c: return this.updateDialogPinned();
-      case 0xfa0f3ca2: return this.updatePinnedDialogs();
-      case 0x7d748d04: return this.dataJSON();
-      case 0x8317c0c3: return this.updateBotWebhookJSON();
-      case 0x9b9240a6: return this.updateBotWebhookJSONQuery();
-      case 0xcb296bf8: return this.labeledPrice();
-      case 0xc30aa358: return this.invoice();
-      case 0xf4e096c3: return this.inputMediaInvoice();
-      case 0xea02c27e: return this.paymentCharge();
-      case 0x8f31b327: return this.messageActionPaymentSentMe();
-      case 0x84551347: return this.messageMediaInvoice();
-      case 0x1e8caaeb: return this.postAddress();
-      case 0x909c3f94: return this.paymentRequestedInfo();
-      case 0xafd93fbb: return this.keyboardButtonBuy();
-      case 0x40699cd0: return this.messageActionPaymentSent();
-      case 0xcdc27a1f: return this.paymentSavedCredentialsCard();
-      case 0x1c570ed1: return this.webDocument();
-      case 0x9bed434d: return this.inputWebDocument();
-      case 0xc239d686: return this.inputWebFileLocation();
-      case 0x21e753bc: return this.upload_webFile();
-      case 0x3f56aea3: return this.payments_paymentForm();
-      case 0xd1451883: return this.payments_validatedRequestedInfo();
-      case 0x4e5f810d: return this.payments_paymentResult();
-      case 0x500911e1: return this.payments_paymentReceipt();
-      case 0xfb8fe43c: return this.payments_savedInfo();
-      case 0xc10eb2cf: return this.inputPaymentCredentialsSaved();
-      case 0x3417d728: return this.inputPaymentCredentials();
-      case 0xdb64fd34: return this.account_tmpPassword();
-      case 0xb6213cdf: return this.shippingOption();
-      case 0xe0cdc940: return this.updateBotShippingQuery();
-      case 0x5d2f3aa9: return this.updateBotPrecheckoutQuery();
-      case 0xffa0a496: return this.inputStickerSetItem();
-      case 0xab0f6b1e: return this.updatePhoneCall();
-      case 0x1e36fded: return this.inputPhoneCall();
-      case 0x5366c915: return this.phoneCallEmpty();
-      case 0x1b8f4ad1: return this.phoneCallWaiting();
-      case 0x87eabb53: return this.phoneCallRequested();
-      case 0x997c454a: return this.phoneCallAccepted();
-      case 0x8742ae7f: return this.phoneCall();
-      case 0x50ca4de1: return this.phoneCallDiscarded();
-      case 0x9d4c17c0: return this.phoneConnection();
-      case 0xa2bb35cb: return this.phoneCallProtocol();
-      case 0xec82e140: return this.phone_phoneCall();
-      case 0x80c99768: return this.inputMessagesFilterPhoneCalls();
-      case 0x80e11a7f: return this.messageActionPhoneCall();
-      case 0x7a7c17a4: return this.inputMessagesFilterRoundVoice();
-      case 0xb549da53: return this.inputMessagesFilterRoundVideo();
-      case 0x88f27fbc: return this.sendMessageRecordRoundAction();
-      case 0x243e1c66: return this.sendMessageUploadRoundAction();
-      case 0xf18cda44: return this.upload_fileCdnRedirect();
-      case 0xeea8e46e: return this.upload_cdnFileReuploadNeeded();
-      case 0xa99fca4f: return this.upload_cdnFile();
-      case 0xc982eaba: return this.cdnPublicKey();
-      case 0x5725e40a: return this.cdnConfig();
-      case 0xef1751b5: return this.pageBlockChannel();
-      case 0xcad181f6: return this.langPackString();
-      case 0x6c47ac9f: return this.langPackStringPluralized();
-      case 0x2979eeb2: return this.langPackStringDeleted();
-      case 0xf385c1f6: return this.langPackDifference();
-      case 0xeeca5ce3: return this.langPackLanguage();
-      case 0x46560264: return this.updateLangPackTooLong();
-      case 0x56022f4d: return this.updateLangPack();
-      case 0xccbebbaf: return this.channelParticipantAdmin();
-      case 0x1c0facaf: return this.channelParticipantBanned();
-      case 0x1427a5e1: return this.channelParticipantsBanned();
-      case 0x656ac4b: return this.channelParticipantsSearch();
-      case 0xe6dfb825: return this.channelAdminLogEventActionChangeTitle();
-      case 0x55188a2e: return this.channelAdminLogEventActionChangeAbout();
-      case 0x6a4afc38: return this.channelAdminLogEventActionChangeUsername();
-      case 0x434bd2af: return this.channelAdminLogEventActionChangePhoto();
-      case 0x1b7907ae: return this.channelAdminLogEventActionToggleInvites();
-      case 0x26ae0971: return this.channelAdminLogEventActionToggleSignatures();
-      case 0xe9e82c18: return this.channelAdminLogEventActionUpdatePinned();
-      case 0x709b2405: return this.channelAdminLogEventActionEditMessage();
-      case 0x42e047bb: return this.channelAdminLogEventActionDeleteMessage();
-      case 0x183040d3: return this.channelAdminLogEventActionParticipantJoin();
-      case 0xf89777f2: return this.channelAdminLogEventActionParticipantLeave();
-      case 0xe31c34d8: return this.channelAdminLogEventActionParticipantInvite();
-      case 0xe6d83d7e: return this.channelAdminLogEventActionParticipantToggleBan();
-      case 0xd5676710: return this.channelAdminLogEventActionParticipantToggleAdmin();
-      case 0x3b5a3e40: return this.channelAdminLogEvent();
-      case 0xed8af74d: return this.channels_adminLogResults();
-      case 0xea107ae4: return this.channelAdminLogEventsFilter();
-      case 0x1e76a78c: return this.topPeerCategoryPhoneCalls();
-      case 0x804361ea: return this.pageBlockAudio();
-      case 0x5ce14175: return this.popularContact();
-      case 0x4792929b: return this.messageActionScreenshotTaken();
-      case 0x9e8fa6d3: return this.messages_favedStickersNotModified();
-      case 0xf37f2f16: return this.messages_favedStickers();
-      case 0xe511996d: return this.updateFavedStickers();
-      case 0x89893b45: return this.updateChannelReadMessagesContents();
-      case 0xc1f8e69a: return this.inputMessagesFilterMyMentions();
-      case 0x7084a7be: return this.updateContactsReset();
-      case 0xb1c3caa7: return this.channelAdminLogEventActionChangeStickerSet();
-      case 0xfae69f56: return this.messageActionCustomAction();
-      case 0xaa1c39f: return this.inputPaymentCredentialsApplePay();
-      case 0xca05d50e: return this.inputPaymentCredentialsAndroidPay();
-      case 0xe7026d0d: return this.inputMessagesFilterGeo();
-      case 0xe062db83: return this.inputMessagesFilterContacts();
-      case 0x70db6837: return this.updateChannelAvailableMessages();
-      case 0x5f5c95f1: return this.channelAdminLogEventActionTogglePreHistoryHidden();
-      case 0xce4e82fd: return this.inputMediaGeoLive();
-      case 0x7c3c2609: return this.messageMediaGeoLive();
-      case 0x46e1d13d: return this.recentMeUrlUnknown();
-      case 0x8dbc3336: return this.recentMeUrlUser();
-      case 0xa01b22f9: return this.recentMeUrlChat();
-      case 0xeb49081d: return this.recentMeUrlChatInvite();
-      case 0xbc0a57dc: return this.recentMeUrlStickerSet();
-      case 0xe0310d7: return this.help_recentMeUrls();
-      case 0xf0173fe9: return this.channels_channelParticipantsNotModified();
-      case 0x74535f21: return this.messages_messagesNotModified();
-      case 0x1cc6e91f: return this.inputSingleMedia();
-      case 0xcac943f2: return this.webAuthorization();
-      case 0xed56c9fc: return this.account_webAuthorizations();
-      case 0xa676a322: return this.inputMessageID();
-      case 0xbad88395: return this.inputMessageReplyTo();
-      case 0x86872538: return this.inputMessagePinned();
-      case 0x9b69e34b: return this.messageEntityPhone();
-      case 0x4c4e743f: return this.messageEntityCashtag();
-      case 0xabe9affe: return this.messageActionBotAllowed();
-      case 0xfcaafeb7: return this.inputDialogPeer();
-      case 0xe56dbf05: return this.dialogPeer();
-      case 0xd54b65d: return this.messages_foundStickerSetsNotModified();
-      case 0x5108d648: return this.messages_foundStickerSets();
-      case 0x6242c773: return this.fileHash();
-      case 0xf9c8bcc6: return this.webDocumentNoProxy();
-      case 0x75588b3f: return this.inputClientProxy();
-      case 0xe09e1fb8: return this.help_proxyDataEmpty();
-      case 0x2bf7ee23: return this.help_proxyDataPromo();
-      case 0xe3309f7f: return this.help_termsOfServiceUpdateEmpty();
-      case 0x28ecf961: return this.help_termsOfServiceUpdate();
-      case 0x3334b0f0: return this.inputSecureFileUploaded();
-      case 0x5367e5be: return this.inputSecureFile();
-      case 0xcbc7ee28: return this.inputSecureFileLocation();
-      case 0x64199744: return this.secureFileEmpty();
-      case 0xe0277a62: return this.secureFile();
-      case 0x8aeabec3: return this.secureData();
-      case 0x7d6099dd: return this.securePlainPhone();
-      case 0x21ec5a5f: return this.securePlainEmail();
-      case 0x9d2a81e3: return this.secureValueTypePersonalDetails();
-      case 0x3dac6a00: return this.secureValueTypePassport();
-      case 0x6e425c4: return this.secureValueTypeDriverLicense();
-      case 0xa0d0744b: return this.secureValueTypeIdentityCard();
-      case 0x99a48f23: return this.secureValueTypeInternalPassport();
-      case 0xcbe31e26: return this.secureValueTypeAddress();
-      case 0xfc36954e: return this.secureValueTypeUtilityBill();
-      case 0x89137c0d: return this.secureValueTypeBankStatement();
-      case 0x8b883488: return this.secureValueTypeRentalAgreement();
-      case 0x99e3806a: return this.secureValueTypePassportRegistration();
-      case 0xea02ec33: return this.secureValueTypeTemporaryRegistration();
-      case 0xb320aadb: return this.secureValueTypePhone();
-      case 0x8e3ca7ee: return this.secureValueTypeEmail();
-      case 0x187fa0ca: return this.secureValue();
-      case 0xdb21d0a7: return this.inputSecureValue();
-      case 0xed1ecdb0: return this.secureValueHash();
-      case 0xe8a40bd9: return this.secureValueErrorData();
-      case 0xbe3dfa: return this.secureValueErrorFrontSide();
-      case 0x868a2aa5: return this.secureValueErrorReverseSide();
-      case 0xe537ced6: return this.secureValueErrorSelfie();
-      case 0x7a700873: return this.secureValueErrorFile();
-      case 0x666220e9: return this.secureValueErrorFiles();
-      case 0x33f0ea47: return this.secureCredentialsEncrypted();
-      case 0xad2e1cd8: return this.account_authorizationForm();
-      case 0x811f854f: return this.account_sentEmailCode();
-      case 0x1b287353: return this.messageActionSecureValuesSentMe();
-      case 0xd95c6154: return this.messageActionSecureValuesSent();
-      case 0x66afa166: return this.help_deepLinkInfoEmpty();
-      case 0x6a4ee832: return this.help_deepLinkInfo();
-      case 0x1142bd56: return this.savedPhoneContact();
-      case 0x4dba4501: return this.account_takeout();
-      case 0x29be5899: return this.inputTakeoutFileLocation();
-      case 0xe16459c3: return this.updateDialogUnreadMark();
-      case 0xf0e3e596: return this.messages_dialogsNotModified();
-      case 0x9f2221c9: return this.inputWebFileGeoPointLocation();
-      case 0xb52c939d: return this.contacts_topPeersDisabled();
-      case 0x9b89f93a: return this.inputReportReasonCopyright();
-      case 0xd45ab096: return this.passwordKdfAlgoUnknown();
-      case 0x4a8537: return this.securePasswordKdfAlgoUnknown();
-      case 0xbbf2dda0: return this.securePasswordKdfAlgoPBKDF2HMACSHA512iter100000();
-      case 0x86471d92: return this.securePasswordKdfAlgoSHA512();
-      case 0x1527bcac: return this.secureSecretSettings();
-      case 0x3a912d4a: return this.passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow();
-      case 0x9880f658: return this.inputCheckPasswordEmpty();
-      case 0xd27ff082: return this.inputCheckPasswordSRP();
-      case 0x869d758f: return this.secureValueError();
-      case 0xa1144770: return this.secureValueErrorTranslationFile();
-      case 0x34636dd8: return this.secureValueErrorTranslationFiles();
-      case 0x829d99da: return this.secureRequiredType();
-      case 0x27477b4: return this.secureRequiredTypeOneOf();
-      case 0xbfb9f457: return this.help_passportConfigNotModified();
-      case 0xa098d6af: return this.help_passportConfig();
-      case 0x1d1b1245: return this.inputAppEvent();
-      case 0xc0de1bd9: return this.jsonObjectValue();
-      case 0x3f6d7b68: return this.jsonNull();
-      case 0xc7345e6a: return this.jsonBool();
-      case 0x2be0dfa4: return this.jsonNumber();
-      case 0xb71e767a: return this.jsonString();
-      case 0xf7444763: return this.jsonArray();
-      case 0x99c1d49d: return this.jsonObject();
-      case 0x4c43da18: return this.updateUserPinnedMessage();
-      case 0xe10db349: return this.updateChatPinnedMessage();
-      case 0xb1db7c7e: return this.inputNotifyBroadcasts();
-      case 0xd612e8ef: return this.notifyBroadcasts();
-      case 0xed6a8504: return this.textSubscript();
-      case 0xc7fb5e01: return this.textSuperscript();
-      case 0x34b8621: return this.textMarked();
-      case 0x1ccb966a: return this.textPhone();
-      case 0x81ccf4f: return this.textImage();
-      case 0x1e148390: return this.pageBlockKicker();
-      case 0x34566b6a: return this.pageTableCell();
-      case 0xe0c0c5e5: return this.pageTableRow();
-      case 0xbf4dea82: return this.pageBlockTable();
-      case 0x6f747657: return this.pageCaption();
-      case 0xb92fb6cd: return this.pageListItemText();
-      case 0x25e073fc: return this.pageListItemBlocks();
-      case 0x5e068047: return this.pageListOrderedItemText();
-      case 0x98dd8936: return this.pageListOrderedItemBlocks();
-      case 0x9a8ae1e1: return this.pageBlockOrderedList();
-      case 0x76768bed: return this.pageBlockDetails();
-      case 0xb390dc08: return this.pageRelatedArticle();
-      case 0x16115a96: return this.pageBlockRelatedArticles();
-      case 0xa44f3ef6: return this.pageBlockMap();
-      case 0xae891bec: return this.page();
-      case 0xdb9e70d2: return this.inputPrivacyKeyPhoneP2P();
-      case 0x39491cc8: return this.privacyKeyPhoneP2P();
-      case 0x35553762: return this.textAnchor();
-      case 0x8c05f1c9: return this.help_supportName();
-      case 0xf3ae2eed: return this.help_userInfoEmpty();
-      case 0x1eb3758: return this.help_userInfo();
-      case 0xf3f25f76: return this.messageActionContactSignUp();
-      case 0xaca1657b: return this.updateMessagePoll();
-      case 0x6ca9c2e9: return this.pollAnswer();
-      case 0xd5529d06: return this.poll();
-      case 0x3b6ddad2: return this.pollAnswerVoters();
-      case 0x5755785a: return this.pollResults();
-      case 0x6b3765b: return this.inputMediaPoll();
-      case 0x4bd6e798: return this.messageMediaPoll();
-      case 0xf041e250: return this.chatOnlines();
-      case 0x47a971e0: return this.statsURL();
-      case 0xe0b0bc2e: return this.photoStrippedSize();
-      case 0x5fb224d5: return this.chatAdminRights();
-      case 0x9f120418: return this.chatBannedRights();
-      case 0x54c01850: return this.updateChatDefaultBannedRights();
-      case 0xe630b979: return this.inputWallPaper();
-      case 0x72091c80: return this.inputWallPaperSlug();
-      case 0xbb6ae88d: return this.channelParticipantsContacts();
-      case 0x2df5fc0a: return this.channelAdminLogEventActionDefaultBannedRights();
-      case 0x8f079643: return this.channelAdminLogEventActionStopPoll();
-      case 0x1c199183: return this.account_wallPapersNotModified();
-      case 0x702b65a9: return this.account_wallPapers();
-      case 0xdebebe83: return this.codeSettings();
-      case 0xa12f40b8: return this.wallPaperSettings();
-      case 0xd246fd47: return this.autoDownloadSettings();
-      case 0x63cacf26: return this.account_autoDownloadSettings();
-      case 0xd5b3b9f9: return this.emojiKeyword();
-      case 0x236df622: return this.emojiKeywordDeleted();
-      case 0x5cc761bd: return this.emojiKeywordsDifference();
-      case 0xa575739d: return this.emojiURL();
-      case 0xb3fb5361: return this.emojiLanguage();
-      case 0xa4dd4c08: return this.inputPrivacyKeyForwards();
-      case 0x69ec56a3: return this.privacyKeyForwards();
-      case 0x5719bacc: return this.inputPrivacyKeyProfilePhoto();
-      case 0x96151fed: return this.privacyKeyProfilePhoto();
-      case 0xbc7fc6cd: return this.fileLocationToBeDeprecated();
-      case 0x40181ffe: return this.inputPhotoFileLocation();
-      case 0x27d69997: return this.inputPeerPhotoFileLocation();
-      case 0xdbaeae9: return this.inputStickerSetThumb();
-      case 0xff544e65: return this.folder();
-      case 0x71bd134c: return this.dialogFolder();
-      case 0x64600527: return this.inputDialogPeerFolder();
-      case 0x514519e2: return this.dialogPeerFolder();
-      case 0xfbd2c296: return this.inputFolderPeer();
-      case 0xe9baa668: return this.folderPeer();
-      case 0x19360dc0: return this.updateFolderPeers();
-      case 0x2d117597: return this.inputUserFromMessage();
-      case 0x2a286531: return this.inputChannelFromMessage();
-      case 0x17bae2e6: return this.inputPeerUserFromMessage();
-      case 0x9c95f7bb: return this.inputPeerChannelFromMessage();
-      case 0x352dafa: return this.inputPrivacyKeyPhoneNumber();
-      case 0xd19ae46d: return this.privacyKeyPhoneNumber();
-      case 0xa8406ca9: return this.topPeerCategoryForwardUsers();
-      case 0xfbeec0f0: return this.topPeerCategoryForwardChats();
-      case 0xa26f881b: return this.channelAdminLogEventActionChangeLinkedChat();
-      case 0xe844ebff: return this.messages_searchCounter();
-      case 0x10b78d29: return this.keyboardButtonUrlAuth();
-      case 0xd02e7fd4: return this.inputKeyboardButtonUrlAuth();
-      case 0x92d33a0e: return this.urlAuthResultRequest();
-      case 0x8f8c0e4e: return this.urlAuthResultAccepted();
-      case 0xa9d6db1f: return this.urlAuthResultDefault();
-      case 0x4c81c1ba: return this.inputPrivacyValueAllowChatParticipants();
-      case 0xd82363af: return this.inputPrivacyValueDisallowChatParticipants();
-      case 0x18be796b: return this.privacyValueAllowChatParticipants();
-      case 0xacae0690: return this.privacyValueDisallowChatParticipants();
-      case 0x9c4e7e8b: return this.messageEntityUnderline();
-      case 0xbf0693d4: return this.messageEntityStrike();
-      case 0x20df5d0: return this.messageEntityBlockquote();
-      case 0x6a7e7366: return this.updatePeerSettings();
-      case 0xbfb5ad8b: return this.channelLocationEmpty();
-      case 0x209b82db: return this.channelLocation();
-      case 0xca461b5d: return this.peerLocated();
-      case 0xb4afcfb0: return this.updatePeerLocated();
-      case 0xe6b76ae: return this.channelAdminLogEventActionChangeLocation();
-      case 0xdbd4feed: return this.inputReportReasonGeoIrrelevant();
-      case 0x53909779: return this.channelAdminLogEventActionToggleSlowMode();
-      case 0x44747e9a: return this.auth_authorizationSignUpRequired();
-      case 0xd8411139: return this.payments_paymentVerificationNeeded();
-      case 0x28703c8: return this.inputStickerSetAnimatedEmoji();
-      case 0x39a51dfb: return this.updateNewScheduledMessage();
-      case 0x90866cee: return this.updateDeleteScheduledMessages();
-      case 0xd072acb4: return this.restrictionReason();
-      case 0x3c5693e9: return this.inputTheme();
-      case 0xf5890df1: return this.inputThemeSlug();
-      case 0x483d270c: return this.themeDocumentNotModified();
-      case 0xf7d90ce0: return this.theme();
-      case 0xf41eb622: return this.account_themesNotModified();
-      case 0x7f676421: return this.account_themes();
-      case 0x8216fba3: return this.updateTheme();
-      case 0xd1219bdd: return this.inputPrivacyKeyAddedByPhone();
-      case 0x42ffd42b: return this.privacyKeyAddedByPhone();
+interface Parser {
+  parse(stream: ByteStream): any;
+}
+
+export default class MessageParser implements Parser {
+  private _s!: ByteStream;
+  
+  constructor(private fallbackParser?: Parser) {}
+  
+  public parse(stream: ByteStream) {
+    this._s = stream;
+    return this.o();
+  }
+  
+  private i32 = () => this._s.readInt32();
+  private u32 = () => this._s.readUint32();
+  private i64 = () => this._s.readInt64();
+  private i128 = () => this._s.readInt128();
+  private i256 = () => this._s.readInt256();
+  private d = () => this._s.readDouble();
+  private s = () => this._s.readString();
+  private b = () => this._s.readBytes();
+  
+  private v = (t: () => any, bare = false) => {
+    if (!bare) { this.u32(); } // should always be 481674261
+    const len = this.u32();
+    const result = [];
+    for (let i = 0; i < len; ++i) result.push(t());
+    return result;
+  }
+  
+  private o = (): any => {
+    const t = this;
+    const c = this.u32();
+    switch (c) {
+      case 0xbc799737: return t.A();
+      case 0x997275b5: return t.B();
+      case 0x3fedd339: return t.C();
+      case 0x1cb5c415: return t.D();
+      case 0xc4b9f9bb: return t.E();
+      case 0x56730bcc: return t.F();
+      case 0x7f3b18ea: return t.G();
+      case 0x7da07ec9: return t.H();
+      case 0x179be863: return t.I();
+      case 0xb98886cf: return t.N();
+      case 0xf7c1b13f: return t.O();
+      case 0xf392b7f4: return t.R();
+      case 0xf52ff27f: return t.S();
+      case 0x9664f57f: return t.U();
+      case 0x1e287d04: return t.V();
+      case 0xb3ba0635: return t.W();
+      case 0xf9c44144: return t.X();
+      case 0xf8ab7dfb: return t.Y();
+      case 0x1ca48f57: return t.BJ();
+      case 0x927c55b4: return t.BK();
+      case 0x8953ad37: return t.BL();
+      case 0xe4c123d6: return t.BM();
+      case 0xf3b7acc9: return t.BN();
+      case 0x1cd7bf0d: return t.BO();
+      case 0x3bb3b94a: return t.BP();
+      case 0xdfdaabe1: return t.BQ();
+      case 0x9db1bc6d: return t.BY();
+      case 0xbad0e5bb: return t.BZ();
+      case 0xaa963b05: return t.CB();
+      case 0x40bc6f52: return t.CC();
+      case 0x7efe0e: return t.CD();
+      case 0xcae1aadf: return t.CE();
+      case 0xa4f63c0: return t.CF();
+      case 0xae1e508d: return t.CG();
+      case 0x528a0677: return t.CH();
+      case 0x4b09ebbc: return t.CI();
+      case 0xb3cea0e4: return t.CJ();
+      case 0x1081464c: return t.CK();
+      case 0x200250ba: return t.CL();
+      case 0x4f11bae1: return t.CN();
+      case 0xecd75d8c: return t.CO();
+      case 0x9d05049: return t.CP();
+      case 0xedb93949: return t.CQ();
+      case 0x8c703f: return t.CR();
+      case 0x9ba2d800: return t.CV();
+      case 0x3bda1bde: return t.CW();
+      case 0x7328bdb: return t.CX();
+      case 0x1b7c9db3: return t.DA();
+      case 0xc8d7493e: return t.DC();
+      case 0xfc900c2b: return t.DF();
+      case 0x3f460fed: return t.DG();
+      case 0x37c1011c: return t.DH();
+      case 0x475cdbd5: return t.DI();
+      case 0x83e5de54: return t.DJ();
+      case 0x452c0e65: return t.DK();
+      case 0x9e19a1f6: return t.DL();
+      case 0x3ded6320: return t.DM();
+      case 0x695150d7: return t.DN();
+      case 0x56e0d474: return t.DO();
+      case 0xcbf24940: return t.DP();
+      case 0x9f84f49e: return t.DQ();
+      case 0xb6aef7b0: return t.DY();
+      case 0xa6638b9a: return t.DZ();
+      case 0xb5a1ce5a: return t.EA();
+      case 0x7fcb13a8: return t.EB();
+      case 0x95e3fbef: return t.EC();
+      case 0x488a7337: return t.ED();
+      case 0xb2ae9b0c: return t.EE();
+      case 0x2c171f72: return t.EV();
+      case 0x2331b22d: return t.EX();
+      case 0xd07504a5: return t.EY();
+      case 0xe17e23c: return t.EZ();
+      case 0x77bfb61b: return t.FA();
+      case 0xe9a734fa: return t.FB();
+      case 0x1117dd5f: return t.FD();
+      case 0x296f104: return t.FE();
+      case 0x5e002502: return t.FF();
+      case 0xcd050916: return t.FG();
+      case 0xdf969c2d: return t.FI();
+      case 0xb8bc5b0c: return t.FJ();
+      case 0x193b4417: return t.FK();
+      case 0x4a95e84e: return t.FL();
+      case 0x9c3d198e: return t.FN();
+      case 0xaf509d20: return t.FO();
+      case 0x818426cd: return t.FP();
+      case 0xa437c3ed: return t.FQ();
+      case 0x58dbcab8: return t.FR();
+      case 0x1e22c78d: return t.FS();
+      case 0x2e59d922: return t.FT();
+      case 0xadf44ee3: return t.FU();
+      case 0xe1746d0a: return t.FV();
+      case 0xedf17c12: return t.FY();
+      case 0xf911c994: return t.FZ();
+      case 0xd0028438: return t.GA();
+      case 0x561bc879: return t.GB();
+      case 0xd3680c61: return t.GC();
+      case 0xb74ba9d2: return t.GD();
+      case 0xeae87e42: return t.GE();
+      case 0x77d01c3b: return t.GF();
+      case 0x1c138d15: return t.GG();
+      case 0x900802a1: return t.GH();
+      case 0x15ba6c40: return t.GI();
+      case 0x71e094f3: return t.GJ();
+      case 0x8c718e87: return t.GL();
+      case 0xc8edce1e: return t.GM();
+      case 0x64ff9fd5: return t.GP();
+      case 0xe5d7d19c: return t.GR();
+      case 0xb45c69d1: return t.GS();
+      case 0x57e2f66c: return t.GT();
+      case 0x9609a51c: return t.GU();
+      case 0x9fc00e65: return t.GV();
+      case 0x56e9f0e4: return t.GW();
+      case 0x9eddf188: return t.GX();
+      case 0x7ef0dd87: return t.GY();
+      case 0xffc86587: return t.GZ();
+      case 0x1f2b0afd: return t.HJ();
+      case 0x4e90bfd6: return t.HK();
+      case 0xa20db0e5: return t.HL();
+      case 0x5c486927: return t.HM();
+      case 0x9a65ea1f: return t.HN();
+      case 0x7761198: return t.HO();
+      case 0x1bfbd823: return t.HP();
+      case 0xa7332b73: return t.HQ();
+      case 0x95313b0c: return t.HR();
+      case 0xa56c2a3e: return t.KF();
+      case 0x5d75a138: return t.KG();
+      case 0xf49ca0: return t.KH();
+      case 0xa8fb1981: return t.KI();
+      case 0xe317af7e: return t.KK();
+      case 0x914fbf11: return t.KL();
+      case 0x16812688: return t.KM();
+      case 0x78d4dec1: return t.KN();
+      case 0x725b04c3: return t.KO();
+      case 0x74ae4240: return t.KP();
+      case 0x8dca6aa5: return t.KR();
+      case 0x15051f54: return t.KS();
+      case 0x20212ca8: return t.KT();
+      case 0x96a18d5: return t.KU();
+      case 0x18b7a10d: return t.KW();
+      case 0x330b4067: return t.KX();
+      case 0x8e1a1775: return t.KY();
+      case 0x1da7158f: return t.KZ();
+      case 0xc45a6536: return t.LA();
+      case 0x18cb9f78: return t.LB();
+      case 0x12bcbd9a: return t.HS();
+      case 0x1710f156: return t.HT();
+      case 0xb4a2e88d: return t.HU();
+      case 0x38fe25b7: return t.HV();
+      case 0xab7ec0a0: return t.LC();
+      case 0x3bf703dc: return t.LD();
+      case 0xc878527e: return t.LE();
+      case 0xfa56ce36: return t.LF();
+      case 0x13d6dd27: return t.LG();
+      case 0xf141b5e1: return t.LH();
+      case 0xc21f497e: return t.LI();
+      case 0x4a70994c: return t.LJ();
+      case 0x1837c364: return t.LK();
+      case 0x64bd0306: return t.LL();
+      case 0x5a17b5e5: return t.LM();
+      case 0xf5235d55: return t.BR();
+      case 0xed18c118: return t.LO();
+      case 0x23734b06: return t.LP();
+      case 0xc0e24635: return t.LQ();
+      case 0x2c221edd: return t.LR();
+      case 0x560f8935: return t.LS();
+      case 0x9493ff32: return t.LT();
+      case 0xfa4f0bb5: return t.T();
+      case 0x2dc173c8: return t.LN();
+      case 0xea4b0e5c: return t.HW();
+      case 0x6e5f8c22: return t.HX();
+      case 0x8e5e9873: return t.HY();
+      case 0x5b38c6c1: return t.Z();
+      case 0x23ab23d2: return t.BA();
+      case 0x9cb070d7: return t.DR();
+      case 0x72f0eaae: return t.LU();
+      case 0x1abfb575: return t.LV();
+      case 0xbad07584: return t.BS();
+      case 0x36f8c871: return t.LW();
+      case 0x9ba29cc1: return t.LX();
+      case 0x17c6b5f6: return t.LY();
+      case 0x9fd40bd8: return t.LZ();
+      case 0xb4c83b4c: return t.MA();
+      case 0xc007cec3: return t.MB();
+      case 0x80ece81a: return t.HZ();
+      case 0xbec268ef: return t.IA();
+      case 0x16bf744e: return t.MD();
+      case 0xfd5ec8f5: return t.ME();
+      case 0xa187d66f: return t.MF();
+      case 0xe9763aec: return t.MG();
+      case 0xd52f73f7: return t.MH();
+      case 0xf351d7ab: return t.MI();
+      case 0xd1d34a26: return t.MJ();
+      case 0xaa0cd9e4: return t.MK();
+      case 0x176f8ba1: return t.ML();
+      case 0x628cbc6f: return t.MM();
+      case 0xb3134d9d: return t.MQ();
+      case 0xebe46819: return t.IB();
+      case 0xe26f42f1: return t.CS();
+      case 0x7bf09fc: return t.CT();
+      case 0x77ebc742: return t.CU();
+      case 0xee3b272a: return t.IC();
+      case 0x4f96cb18: return t.MR();
+      case 0xbc2eab30: return t.MZ();
+      case 0xd09e07b: return t.NH();
+      case 0x184b35ce: return t.NI();
+      case 0x131cc67f: return t.NJ();
+      case 0xba52007: return t.NK();
+      case 0xd66b66c9: return t.NL();
+      case 0x90110467: return t.NM();
+      case 0xfffe1bac: return t.NP();
+      case 0x65427b82: return t.NQ();
+      case 0x4d5bbe0c: return t.NR();
+      case 0xf888fa1a: return t.NS();
+      case 0x8b73e763: return t.NT();
+      case 0xc7f49b7: return t.NU();
+      case 0x50a04e45: return t.NX();
+      case 0xb8d0afdf: return t.NY();
+      case 0x12b9417b: return t.ID();
+      case 0x6c37c15c: return t.NZ();
+      case 0x11b58939: return t.OA();
+      case 0x6319d612: return t.OB();
+      case 0xef02ce6: return t.OC();
+      case 0x9852f9c6: return t.OD();
+      case 0x15590068: return t.OE();
+      case 0xf1749a22: return t.OG();
+      case 0xe4599bbd: return t.OH();
+      case 0x12b299d4: return t.OI();
+      case 0xe86602c3: return t.OJ();
+      case 0xedfd405f: return t.OK();
+      case 0x9c974fdf: return t.IE();
+      case 0x2f2f21bf: return t.IF();
+      case 0x84d19185: return t.OL();
+      case 0x7f891213: return t.IG();
+      case 0xeb1477e8: return t.OM();
+      case 0xc586da1c: return t.ON();
+      case 0xfa64e172: return t.OO();
+      case 0xa32dd600: return t.DS();
+      case 0xad01d61d: return t.OQ();
+      case 0x1250abde: return t.OR();
+      case 0xad2641f8: return t.OS();
+      case 0x9a5c33e5: return t.OT();
+      case 0xc23727c9: return t.OU();
+      case 0x137948a5: return t.OV();
+      case 0xc13d1c11: return t.BB();
+      case 0x2ec0533f: return t.DT();
+      case 0xa384b779: return t.OW();
+      case 0x69df3769: return t.OX();
+      case 0xfc2e05bc: return t.OY();
+      case 0x5a686d7c: return t.OZ();
+      case 0xdfc2f58e: return t.PA();
+      case 0xf89cf5e8: return t.EF();
+      case 0x68c13933: return t.IH();
+      case 0xffb62b95: return t.PB();
+      case 0x9de7a269: return t.PC();
+      case 0x861cc8a0: return t.PD();
+      case 0xeeb46f27: return t.PF();
+      case 0xb60a24a6: return t.PG();
+      case 0x938458c1: return t.CM();
+      case 0xc27ac8c7: return t.PH();
+      case 0x98e81d3a: return t.PI();
+      case 0xa2fa4880: return t.PJ();
+      case 0x77608b83: return t.PT();
+      case 0xa03e5b85: return t.PU();
+      case 0xf4108aa0: return t.PV();
+      case 0x3502758c: return t.PW();
+      case 0x7b8e7de6: return t.J();
+      case 0xd8292816: return t.P();
+      case 0xbb92ba95: return t.PY();
+      case 0xfa04579d: return t.PZ();
+      case 0x6f635b0d: return t.QA();
+      case 0x6cef8ac7: return t.QB();
+      case 0x6ed02538: return t.QC();
+      case 0x64e475c2: return t.QD();
+      case 0xbd610bc9: return t.QE();
+      case 0x826f8b60: return t.QF();
+      case 0x28a20571: return t.QG();
+      case 0x73924be0: return t.QH();
+      case 0x76a6d327: return t.QI();
+      case 0x11f1331c: return t.KQ();
+      case 0xee8c1e86: return t.QQ();
+      case 0xafeb712e: return t.QR();
+      case 0xbddde532: return t.CA();
+      case 0x20adaef8: return t.K();
+      case 0xd31a961e: return t.CY();
+      case 0x289da732: return t.CZ();
+      case 0x7f077ad9: return t.QT();
+      case 0x2d895c74: return t.DB();
+      case 0xae30253: return t.QU();
+      case 0x99262e37: return t.GN();
+      case 0x95d2ac92: return t.EG();
+      case 0xeb0467fb: return t.II();
+      case 0xb6d45656: return t.IJ();
+      case 0x62ba04d9: return t.IK();
+      case 0x330b5424: return t.IL();
+      case 0xc37521c9: return t.IM();
+      case 0x98a12b4b: return t.IN();
+      case 0x3e11affb: return t.QV();
+      case 0xa4bcc6fe: return t.QW();
+      case 0x2064674e: return t.QX();
+      case 0x94d42ee7: return t.QY();
+      case 0xcd77d957: return t.QZ();
+      case 0x15ebac1d: return t.RA();
+      case 0xa3289a6d: return t.RB();
+      case 0x808d15a4: return t.RC();
+      case 0xde3f3c79: return t.RF();
+      case 0xb4608969: return t.RG();
+      case 0xa3b54985: return t.RH();
+      case 0xf56ee2a8: return t.RM();
+      case 0xd0d9b163: return t.RO();
+      case 0xda13538a: return t.DD();
+      case 0xe2d6e436: return t.DE();
+      case 0xb6901959: return t.IO();
+      case 0x51bdb021: return t.EH();
+      case 0xb055eaee: return t.EI();
+      case 0xb0d1865b: return t.RI();
+      case 0x780a0310: return t.RP();
+      case 0x688a30aa: return t.IP();
+      case 0xbb2d201: return t.IQ();
+      case 0x43ae3dec: return t.IR();
+      case 0x162ecc1f: return t.RQ();
+      case 0x9c750409: return t.RR();
+      case 0x4843b0fd: return t.BC();
+      case 0x450a1c0a: return t.RS();
+      case 0xe8025ca2: return t.RT();
+      case 0x2e0709a5: return t.RU();
+      case 0x9375341e: return t.IS();
+      case 0x3380c786: return t.RV();
+      case 0x3dcd7a87: return t.RW();
+      case 0x88bf9319: return t.SB();
+      case 0x764cf810: return t.SF();
+      case 0x8c7f65e2: return t.SG();
+      case 0x11965f3a: return t.SK();
+      case 0x947ca848: return t.SM();
+      case 0x54826690: return t.IT();
+      case 0xe48f964: return t.IU();
+      case 0x50f5c392: return t.HA();
+      case 0x3751b49e: return t.HB();
+      case 0xbdfb0426: return t.MS();
+      case 0x500e6dfa: return t.NA();
+      case 0x5dab1af4: return t.SN();
+      case 0xec338270: return t.SO();
+      case 0x1b3f4df7: return t.IV();
+      case 0x98592475: return t.IW();
+      case 0x94bd38ed: return t.EJ();
+      case 0x72a3158c: return t.SP();
+      case 0x741cd3e3: return t.SQ();
+      case 0x226ccefb: return t.SR();
+      case 0x3dbb5986: return t.SS();
+      case 0xc000bba2: return t.ST();
+      case 0x5353e5a7: return t.SU();
+      case 0xab03c6d9: return t.SV();
+      case 0x258aff05: return t.PK();
+      case 0x683a5e46: return t.PL();
+      case 0xb16a6c29: return t.PM();
+      case 0xfc796b3f: return t.PN();
+      case 0x568a748: return t.PO();
+      case 0x48a30254: return t.PX();
+      case 0x36585ea4: return t.SW();
+      case 0xe73547e1: return t.IX();
+      case 0x26b5dde6: return t.SX();
+      case 0xe40370a3: return t.IY();
+      case 0xc1b15d65: return t.RX();
+      case 0x417bbf11: return t.RY();
+      case 0xa6edbffd: return t.RZ();
+      case 0xb722de65: return t.SH();
+      case 0x8a86659c: return t.SI();
+      case 0x18d1cdc2: return t.SJ();
+      case 0xa8d864a7: return t.SC();
+      case 0xfff8fdc4: return t.SD();
+      case 0x17db940b: return t.SL();
+      case 0x890c3d89: return t.SY();
+      case 0xf9d27a5a: return t.IZ();
+      case 0x3c20629f: return t.SZ();
+      case 0x3371c354: return t.TA();
+      case 0xedcdc05b: return t.TB();
+      case 0xab661b5b: return t.TC();
+      case 0x148677e2: return t.TD();
+      case 0x637b7ed: return t.TE();
+      case 0xbd17a14a: return t.TF();
+      case 0x161d9628: return t.TG();
+      case 0xfb834291: return t.TK();
+      case 0xde266ef5: return t.TL();
+      case 0x70b772a8: return t.TM();
+      case 0x352dca58: return t.QJ();
+      case 0x208e68c9: return t.QK();
+      case 0x3a20ecb8: return t.HC();
+      case 0x25d6c9c7: return t.JA();
+      case 0xee2bb969: return t.JB();
+      case 0x1b0c841a: return t.TO();
+      case 0xfd8e711f: return t.TP();
+      case 0x9fbab604: return t.EK();
+      case 0x4ede3cf: return t.TQ();
+      case 0xf89d88e5: return t.TR();
+      case 0x571d2742: return t.JC();
+      case 0xb17f890: return t.TS();
+      case 0x22f3afb3: return t.TT();
+      case 0x9a422c20: return t.JD();
+      case 0x4fcba9c8: return t.TU();
+      case 0x38641628: return t.TV();
+      case 0x35e410a8: return t.TW();
+      case 0x6410a5d2: return t.TX();
+      case 0xa229dd06: return t.JE();
+      case 0x3354678f: return t.JF();
+      case 0xe5bbfe1a: return t.BD();
+      case 0xfb52dc99: return t.BE();
+      case 0x3407e51b: return t.TY();
+      case 0xaed6dbb2: return t.TZ();
+      case 0x9801d2f7: return t.OF();
+      case 0x4a992157: return t.UA();
+      case 0x438865b: return t.UB();
+      case 0xbdf9653b: return t.UC();
+      case 0x4fa417f2: return t.SE();
+      case 0x4b425864: return t.SA();
+      case 0xfdb19008: return t.DU();
+      case 0xd33f43f3: return t.BF();
+      case 0x32c3e77: return t.UD();
+      case 0xc331e80a: return t.UE();
+      case 0x50f41ccf: return t.PP();
+      case 0x92a72876: return t.EL();
+      case 0x58fffcd0: return t.UF();
+      case 0x9a3bfd99: return t.UG();
+      case 0x4afe8f6d: return t.KJ();
+      case 0x40771900: return t.JG();
+      case 0x9cd81144: return t.GQ();
+      case 0xdc3d824f: return t.UH();
+      case 0x744694e0: return t.UI();
+      case 0x6724abc4: return t.UJ();
+      case 0xd912a59c: return t.UK();
+      case 0xc12622c4: return t.UL();
+      case 0x9bf8bb95: return t.UM();
+      case 0x6c3f19b9: return t.UN();
+      case 0x3c2884c1: return t.UO();
+      case 0xde5a0dd6: return t.UP();
+      case 0x7e6260d7: return t.UQ();
+      case 0x13567e8a: return t.UX();
+      case 0x70abc3fd: return t.UY();
+      case 0x8ffa9a1f: return t.UZ();
+      case 0xbaafe5e0: return t.VA();
+      case 0xbfd064ec: return t.VB();
+      case 0xf12bb6e1: return t.VC();
+      case 0x467a0766: return t.VD();
+      case 0xc070d93e: return t.VE();
+      case 0x48870999: return t.VF();
+      case 0xdb20b188: return t.VG();
+      case 0xce0d37b0: return t.VH();
+      case 0xe4e88011: return t.VI();
+      case 0x263d7c26: return t.VJ();
+      case 0x4f4456d3: return t.VK();
+      case 0x1759c560: return t.VL();
+      case 0x7c8fe7b6: return t.VM();
+      case 0x39f23300: return t.VN();
+      case 0xa8718dc5: return t.VO();
+      case 0xf259a80b: return t.VP();
+      case 0x65a0fa4d: return t.VQ();
+      case 0x31f9590: return t.VR();
+      case 0x85849473: return t.OP();
+      case 0xfabadc5f: return t.MT();
+      case 0x3d662b7b: return t.NB();
+      case 0xdd6a8f48: return t.MN();
+      case 0x85e42301: return t.WA();
+      case 0xe095c1a0: return t.WB();
+      case 0x57adc690: return t.WC();
+      case 0xfaf7e8c9: return t.WD();
+      case 0x6e6fe51c: return t.JH();
+      case 0xfa0f3ca2: return t.JI();
+      case 0x7d748d04: return t.WE();
+      case 0x8317c0c3: return t.JJ();
+      case 0x9b9240a6: return t.JK();
+      case 0xcb296bf8: return t.WF();
+      case 0xc30aa358: return t.WG();
+      case 0xf4e096c3: return t.BG();
+      case 0xea02c27e: return t.WH();
+      case 0x8f31b327: return t.EM();
+      case 0x84551347: return t.DV();
+      case 0x1e8caaeb: return t.WI();
+      case 0x909c3f94: return t.WJ();
+      case 0xafd93fbb: return t.PQ();
+      case 0x40699cd0: return t.EN();
+      case 0xcdc27a1f: return t.WK();
+      case 0x1c570ed1: return t.WL();
+      case 0x9bed434d: return t.WN();
+      case 0xc239d686: return t.WO();
+      case 0x21e753bc: return t.WQ();
+      case 0x3f56aea3: return t.WR();
+      case 0xd1451883: return t.WS();
+      case 0x4e5f810d: return t.WT();
+      case 0x500911e1: return t.WV();
+      case 0xfb8fe43c: return t.WW();
+      case 0xc10eb2cf: return t.WX();
+      case 0x3417d728: return t.WY();
+      case 0xdb64fd34: return t.XB();
+      case 0xb6213cdf: return t.XC();
+      case 0xe0cdc940: return t.JL();
+      case 0x5d2f3aa9: return t.JM();
+      case 0xffa0a496: return t.XD();
+      case 0xab0f6b1e: return t.JN();
+      case 0x1e36fded: return t.XE();
+      case 0x5366c915: return t.XF();
+      case 0x1b8f4ad1: return t.XG();
+      case 0x87eabb53: return t.XH();
+      case 0x997c454a: return t.XI();
+      case 0x8742ae7f: return t.XJ();
+      case 0x50ca4de1: return t.XK();
+      case 0x9d4c17c0: return t.XL();
+      case 0xa2bb35cb: return t.XM();
+      case 0xec82e140: return t.XN();
+      case 0x80c99768: return t.HD();
+      case 0x80e11a7f: return t.EO();
+      case 0x7a7c17a4: return t.HE();
+      case 0xb549da53: return t.HF();
+      case 0x88f27fbc: return t.MO();
+      case 0x243e1c66: return t.MP();
+      case 0xf18cda44: return t.KV();
+      case 0xeea8e46e: return t.XO();
+      case 0xa99fca4f: return t.XP();
+      case 0xc982eaba: return t.XQ();
+      case 0x5725e40a: return t.XR();
+      case 0xef1751b5: return t.VS();
+      case 0xcad181f6: return t.XS();
+      case 0x6c47ac9f: return t.XT();
+      case 0x2979eeb2: return t.XU();
+      case 0xf385c1f6: return t.XV();
+      case 0xeeca5ce3: return t.XW();
+      case 0x46560264: return t.JO();
+      case 0x56022f4d: return t.JP();
+      case 0xccbebbaf: return t.RD();
+      case 0x1c0facaf: return t.RE();
+      case 0x1427a5e1: return t.RJ();
+      case 0x656ac4b: return t.RK();
+      case 0xe6dfb825: return t.XX();
+      case 0x55188a2e: return t.XY();
+      case 0x6a4afc38: return t.XZ();
+      case 0x434bd2af: return t.YA();
+      case 0x1b7907ae: return t.YB();
+      case 0x26ae0971: return t.YC();
+      case 0xe9e82c18: return t.YD();
+      case 0x709b2405: return t.YE();
+      case 0x42e047bb: return t.YF();
+      case 0x183040d3: return t.YG();
+      case 0xf89777f2: return t.YH();
+      case 0xe31c34d8: return t.YI();
+      case 0xe6d83d7e: return t.YJ();
+      case 0xd5676710: return t.YK();
+      case 0x3b5a3e40: return t.YS();
+      case 0xed8af74d: return t.YT();
+      case 0xea107ae4: return t.YU();
+      case 0x1e76a78c: return t.TH();
+      case 0x804361ea: return t.VT();
+      case 0x5ce14175: return t.YV();
+      case 0x4792929b: return t.EP();
+      case 0x9e8fa6d3: return t.YW();
+      case 0xf37f2f16: return t.YX();
+      case 0xe511996d: return t.JQ();
+      case 0x89893b45: return t.JR();
+      case 0xc1f8e69a: return t.HG();
+      case 0x7084a7be: return t.JS();
+      case 0xb1c3caa7: return t.YL();
+      case 0xfae69f56: return t.EQ();
+      case 0xaa1c39f: return t.WZ();
+      case 0xca05d50e: return t.XA();
+      case 0xe7026d0d: return t.HH();
+      case 0xe062db83: return t.HI();
+      case 0x70db6837: return t.JT();
+      case 0x5f5c95f1: return t.YM();
+      case 0xce4e82fd: return t.BH();
+      case 0x7c3c2609: return t.DW();
+      case 0x46e1d13d: return t.YY();
+      case 0x8dbc3336: return t.YZ();
+      case 0xa01b22f9: return t.ZA();
+      case 0xeb49081d: return t.ZB();
+      case 0xbc0a57dc: return t.ZC();
+      case 0xe0310d7: return t.ZD();
+      case 0xf0173fe9: return t.RN();
+      case 0x74535f21: return t.GO();
+      case 0x1cc6e91f: return t.ZE();
+      case 0xcac943f2: return t.ZF();
+      case 0xed56c9fc: return t.ZG();
+      case 0xa676a322: return t.ZH();
+      case 0xbad88395: return t.ZI();
+      case 0x86872538: return t.ZJ();
+      case 0x9b69e34b: return t.QL();
+      case 0x4c4e743f: return t.QM();
+      case 0xabe9affe: return t.ER();
+      case 0xfcaafeb7: return t.ZK();
+      case 0xe56dbf05: return t.ZM();
+      case 0xd54b65d: return t.ZO();
+      case 0x5108d648: return t.ZP();
+      case 0x6242c773: return t.ZQ();
+      case 0xf9c8bcc6: return t.WM();
+      case 0x75588b3f: return t.ZR();
+      case 0xe09e1fb8: return t.ZS();
+      case 0x2bf7ee23: return t.ZT();
+      case 0xe3309f7f: return t.ZU();
+      case 0x28ecf961: return t.ZV();
+      case 0x3334b0f0: return t.ZW();
+      case 0x5367e5be: return t.ZX();
+      case 0xcbc7ee28: return t.BT();
+      case 0x64199744: return t.ZY();
+      case 0xe0277a62: return t.ZZ();
+      case 0x8aeabec3: return t.BAA();
+      case 0x7d6099dd: return t.BAB();
+      case 0x21ec5a5f: return t.BAC();
+      case 0x9d2a81e3: return t.BAD();
+      case 0x3dac6a00: return t.BAE();
+      case 0x6e425c4: return t.BAF();
+      case 0xa0d0744b: return t.BAG();
+      case 0x99a48f23: return t.BAH();
+      case 0xcbe31e26: return t.BAI();
+      case 0xfc36954e: return t.BAJ();
+      case 0x89137c0d: return t.BAK();
+      case 0x8b883488: return t.BAL();
+      case 0x99e3806a: return t.BAM();
+      case 0xea02ec33: return t.BAN();
+      case 0xb320aadb: return t.BAO();
+      case 0x8e3ca7ee: return t.BAP();
+      case 0x187fa0ca: return t.BAQ();
+      case 0xdb21d0a7: return t.BAR();
+      case 0xed1ecdb0: return t.BAS();
+      case 0xe8a40bd9: return t.BAT();
+      case 0xbe3dfa: return t.BAU();
+      case 0x868a2aa5: return t.BAV();
+      case 0xe537ced6: return t.BAW();
+      case 0x7a700873: return t.BAX();
+      case 0x666220e9: return t.BAY();
+      case 0x33f0ea47: return t.BBC();
+      case 0xad2e1cd8: return t.BBD();
+      case 0x811f854f: return t.BBE();
+      case 0x1b287353: return t.ES();
+      case 0xd95c6154: return t.ET();
+      case 0x66afa166: return t.BBF();
+      case 0x6a4ee832: return t.BBG();
+      case 0x1142bd56: return t.BBH();
+      case 0x4dba4501: return t.BBI();
+      case 0x29be5899: return t.BU();
+      case 0xe16459c3: return t.JU();
+      case 0xf0e3e596: return t.GK();
+      case 0x9f2221c9: return t.WP();
+      case 0xb52c939d: return t.TN();
+      case 0x9b89f93a: return t.FW();
+      case 0xd45ab096: return t.BBJ();
+      case 0x4a8537: return t.BBL();
+      case 0xbbf2dda0: return t.BBM();
+      case 0x86471d92: return t.BBN();
+      case 0x1527bcac: return t.BBO();
+      case 0x3a912d4a: return t.BBK();
+      case 0x9880f658: return t.BBP();
+      case 0xd27ff082: return t.BBQ();
+      case 0x869d758f: return t.BAZ();
+      case 0xa1144770: return t.BBA();
+      case 0x34636dd8: return t.BBB();
+      case 0x829d99da: return t.BBR();
+      case 0x27477b4: return t.BBS();
+      case 0xbfb9f457: return t.BBT();
+      case 0xa098d6af: return t.BBU();
+      case 0x1d1b1245: return t.BBV();
+      case 0xc0de1bd9: return t.BBW();
+      case 0x3f6d7b68: return t.BBX();
+      case 0xc7345e6a: return t.BBY();
+      case 0x2be0dfa4: return t.BBZ();
+      case 0xb71e767a: return t.BCA();
+      case 0xf7444763: return t.BCB();
+      case 0x99c1d49d: return t.BCC();
+      case 0x4c43da18: return t.JV();
+      case 0xe10db349: return t.JW();
+      case 0xb1db7c7e: return t.FM();
+      case 0xd612e8ef: return t.MC();
+      case 0xed6a8504: return t.UR();
+      case 0xc7fb5e01: return t.US();
+      case 0x34b8621: return t.UT();
+      case 0x1ccb966a: return t.UU();
+      case 0x81ccf4f: return t.UV();
+      case 0x1e148390: return t.VU();
+      case 0x34566b6a: return t.BCD();
+      case 0xe0c0c5e5: return t.BCE();
+      case 0xbf4dea82: return t.VV();
+      case 0x6f747657: return t.BCF();
+      case 0xb92fb6cd: return t.BCG();
+      case 0x25e073fc: return t.BCH();
+      case 0x5e068047: return t.BCI();
+      case 0x98dd8936: return t.BCJ();
+      case 0x9a8ae1e1: return t.VW();
+      case 0x76768bed: return t.VX();
+      case 0xb390dc08: return t.BCK();
+      case 0x16115a96: return t.VY();
+      case 0xa44f3ef6: return t.VZ();
+      case 0xae891bec: return t.BCL();
+      case 0xdb9e70d2: return t.MU();
+      case 0x39491cc8: return t.NC();
+      case 0x35553762: return t.UW();
+      case 0x8c05f1c9: return t.BCM();
+      case 0xf3ae2eed: return t.BCN();
+      case 0x1eb3758: return t.BCO();
+      case 0xf3f25f76: return t.EU();
+      case 0xaca1657b: return t.JX();
+      case 0x6ca9c2e9: return t.BCP();
+      case 0xd5529d06: return t.BCQ();
+      case 0x3b6ddad2: return t.BCR();
+      case 0x5755785a: return t.BCS();
+      case 0x6b3765b: return t.BI();
+      case 0x4bd6e798: return t.DX();
+      case 0xf041e250: return t.BCT();
+      case 0x47a971e0: return t.BCU();
+      case 0xe0b0bc2e: return t.FC();
+      case 0x5fb224d5: return t.BCV();
+      case 0x9f120418: return t.BCW();
+      case 0x54c01850: return t.JY();
+      case 0xe630b979: return t.BCX();
+      case 0x72091c80: return t.BCY();
+      case 0xbb6ae88d: return t.RL();
+      case 0x2df5fc0a: return t.YN();
+      case 0x8f079643: return t.YO();
+      case 0x1c199183: return t.BCZ();
+      case 0x702b65a9: return t.BDA();
+      case 0xdebebe83: return t.BDB();
+      case 0xa12f40b8: return t.BDC();
+      case 0xd246fd47: return t.BDD();
+      case 0x63cacf26: return t.BDE();
+      case 0xd5b3b9f9: return t.BDF();
+      case 0x236df622: return t.BDG();
+      case 0x5cc761bd: return t.BDH();
+      case 0xa575739d: return t.BDI();
+      case 0xb3fb5361: return t.BDJ();
+      case 0xa4dd4c08: return t.MV();
+      case 0x69ec56a3: return t.ND();
+      case 0x5719bacc: return t.MW();
+      case 0x96151fed: return t.NE();
+      case 0xbc7fc6cd: return t.BDK();
+      case 0x40181ffe: return t.BV();
+      case 0x27d69997: return t.BW();
+      case 0xdbaeae9: return t.BX();
+      case 0xff544e65: return t.BDL();
+      case 0x71bd134c: return t.EW();
+      case 0x64600527: return t.ZL();
+      case 0x514519e2: return t.ZN();
+      case 0xfbd2c296: return t.BDM();
+      case 0xe9baa668: return t.BDN();
+      case 0x19360dc0: return t.JZ();
+      case 0x2d117597: return t.Q();
+      case 0x2a286531: return t.QS();
+      case 0x17bae2e6: return t.L();
+      case 0x9c95f7bb: return t.M();
+      case 0x352dafa: return t.MX();
+      case 0xd19ae46d: return t.NF();
+      case 0xa8406ca9: return t.TI();
+      case 0xfbeec0f0: return t.TJ();
+      case 0xa26f881b: return t.YP();
+      case 0xe844ebff: return t.BDO();
+      case 0x10b78d29: return t.PR();
+      case 0xd02e7fd4: return t.PS();
+      case 0x92d33a0e: return t.BDP();
+      case 0x8f8c0e4e: return t.BDQ();
+      case 0xa9d6db1f: return t.BDR();
+      case 0x4c81c1ba: return t.NN();
+      case 0xd82363af: return t.NO();
+      case 0x18be796b: return t.NV();
+      case 0xacae0690: return t.NW();
+      case 0x9c4e7e8b: return t.QN();
+      case 0xbf0693d4: return t.QO();
+      case 0x20df5d0: return t.QP();
+      case 0x6a7e7366: return t.KA();
+      case 0xbfb5ad8b: return t.BDS();
+      case 0x209b82db: return t.BDT();
+      case 0xca461b5d: return t.BDU();
+      case 0xb4afcfb0: return t.KB();
+      case 0xe6b76ae: return t.YQ();
+      case 0xdbd4feed: return t.FX();
+      case 0x53909779: return t.YR();
+      case 0x44747e9a: return t.FH();
+      case 0xd8411139: return t.WU();
+      case 0x28703c8: return t.PE();
+      case 0x39a51dfb: return t.KC();
+      case 0x90866cee: return t.KD();
+      case 0xd072acb4: return t.BDV();
+      case 0x3c5693e9: return t.BDW();
+      case 0xf5890df1: return t.BDX();
+      case 0x483d270c: return t.BDY();
+      case 0xf7d90ce0: return t.BDZ();
+      case 0xf41eb622: return t.BEA();
+      case 0x7f676421: return t.BEB();
+      case 0x8216fba3: return t.KE();
+      case 0xd1219bdd: return t.MY();
+      case 0x42ffd42b: return t.NG();
+      default: {
+        if (this.fallbackParser) {
+          this._s.revert(4);
+          return this.fallbackParser.parse(this._s);
+        } else {
+          console.error(`Unknown constructor 0x${c.toString(16)}.`);
+          return undefined;
+        }
+      }
     }
   }
-
-  boolFalse() {
+  
+  A = () => false;
+  B = () => true;
+  C = () => ({_: 'true'})
+  D = () => ({_: 'vector'})
+  E = () => ({_: 'error', code: this.i32(), text: this.s()})
+  F = () => ({_: 'null'})
+  G = () => ({_: 'inputPeerEmpty'})
+  H = () => ({_: 'inputPeerSelf'})
+  I = () => ({_: 'inputPeerChat', chat_id: this.i32()})
+  N = () => ({_: 'inputUserEmpty'})
+  O = () => ({_: 'inputUserSelf'})
+  R = () => ({_: 'inputPhoneContact', client_id: this.i64(), phone: this.s(), first_name: this.s(), last_name: this.s()})
+  S = () => ({_: 'inputFile', id: this.i64(), parts: this.i32(), name: this.s(), md5_checksum: this.s()})
+  U = () => ({_: 'inputMediaEmpty'})
+  V() {
+    const flags = this.i32();
     return {
-      _: 'boolFalse',
+      _: 'inputMediaUploadedPhoto' as const,
+      file: this.o(),
+      stickers: flags & 0x1 ? this.v(this.o) : undefined,
+      ttl_seconds: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  boolTrue() {
+  W() {
+    const flags = this.i32();
     return {
-      _: 'boolTrue',
+      _: 'inputMediaPhoto' as const,
+      id: this.o(),
+      ttl_seconds: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  true() {
+  X = () => ({_: 'inputMediaGeoPoint', geo_point: this.o()})
+  Y = () => ({_: 'inputMediaContact', phone_number: this.s(), first_name: this.s(), last_name: this.s(), vcard: this.s()})
+  BJ = () => ({_: 'inputChatPhotoEmpty'})
+  BK = () => ({_: 'inputChatUploadedPhoto', file: this.o()})
+  BL = () => ({_: 'inputChatPhoto', id: this.o()})
+  BM = () => ({_: 'inputGeoPointEmpty'})
+  BN = () => ({_: 'inputGeoPoint', lat: this.d(), long: this.d()})
+  BO = () => ({_: 'inputPhotoEmpty'})
+  BP = () => ({_: 'inputPhoto', id: this.i64(), access_hash: this.i64(), file_reference: this.b()})
+  BQ = () => ({_: 'inputFileLocation', volume_id: this.i64(), local_id: this.i32(), secret: this.i64(), file_reference: this.b()})
+  BY = () => ({_: 'peerUser', user_id: this.i32()})
+  BZ = () => ({_: 'peerChat', chat_id: this.i32()})
+  CB = () => ({_: 'storage.fileUnknown'})
+  CC = () => ({_: 'storage.filePartial'})
+  CD = () => ({_: 'storage.fileJpeg'})
+  CE = () => ({_: 'storage.fileGif'})
+  CF = () => ({_: 'storage.filePng'})
+  CG = () => ({_: 'storage.filePdf'})
+  CH = () => ({_: 'storage.fileMp3'})
+  CI = () => ({_: 'storage.fileMov'})
+  CJ = () => ({_: 'storage.fileMp4'})
+  CK = () => ({_: 'storage.fileWebp'})
+  CL = () => ({_: 'userEmpty', id: this.i32()})
+  CN = () => ({_: 'userProfilePhotoEmpty'})
+  CO = () => ({_: 'userProfilePhoto', photo_id: this.i64(), photo_small: this.o(), photo_big: this.o(), dc_id: this.i32()})
+  CP = () => ({_: 'userStatusEmpty'})
+  CQ = () => ({_: 'userStatusOnline', expires: this.i32()})
+  CR = () => ({_: 'userStatusOffline', was_online: this.i32()})
+  CV = () => ({_: 'chatEmpty', id: this.i32()})
+  CW() {
+    const flags = this.i32();
     return {
-      _: 'true',
-    }
-  }
-
-  vector() {
-    return {
-      _: 'vector',
-    }
-  }
-
-  error() {
-    return {
-      _: 'error',
-      code: this.readInt(),
-      text: this.readString(),
-    }
-  }
-
-  null() {
-    return {
-      _: 'null',
-    }
-  }
-
-  inputPeerEmpty() {
-    return {
-      _: 'inputPeerEmpty',
-    }
-  }
-
-  inputPeerSelf() {
-    return {
-      _: 'inputPeerSelf',
-    }
-  }
-
-  inputPeerChat() {
-    return {
-      _: 'inputPeerChat',
-      chat_id: this.readInt(),
-    }
-  }
-
-  inputUserEmpty() {
-    return {
-      _: 'inputUserEmpty',
-    }
-  }
-
-  inputUserSelf() {
-    return {
-      _: 'inputUserSelf',
-    }
-  }
-
-  inputPhoneContact() {
-    return {
-      _: 'inputPhoneContact',
-      client_id: this.readLong(),
-      phone: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-    }
-  }
-
-  inputFile() {
-    return {
-      _: 'inputFile',
-      id: this.readLong(),
-      parts: this.readInt(),
-      name: this.readString(),
-      md5_checksum: this.readString(),
-    }
-  }
-
-  inputMediaEmpty() {
-    return {
-      _: 'inputMediaEmpty',
-    }
-  }
-
-  inputMediaUploadedPhoto() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaUploadedPhoto',
-      file: this.readObject(),
-      stickers: (flags & 0x1) ? this.readObject() : undefined,
-      ttl_seconds: (flags & 0x2) ? this.readInt() : undefined,
-    }
-  }
-
-  inputMediaPhoto() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaPhoto',
-      id: this.readObject(),
-      ttl_seconds: (flags & 0x1) ? this.readInt() : undefined,
-    }
-  }
-
-  inputMediaGeoPoint() {
-    return {
-      _: 'inputMediaGeoPoint',
-      geo_point: this.readObject(),
-    }
-  }
-
-  inputMediaContact() {
-    return {
-      _: 'inputMediaContact',
-      phone_number: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      vcard: this.readString(),
-    }
-  }
-
-  inputChatPhotoEmpty() {
-    return {
-      _: 'inputChatPhotoEmpty',
-    }
-  }
-
-  inputChatUploadedPhoto() {
-    return {
-      _: 'inputChatUploadedPhoto',
-      file: this.readObject(),
-    }
-  }
-
-  inputChatPhoto() {
-    return {
-      _: 'inputChatPhoto',
-      id: this.readObject(),
-    }
-  }
-
-  inputGeoPointEmpty() {
-    return {
-      _: 'inputGeoPointEmpty',
-    }
-  }
-
-  inputGeoPoint() {
-    return {
-      _: 'inputGeoPoint',
-      lat: this.readObject(),
-      long: this.readObject(),
-    }
-  }
-
-  inputPhotoEmpty() {
-    return {
-      _: 'inputPhotoEmpty',
-    }
-  }
-
-  inputPhoto() {
-    return {
-      _: 'inputPhoto',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-    }
-  }
-
-  inputFileLocation() {
-    return {
-      _: 'inputFileLocation',
-      volume_id: this.readLong(),
-      local_id: this.readInt(),
-      secret: this.readLong(),
-      file_reference: this.readObject(),
-    }
-  }
-
-  peerUser() {
-    return {
-      _: 'peerUser',
-      user_id: this.readInt(),
-    }
-  }
-
-  peerChat() {
-    return {
-      _: 'peerChat',
-      chat_id: this.readInt(),
-    }
-  }
-
-  storage_fileUnknown() {
-    return {
-      _: 'storage.fileUnknown',
-    }
-  }
-
-  storage_filePartial() {
-    return {
-      _: 'storage.filePartial',
-    }
-  }
-
-  storage_fileJpeg() {
-    return {
-      _: 'storage.fileJpeg',
-    }
-  }
-
-  storage_fileGif() {
-    return {
-      _: 'storage.fileGif',
-    }
-  }
-
-  storage_filePng() {
-    return {
-      _: 'storage.filePng',
-    }
-  }
-
-  storage_filePdf() {
-    return {
-      _: 'storage.filePdf',
-    }
-  }
-
-  storage_fileMp3() {
-    return {
-      _: 'storage.fileMp3',
-    }
-  }
-
-  storage_fileMov() {
-    return {
-      _: 'storage.fileMov',
-    }
-  }
-
-  storage_fileMp4() {
-    return {
-      _: 'storage.fileMp4',
-    }
-  }
-
-  storage_fileWebp() {
-    return {
-      _: 'storage.fileWebp',
-    }
-  }
-
-  userEmpty() {
-    return {
-      _: 'userEmpty',
-      id: this.readInt(),
-    }
-  }
-
-  userProfilePhotoEmpty() {
-    return {
-      _: 'userProfilePhotoEmpty',
-    }
-  }
-
-  userProfilePhoto() {
-    return {
-      _: 'userProfilePhoto',
-      photo_id: this.readLong(),
-      photo_small: this.readObject(),
-      photo_big: this.readObject(),
-      dc_id: this.readInt(),
-    }
-  }
-
-  userStatusEmpty() {
-    return {
-      _: 'userStatusEmpty',
-    }
-  }
-
-  userStatusOnline() {
-    return {
-      _: 'userStatusOnline',
-      expires: this.readInt(),
-    }
-  }
-
-  userStatusOffline() {
-    return {
-      _: 'userStatusOffline',
-      was_online: this.readInt(),
-    }
-  }
-
-  chatEmpty() {
-    return {
-      _: 'chatEmpty',
-      id: this.readInt(),
-    }
-  }
-
-  chat() {
-    const flags = this.readInt();
-    return {
-      _: 'chat',
+      _: 'chat' as const,
       creator: !!(flags & 0x1),
       kicked: !!(flags & 0x2),
       left: !!(flags & 0x4),
-      deactivated: !!(flags & 0x32),
-      id: this.readInt(),
-      title: this.readString(),
-      photo: this.readObject(),
-      participants_count: this.readInt(),
-      date: this.readInt(),
-      version: this.readInt(),
-      migrated_to: (flags & 0x64) ? this.readObject() : undefined,
-      admin_rights: (flags & 0x16384) ? this.readObject() : undefined,
-      default_banned_rights: (flags & 0x262144) ? this.readObject() : undefined,
+      deactivated: !!(flags & 0x20),
+      id: this.i32(),
+      title: this.s(),
+      photo: this.o(),
+      participants_count: this.i32(),
+      date: this.i32(),
+      version: this.i32(),
+      migrated_to: flags & 0x40 ? this.o() : undefined,
+      admin_rights: flags & 0x4000 ? this.o() : undefined,
+      default_banned_rights: flags & 0x40000 ? this.o() : undefined,
     }
   }
-
-  chatForbidden() {
+  CX = () => ({_: 'chatForbidden', id: this.i32(), title: this.s()})
+  DA() {
+    const flags = this.i32();
     return {
-      _: 'chatForbidden',
-      id: this.readInt(),
-      title: this.readString(),
+      _: 'chatFull' as const,
+      can_set_username: !!(flags & 0x80),
+      has_scheduled: !!(flags & 0x100),
+      id: this.i32(),
+      about: this.s(),
+      participants: this.o(),
+      chat_photo: flags & 0x4 ? this.o() : undefined,
+      notify_settings: this.o(),
+      exported_invite: this.o(),
+      bot_info: flags & 0x8 ? this.v(this.o) : undefined,
+      pinned_msg_id: flags & 0x40 ? this.i32() : undefined,
+      folder_id: flags & 0x800 ? this.i32() : undefined,
     }
   }
-
-  chatFull() {
-    const flags = this.readInt();
+  DC = () => ({_: 'chatParticipant', user_id: this.i32(), inviter_id: this.i32(), date: this.i32()})
+  DF() {
+    const flags = this.i32();
     return {
-      _: 'chatFull',
-      can_set_username: !!(flags & 0x128),
-      has_scheduled: !!(flags & 0x256),
-      id: this.readInt(),
-      about: this.readString(),
-      participants: this.readObject(),
-      chat_photo: (flags & 0x4) ? this.readObject() : undefined,
-      notify_settings: this.readObject(),
-      exported_invite: this.readObject(),
-      bot_info: (flags & 0x8) ? this.readObject() : undefined,
-      pinned_msg_id: (flags & 0x64) ? this.readInt() : undefined,
-      folder_id: (flags & 0x2048) ? this.readInt() : undefined,
+      _: 'chatParticipantsForbidden' as const,
+      chat_id: this.i32(),
+      self_participant: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  chatParticipant() {
+  DG = () => ({_: 'chatParticipants', chat_id: this.i32(), participants: this.v(this.o), version: this.i32()})
+  DH = () => ({_: 'chatPhotoEmpty'})
+  DI = () => ({_: 'chatPhoto', photo_small: this.o(), photo_big: this.o(), dc_id: this.i32()})
+  DJ = () => ({_: 'messageEmpty', id: this.i32()})
+  DK() {
+    const flags = this.i32();
     return {
-      _: 'chatParticipant',
-      user_id: this.readInt(),
-      inviter_id: this.readInt(),
-      date: this.readInt(),
-    }
-  }
-
-  chatParticipantsForbidden() {
-    const flags = this.readInt();
-    return {
-      _: 'chatParticipantsForbidden',
-      chat_id: this.readInt(),
-      self_participant: (flags & 0x1) ? this.readObject() : undefined,
-    }
-  }
-
-  chatParticipants() {
-    return {
-      _: 'chatParticipants',
-      chat_id: this.readInt(),
-      participants: this.readObject(),
-      version: this.readInt(),
-    }
-  }
-
-  chatPhotoEmpty() {
-    return {
-      _: 'chatPhotoEmpty',
-    }
-  }
-
-  chatPhoto() {
-    return {
-      _: 'chatPhoto',
-      photo_small: this.readObject(),
-      photo_big: this.readObject(),
-      dc_id: this.readInt(),
-    }
-  }
-
-  messageEmpty() {
-    return {
-      _: 'messageEmpty',
-      id: this.readInt(),
-    }
-  }
-
-  message() {
-    const flags = this.readInt();
-    return {
-      _: 'message',
+      _: 'message' as const,
       out: !!(flags & 0x2),
-      mentioned: !!(flags & 0x16),
-      media_unread: !!(flags & 0x32),
-      silent: !!(flags & 0x8192),
-      post: !!(flags & 0x16384),
-      from_scheduled: !!(flags & 0x262144),
-      legacy: !!(flags & 0x524288),
-      edit_hide: !!(flags & 0x2097152),
-      id: this.readInt(),
-      from_id: (flags & 0x256) ? this.readInt() : undefined,
-      to_id: this.readObject(),
-      fwd_from: (flags & 0x4) ? this.readObject() : undefined,
-      via_bot_id: (flags & 0x2048) ? this.readInt() : undefined,
-      reply_to_msg_id: (flags & 0x8) ? this.readInt() : undefined,
-      date: this.readInt(),
-      message: this.readString(),
-      media: (flags & 0x512) ? this.readObject() : undefined,
-      reply_markup: (flags & 0x64) ? this.readObject() : undefined,
-      entities: (flags & 0x128) ? this.readObject() : undefined,
-      views: (flags & 0x1024) ? this.readInt() : undefined,
-      edit_date: (flags & 0x32768) ? this.readInt() : undefined,
-      post_author: (flags & 0x65536) ? this.readString() : undefined,
-      grouped_id: (flags & 0x131072) ? this.readLong() : undefined,
-      restriction_reason: (flags & 0x4194304) ? this.readObject() : undefined,
+      mentioned: !!(flags & 0x10),
+      media_unread: !!(flags & 0x20),
+      silent: !!(flags & 0x2000),
+      post: !!(flags & 0x4000),
+      from_scheduled: !!(flags & 0x40000),
+      legacy: !!(flags & 0x80000),
+      edit_hide: !!(flags & 0x200000),
+      id: this.i32(),
+      from_id: flags & 0x100 ? this.i32() : undefined,
+      to_id: this.o(),
+      fwd_from: flags & 0x4 ? this.o() : undefined,
+      via_bot_id: flags & 0x800 ? this.i32() : undefined,
+      reply_to_msg_id: flags & 0x8 ? this.i32() : undefined,
+      date: this.i32(),
+      message: this.s(),
+      media: flags & 0x200 ? this.o() : undefined,
+      reply_markup: flags & 0x40 ? this.o() : undefined,
+      entities: flags & 0x80 ? this.v(this.o) : undefined,
+      views: flags & 0x400 ? this.i32() : undefined,
+      edit_date: flags & 0x8000 ? this.i32() : undefined,
+      post_author: flags & 0x10000 ? this.s() : undefined,
+      grouped_id: flags & 0x20000 ? this.i64() : undefined,
+      restriction_reason: flags & 0x400000 ? this.v(this.o) : undefined,
     }
   }
-
-  messageService() {
-    const flags = this.readInt();
+  DL() {
+    const flags = this.i32();
     return {
-      _: 'messageService',
+      _: 'messageService' as const,
       out: !!(flags & 0x2),
-      mentioned: !!(flags & 0x16),
-      media_unread: !!(flags & 0x32),
-      silent: !!(flags & 0x8192),
-      post: !!(flags & 0x16384),
-      legacy: !!(flags & 0x524288),
-      id: this.readInt(),
-      from_id: (flags & 0x256) ? this.readInt() : undefined,
-      to_id: this.readObject(),
-      reply_to_msg_id: (flags & 0x8) ? this.readInt() : undefined,
-      date: this.readInt(),
-      action: this.readObject(),
+      mentioned: !!(flags & 0x10),
+      media_unread: !!(flags & 0x20),
+      silent: !!(flags & 0x2000),
+      post: !!(flags & 0x4000),
+      legacy: !!(flags & 0x80000),
+      id: this.i32(),
+      from_id: flags & 0x100 ? this.i32() : undefined,
+      to_id: this.o(),
+      reply_to_msg_id: flags & 0x8 ? this.i32() : undefined,
+      date: this.i32(),
+      action: this.o(),
     }
   }
-
-  messageMediaEmpty() {
+  DM = () => ({_: 'messageMediaEmpty'})
+  DN() {
+    const flags = this.i32();
     return {
-      _: 'messageMediaEmpty',
+      _: 'messageMediaPhoto' as const,
+      photo: flags & 0x1 ? this.o() : undefined,
+      ttl_seconds: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  messageMediaPhoto() {
-    const flags = this.readInt();
+  DO = () => ({_: 'messageMediaGeo', geo: this.o()})
+  DP = () => ({_: 'messageMediaContact', phone_number: this.s(), first_name: this.s(), last_name: this.s(), vcard: this.s(), user_id: this.i32()})
+  DQ = () => ({_: 'messageMediaUnsupported'})
+  DY = () => ({_: 'messageActionEmpty'})
+  DZ = () => ({_: 'messageActionChatCreate', title: this.s(), users: this.v(this.i32)})
+  EA = () => ({_: 'messageActionChatEditTitle', title: this.s()})
+  EB = () => ({_: 'messageActionChatEditPhoto', photo: this.o()})
+  EC = () => ({_: 'messageActionChatDeletePhoto'})
+  ED = () => ({_: 'messageActionChatAddUser', users: this.v(this.i32)})
+  EE = () => ({_: 'messageActionChatDeleteUser', user_id: this.i32()})
+  EV() {
+    const flags = this.i32();
     return {
-      _: 'messageMediaPhoto',
-      photo: (flags & 0x1) ? this.readObject() : undefined,
-      ttl_seconds: (flags & 0x4) ? this.readInt() : undefined,
-    }
-  }
-
-  messageMediaGeo() {
-    return {
-      _: 'messageMediaGeo',
-      geo: this.readObject(),
-    }
-  }
-
-  messageMediaContact() {
-    return {
-      _: 'messageMediaContact',
-      phone_number: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      vcard: this.readString(),
-      user_id: this.readInt(),
-    }
-  }
-
-  messageMediaUnsupported() {
-    return {
-      _: 'messageMediaUnsupported',
-    }
-  }
-
-  messageActionEmpty() {
-    return {
-      _: 'messageActionEmpty',
-    }
-  }
-
-  messageActionChatCreate() {
-    return {
-      _: 'messageActionChatCreate',
-      title: this.readString(),
-      users: this.readObject(),
-    }
-  }
-
-  messageActionChatEditTitle() {
-    return {
-      _: 'messageActionChatEditTitle',
-      title: this.readString(),
-    }
-  }
-
-  messageActionChatEditPhoto() {
-    return {
-      _: 'messageActionChatEditPhoto',
-      photo: this.readObject(),
-    }
-  }
-
-  messageActionChatDeletePhoto() {
-    return {
-      _: 'messageActionChatDeletePhoto',
-    }
-  }
-
-  messageActionChatAddUser() {
-    return {
-      _: 'messageActionChatAddUser',
-      users: this.readObject(),
-    }
-  }
-
-  messageActionChatDeleteUser() {
-    return {
-      _: 'messageActionChatDeleteUser',
-      user_id: this.readInt(),
-    }
-  }
-
-  dialog() {
-    const flags = this.readInt();
-    return {
-      _: 'dialog',
+      _: 'dialog' as const,
       pinned: !!(flags & 0x4),
       unread_mark: !!(flags & 0x8),
-      peer: this.readObject(),
-      top_message: this.readInt(),
-      read_inbox_max_id: this.readInt(),
-      read_outbox_max_id: this.readInt(),
-      unread_count: this.readInt(),
-      unread_mentions_count: this.readInt(),
-      notify_settings: this.readObject(),
-      pts: (flags & 0x1) ? this.readInt() : undefined,
-      draft: (flags & 0x2) ? this.readObject() : undefined,
-      folder_id: (flags & 0x16) ? this.readInt() : undefined,
+      peer: this.o(),
+      top_message: this.i32(),
+      read_inbox_max_id: this.i32(),
+      read_outbox_max_id: this.i32(),
+      unread_count: this.i32(),
+      unread_mentions_count: this.i32(),
+      notify_settings: this.o(),
+      pts: flags & 0x1 ? this.i32() : undefined,
+      draft: flags & 0x2 ? this.o() : undefined,
+      folder_id: flags & 0x10 ? this.i32() : undefined,
     }
   }
-
-  photoEmpty() {
+  EX = () => ({_: 'photoEmpty', id: this.i64()})
+  EY() {
+    const flags = this.i32();
     return {
-      _: 'photoEmpty',
-      id: this.readLong(),
-    }
-  }
-
-  photo() {
-    const flags = this.readInt();
-    return {
-      _: 'photo',
+      _: 'photo' as const,
       has_stickers: !!(flags & 0x1),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-      date: this.readInt(),
-      sizes: this.readObject(),
-      dc_id: this.readInt(),
+      id: this.i64(),
+      access_hash: this.i64(),
+      file_reference: this.b(),
+      date: this.i32(),
+      sizes: this.v(this.o),
+      dc_id: this.i32(),
     }
   }
-
-  photoSizeEmpty() {
+  EZ = () => ({_: 'photoSizeEmpty', type: this.s()})
+  FA = () => ({_: 'photoSize', type: this.s(), location: this.o(), w: this.i32(), h: this.i32(), size: this.i32()})
+  FB = () => ({_: 'photoCachedSize', type: this.s(), location: this.o(), w: this.i32(), h: this.i32(), bytes: this.b()})
+  FD = () => ({_: 'geoPointEmpty'})
+  FE = () => ({_: 'geoPoint', long: this.d(), lat: this.d(), access_hash: this.i64()})
+  FF() {
+    const flags = this.i32();
     return {
-      _: 'photoSizeEmpty',
-      type: this.readString(),
+      _: 'auth.sentCode' as const,
+      type: this.o(),
+      phone_code_hash: this.s(),
+      next_type: flags & 0x2 ? this.o() : undefined,
+      timeout: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  photoSize() {
+  FG() {
+    const flags = this.i32();
     return {
-      _: 'photoSize',
-      type: this.readString(),
-      location: this.readObject(),
-      w: this.readInt(),
-      h: this.readInt(),
-      size: this.readInt(),
+      _: 'auth.authorization' as const,
+      tmp_sessions: flags & 0x1 ? this.i32() : undefined,
+      user: this.o(),
     }
   }
-
-  photoCachedSize() {
+  FI = () => ({_: 'auth.exportedAuthorization', id: this.i32(), bytes: this.b()})
+  FJ = () => ({_: 'inputNotifyPeer', peer: this.o()})
+  FK = () => ({_: 'inputNotifyUsers'})
+  FL = () => ({_: 'inputNotifyChats'})
+  FN() {
+    const flags = this.i32();
     return {
-      _: 'photoCachedSize',
-      type: this.readString(),
-      location: this.readObject(),
-      w: this.readInt(),
-      h: this.readInt(),
-      bytes: this.readObject(),
+      _: 'inputPeerNotifySettings' as const,
+      show_previews: flags & 0x1 ? this.o() : undefined,
+      silent: flags & 0x2 ? this.o() : undefined,
+      mute_until: flags & 0x4 ? this.i32() : undefined,
+      sound: flags & 0x8 ? this.s() : undefined,
     }
   }
-
-  geoPointEmpty() {
+  FO() {
+    const flags = this.i32();
     return {
-      _: 'geoPointEmpty',
+      _: 'peerNotifySettings' as const,
+      show_previews: flags & 0x1 ? this.o() : undefined,
+      silent: flags & 0x2 ? this.o() : undefined,
+      mute_until: flags & 0x4 ? this.i32() : undefined,
+      sound: flags & 0x8 ? this.s() : undefined,
     }
   }
-
-  geoPoint() {
+  FP() {
+    const flags = this.i32();
     return {
-      _: 'geoPoint',
-      long: this.readObject(),
-      lat: this.readObject(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  auth_sentCode() {
-    const flags = this.readInt();
-    return {
-      _: 'auth.sentCode',
-      type: this.readObject(),
-      phone_code_hash: this.readString(),
-      next_type: (flags & 0x2) ? this.readObject() : undefined,
-      timeout: (flags & 0x4) ? this.readInt() : undefined,
-    }
-  }
-
-  auth_authorization() {
-    const flags = this.readInt();
-    return {
-      _: 'auth.authorization',
-      tmp_sessions: (flags & 0x1) ? this.readInt() : undefined,
-      user: this.readObject(),
-    }
-  }
-
-  auth_exportedAuthorization() {
-    return {
-      _: 'auth.exportedAuthorization',
-      id: this.readInt(),
-      bytes: this.readObject(),
-    }
-  }
-
-  inputNotifyPeer() {
-    return {
-      _: 'inputNotifyPeer',
-      peer: this.readObject(),
-    }
-  }
-
-  inputNotifyUsers() {
-    return {
-      _: 'inputNotifyUsers',
-    }
-  }
-
-  inputNotifyChats() {
-    return {
-      _: 'inputNotifyChats',
-    }
-  }
-
-  inputPeerNotifySettings() {
-    const flags = this.readInt();
-    return {
-      _: 'inputPeerNotifySettings',
-      show_previews: (flags & 0x1) ? this.readObject() : undefined,
-      silent: (flags & 0x2) ? this.readObject() : undefined,
-      mute_until: (flags & 0x4) ? this.readInt() : undefined,
-      sound: (flags & 0x8) ? this.readString() : undefined,
-    }
-  }
-
-  peerNotifySettings() {
-    const flags = this.readInt();
-    return {
-      _: 'peerNotifySettings',
-      show_previews: (flags & 0x1) ? this.readObject() : undefined,
-      silent: (flags & 0x2) ? this.readObject() : undefined,
-      mute_until: (flags & 0x4) ? this.readInt() : undefined,
-      sound: (flags & 0x8) ? this.readString() : undefined,
-    }
-  }
-
-  peerSettings() {
-    const flags = this.readInt();
-    return {
-      _: 'peerSettings',
+      _: 'peerSettings' as const,
       report_spam: !!(flags & 0x1),
       add_contact: !!(flags & 0x2),
       block_contact: !!(flags & 0x4),
       share_contact: !!(flags & 0x8),
-      need_contacts_exception: !!(flags & 0x16),
-      report_geo: !!(flags & 0x32),
+      need_contacts_exception: !!(flags & 0x10),
+      report_geo: !!(flags & 0x20),
     }
   }
-
-  wallPaper() {
-    const flags = this.readInt();
+  FQ() {
+    const flags = this.i32();
     return {
-      _: 'wallPaper',
-      id: this.readLong(),
+      _: 'wallPaper' as const,
+      id: this.i64(),
       creator: !!(flags & 0x1),
       default: !!(flags & 0x2),
       pattern: !!(flags & 0x8),
-      dark: !!(flags & 0x16),
-      access_hash: this.readLong(),
-      slug: this.readString(),
-      document: this.readObject(),
-      settings: (flags & 0x4) ? this.readObject() : undefined,
+      dark: !!(flags & 0x10),
+      access_hash: this.i64(),
+      slug: this.s(),
+      document: this.o(),
+      settings: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  inputReportReasonSpam() {
+  FR = () => ({_: 'inputReportReasonSpam'})
+  FS = () => ({_: 'inputReportReasonViolence'})
+  FT = () => ({_: 'inputReportReasonPornography'})
+  FU = () => ({_: 'inputReportReasonChildAbuse'})
+  FV = () => ({_: 'inputReportReasonOther', text: this.s()})
+  FY() {
+    const flags = this.i32();
     return {
-      _: 'inputReportReasonSpam',
-    }
-  }
-
-  inputReportReasonViolence() {
-    return {
-      _: 'inputReportReasonViolence',
-    }
-  }
-
-  inputReportReasonPornography() {
-    return {
-      _: 'inputReportReasonPornography',
-    }
-  }
-
-  inputReportReasonChildAbuse() {
-    return {
-      _: 'inputReportReasonChildAbuse',
-    }
-  }
-
-  inputReportReasonOther() {
-    return {
-      _: 'inputReportReasonOther',
-      text: this.readString(),
-    }
-  }
-
-  userFull() {
-    const flags = this.readInt();
-    return {
-      _: 'userFull',
+      _: 'userFull' as const,
       blocked: !!(flags & 0x1),
-      phone_calls_available: !!(flags & 0x16),
-      phone_calls_private: !!(flags & 0x32),
-      can_pin_message: !!(flags & 0x128),
-      has_scheduled: !!(flags & 0x4096),
-      user: this.readObject(),
-      about: (flags & 0x2) ? this.readString() : undefined,
-      settings: this.readObject(),
-      profile_photo: (flags & 0x4) ? this.readObject() : undefined,
-      notify_settings: this.readObject(),
-      bot_info: (flags & 0x8) ? this.readObject() : undefined,
-      pinned_msg_id: (flags & 0x64) ? this.readInt() : undefined,
-      common_chats_count: this.readInt(),
-      folder_id: (flags & 0x2048) ? this.readInt() : undefined,
+      phone_calls_available: !!(flags & 0x10),
+      phone_calls_private: !!(flags & 0x20),
+      can_pin_message: !!(flags & 0x80),
+      has_scheduled: !!(flags & 0x1000),
+      user: this.o(),
+      about: flags & 0x2 ? this.s() : undefined,
+      settings: this.o(),
+      profile_photo: flags & 0x4 ? this.o() : undefined,
+      notify_settings: this.o(),
+      bot_info: flags & 0x8 ? this.o() : undefined,
+      pinned_msg_id: flags & 0x40 ? this.i32() : undefined,
+      common_chats_count: this.i32(),
+      folder_id: flags & 0x800 ? this.i32() : undefined,
     }
   }
-
-  contact() {
+  FZ = () => ({_: 'contact', user_id: this.i32(), mutual: this.o()})
+  GA = () => ({_: 'importedContact', user_id: this.i32(), client_id: this.i64()})
+  GB = () => ({_: 'contactBlocked', user_id: this.i32(), date: this.i32()})
+  GC = () => ({_: 'contactStatus', user_id: this.i32(), status: this.o()})
+  GD = () => ({_: 'contacts.contactsNotModified'})
+  GE = () => ({_: 'contacts.contacts', contacts: this.v(this.o), saved_count: this.i32(), users: this.v(this.o)})
+  GF = () => ({_: 'contacts.importedContacts', imported: this.v(this.o), popular_invites: this.v(this.o), retry_contacts: this.v(this.i64), users: this.v(this.o)})
+  GG = () => ({_: 'contacts.blocked', blocked: this.v(this.o), users: this.v(this.o)})
+  GH = () => ({_: 'contacts.blockedSlice', count: this.i32(), blocked: this.v(this.o), users: this.v(this.o)})
+  GI = () => ({_: 'messages.dialogs', dialogs: this.v(this.o), messages: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  GJ = () => ({_: 'messages.dialogsSlice', count: this.i32(), dialogs: this.v(this.o), messages: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  GL = () => ({_: 'messages.messages', messages: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  GM() {
+    const flags = this.i32();
     return {
-      _: 'contact',
-      user_id: this.readInt(),
-      mutual: this.readObject(),
-    }
-  }
-
-  importedContact() {
-    return {
-      _: 'importedContact',
-      user_id: this.readInt(),
-      client_id: this.readLong(),
-    }
-  }
-
-  contactBlocked() {
-    return {
-      _: 'contactBlocked',
-      user_id: this.readInt(),
-      date: this.readInt(),
-    }
-  }
-
-  contactStatus() {
-    return {
-      _: 'contactStatus',
-      user_id: this.readInt(),
-      status: this.readObject(),
-    }
-  }
-
-  contacts_contactsNotModified() {
-    return {
-      _: 'contacts.contactsNotModified',
-    }
-  }
-
-  contacts_contacts() {
-    return {
-      _: 'contacts.contacts',
-      contacts: this.readObject(),
-      saved_count: this.readInt(),
-      users: this.readObject(),
-    }
-  }
-
-  contacts_importedContacts() {
-    return {
-      _: 'contacts.importedContacts',
-      imported: this.readObject(),
-      popular_invites: this.readObject(),
-      retry_contacts: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  contacts_blocked() {
-    return {
-      _: 'contacts.blocked',
-      blocked: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  contacts_blockedSlice() {
-    return {
-      _: 'contacts.blockedSlice',
-      count: this.readInt(),
-      blocked: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messages_dialogs() {
-    return {
-      _: 'messages.dialogs',
-      dialogs: this.readObject(),
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messages_dialogsSlice() {
-    return {
-      _: 'messages.dialogsSlice',
-      count: this.readInt(),
-      dialogs: this.readObject(),
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messages_messages() {
-    return {
-      _: 'messages.messages',
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messages_messagesSlice() {
-    const flags = this.readInt();
-    return {
-      _: 'messages.messagesSlice',
+      _: 'messages.messagesSlice' as const,
       inexact: !!(flags & 0x2),
-      count: this.readInt(),
-      next_rate: (flags & 0x1) ? this.readInt() : undefined,
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
+      count: this.i32(),
+      next_rate: flags & 0x1 ? this.i32() : undefined,
+      messages: this.v(this.o),
+      chats: this.v(this.o),
+      users: this.v(this.o),
     }
   }
-
-  messages_chats() {
+  GP = () => ({_: 'messages.chats', chats: this.v(this.o)})
+  GR = () => ({_: 'messages.chatFull', full_chat: this.o(), chats: this.v(this.o), users: this.v(this.o)})
+  GS = () => ({_: 'messages.affectedHistory', pts: this.i32(), pts_count: this.i32(), offset: this.i32()})
+  GT = () => ({_: 'inputMessagesFilterEmpty'})
+  GU = () => ({_: 'inputMessagesFilterPhotos'})
+  GV = () => ({_: 'inputMessagesFilterVideo'})
+  GW = () => ({_: 'inputMessagesFilterPhotoVideo'})
+  GX = () => ({_: 'inputMessagesFilterDocument'})
+  GY = () => ({_: 'inputMessagesFilterUrl'})
+  GZ = () => ({_: 'inputMessagesFilterGif'})
+  HJ = () => ({_: 'updateNewMessage', message: this.o(), pts: this.i32(), pts_count: this.i32()})
+  HK = () => ({_: 'updateMessageID', id: this.i32(), random_id: this.i64()})
+  HL = () => ({_: 'updateDeleteMessages', messages: this.v(this.i32), pts: this.i32(), pts_count: this.i32()})
+  HM = () => ({_: 'updateUserTyping', user_id: this.i32(), action: this.o()})
+  HN = () => ({_: 'updateChatUserTyping', chat_id: this.i32(), user_id: this.i32(), action: this.o()})
+  HO = () => ({_: 'updateChatParticipants', participants: this.o()})
+  HP = () => ({_: 'updateUserStatus', user_id: this.i32(), status: this.o()})
+  HQ = () => ({_: 'updateUserName', user_id: this.i32(), first_name: this.s(), last_name: this.s(), username: this.s()})
+  HR = () => ({_: 'updateUserPhoto', user_id: this.i32(), date: this.i32(), photo: this.o(), previous: this.o()})
+  KF = () => ({_: 'updates.state', pts: this.i32(), qts: this.i32(), date: this.i32(), seq: this.i32(), unread_count: this.i32()})
+  KG = () => ({_: 'updates.differenceEmpty', date: this.i32(), seq: this.i32()})
+  KH = () => ({_: 'updates.difference', new_messages: this.v(this.o), new_encrypted_messages: this.v(this.o), other_updates: this.v(this.o), chats: this.v(this.o), users: this.v(this.o), state: this.o()})
+  KI = () => ({_: 'updates.differenceSlice', new_messages: this.v(this.o), new_encrypted_messages: this.v(this.o), other_updates: this.v(this.o), chats: this.v(this.o), users: this.v(this.o), intermediate_state: this.o()})
+  KK = () => ({_: 'updatesTooLong'})
+  KL() {
+    const flags = this.i32();
     return {
-      _: 'messages.chats',
-      chats: this.readObject(),
-    }
-  }
-
-  messages_chatFull() {
-    return {
-      _: 'messages.chatFull',
-      full_chat: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messages_affectedHistory() {
-    return {
-      _: 'messages.affectedHistory',
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-      offset: this.readInt(),
-    }
-  }
-
-  inputMessagesFilterEmpty() {
-    return {
-      _: 'inputMessagesFilterEmpty',
-    }
-  }
-
-  inputMessagesFilterPhotos() {
-    return {
-      _: 'inputMessagesFilterPhotos',
-    }
-  }
-
-  inputMessagesFilterVideo() {
-    return {
-      _: 'inputMessagesFilterVideo',
-    }
-  }
-
-  inputMessagesFilterPhotoVideo() {
-    return {
-      _: 'inputMessagesFilterPhotoVideo',
-    }
-  }
-
-  inputMessagesFilterDocument() {
-    return {
-      _: 'inputMessagesFilterDocument',
-    }
-  }
-
-  inputMessagesFilterUrl() {
-    return {
-      _: 'inputMessagesFilterUrl',
-    }
-  }
-
-  inputMessagesFilterGif() {
-    return {
-      _: 'inputMessagesFilterGif',
-    }
-  }
-
-  updateNewMessage() {
-    return {
-      _: 'updateNewMessage',
-      message: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateMessageID() {
-    return {
-      _: 'updateMessageID',
-      id: this.readInt(),
-      random_id: this.readLong(),
-    }
-  }
-
-  updateDeleteMessages() {
-    return {
-      _: 'updateDeleteMessages',
-      messages: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateUserTyping() {
-    return {
-      _: 'updateUserTyping',
-      user_id: this.readInt(),
-      action: this.readObject(),
-    }
-  }
-
-  updateChatUserTyping() {
-    return {
-      _: 'updateChatUserTyping',
-      chat_id: this.readInt(),
-      user_id: this.readInt(),
-      action: this.readObject(),
-    }
-  }
-
-  updateChatParticipants() {
-    return {
-      _: 'updateChatParticipants',
-      participants: this.readObject(),
-    }
-  }
-
-  updateUserStatus() {
-    return {
-      _: 'updateUserStatus',
-      user_id: this.readInt(),
-      status: this.readObject(),
-    }
-  }
-
-  updateUserName() {
-    return {
-      _: 'updateUserName',
-      user_id: this.readInt(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      username: this.readString(),
-    }
-  }
-
-  updateUserPhoto() {
-    return {
-      _: 'updateUserPhoto',
-      user_id: this.readInt(),
-      date: this.readInt(),
-      photo: this.readObject(),
-      previous: this.readObject(),
-    }
-  }
-
-  updates_state() {
-    return {
-      _: 'updates.state',
-      pts: this.readInt(),
-      qts: this.readInt(),
-      date: this.readInt(),
-      seq: this.readInt(),
-      unread_count: this.readInt(),
-    }
-  }
-
-  updates_differenceEmpty() {
-    return {
-      _: 'updates.differenceEmpty',
-      date: this.readInt(),
-      seq: this.readInt(),
-    }
-  }
-
-  updates_difference() {
-    return {
-      _: 'updates.difference',
-      new_messages: this.readObject(),
-      new_encrypted_messages: this.readObject(),
-      other_updates: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-      state: this.readObject(),
-    }
-  }
-
-  updates_differenceSlice() {
-    return {
-      _: 'updates.differenceSlice',
-      new_messages: this.readObject(),
-      new_encrypted_messages: this.readObject(),
-      other_updates: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-      intermediate_state: this.readObject(),
-    }
-  }
-
-  updatesTooLong() {
-    return {
-      _: 'updatesTooLong',
-    }
-  }
-
-  updateShortMessage() {
-    const flags = this.readInt();
-    return {
-      _: 'updateShortMessage',
+      _: 'updateShortMessage' as const,
       out: !!(flags & 0x2),
-      mentioned: !!(flags & 0x16),
-      media_unread: !!(flags & 0x32),
-      silent: !!(flags & 0x8192),
-      id: this.readInt(),
-      user_id: this.readInt(),
-      message: this.readString(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-      date: this.readInt(),
-      fwd_from: (flags & 0x4) ? this.readObject() : undefined,
-      via_bot_id: (flags & 0x2048) ? this.readInt() : undefined,
-      reply_to_msg_id: (flags & 0x8) ? this.readInt() : undefined,
-      entities: (flags & 0x128) ? this.readObject() : undefined,
+      mentioned: !!(flags & 0x10),
+      media_unread: !!(flags & 0x20),
+      silent: !!(flags & 0x2000),
+      id: this.i32(),
+      user_id: this.i32(),
+      message: this.s(),
+      pts: this.i32(),
+      pts_count: this.i32(),
+      date: this.i32(),
+      fwd_from: flags & 0x4 ? this.o() : undefined,
+      via_bot_id: flags & 0x800 ? this.i32() : undefined,
+      reply_to_msg_id: flags & 0x8 ? this.i32() : undefined,
+      entities: flags & 0x80 ? this.v(this.o) : undefined,
     }
   }
-
-  updateShortChatMessage() {
-    const flags = this.readInt();
+  KM() {
+    const flags = this.i32();
     return {
-      _: 'updateShortChatMessage',
+      _: 'updateShortChatMessage' as const,
       out: !!(flags & 0x2),
-      mentioned: !!(flags & 0x16),
-      media_unread: !!(flags & 0x32),
-      silent: !!(flags & 0x8192),
-      id: this.readInt(),
-      from_id: this.readInt(),
-      chat_id: this.readInt(),
-      message: this.readString(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-      date: this.readInt(),
-      fwd_from: (flags & 0x4) ? this.readObject() : undefined,
-      via_bot_id: (flags & 0x2048) ? this.readInt() : undefined,
-      reply_to_msg_id: (flags & 0x8) ? this.readInt() : undefined,
-      entities: (flags & 0x128) ? this.readObject() : undefined,
+      mentioned: !!(flags & 0x10),
+      media_unread: !!(flags & 0x20),
+      silent: !!(flags & 0x2000),
+      id: this.i32(),
+      from_id: this.i32(),
+      chat_id: this.i32(),
+      message: this.s(),
+      pts: this.i32(),
+      pts_count: this.i32(),
+      date: this.i32(),
+      fwd_from: flags & 0x4 ? this.o() : undefined,
+      via_bot_id: flags & 0x800 ? this.i32() : undefined,
+      reply_to_msg_id: flags & 0x8 ? this.i32() : undefined,
+      entities: flags & 0x80 ? this.v(this.o) : undefined,
     }
   }
-
-  updateShort() {
+  KN = () => ({_: 'updateShort', update: this.o(), date: this.i32()})
+  KO = () => ({_: 'updatesCombined', updates: this.v(this.o), users: this.v(this.o), chats: this.v(this.o), date: this.i32(), seq_start: this.i32(), seq: this.i32()})
+  KP = () => ({_: 'updates', updates: this.v(this.o), users: this.v(this.o), chats: this.v(this.o), date: this.i32(), seq: this.i32()})
+  KR = () => ({_: 'photos.photos', photos: this.v(this.o), users: this.v(this.o)})
+  KS = () => ({_: 'photos.photosSlice', count: this.i32(), photos: this.v(this.o), users: this.v(this.o)})
+  KT = () => ({_: 'photos.photo', photo: this.o(), users: this.v(this.o)})
+  KU = () => ({_: 'upload.file', type: this.o(), mtime: this.i32(), bytes: this.b()})
+  KW() {
+    const flags = this.i32();
     return {
-      _: 'updateShort',
-      update: this.readObject(),
-      date: this.readInt(),
-    }
-  }
-
-  updatesCombined() {
-    return {
-      _: 'updatesCombined',
-      updates: this.readObject(),
-      users: this.readObject(),
-      chats: this.readObject(),
-      date: this.readInt(),
-      seq_start: this.readInt(),
-      seq: this.readInt(),
-    }
-  }
-
-  updates() {
-    return {
-      _: 'updates',
-      updates: this.readObject(),
-      users: this.readObject(),
-      chats: this.readObject(),
-      date: this.readInt(),
-      seq: this.readInt(),
-    }
-  }
-
-  photos_photos() {
-    return {
-      _: 'photos.photos',
-      photos: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  photos_photosSlice() {
-    return {
-      _: 'photos.photosSlice',
-      count: this.readInt(),
-      photos: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  photos_photo() {
-    return {
-      _: 'photos.photo',
-      photo: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  upload_file() {
-    return {
-      _: 'upload.file',
-      type: this.readObject(),
-      mtime: this.readInt(),
-      bytes: this.readObject(),
-    }
-  }
-
-  dcOption() {
-    const flags = this.readInt();
-    return {
-      _: 'dcOption',
+      _: 'dcOption' as const,
       ipv6: !!(flags & 0x1),
       media_only: !!(flags & 0x2),
       tcpo_only: !!(flags & 0x4),
       cdn: !!(flags & 0x8),
-      static: !!(flags & 0x16),
-      id: this.readInt(),
-      ip_address: this.readString(),
-      port: this.readInt(),
-      secret: (flags & 0x1024) ? this.readObject() : undefined,
+      static: !!(flags & 0x10),
+      id: this.i32(),
+      ip_address: this.s(),
+      port: this.i32(),
+      secret: flags & 0x400 ? this.b() : undefined,
     }
   }
-
-  config() {
-    const flags = this.readInt();
+  KX() {
+    const flags = this.i32();
     return {
-      _: 'config',
+      _: 'config' as const,
       phonecalls_enabled: !!(flags & 0x2),
       default_p2p_contacts: !!(flags & 0x8),
-      preload_featured_stickers: !!(flags & 0x16),
-      ignore_phone_entities: !!(flags & 0x32),
-      revoke_pm_inbox: !!(flags & 0x64),
-      blocked_mode: !!(flags & 0x256),
-      pfs_enabled: !!(flags & 0x8192),
-      date: this.readInt(),
-      expires: this.readInt(),
-      test_mode: this.readObject(),
-      this_dc: this.readInt(),
-      dc_options: this.readObject(),
-      dc_txt_domain_name: this.readString(),
-      chat_size_max: this.readInt(),
-      megagroup_size_max: this.readInt(),
-      forwarded_count_max: this.readInt(),
-      online_update_period_ms: this.readInt(),
-      offline_blur_timeout_ms: this.readInt(),
-      offline_idle_timeout_ms: this.readInt(),
-      online_cloud_timeout_ms: this.readInt(),
-      notify_cloud_delay_ms: this.readInt(),
-      notify_default_delay_ms: this.readInt(),
-      push_chat_period_ms: this.readInt(),
-      push_chat_limit: this.readInt(),
-      saved_gifs_limit: this.readInt(),
-      edit_time_limit: this.readInt(),
-      revoke_time_limit: this.readInt(),
-      revoke_pm_time_limit: this.readInt(),
-      rating_e_decay: this.readInt(),
-      stickers_recent_limit: this.readInt(),
-      stickers_faved_limit: this.readInt(),
-      channels_read_media_period: this.readInt(),
-      tmp_sessions: (flags & 0x1) ? this.readInt() : undefined,
-      pinned_dialogs_count_max: this.readInt(),
-      pinned_infolder_count_max: this.readInt(),
-      call_receive_timeout_ms: this.readInt(),
-      call_ring_timeout_ms: this.readInt(),
-      call_connect_timeout_ms: this.readInt(),
-      call_packet_timeout_ms: this.readInt(),
-      me_url_prefix: this.readString(),
-      autoupdate_url_prefix: (flags & 0x128) ? this.readString() : undefined,
-      gif_search_username: (flags & 0x512) ? this.readString() : undefined,
-      venue_search_username: (flags & 0x1024) ? this.readString() : undefined,
-      img_search_username: (flags & 0x2048) ? this.readString() : undefined,
-      static_maps_provider: (flags & 0x4096) ? this.readString() : undefined,
-      caption_length_max: this.readInt(),
-      message_length_max: this.readInt(),
-      webfile_dc_id: this.readInt(),
-      suggested_lang_code: (flags & 0x4) ? this.readString() : undefined,
-      lang_pack_version: (flags & 0x4) ? this.readInt() : undefined,
-      base_lang_pack_version: (flags & 0x4) ? this.readInt() : undefined,
+      preload_featured_stickers: !!(flags & 0x10),
+      ignore_phone_entities: !!(flags & 0x20),
+      revoke_pm_inbox: !!(flags & 0x40),
+      blocked_mode: !!(flags & 0x100),
+      pfs_enabled: !!(flags & 0x2000),
+      date: this.i32(),
+      expires: this.i32(),
+      test_mode: this.o(),
+      this_dc: this.i32(),
+      dc_options: this.v(this.o),
+      dc_txt_domain_name: this.s(),
+      chat_size_max: this.i32(),
+      megagroup_size_max: this.i32(),
+      forwarded_count_max: this.i32(),
+      online_update_period_ms: this.i32(),
+      offline_blur_timeout_ms: this.i32(),
+      offline_idle_timeout_ms: this.i32(),
+      online_cloud_timeout_ms: this.i32(),
+      notify_cloud_delay_ms: this.i32(),
+      notify_default_delay_ms: this.i32(),
+      push_chat_period_ms: this.i32(),
+      push_chat_limit: this.i32(),
+      saved_gifs_limit: this.i32(),
+      edit_time_limit: this.i32(),
+      revoke_time_limit: this.i32(),
+      revoke_pm_time_limit: this.i32(),
+      rating_e_decay: this.i32(),
+      stickers_recent_limit: this.i32(),
+      stickers_faved_limit: this.i32(),
+      channels_read_media_period: this.i32(),
+      tmp_sessions: flags & 0x1 ? this.i32() : undefined,
+      pinned_dialogs_count_max: this.i32(),
+      pinned_infolder_count_max: this.i32(),
+      call_receive_timeout_ms: this.i32(),
+      call_ring_timeout_ms: this.i32(),
+      call_connect_timeout_ms: this.i32(),
+      call_packet_timeout_ms: this.i32(),
+      me_url_prefix: this.s(),
+      autoupdate_url_prefix: flags & 0x80 ? this.s() : undefined,
+      gif_search_username: flags & 0x200 ? this.s() : undefined,
+      venue_search_username: flags & 0x400 ? this.s() : undefined,
+      img_search_username: flags & 0x800 ? this.s() : undefined,
+      static_maps_provider: flags & 0x1000 ? this.s() : undefined,
+      caption_length_max: this.i32(),
+      message_length_max: this.i32(),
+      webfile_dc_id: this.i32(),
+      suggested_lang_code: flags & 0x4 ? this.s() : undefined,
+      lang_pack_version: flags & 0x4 ? this.i32() : undefined,
+      base_lang_pack_version: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  nearestDc() {
+  KY = () => ({_: 'nearestDc', country: this.s(), this_dc: this.i32(), nearest_dc: this.i32()})
+  KZ() {
+    const flags = this.i32();
     return {
-      _: 'nearestDc',
-      country: this.readString(),
-      this_dc: this.readInt(),
-      nearest_dc: this.readInt(),
-    }
-  }
-
-  help_appUpdate() {
-    const flags = this.readInt();
-    return {
-      _: 'help.appUpdate',
+      _: 'help.appUpdate' as const,
       can_not_skip: !!(flags & 0x1),
-      id: this.readInt(),
-      version: this.readString(),
-      text: this.readString(),
-      entities: this.readObject(),
-      document: (flags & 0x2) ? this.readObject() : undefined,
-      url: (flags & 0x4) ? this.readString() : undefined,
+      id: this.i32(),
+      version: this.s(),
+      text: this.s(),
+      entities: this.v(this.o),
+      document: flags & 0x2 ? this.o() : undefined,
+      url: flags & 0x4 ? this.s() : undefined,
     }
   }
-
-  help_noAppUpdate() {
+  LA = () => ({_: 'help.noAppUpdate'})
+  LB = () => ({_: 'help.inviteText', message: this.s()})
+  HS = () => ({_: 'updateNewEncryptedMessage', message: this.o(), qts: this.i32()})
+  HT = () => ({_: 'updateEncryptedChatTyping', chat_id: this.i32()})
+  HU = () => ({_: 'updateEncryption', chat: this.o(), date: this.i32()})
+  HV = () => ({_: 'updateEncryptedMessagesRead', chat_id: this.i32(), max_date: this.i32(), date: this.i32()})
+  LC = () => ({_: 'encryptedChatEmpty', id: this.i32()})
+  LD = () => ({_: 'encryptedChatWaiting', id: this.i32(), access_hash: this.i64(), date: this.i32(), admin_id: this.i32(), participant_id: this.i32()})
+  LE = () => ({_: 'encryptedChatRequested', id: this.i32(), access_hash: this.i64(), date: this.i32(), admin_id: this.i32(), participant_id: this.i32(), g_a: this.b()})
+  LF = () => ({_: 'encryptedChat', id: this.i32(), access_hash: this.i64(), date: this.i32(), admin_id: this.i32(), participant_id: this.i32(), g_a_or_b: this.b(), key_fingerprint: this.i64()})
+  LG = () => ({_: 'encryptedChatDiscarded', id: this.i32()})
+  LH = () => ({_: 'inputEncryptedChat', chat_id: this.i32(), access_hash: this.i64()})
+  LI = () => ({_: 'encryptedFileEmpty'})
+  LJ = () => ({_: 'encryptedFile', id: this.i64(), access_hash: this.i64(), size: this.i32(), dc_id: this.i32(), key_fingerprint: this.i32()})
+  LK = () => ({_: 'inputEncryptedFileEmpty'})
+  LL = () => ({_: 'inputEncryptedFileUploaded', id: this.i64(), parts: this.i32(), md5_checksum: this.s(), key_fingerprint: this.i32()})
+  LM = () => ({_: 'inputEncryptedFile', id: this.i64(), access_hash: this.i64()})
+  BR = () => ({_: 'inputEncryptedFileLocation', id: this.i64(), access_hash: this.i64()})
+  LO = () => ({_: 'encryptedMessage', random_id: this.i64(), chat_id: this.i32(), date: this.i32(), bytes: this.b(), file: this.o()})
+  LP = () => ({_: 'encryptedMessageService', random_id: this.i64(), chat_id: this.i32(), date: this.i32(), bytes: this.b()})
+  LQ = () => ({_: 'messages.dhConfigNotModified', random: this.b()})
+  LR = () => ({_: 'messages.dhConfig', g: this.i32(), p: this.b(), version: this.i32(), random: this.b()})
+  LS = () => ({_: 'messages.sentEncryptedMessage', date: this.i32()})
+  LT = () => ({_: 'messages.sentEncryptedFile', date: this.i32(), file: this.o()})
+  T = () => ({_: 'inputFileBig', id: this.i64(), parts: this.i32(), name: this.s()})
+  LN = () => ({_: 'inputEncryptedFileBigUploaded', id: this.i64(), parts: this.i32(), key_fingerprint: this.i32()})
+  HW = () => ({_: 'updateChatParticipantAdd', chat_id: this.i32(), user_id: this.i32(), inviter_id: this.i32(), date: this.i32(), version: this.i32()})
+  HX = () => ({_: 'updateChatParticipantDelete', chat_id: this.i32(), user_id: this.i32(), version: this.i32()})
+  HY = () => ({_: 'updateDcOptions', dc_options: this.v(this.o)})
+  Z() {
+    const flags = this.i32();
     return {
-      _: 'help.noAppUpdate',
-    }
-  }
-
-  help_inviteText() {
-    return {
-      _: 'help.inviteText',
-      message: this.readString(),
-    }
-  }
-
-  updateNewEncryptedMessage() {
-    return {
-      _: 'updateNewEncryptedMessage',
-      message: this.readObject(),
-      qts: this.readInt(),
-    }
-  }
-
-  updateEncryptedChatTyping() {
-    return {
-      _: 'updateEncryptedChatTyping',
-      chat_id: this.readInt(),
-    }
-  }
-
-  updateEncryption() {
-    return {
-      _: 'updateEncryption',
-      chat: this.readObject(),
-      date: this.readInt(),
-    }
-  }
-
-  updateEncryptedMessagesRead() {
-    return {
-      _: 'updateEncryptedMessagesRead',
-      chat_id: this.readInt(),
-      max_date: this.readInt(),
-      date: this.readInt(),
-    }
-  }
-
-  encryptedChatEmpty() {
-    return {
-      _: 'encryptedChatEmpty',
-      id: this.readInt(),
-    }
-  }
-
-  encryptedChatWaiting() {
-    return {
-      _: 'encryptedChatWaiting',
-      id: this.readInt(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-    }
-  }
-
-  encryptedChatRequested() {
-    return {
-      _: 'encryptedChatRequested',
-      id: this.readInt(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      g_a: this.readObject(),
-    }
-  }
-
-  encryptedChat() {
-    return {
-      _: 'encryptedChat',
-      id: this.readInt(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      g_a_or_b: this.readObject(),
-      key_fingerprint: this.readLong(),
-    }
-  }
-
-  encryptedChatDiscarded() {
-    return {
-      _: 'encryptedChatDiscarded',
-      id: this.readInt(),
-    }
-  }
-
-  inputEncryptedChat() {
-    return {
-      _: 'inputEncryptedChat',
-      chat_id: this.readInt(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  encryptedFileEmpty() {
-    return {
-      _: 'encryptedFileEmpty',
-    }
-  }
-
-  encryptedFile() {
-    return {
-      _: 'encryptedFile',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      size: this.readInt(),
-      dc_id: this.readInt(),
-      key_fingerprint: this.readInt(),
-    }
-  }
-
-  inputEncryptedFileEmpty() {
-    return {
-      _: 'inputEncryptedFileEmpty',
-    }
-  }
-
-  inputEncryptedFileUploaded() {
-    return {
-      _: 'inputEncryptedFileUploaded',
-      id: this.readLong(),
-      parts: this.readInt(),
-      md5_checksum: this.readString(),
-      key_fingerprint: this.readInt(),
-    }
-  }
-
-  inputEncryptedFile() {
-    return {
-      _: 'inputEncryptedFile',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputEncryptedFileLocation() {
-    return {
-      _: 'inputEncryptedFileLocation',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  encryptedMessage() {
-    return {
-      _: 'encryptedMessage',
-      random_id: this.readLong(),
-      chat_id: this.readInt(),
-      date: this.readInt(),
-      bytes: this.readObject(),
-      file: this.readObject(),
-    }
-  }
-
-  encryptedMessageService() {
-    return {
-      _: 'encryptedMessageService',
-      random_id: this.readLong(),
-      chat_id: this.readInt(),
-      date: this.readInt(),
-      bytes: this.readObject(),
-    }
-  }
-
-  messages_dhConfigNotModified() {
-    return {
-      _: 'messages.dhConfigNotModified',
-      random: this.readObject(),
-    }
-  }
-
-  messages_dhConfig() {
-    return {
-      _: 'messages.dhConfig',
-      g: this.readInt(),
-      p: this.readObject(),
-      version: this.readInt(),
-      random: this.readObject(),
-    }
-  }
-
-  messages_sentEncryptedMessage() {
-    return {
-      _: 'messages.sentEncryptedMessage',
-      date: this.readInt(),
-    }
-  }
-
-  messages_sentEncryptedFile() {
-    return {
-      _: 'messages.sentEncryptedFile',
-      date: this.readInt(),
-      file: this.readObject(),
-    }
-  }
-
-  inputFileBig() {
-    return {
-      _: 'inputFileBig',
-      id: this.readLong(),
-      parts: this.readInt(),
-      name: this.readString(),
-    }
-  }
-
-  inputEncryptedFileBigUploaded() {
-    return {
-      _: 'inputEncryptedFileBigUploaded',
-      id: this.readLong(),
-      parts: this.readInt(),
-      key_fingerprint: this.readInt(),
-    }
-  }
-
-  updateChatParticipantAdd() {
-    return {
-      _: 'updateChatParticipantAdd',
-      chat_id: this.readInt(),
-      user_id: this.readInt(),
-      inviter_id: this.readInt(),
-      date: this.readInt(),
-      version: this.readInt(),
-    }
-  }
-
-  updateChatParticipantDelete() {
-    return {
-      _: 'updateChatParticipantDelete',
-      chat_id: this.readInt(),
-      user_id: this.readInt(),
-      version: this.readInt(),
-    }
-  }
-
-  updateDcOptions() {
-    return {
-      _: 'updateDcOptions',
-      dc_options: this.readObject(),
-    }
-  }
-
-  inputMediaUploadedDocument() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaUploadedDocument',
+      _: 'inputMediaUploadedDocument' as const,
       nosound_video: !!(flags & 0x8),
-      file: this.readObject(),
-      thumb: (flags & 0x4) ? this.readObject() : undefined,
-      mime_type: this.readString(),
-      attributes: this.readObject(),
-      stickers: (flags & 0x1) ? this.readObject() : undefined,
-      ttl_seconds: (flags & 0x2) ? this.readInt() : undefined,
+      file: this.o(),
+      thumb: flags & 0x4 ? this.o() : undefined,
+      mime_type: this.s(),
+      attributes: this.v(this.o),
+      stickers: flags & 0x1 ? this.v(this.o) : undefined,
+      ttl_seconds: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  inputMediaDocument() {
-    const flags = this.readInt();
+  BA() {
+    const flags = this.i32();
     return {
-      _: 'inputMediaDocument',
-      id: this.readObject(),
-      ttl_seconds: (flags & 0x1) ? this.readInt() : undefined,
+      _: 'inputMediaDocument' as const,
+      id: this.o(),
+      ttl_seconds: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  messageMediaDocument() {
-    const flags = this.readInt();
+  DR() {
+    const flags = this.i32();
     return {
-      _: 'messageMediaDocument',
-      document: (flags & 0x1) ? this.readObject() : undefined,
-      ttl_seconds: (flags & 0x4) ? this.readInt() : undefined,
+      _: 'messageMediaDocument' as const,
+      document: flags & 0x1 ? this.o() : undefined,
+      ttl_seconds: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  inputDocumentEmpty() {
+  LU = () => ({_: 'inputDocumentEmpty'})
+  LV = () => ({_: 'inputDocument', id: this.i64(), access_hash: this.i64(), file_reference: this.b()})
+  BS = () => ({_: 'inputDocumentFileLocation', id: this.i64(), access_hash: this.i64(), file_reference: this.b(), thumb_size: this.s()})
+  LW = () => ({_: 'documentEmpty', id: this.i64()})
+  LX() {
+    const flags = this.i32();
     return {
-      _: 'inputDocumentEmpty',
+      _: 'document' as const,
+      id: this.i64(),
+      access_hash: this.i64(),
+      file_reference: this.b(),
+      date: this.i32(),
+      mime_type: this.s(),
+      size: this.i32(),
+      thumbs: flags & 0x1 ? this.v(this.o) : undefined,
+      dc_id: this.i32(),
+      attributes: this.v(this.o),
     }
   }
-
-  inputDocument() {
+  LY = () => ({_: 'help.support', phone_number: this.s(), user: this.o()})
+  LZ = () => ({_: 'notifyPeer', peer: this.o()})
+  MA = () => ({_: 'notifyUsers'})
+  MB = () => ({_: 'notifyChats'})
+  HZ = () => ({_: 'updateUserBlocked', user_id: this.i32(), blocked: this.o()})
+  IA = () => ({_: 'updateNotifySettings', peer: this.o(), notify_settings: this.o()})
+  MD = () => ({_: 'sendMessageTypingAction'})
+  ME = () => ({_: 'sendMessageCancelAction'})
+  MF = () => ({_: 'sendMessageRecordVideoAction'})
+  MG = () => ({_: 'sendMessageUploadVideoAction', progress: this.i32()})
+  MH = () => ({_: 'sendMessageRecordAudioAction'})
+  MI = () => ({_: 'sendMessageUploadAudioAction', progress: this.i32()})
+  MJ = () => ({_: 'sendMessageUploadPhotoAction', progress: this.i32()})
+  MK = () => ({_: 'sendMessageUploadDocumentAction', progress: this.i32()})
+  ML = () => ({_: 'sendMessageGeoLocationAction'})
+  MM = () => ({_: 'sendMessageChooseContactAction'})
+  MQ = () => ({_: 'contacts.found', my_results: this.v(this.o), results: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  IB() {
+    const flags = this.i32();
     return {
-      _: 'inputDocument',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-    }
-  }
-
-  inputDocumentFileLocation() {
-    return {
-      _: 'inputDocumentFileLocation',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-      thumb_size: this.readString(),
-    }
-  }
-
-  documentEmpty() {
-    return {
-      _: 'documentEmpty',
-      id: this.readLong(),
-    }
-  }
-
-  document() {
-    const flags = this.readInt();
-    return {
-      _: 'document',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-      date: this.readInt(),
-      mime_type: this.readString(),
-      size: this.readInt(),
-      thumbs: (flags & 0x1) ? this.readObject() : undefined,
-      dc_id: this.readInt(),
-      attributes: this.readObject(),
-    }
-  }
-
-  help_support() {
-    return {
-      _: 'help.support',
-      phone_number: this.readString(),
-      user: this.readObject(),
-    }
-  }
-
-  notifyPeer() {
-    return {
-      _: 'notifyPeer',
-      peer: this.readObject(),
-    }
-  }
-
-  notifyUsers() {
-    return {
-      _: 'notifyUsers',
-    }
-  }
-
-  notifyChats() {
-    return {
-      _: 'notifyChats',
-    }
-  }
-
-  updateUserBlocked() {
-    return {
-      _: 'updateUserBlocked',
-      user_id: this.readInt(),
-      blocked: this.readObject(),
-    }
-  }
-
-  updateNotifySettings() {
-    return {
-      _: 'updateNotifySettings',
-      peer: this.readObject(),
-      notify_settings: this.readObject(),
-    }
-  }
-
-  sendMessageTypingAction() {
-    return {
-      _: 'sendMessageTypingAction',
-    }
-  }
-
-  sendMessageCancelAction() {
-    return {
-      _: 'sendMessageCancelAction',
-    }
-  }
-
-  sendMessageRecordVideoAction() {
-    return {
-      _: 'sendMessageRecordVideoAction',
-    }
-  }
-
-  sendMessageUploadVideoAction() {
-    return {
-      _: 'sendMessageUploadVideoAction',
-      progress: this.readInt(),
-    }
-  }
-
-  sendMessageRecordAudioAction() {
-    return {
-      _: 'sendMessageRecordAudioAction',
-    }
-  }
-
-  sendMessageUploadAudioAction() {
-    return {
-      _: 'sendMessageUploadAudioAction',
-      progress: this.readInt(),
-    }
-  }
-
-  sendMessageUploadPhotoAction() {
-    return {
-      _: 'sendMessageUploadPhotoAction',
-      progress: this.readInt(),
-    }
-  }
-
-  sendMessageUploadDocumentAction() {
-    return {
-      _: 'sendMessageUploadDocumentAction',
-      progress: this.readInt(),
-    }
-  }
-
-  sendMessageGeoLocationAction() {
-    return {
-      _: 'sendMessageGeoLocationAction',
-    }
-  }
-
-  sendMessageChooseContactAction() {
-    return {
-      _: 'sendMessageChooseContactAction',
-    }
-  }
-
-  contacts_found() {
-    return {
-      _: 'contacts.found',
-      my_results: this.readObject(),
-      results: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  updateServiceNotification() {
-    const flags = this.readInt();
-    return {
-      _: 'updateServiceNotification',
+      _: 'updateServiceNotification' as const,
       popup: !!(flags & 0x1),
-      inbox_date: (flags & 0x2) ? this.readInt() : undefined,
-      type: this.readString(),
-      message: this.readString(),
-      media: this.readObject(),
-      entities: this.readObject(),
+      inbox_date: flags & 0x2 ? this.i32() : undefined,
+      type: this.s(),
+      message: this.s(),
+      media: this.o(),
+      entities: this.v(this.o),
     }
   }
-
-  userStatusRecently() {
+  CS = () => ({_: 'userStatusRecently'})
+  CT = () => ({_: 'userStatusLastWeek'})
+  CU = () => ({_: 'userStatusLastMonth'})
+  IC = () => ({_: 'updatePrivacy', key: this.o(), rules: this.v(this.o)})
+  MR = () => ({_: 'inputPrivacyKeyStatusTimestamp'})
+  MZ = () => ({_: 'privacyKeyStatusTimestamp'})
+  NH = () => ({_: 'inputPrivacyValueAllowContacts'})
+  NI = () => ({_: 'inputPrivacyValueAllowAll'})
+  NJ = () => ({_: 'inputPrivacyValueAllowUsers', users: this.v(this.o)})
+  NK = () => ({_: 'inputPrivacyValueDisallowContacts'})
+  NL = () => ({_: 'inputPrivacyValueDisallowAll'})
+  NM = () => ({_: 'inputPrivacyValueDisallowUsers', users: this.v(this.o)})
+  NP = () => ({_: 'privacyValueAllowContacts'})
+  NQ = () => ({_: 'privacyValueAllowAll'})
+  NR = () => ({_: 'privacyValueAllowUsers', users: this.v(this.i32)})
+  NS = () => ({_: 'privacyValueDisallowContacts'})
+  NT = () => ({_: 'privacyValueDisallowAll'})
+  NU = () => ({_: 'privacyValueDisallowUsers', users: this.v(this.i32)})
+  NX = () => ({_: 'account.privacyRules', rules: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  NY = () => ({_: 'accountDaysTTL', days: this.i32()})
+  ID = () => ({_: 'updateUserPhone', user_id: this.i32(), phone: this.s()})
+  NZ = () => ({_: 'documentAttributeImageSize', w: this.i32(), h: this.i32()})
+  OA = () => ({_: 'documentAttributeAnimated'})
+  OB() {
+    const flags = this.i32();
     return {
-      _: 'userStatusRecently',
-    }
-  }
-
-  userStatusLastWeek() {
-    return {
-      _: 'userStatusLastWeek',
-    }
-  }
-
-  userStatusLastMonth() {
-    return {
-      _: 'userStatusLastMonth',
-    }
-  }
-
-  updatePrivacy() {
-    return {
-      _: 'updatePrivacy',
-      key: this.readObject(),
-      rules: this.readObject(),
-    }
-  }
-
-  inputPrivacyKeyStatusTimestamp() {
-    return {
-      _: 'inputPrivacyKeyStatusTimestamp',
-    }
-  }
-
-  privacyKeyStatusTimestamp() {
-    return {
-      _: 'privacyKeyStatusTimestamp',
-    }
-  }
-
-  inputPrivacyValueAllowContacts() {
-    return {
-      _: 'inputPrivacyValueAllowContacts',
-    }
-  }
-
-  inputPrivacyValueAllowAll() {
-    return {
-      _: 'inputPrivacyValueAllowAll',
-    }
-  }
-
-  inputPrivacyValueAllowUsers() {
-    return {
-      _: 'inputPrivacyValueAllowUsers',
-      users: this.readObject(),
-    }
-  }
-
-  inputPrivacyValueDisallowContacts() {
-    return {
-      _: 'inputPrivacyValueDisallowContacts',
-    }
-  }
-
-  inputPrivacyValueDisallowAll() {
-    return {
-      _: 'inputPrivacyValueDisallowAll',
-    }
-  }
-
-  inputPrivacyValueDisallowUsers() {
-    return {
-      _: 'inputPrivacyValueDisallowUsers',
-      users: this.readObject(),
-    }
-  }
-
-  privacyValueAllowContacts() {
-    return {
-      _: 'privacyValueAllowContacts',
-    }
-  }
-
-  privacyValueAllowAll() {
-    return {
-      _: 'privacyValueAllowAll',
-    }
-  }
-
-  privacyValueAllowUsers() {
-    return {
-      _: 'privacyValueAllowUsers',
-      users: this.readObject(),
-    }
-  }
-
-  privacyValueDisallowContacts() {
-    return {
-      _: 'privacyValueDisallowContacts',
-    }
-  }
-
-  privacyValueDisallowAll() {
-    return {
-      _: 'privacyValueDisallowAll',
-    }
-  }
-
-  privacyValueDisallowUsers() {
-    return {
-      _: 'privacyValueDisallowUsers',
-      users: this.readObject(),
-    }
-  }
-
-  account_privacyRules() {
-    return {
-      _: 'account.privacyRules',
-      rules: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  accountDaysTTL() {
-    return {
-      _: 'accountDaysTTL',
-      days: this.readInt(),
-    }
-  }
-
-  updateUserPhone() {
-    return {
-      _: 'updateUserPhone',
-      user_id: this.readInt(),
-      phone: this.readString(),
-    }
-  }
-
-  documentAttributeImageSize() {
-    return {
-      _: 'documentAttributeImageSize',
-      w: this.readInt(),
-      h: this.readInt(),
-    }
-  }
-
-  documentAttributeAnimated() {
-    return {
-      _: 'documentAttributeAnimated',
-    }
-  }
-
-  documentAttributeSticker() {
-    const flags = this.readInt();
-    return {
-      _: 'documentAttributeSticker',
+      _: 'documentAttributeSticker' as const,
       mask: !!(flags & 0x2),
-      alt: this.readString(),
-      stickerset: this.readObject(),
-      mask_coords: (flags & 0x1) ? this.readObject() : undefined,
+      alt: this.s(),
+      stickerset: this.o(),
+      mask_coords: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  documentAttributeVideo() {
-    const flags = this.readInt();
+  OC() {
+    const flags = this.i32();
     return {
-      _: 'documentAttributeVideo',
+      _: 'documentAttributeVideo' as const,
       round_message: !!(flags & 0x1),
       supports_streaming: !!(flags & 0x2),
-      duration: this.readInt(),
-      w: this.readInt(),
-      h: this.readInt(),
+      duration: this.i32(),
+      w: this.i32(),
+      h: this.i32(),
     }
   }
-
-  documentAttributeAudio() {
-    const flags = this.readInt();
+  OD() {
+    const flags = this.i32();
     return {
-      _: 'documentAttributeAudio',
-      voice: !!(flags & 0x1024),
-      duration: this.readInt(),
-      title: (flags & 0x1) ? this.readString() : undefined,
-      performer: (flags & 0x2) ? this.readString() : undefined,
-      waveform: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'documentAttributeAudio' as const,
+      voice: !!(flags & 0x400),
+      duration: this.i32(),
+      title: flags & 0x1 ? this.s() : undefined,
+      performer: flags & 0x2 ? this.s() : undefined,
+      waveform: flags & 0x4 ? this.b() : undefined,
     }
   }
-
-  documentAttributeFilename() {
+  OE = () => ({_: 'documentAttributeFilename', file_name: this.s()})
+  OG = () => ({_: 'messages.stickersNotModified'})
+  OH = () => ({_: 'messages.stickers', hash: this.i32(), stickers: this.v(this.o)})
+  OI = () => ({_: 'stickerPack', emoticon: this.s(), documents: this.v(this.i64)})
+  OJ = () => ({_: 'messages.allStickersNotModified'})
+  OK = () => ({_: 'messages.allStickers', hash: this.i32(), sets: this.v(this.o)})
+  IE() {
+    const flags = this.i32();
     return {
-      _: 'documentAttributeFilename',
-      file_name: this.readString(),
+      _: 'updateReadHistoryInbox' as const,
+      folder_id: flags & 0x1 ? this.i32() : undefined,
+      peer: this.o(),
+      max_id: this.i32(),
+      still_unread_count: this.i32(),
+      pts: this.i32(),
+      pts_count: this.i32(),
     }
   }
-
-  messages_stickersNotModified() {
+  IF = () => ({_: 'updateReadHistoryOutbox', peer: this.o(), max_id: this.i32(), pts: this.i32(), pts_count: this.i32()})
+  OL = () => ({_: 'messages.affectedMessages', pts: this.i32(), pts_count: this.i32()})
+  IG = () => ({_: 'updateWebPage', webpage: this.o(), pts: this.i32(), pts_count: this.i32()})
+  OM = () => ({_: 'webPageEmpty', id: this.i64()})
+  ON = () => ({_: 'webPagePending', id: this.i64(), date: this.i32()})
+  OO() {
+    const flags = this.i32();
     return {
-      _: 'messages.stickersNotModified',
+      _: 'webPage' as const,
+      id: this.i64(),
+      url: this.s(),
+      display_url: this.s(),
+      hash: this.i32(),
+      type: flags & 0x1 ? this.s() : undefined,
+      site_name: flags & 0x2 ? this.s() : undefined,
+      title: flags & 0x4 ? this.s() : undefined,
+      description: flags & 0x8 ? this.s() : undefined,
+      photo: flags & 0x10 ? this.o() : undefined,
+      embed_url: flags & 0x20 ? this.s() : undefined,
+      embed_type: flags & 0x20 ? this.s() : undefined,
+      embed_width: flags & 0x40 ? this.i32() : undefined,
+      embed_height: flags & 0x40 ? this.i32() : undefined,
+      duration: flags & 0x80 ? this.i32() : undefined,
+      author: flags & 0x100 ? this.s() : undefined,
+      document: flags & 0x200 ? this.o() : undefined,
+      documents: flags & 0x800 ? this.v(this.o) : undefined,
+      cached_page: flags & 0x400 ? this.o() : undefined,
     }
   }
-
-  messages_stickers() {
+  DS = () => ({_: 'messageMediaWebPage', webpage: this.o()})
+  OQ() {
+    const flags = this.i32();
     return {
-      _: 'messages.stickers',
-      hash: this.readInt(),
-      stickers: this.readObject(),
-    }
-  }
-
-  stickerPack() {
-    return {
-      _: 'stickerPack',
-      emoticon: this.readString(),
-      documents: this.readObject(),
-    }
-  }
-
-  messages_allStickersNotModified() {
-    return {
-      _: 'messages.allStickersNotModified',
-    }
-  }
-
-  messages_allStickers() {
-    return {
-      _: 'messages.allStickers',
-      hash: this.readInt(),
-      sets: this.readObject(),
-    }
-  }
-
-  updateReadHistoryInbox() {
-    const flags = this.readInt();
-    return {
-      _: 'updateReadHistoryInbox',
-      folder_id: (flags & 0x1) ? this.readInt() : undefined,
-      peer: this.readObject(),
-      max_id: this.readInt(),
-      still_unread_count: this.readInt(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateReadHistoryOutbox() {
-    return {
-      _: 'updateReadHistoryOutbox',
-      peer: this.readObject(),
-      max_id: this.readInt(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  messages_affectedMessages() {
-    return {
-      _: 'messages.affectedMessages',
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateWebPage() {
-    return {
-      _: 'updateWebPage',
-      webpage: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  webPageEmpty() {
-    return {
-      _: 'webPageEmpty',
-      id: this.readLong(),
-    }
-  }
-
-  webPagePending() {
-    return {
-      _: 'webPagePending',
-      id: this.readLong(),
-      date: this.readInt(),
-    }
-  }
-
-  webPage() {
-    const flags = this.readInt();
-    return {
-      _: 'webPage',
-      id: this.readLong(),
-      url: this.readString(),
-      display_url: this.readString(),
-      hash: this.readInt(),
-      type: (flags & 0x1) ? this.readString() : undefined,
-      site_name: (flags & 0x2) ? this.readString() : undefined,
-      title: (flags & 0x4) ? this.readString() : undefined,
-      description: (flags & 0x8) ? this.readString() : undefined,
-      photo: (flags & 0x16) ? this.readObject() : undefined,
-      embed_url: (flags & 0x32) ? this.readString() : undefined,
-      embed_type: (flags & 0x32) ? this.readString() : undefined,
-      embed_width: (flags & 0x64) ? this.readInt() : undefined,
-      embed_height: (flags & 0x64) ? this.readInt() : undefined,
-      duration: (flags & 0x128) ? this.readInt() : undefined,
-      author: (flags & 0x256) ? this.readString() : undefined,
-      document: (flags & 0x512) ? this.readObject() : undefined,
-      documents: (flags & 0x2048) ? this.readObject() : undefined,
-      cached_page: (flags & 0x1024) ? this.readObject() : undefined,
-    }
-  }
-
-  messageMediaWebPage() {
-    return {
-      _: 'messageMediaWebPage',
-      webpage: this.readObject(),
-    }
-  }
-
-  authorization() {
-    const flags = this.readInt();
-    return {
-      _: 'authorization',
+      _: 'authorization' as const,
       current: !!(flags & 0x1),
       official_app: !!(flags & 0x2),
       password_pending: !!(flags & 0x4),
-      hash: this.readLong(),
-      device_model: this.readString(),
-      platform: this.readString(),
-      system_version: this.readString(),
-      api_id: this.readInt(),
-      app_name: this.readString(),
-      app_version: this.readString(),
-      date_created: this.readInt(),
-      date_active: this.readInt(),
-      ip: this.readString(),
-      country: this.readString(),
-      region: this.readString(),
+      hash: this.i64(),
+      device_model: this.s(),
+      platform: this.s(),
+      system_version: this.s(),
+      api_id: this.i32(),
+      app_name: this.s(),
+      app_version: this.s(),
+      date_created: this.i32(),
+      date_active: this.i32(),
+      ip: this.s(),
+      country: this.s(),
+      region: this.s(),
     }
   }
-
-  account_authorizations() {
+  OR = () => ({_: 'account.authorizations', authorizations: this.v(this.o)})
+  OS() {
+    const flags = this.i32();
     return {
-      _: 'account.authorizations',
-      authorizations: this.readObject(),
-    }
-  }
-
-  account_password() {
-    const flags = this.readInt();
-    return {
-      _: 'account.password',
+      _: 'account.password' as const,
       has_recovery: !!(flags & 0x1),
       has_secure_values: !!(flags & 0x2),
       has_password: !!(flags & 0x4),
-      current_algo: (flags & 0x4) ? this.readObject() : undefined,
-      srp_B: (flags & 0x4) ? this.readObject() : undefined,
-      srp_id: (flags & 0x4) ? this.readLong() : undefined,
-      hint: (flags & 0x8) ? this.readString() : undefined,
-      email_unconfirmed_pattern: (flags & 0x16) ? this.readString() : undefined,
-      new_algo: this.readObject(),
-      new_secure_algo: this.readObject(),
-      secure_random: this.readObject(),
+      current_algo: flags & 0x4 ? this.o() : undefined,
+      srp_B: flags & 0x4 ? this.b() : undefined,
+      srp_id: flags & 0x4 ? this.i64() : undefined,
+      hint: flags & 0x8 ? this.s() : undefined,
+      email_unconfirmed_pattern: flags & 0x10 ? this.s() : undefined,
+      new_algo: this.o(),
+      new_secure_algo: this.o(),
+      secure_random: this.b(),
     }
   }
-
-  account_passwordSettings() {
-    const flags = this.readInt();
+  OT() {
+    const flags = this.i32();
     return {
-      _: 'account.passwordSettings',
-      email: (flags & 0x1) ? this.readString() : undefined,
-      secure_settings: (flags & 0x2) ? this.readObject() : undefined,
+      _: 'account.passwordSettings' as const,
+      email: flags & 0x1 ? this.s() : undefined,
+      secure_settings: flags & 0x2 ? this.o() : undefined,
     }
   }
-
-  account_passwordInputSettings() {
-    const flags = this.readInt();
+  OU() {
+    const flags = this.i32();
     return {
-      _: 'account.passwordInputSettings',
-      new_algo: (flags & 0x1) ? this.readObject() : undefined,
-      new_password_hash: (flags & 0x1) ? this.readObject() : undefined,
-      hint: (flags & 0x1) ? this.readString() : undefined,
-      email: (flags & 0x2) ? this.readString() : undefined,
-      new_secure_settings: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'account.passwordInputSettings' as const,
+      new_algo: flags & 0x1 ? this.o() : undefined,
+      new_password_hash: flags & 0x1 ? this.b() : undefined,
+      hint: flags & 0x1 ? this.s() : undefined,
+      email: flags & 0x2 ? this.s() : undefined,
+      new_secure_settings: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  auth_passwordRecovery() {
+  OV = () => ({_: 'auth.passwordRecovery', email_pattern: this.s()})
+  BB = () => ({_: 'inputMediaVenue', geo_point: this.o(), title: this.s(), address: this.s(), provider: this.s(), venue_id: this.s(), venue_type: this.s()})
+  DT = () => ({_: 'messageMediaVenue', geo: this.o(), title: this.s(), address: this.s(), provider: this.s(), venue_id: this.s(), venue_type: this.s()})
+  OW() {
     return {
-      _: 'auth.passwordRecovery',
-      email_pattern: this.readString(),
+      _: 'receivedNotifyMessage' as const,
+      id: this.i32(),
+      flags: this.i32(),
     }
   }
-
-  inputMediaVenue() {
+  OX = () => ({_: 'chatInviteEmpty'})
+  OY = () => ({_: 'chatInviteExported', link: this.s()})
+  OZ = () => ({_: 'chatInviteAlready', chat: this.o()})
+  PA() {
+    const flags = this.i32();
     return {
-      _: 'inputMediaVenue',
-      geo_point: this.readObject(),
-      title: this.readString(),
-      address: this.readString(),
-      provider: this.readString(),
-      venue_id: this.readString(),
-      venue_type: this.readString(),
-    }
-  }
-
-  messageMediaVenue() {
-    return {
-      _: 'messageMediaVenue',
-      geo: this.readObject(),
-      title: this.readString(),
-      address: this.readString(),
-      provider: this.readString(),
-      venue_id: this.readString(),
-      venue_type: this.readString(),
-    }
-  }
-
-  receivedNotifyMessage() {
-    return {
-      _: 'receivedNotifyMessage',
-      id: this.readInt(),
-      flags: this.readInt(),
-    }
-  }
-
-  chatInviteEmpty() {
-    return {
-      _: 'chatInviteEmpty',
-    }
-  }
-
-  chatInviteExported() {
-    return {
-      _: 'chatInviteExported',
-      link: this.readString(),
-    }
-  }
-
-  chatInviteAlready() {
-    return {
-      _: 'chatInviteAlready',
-      chat: this.readObject(),
-    }
-  }
-
-  chatInvite() {
-    const flags = this.readInt();
-    return {
-      _: 'chatInvite',
+      _: 'chatInvite' as const,
       channel: !!(flags & 0x1),
       broadcast: !!(flags & 0x2),
       public: !!(flags & 0x4),
       megagroup: !!(flags & 0x8),
-      title: this.readString(),
-      photo: this.readObject(),
-      participants_count: this.readInt(),
-      participants: (flags & 0x16) ? this.readObject() : undefined,
+      title: this.s(),
+      photo: this.o(),
+      participants_count: this.i32(),
+      participants: flags & 0x10 ? this.v(this.o) : undefined,
     }
   }
-
-  messageActionChatJoinedByLink() {
+  EF = () => ({_: 'messageActionChatJoinedByLink', inviter_id: this.i32()})
+  IH = () => ({_: 'updateReadMessagesContents', messages: this.v(this.i32), pts: this.i32(), pts_count: this.i32()})
+  PB = () => ({_: 'inputStickerSetEmpty'})
+  PC = () => ({_: 'inputStickerSetID', id: this.i64(), access_hash: this.i64()})
+  PD = () => ({_: 'inputStickerSetShortName', short_name: this.s()})
+  PF() {
+    const flags = this.i32();
     return {
-      _: 'messageActionChatJoinedByLink',
-      inviter_id: this.readInt(),
-    }
-  }
-
-  updateReadMessagesContents() {
-    return {
-      _: 'updateReadMessagesContents',
-      messages: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  inputStickerSetEmpty() {
-    return {
-      _: 'inputStickerSetEmpty',
-    }
-  }
-
-  inputStickerSetID() {
-    return {
-      _: 'inputStickerSetID',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputStickerSetShortName() {
-    return {
-      _: 'inputStickerSetShortName',
-      short_name: this.readString(),
-    }
-  }
-
-  stickerSet() {
-    const flags = this.readInt();
-    return {
-      _: 'stickerSet',
+      _: 'stickerSet' as const,
       archived: !!(flags & 0x2),
       official: !!(flags & 0x4),
       masks: !!(flags & 0x8),
-      animated: !!(flags & 0x32),
-      installed_date: (flags & 0x1) ? this.readInt() : undefined,
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      title: this.readString(),
-      short_name: this.readString(),
-      thumb: (flags & 0x16) ? this.readObject() : undefined,
-      thumb_dc_id: (flags & 0x16) ? this.readInt() : undefined,
-      count: this.readInt(),
-      hash: this.readInt(),
+      animated: !!(flags & 0x20),
+      installed_date: flags & 0x1 ? this.i32() : undefined,
+      id: this.i64(),
+      access_hash: this.i64(),
+      title: this.s(),
+      short_name: this.s(),
+      thumb: flags & 0x10 ? this.o() : undefined,
+      thumb_dc_id: flags & 0x10 ? this.i32() : undefined,
+      count: this.i32(),
+      hash: this.i32(),
     }
   }
-
-  messages_stickerSet() {
+  PG = () => ({_: 'messages.stickerSet', set: this.o(), packs: this.v(this.o), documents: this.v(this.o)})
+  CM() {
+    const flags = this.i32();
     return {
-      _: 'messages.stickerSet',
-      set: this.readObject(),
-      packs: this.readObject(),
-      documents: this.readObject(),
+      _: 'user' as const,
+      self: !!(flags & 0x400),
+      contact: !!(flags & 0x800),
+      mutual_contact: !!(flags & 0x1000),
+      deleted: !!(flags & 0x2000),
+      bot: !!(flags & 0x4000),
+      bot_chat_history: !!(flags & 0x8000),
+      bot_nochats: !!(flags & 0x10000),
+      verified: !!(flags & 0x20000),
+      restricted: !!(flags & 0x40000),
+      min: !!(flags & 0x100000),
+      bot_inline_geo: !!(flags & 0x200000),
+      support: !!(flags & 0x800000),
+      scam: !!(flags & 0x1000000),
+      id: this.i32(),
+      access_hash: flags & 0x1 ? this.i64() : undefined,
+      first_name: flags & 0x2 ? this.s() : undefined,
+      last_name: flags & 0x4 ? this.s() : undefined,
+      username: flags & 0x8 ? this.s() : undefined,
+      phone: flags & 0x10 ? this.s() : undefined,
+      photo: flags & 0x20 ? this.o() : undefined,
+      status: flags & 0x40 ? this.o() : undefined,
+      bot_info_version: flags & 0x4000 ? this.i32() : undefined,
+      restriction_reason: flags & 0x40000 ? this.v(this.o) : undefined,
+      bot_inline_placeholder: flags & 0x80000 ? this.s() : undefined,
+      lang_code: flags & 0x400000 ? this.s() : undefined,
     }
   }
-
-  user() {
-    const flags = this.readInt();
+  PH = () => ({_: 'botCommand', command: this.s(), description: this.s()})
+  PI = () => ({_: 'botInfo', user_id: this.i32(), description: this.s(), commands: this.v(this.o)})
+  PJ = () => ({_: 'keyboardButton', text: this.s()})
+  PT = () => ({_: 'keyboardButtonRow', buttons: this.v(this.o)})
+  PU() {
+    const flags = this.i32();
     return {
-      _: 'user',
-      self: !!(flags & 0x1024),
-      contact: !!(flags & 0x2048),
-      mutual_contact: !!(flags & 0x4096),
-      deleted: !!(flags & 0x8192),
-      bot: !!(flags & 0x16384),
-      bot_chat_history: !!(flags & 0x32768),
-      bot_nochats: !!(flags & 0x65536),
-      verified: !!(flags & 0x131072),
-      restricted: !!(flags & 0x262144),
-      min: !!(flags & 0x1048576),
-      bot_inline_geo: !!(flags & 0x2097152),
-      support: !!(flags & 0x8388608),
-      scam: !!(flags & 0x16777216),
-      id: this.readInt(),
-      access_hash: (flags & 0x1) ? this.readLong() : undefined,
-      first_name: (flags & 0x2) ? this.readString() : undefined,
-      last_name: (flags & 0x4) ? this.readString() : undefined,
-      username: (flags & 0x8) ? this.readString() : undefined,
-      phone: (flags & 0x16) ? this.readString() : undefined,
-      photo: (flags & 0x32) ? this.readObject() : undefined,
-      status: (flags & 0x64) ? this.readObject() : undefined,
-      bot_info_version: (flags & 0x16384) ? this.readInt() : undefined,
-      restriction_reason: (flags & 0x262144) ? this.readObject() : undefined,
-      bot_inline_placeholder: (flags & 0x524288) ? this.readString() : undefined,
-      lang_code: (flags & 0x4194304) ? this.readString() : undefined,
-    }
-  }
-
-  botCommand() {
-    return {
-      _: 'botCommand',
-      command: this.readString(),
-      description: this.readString(),
-    }
-  }
-
-  botInfo() {
-    return {
-      _: 'botInfo',
-      user_id: this.readInt(),
-      description: this.readString(),
-      commands: this.readObject(),
-    }
-  }
-
-  keyboardButton() {
-    return {
-      _: 'keyboardButton',
-      text: this.readString(),
-    }
-  }
-
-  keyboardButtonRow() {
-    return {
-      _: 'keyboardButtonRow',
-      buttons: this.readObject(),
-    }
-  }
-
-  replyKeyboardHide() {
-    const flags = this.readInt();
-    return {
-      _: 'replyKeyboardHide',
+      _: 'replyKeyboardHide' as const,
       selective: !!(flags & 0x4),
     }
   }
-
-  replyKeyboardForceReply() {
-    const flags = this.readInt();
+  PV() {
+    const flags = this.i32();
     return {
-      _: 'replyKeyboardForceReply',
+      _: 'replyKeyboardForceReply' as const,
       single_use: !!(flags & 0x2),
       selective: !!(flags & 0x4),
     }
   }
-
-  replyKeyboardMarkup() {
-    const flags = this.readInt();
+  PW() {
+    const flags = this.i32();
     return {
-      _: 'replyKeyboardMarkup',
+      _: 'replyKeyboardMarkup' as const,
       resize: !!(flags & 0x1),
       single_use: !!(flags & 0x2),
       selective: !!(flags & 0x4),
-      rows: this.readObject(),
+      rows: this.v(this.o),
     }
   }
-
-  inputPeerUser() {
+  J = () => ({_: 'inputPeerUser', user_id: this.i32(), access_hash: this.i64()})
+  P = () => ({_: 'inputUser', user_id: this.i32(), access_hash: this.i64()})
+  PY = () => ({_: 'messageEntityUnknown', offset: this.i32(), length: this.i32()})
+  PZ = () => ({_: 'messageEntityMention', offset: this.i32(), length: this.i32()})
+  QA = () => ({_: 'messageEntityHashtag', offset: this.i32(), length: this.i32()})
+  QB = () => ({_: 'messageEntityBotCommand', offset: this.i32(), length: this.i32()})
+  QC = () => ({_: 'messageEntityUrl', offset: this.i32(), length: this.i32()})
+  QD = () => ({_: 'messageEntityEmail', offset: this.i32(), length: this.i32()})
+  QE = () => ({_: 'messageEntityBold', offset: this.i32(), length: this.i32()})
+  QF = () => ({_: 'messageEntityItalic', offset: this.i32(), length: this.i32()})
+  QG = () => ({_: 'messageEntityCode', offset: this.i32(), length: this.i32()})
+  QH = () => ({_: 'messageEntityPre', offset: this.i32(), length: this.i32(), language: this.s()})
+  QI = () => ({_: 'messageEntityTextUrl', offset: this.i32(), length: this.i32(), url: this.s()})
+  KQ() {
+    const flags = this.i32();
     return {
-      _: 'inputPeerUser',
-      user_id: this.readInt(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputUser() {
-    return {
-      _: 'inputUser',
-      user_id: this.readInt(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  messageEntityUnknown() {
-    return {
-      _: 'messageEntityUnknown',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityMention() {
-    return {
-      _: 'messageEntityMention',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityHashtag() {
-    return {
-      _: 'messageEntityHashtag',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityBotCommand() {
-    return {
-      _: 'messageEntityBotCommand',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityUrl() {
-    return {
-      _: 'messageEntityUrl',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityEmail() {
-    return {
-      _: 'messageEntityEmail',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityBold() {
-    return {
-      _: 'messageEntityBold',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityItalic() {
-    return {
-      _: 'messageEntityItalic',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityCode() {
-    return {
-      _: 'messageEntityCode',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityPre() {
-    return {
-      _: 'messageEntityPre',
-      offset: this.readInt(),
-      length: this.readInt(),
-      language: this.readString(),
-    }
-  }
-
-  messageEntityTextUrl() {
-    return {
-      _: 'messageEntityTextUrl',
-      offset: this.readInt(),
-      length: this.readInt(),
-      url: this.readString(),
-    }
-  }
-
-  updateShortSentMessage() {
-    const flags = this.readInt();
-    return {
-      _: 'updateShortSentMessage',
+      _: 'updateShortSentMessage' as const,
       out: !!(flags & 0x2),
-      id: this.readInt(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-      date: this.readInt(),
-      media: (flags & 0x512) ? this.readObject() : undefined,
-      entities: (flags & 0x128) ? this.readObject() : undefined,
+      id: this.i32(),
+      pts: this.i32(),
+      pts_count: this.i32(),
+      date: this.i32(),
+      media: flags & 0x200 ? this.o() : undefined,
+      entities: flags & 0x80 ? this.v(this.o) : undefined,
     }
   }
-
-  inputChannelEmpty() {
+  QQ = () => ({_: 'inputChannelEmpty'})
+  QR = () => ({_: 'inputChannel', channel_id: this.i32(), access_hash: this.i64()})
+  CA = () => ({_: 'peerChannel', channel_id: this.i32()})
+  K = () => ({_: 'inputPeerChannel', channel_id: this.i32(), access_hash: this.i64()})
+  CY() {
+    const flags = this.i32();
     return {
-      _: 'inputChannelEmpty',
-    }
-  }
-
-  inputChannel() {
-    return {
-      _: 'inputChannel',
-      channel_id: this.readInt(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  peerChannel() {
-    return {
-      _: 'peerChannel',
-      channel_id: this.readInt(),
-    }
-  }
-
-  inputPeerChannel() {
-    return {
-      _: 'inputPeerChannel',
-      channel_id: this.readInt(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  channel() {
-    const flags = this.readInt();
-    return {
-      _: 'channel',
+      _: 'channel' as const,
       creator: !!(flags & 0x1),
       left: !!(flags & 0x4),
-      broadcast: !!(flags & 0x32),
-      verified: !!(flags & 0x128),
-      megagroup: !!(flags & 0x256),
-      restricted: !!(flags & 0x512),
-      signatures: !!(flags & 0x2048),
-      min: !!(flags & 0x4096),
-      scam: !!(flags & 0x524288),
-      has_link: !!(flags & 0x1048576),
-      has_geo: !!(flags & 0x2097152),
-      slowmode_enabled: !!(flags & 0x4194304),
-      id: this.readInt(),
-      access_hash: (flags & 0x8192) ? this.readLong() : undefined,
-      title: this.readString(),
-      username: (flags & 0x64) ? this.readString() : undefined,
-      photo: this.readObject(),
-      date: this.readInt(),
-      version: this.readInt(),
-      restriction_reason: (flags & 0x512) ? this.readObject() : undefined,
-      admin_rights: (flags & 0x16384) ? this.readObject() : undefined,
-      banned_rights: (flags & 0x32768) ? this.readObject() : undefined,
-      default_banned_rights: (flags & 0x262144) ? this.readObject() : undefined,
-      participants_count: (flags & 0x131072) ? this.readInt() : undefined,
+      broadcast: !!(flags & 0x20),
+      verified: !!(flags & 0x80),
+      megagroup: !!(flags & 0x100),
+      restricted: !!(flags & 0x200),
+      signatures: !!(flags & 0x800),
+      min: !!(flags & 0x1000),
+      scam: !!(flags & 0x80000),
+      has_link: !!(flags & 0x100000),
+      has_geo: !!(flags & 0x200000),
+      slowmode_enabled: !!(flags & 0x400000),
+      id: this.i32(),
+      access_hash: flags & 0x2000 ? this.i64() : undefined,
+      title: this.s(),
+      username: flags & 0x40 ? this.s() : undefined,
+      photo: this.o(),
+      date: this.i32(),
+      version: this.i32(),
+      restriction_reason: flags & 0x200 ? this.v(this.o) : undefined,
+      admin_rights: flags & 0x4000 ? this.o() : undefined,
+      banned_rights: flags & 0x8000 ? this.o() : undefined,
+      default_banned_rights: flags & 0x40000 ? this.o() : undefined,
+      participants_count: flags & 0x20000 ? this.i32() : undefined,
     }
   }
-
-  channelForbidden() {
-    const flags = this.readInt();
+  CZ() {
+    const flags = this.i32();
     return {
-      _: 'channelForbidden',
-      broadcast: !!(flags & 0x32),
-      megagroup: !!(flags & 0x256),
-      id: this.readInt(),
-      access_hash: this.readLong(),
-      title: this.readString(),
-      until_date: (flags & 0x65536) ? this.readInt() : undefined,
+      _: 'channelForbidden' as const,
+      broadcast: !!(flags & 0x20),
+      megagroup: !!(flags & 0x100),
+      id: this.i32(),
+      access_hash: this.i64(),
+      title: this.s(),
+      until_date: flags & 0x10000 ? this.i32() : undefined,
     }
   }
-
-  contacts_resolvedPeer() {
+  QT = () => ({_: 'contacts.resolvedPeer', peer: this.o(), chats: this.v(this.o), users: this.v(this.o)})
+  DB() {
+    const flags = this.i32();
     return {
-      _: 'contacts.resolvedPeer',
-      peer: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  channelFull() {
-    const flags = this.readInt();
-    return {
-      _: 'channelFull',
+      _: 'channelFull' as const,
       can_view_participants: !!(flags & 0x8),
-      can_set_username: !!(flags & 0x64),
-      can_set_stickers: !!(flags & 0x128),
-      hidden_prehistory: !!(flags & 0x1024),
-      can_view_stats: !!(flags & 0x4096),
-      can_set_location: !!(flags & 0x65536),
-      has_scheduled: !!(flags & 0x524288),
-      id: this.readInt(),
-      about: this.readString(),
-      participants_count: (flags & 0x1) ? this.readInt() : undefined,
-      admins_count: (flags & 0x2) ? this.readInt() : undefined,
-      kicked_count: (flags & 0x4) ? this.readInt() : undefined,
-      banned_count: (flags & 0x4) ? this.readInt() : undefined,
-      online_count: (flags & 0x8192) ? this.readInt() : undefined,
-      read_inbox_max_id: this.readInt(),
-      read_outbox_max_id: this.readInt(),
-      unread_count: this.readInt(),
-      chat_photo: this.readObject(),
-      notify_settings: this.readObject(),
-      exported_invite: this.readObject(),
-      bot_info: this.readObject(),
-      migrated_from_chat_id: (flags & 0x16) ? this.readInt() : undefined,
-      migrated_from_max_id: (flags & 0x16) ? this.readInt() : undefined,
-      pinned_msg_id: (flags & 0x32) ? this.readInt() : undefined,
-      stickerset: (flags & 0x256) ? this.readObject() : undefined,
-      available_min_id: (flags & 0x512) ? this.readInt() : undefined,
-      folder_id: (flags & 0x2048) ? this.readInt() : undefined,
-      linked_chat_id: (flags & 0x16384) ? this.readInt() : undefined,
-      location: (flags & 0x32768) ? this.readObject() : undefined,
-      slowmode_seconds: (flags & 0x131072) ? this.readInt() : undefined,
-      slowmode_next_send_date: (flags & 0x262144) ? this.readInt() : undefined,
-      pts: this.readInt(),
+      can_set_username: !!(flags & 0x40),
+      can_set_stickers: !!(flags & 0x80),
+      hidden_prehistory: !!(flags & 0x400),
+      can_view_stats: !!(flags & 0x1000),
+      can_set_location: !!(flags & 0x10000),
+      has_scheduled: !!(flags & 0x80000),
+      id: this.i32(),
+      about: this.s(),
+      participants_count: flags & 0x1 ? this.i32() : undefined,
+      admins_count: flags & 0x2 ? this.i32() : undefined,
+      kicked_count: flags & 0x4 ? this.i32() : undefined,
+      banned_count: flags & 0x4 ? this.i32() : undefined,
+      online_count: flags & 0x2000 ? this.i32() : undefined,
+      read_inbox_max_id: this.i32(),
+      read_outbox_max_id: this.i32(),
+      unread_count: this.i32(),
+      chat_photo: this.o(),
+      notify_settings: this.o(),
+      exported_invite: this.o(),
+      bot_info: this.v(this.o),
+      migrated_from_chat_id: flags & 0x10 ? this.i32() : undefined,
+      migrated_from_max_id: flags & 0x10 ? this.i32() : undefined,
+      pinned_msg_id: flags & 0x20 ? this.i32() : undefined,
+      stickerset: flags & 0x100 ? this.o() : undefined,
+      available_min_id: flags & 0x200 ? this.i32() : undefined,
+      folder_id: flags & 0x800 ? this.i32() : undefined,
+      linked_chat_id: flags & 0x4000 ? this.i32() : undefined,
+      location: flags & 0x8000 ? this.o() : undefined,
+      slowmode_seconds: flags & 0x20000 ? this.i32() : undefined,
+      slowmode_next_send_date: flags & 0x40000 ? this.i32() : undefined,
+      pts: this.i32(),
     }
   }
-
-  messageRange() {
+  QU = () => ({_: 'messageRange', min_id: this.i32(), max_id: this.i32()})
+  GN() {
+    const flags = this.i32();
     return {
-      _: 'messageRange',
-      min_id: this.readInt(),
-      max_id: this.readInt(),
-    }
-  }
-
-  messages_channelMessages() {
-    const flags = this.readInt();
-    return {
-      _: 'messages.channelMessages',
+      _: 'messages.channelMessages' as const,
       inexact: !!(flags & 0x2),
-      pts: this.readInt(),
-      count: this.readInt(),
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
+      pts: this.i32(),
+      count: this.i32(),
+      messages: this.v(this.o),
+      chats: this.v(this.o),
+      users: this.v(this.o),
     }
   }
-
-  messageActionChannelCreate() {
+  EG = () => ({_: 'messageActionChannelCreate', title: this.s()})
+  II() {
+    const flags = this.i32();
     return {
-      _: 'messageActionChannelCreate',
-      title: this.readString(),
+      _: 'updateChannelTooLong' as const,
+      channel_id: this.i32(),
+      pts: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  updateChannelTooLong() {
-    const flags = this.readInt();
+  IJ = () => ({_: 'updateChannel', channel_id: this.i32()})
+  IK = () => ({_: 'updateNewChannelMessage', message: this.o(), pts: this.i32(), pts_count: this.i32()})
+  IL() {
+    const flags = this.i32();
     return {
-      _: 'updateChannelTooLong',
-      channel_id: this.readInt(),
-      pts: (flags & 0x1) ? this.readInt() : undefined,
+      _: 'updateReadChannelInbox' as const,
+      folder_id: flags & 0x1 ? this.i32() : undefined,
+      channel_id: this.i32(),
+      max_id: this.i32(),
+      still_unread_count: this.i32(),
+      pts: this.i32(),
     }
   }
-
-  updateChannel() {
+  IM = () => ({_: 'updateDeleteChannelMessages', channel_id: this.i32(), messages: this.v(this.i32), pts: this.i32(), pts_count: this.i32()})
+  IN = () => ({_: 'updateChannelMessageViews', channel_id: this.i32(), id: this.i32(), views: this.i32()})
+  QV() {
+    const flags = this.i32();
     return {
-      _: 'updateChannel',
-      channel_id: this.readInt(),
-    }
-  }
-
-  updateNewChannelMessage() {
-    return {
-      _: 'updateNewChannelMessage',
-      message: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateReadChannelInbox() {
-    const flags = this.readInt();
-    return {
-      _: 'updateReadChannelInbox',
-      folder_id: (flags & 0x1) ? this.readInt() : undefined,
-      channel_id: this.readInt(),
-      max_id: this.readInt(),
-      still_unread_count: this.readInt(),
-      pts: this.readInt(),
-    }
-  }
-
-  updateDeleteChannelMessages() {
-    return {
-      _: 'updateDeleteChannelMessages',
-      channel_id: this.readInt(),
-      messages: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateChannelMessageViews() {
-    return {
-      _: 'updateChannelMessageViews',
-      channel_id: this.readInt(),
-      id: this.readInt(),
-      views: this.readInt(),
-    }
-  }
-
-  updates_channelDifferenceEmpty() {
-    const flags = this.readInt();
-    return {
-      _: 'updates.channelDifferenceEmpty',
+      _: 'updates.channelDifferenceEmpty' as const,
       final: !!(flags & 0x1),
-      pts: this.readInt(),
-      timeout: (flags & 0x2) ? this.readInt() : undefined,
+      pts: this.i32(),
+      timeout: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  updates_channelDifferenceTooLong() {
-    const flags = this.readInt();
+  QW() {
+    const flags = this.i32();
     return {
-      _: 'updates.channelDifferenceTooLong',
+      _: 'updates.channelDifferenceTooLong' as const,
       final: !!(flags & 0x1),
-      timeout: (flags & 0x2) ? this.readInt() : undefined,
-      dialog: this.readObject(),
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
+      timeout: flags & 0x2 ? this.i32() : undefined,
+      dialog: this.o(),
+      messages: this.v(this.o),
+      chats: this.v(this.o),
+      users: this.v(this.o),
     }
   }
-
-  updates_channelDifference() {
-    const flags = this.readInt();
+  QX() {
+    const flags = this.i32();
     return {
-      _: 'updates.channelDifference',
+      _: 'updates.channelDifference' as const,
       final: !!(flags & 0x1),
-      pts: this.readInt(),
-      timeout: (flags & 0x2) ? this.readInt() : undefined,
-      new_messages: this.readObject(),
-      other_updates: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
+      pts: this.i32(),
+      timeout: flags & 0x2 ? this.i32() : undefined,
+      new_messages: this.v(this.o),
+      other_updates: this.v(this.o),
+      chats: this.v(this.o),
+      users: this.v(this.o),
     }
   }
-
-  channelMessagesFilterEmpty() {
+  QY = () => ({_: 'channelMessagesFilterEmpty'})
+  QZ() {
+    const flags = this.i32();
     return {
-      _: 'channelMessagesFilterEmpty',
-    }
-  }
-
-  channelMessagesFilter() {
-    const flags = this.readInt();
-    return {
-      _: 'channelMessagesFilter',
+      _: 'channelMessagesFilter' as const,
       exclude_new_messages: !!(flags & 0x2),
-      ranges: this.readObject(),
+      ranges: this.v(this.o),
     }
   }
-
-  channelParticipant() {
+  RA = () => ({_: 'channelParticipant', user_id: this.i32(), date: this.i32()})
+  RB = () => ({_: 'channelParticipantSelf', user_id: this.i32(), inviter_id: this.i32(), date: this.i32()})
+  RC() {
+    const flags = this.i32();
     return {
-      _: 'channelParticipant',
-      user_id: this.readInt(),
-      date: this.readInt(),
+      _: 'channelParticipantCreator' as const,
+      user_id: this.i32(),
+      rank: flags & 0x1 ? this.s() : undefined,
     }
   }
-
-  channelParticipantSelf() {
+  RF = () => ({_: 'channelParticipantsRecent'})
+  RG = () => ({_: 'channelParticipantsAdmins'})
+  RH = () => ({_: 'channelParticipantsKicked', q: this.s()})
+  RM = () => ({_: 'channels.channelParticipants', count: this.i32(), participants: this.v(this.o), users: this.v(this.o)})
+  RO = () => ({_: 'channels.channelParticipant', participant: this.o(), users: this.v(this.o)})
+  DD = () => ({_: 'chatParticipantCreator', user_id: this.i32()})
+  DE = () => ({_: 'chatParticipantAdmin', user_id: this.i32(), inviter_id: this.i32(), date: this.i32()})
+  IO = () => ({_: 'updateChatParticipantAdmin', chat_id: this.i32(), user_id: this.i32(), is_admin: this.o(), version: this.i32()})
+  EH = () => ({_: 'messageActionChatMigrateTo', channel_id: this.i32()})
+  EI = () => ({_: 'messageActionChannelMigrateFrom', title: this.s(), chat_id: this.i32()})
+  RI = () => ({_: 'channelParticipantsBots'})
+  RP() {
+    const flags = this.i32();
     return {
-      _: 'channelParticipantSelf',
-      user_id: this.readInt(),
-      inviter_id: this.readInt(),
-      date: this.readInt(),
-    }
-  }
-
-  channelParticipantCreator() {
-    const flags = this.readInt();
-    return {
-      _: 'channelParticipantCreator',
-      user_id: this.readInt(),
-      rank: (flags & 0x1) ? this.readString() : undefined,
-    }
-  }
-
-  channelParticipantsRecent() {
-    return {
-      _: 'channelParticipantsRecent',
-    }
-  }
-
-  channelParticipantsAdmins() {
-    return {
-      _: 'channelParticipantsAdmins',
-    }
-  }
-
-  channelParticipantsKicked() {
-    return {
-      _: 'channelParticipantsKicked',
-      q: this.readString(),
-    }
-  }
-
-  channels_channelParticipants() {
-    return {
-      _: 'channels.channelParticipants',
-      count: this.readInt(),
-      participants: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  channels_channelParticipant() {
-    return {
-      _: 'channels.channelParticipant',
-      participant: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  chatParticipantCreator() {
-    return {
-      _: 'chatParticipantCreator',
-      user_id: this.readInt(),
-    }
-  }
-
-  chatParticipantAdmin() {
-    return {
-      _: 'chatParticipantAdmin',
-      user_id: this.readInt(),
-      inviter_id: this.readInt(),
-      date: this.readInt(),
-    }
-  }
-
-  updateChatParticipantAdmin() {
-    return {
-      _: 'updateChatParticipantAdmin',
-      chat_id: this.readInt(),
-      user_id: this.readInt(),
-      is_admin: this.readObject(),
-      version: this.readInt(),
-    }
-  }
-
-  messageActionChatMigrateTo() {
-    return {
-      _: 'messageActionChatMigrateTo',
-      channel_id: this.readInt(),
-    }
-  }
-
-  messageActionChannelMigrateFrom() {
-    return {
-      _: 'messageActionChannelMigrateFrom',
-      title: this.readString(),
-      chat_id: this.readInt(),
-    }
-  }
-
-  channelParticipantsBots() {
-    return {
-      _: 'channelParticipantsBots',
-    }
-  }
-
-  help_termsOfService() {
-    const flags = this.readInt();
-    return {
-      _: 'help.termsOfService',
+      _: 'help.termsOfService' as const,
       popup: !!(flags & 0x1),
-      id: this.readObject(),
-      text: this.readString(),
-      entities: this.readObject(),
-      min_age_confirm: (flags & 0x2) ? this.readInt() : undefined,
+      id: this.o(),
+      text: this.s(),
+      entities: this.v(this.o),
+      min_age_confirm: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  updateNewStickerSet() {
+  IP = () => ({_: 'updateNewStickerSet', stickerset: this.o()})
+  IQ() {
+    const flags = this.i32();
     return {
-      _: 'updateNewStickerSet',
-      stickerset: this.readObject(),
-    }
-  }
-
-  updateStickerSetsOrder() {
-    const flags = this.readInt();
-    return {
-      _: 'updateStickerSetsOrder',
+      _: 'updateStickerSetsOrder' as const,
       masks: !!(flags & 0x1),
-      order: this.readObject(),
+      order: this.v(this.i64),
     }
   }
-
-  updateStickerSets() {
+  IR = () => ({_: 'updateStickerSets'})
+  RQ = () => ({_: 'foundGif', url: this.s(), thumb_url: this.s(), content_url: this.s(), content_type: this.s(), w: this.i32(), h: this.i32()})
+  RR = () => ({_: 'foundGifCached', url: this.s(), photo: this.o(), document: this.o()})
+  BC = () => ({_: 'inputMediaGifExternal', url: this.s(), q: this.s()})
+  RS = () => ({_: 'messages.foundGifs', next_offset: this.i32(), results: this.v(this.o)})
+  RT = () => ({_: 'messages.savedGifsNotModified'})
+  RU = () => ({_: 'messages.savedGifs', hash: this.i32(), gifs: this.v(this.o)})
+  IS = () => ({_: 'updateSavedGifs'})
+  RV() {
+    const flags = this.i32();
     return {
-      _: 'updateStickerSets',
+      _: 'inputBotInlineMessageMediaAuto' as const,
+      message: this.s(),
+      entities: flags & 0x2 ? this.v(this.o) : undefined,
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  foundGif() {
+  RW() {
+    const flags = this.i32();
     return {
-      _: 'foundGif',
-      url: this.readString(),
-      thumb_url: this.readString(),
-      content_url: this.readString(),
-      content_type: this.readString(),
-      w: this.readInt(),
-      h: this.readInt(),
-    }
-  }
-
-  foundGifCached() {
-    return {
-      _: 'foundGifCached',
-      url: this.readString(),
-      photo: this.readObject(),
-      document: this.readObject(),
-    }
-  }
-
-  inputMediaGifExternal() {
-    return {
-      _: 'inputMediaGifExternal',
-      url: this.readString(),
-      q: this.readString(),
-    }
-  }
-
-  messages_foundGifs() {
-    return {
-      _: 'messages.foundGifs',
-      next_offset: this.readInt(),
-      results: this.readObject(),
-    }
-  }
-
-  messages_savedGifsNotModified() {
-    return {
-      _: 'messages.savedGifsNotModified',
-    }
-  }
-
-  messages_savedGifs() {
-    return {
-      _: 'messages.savedGifs',
-      hash: this.readInt(),
-      gifs: this.readObject(),
-    }
-  }
-
-  updateSavedGifs() {
-    return {
-      _: 'updateSavedGifs',
-    }
-  }
-
-  inputBotInlineMessageMediaAuto() {
-    const flags = this.readInt();
-    return {
-      _: 'inputBotInlineMessageMediaAuto',
-      message: this.readString(),
-      entities: (flags & 0x2) ? this.readObject() : undefined,
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
-    }
-  }
-
-  inputBotInlineMessageText() {
-    const flags = this.readInt();
-    return {
-      _: 'inputBotInlineMessageText',
+      _: 'inputBotInlineMessageText' as const,
       no_webpage: !!(flags & 0x1),
-      message: this.readString(),
-      entities: (flags & 0x2) ? this.readObject() : undefined,
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      message: this.s(),
+      entities: flags & 0x2 ? this.v(this.o) : undefined,
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  inputBotInlineResult() {
-    const flags = this.readInt();
+  SB() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineResult',
-      id: this.readString(),
-      type: this.readString(),
-      title: (flags & 0x2) ? this.readString() : undefined,
-      description: (flags & 0x4) ? this.readString() : undefined,
-      url: (flags & 0x8) ? this.readString() : undefined,
-      thumb: (flags & 0x16) ? this.readObject() : undefined,
-      content: (flags & 0x32) ? this.readObject() : undefined,
-      send_message: this.readObject(),
+      _: 'inputBotInlineResult' as const,
+      id: this.s(),
+      type: this.s(),
+      title: flags & 0x2 ? this.s() : undefined,
+      description: flags & 0x4 ? this.s() : undefined,
+      url: flags & 0x8 ? this.s() : undefined,
+      thumb: flags & 0x10 ? this.o() : undefined,
+      content: flags & 0x20 ? this.o() : undefined,
+      send_message: this.o(),
     }
   }
-
-  botInlineMessageMediaAuto() {
-    const flags = this.readInt();
+  SF() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMessageMediaAuto',
-      message: this.readString(),
-      entities: (flags & 0x2) ? this.readObject() : undefined,
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'botInlineMessageMediaAuto' as const,
+      message: this.s(),
+      entities: flags & 0x2 ? this.v(this.o) : undefined,
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  botInlineMessageText() {
-    const flags = this.readInt();
+  SG() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMessageText',
+      _: 'botInlineMessageText' as const,
       no_webpage: !!(flags & 0x1),
-      message: this.readString(),
-      entities: (flags & 0x2) ? this.readObject() : undefined,
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      message: this.s(),
+      entities: flags & 0x2 ? this.v(this.o) : undefined,
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  botInlineResult() {
-    const flags = this.readInt();
+  SK() {
+    const flags = this.i32();
     return {
-      _: 'botInlineResult',
-      id: this.readString(),
-      type: this.readString(),
-      title: (flags & 0x2) ? this.readString() : undefined,
-      description: (flags & 0x4) ? this.readString() : undefined,
-      url: (flags & 0x8) ? this.readString() : undefined,
-      thumb: (flags & 0x16) ? this.readObject() : undefined,
-      content: (flags & 0x32) ? this.readObject() : undefined,
-      send_message: this.readObject(),
+      _: 'botInlineResult' as const,
+      id: this.s(),
+      type: this.s(),
+      title: flags & 0x2 ? this.s() : undefined,
+      description: flags & 0x4 ? this.s() : undefined,
+      url: flags & 0x8 ? this.s() : undefined,
+      thumb: flags & 0x10 ? this.o() : undefined,
+      content: flags & 0x20 ? this.o() : undefined,
+      send_message: this.o(),
     }
   }
-
-  messages_botResults() {
-    const flags = this.readInt();
+  SM() {
+    const flags = this.i32();
     return {
-      _: 'messages.botResults',
+      _: 'messages.botResults' as const,
       gallery: !!(flags & 0x1),
-      query_id: this.readLong(),
-      next_offset: (flags & 0x2) ? this.readString() : undefined,
-      switch_pm: (flags & 0x4) ? this.readObject() : undefined,
-      results: this.readObject(),
-      cache_time: this.readInt(),
-      users: this.readObject(),
+      query_id: this.i64(),
+      next_offset: flags & 0x2 ? this.s() : undefined,
+      switch_pm: flags & 0x4 ? this.o() : undefined,
+      results: this.v(this.o),
+      cache_time: this.i32(),
+      users: this.v(this.o),
     }
   }
-
-  updateBotInlineQuery() {
-    const flags = this.readInt();
+  IT() {
+    const flags = this.i32();
     return {
-      _: 'updateBotInlineQuery',
-      query_id: this.readLong(),
-      user_id: this.readInt(),
-      query: this.readString(),
-      geo: (flags & 0x1) ? this.readObject() : undefined,
-      offset: this.readString(),
+      _: 'updateBotInlineQuery' as const,
+      query_id: this.i64(),
+      user_id: this.i32(),
+      query: this.s(),
+      geo: flags & 0x1 ? this.o() : undefined,
+      offset: this.s(),
     }
   }
-
-  updateBotInlineSend() {
-    const flags = this.readInt();
+  IU() {
+    const flags = this.i32();
     return {
-      _: 'updateBotInlineSend',
-      user_id: this.readInt(),
-      query: this.readString(),
-      geo: (flags & 0x1) ? this.readObject() : undefined,
-      id: this.readString(),
-      msg_id: (flags & 0x2) ? this.readObject() : undefined,
+      _: 'updateBotInlineSend' as const,
+      user_id: this.i32(),
+      query: this.s(),
+      geo: flags & 0x1 ? this.o() : undefined,
+      id: this.s(),
+      msg_id: flags & 0x2 ? this.o() : undefined,
     }
   }
-
-  inputMessagesFilterVoice() {
+  HA = () => ({_: 'inputMessagesFilterVoice'})
+  HB = () => ({_: 'inputMessagesFilterMusic'})
+  MS = () => ({_: 'inputPrivacyKeyChatInvite'})
+  NA = () => ({_: 'privacyKeyChatInvite'})
+  SN = () => ({_: 'exportedMessageLink', link: this.s(), html: this.s()})
+  SO() {
+    const flags = this.i32();
     return {
-      _: 'inputMessagesFilterVoice',
+      _: 'messageFwdHeader' as const,
+      from_id: flags & 0x1 ? this.i32() : undefined,
+      from_name: flags & 0x20 ? this.s() : undefined,
+      date: this.i32(),
+      channel_id: flags & 0x2 ? this.i32() : undefined,
+      channel_post: flags & 0x4 ? this.i32() : undefined,
+      post_author: flags & 0x8 ? this.s() : undefined,
+      saved_from_peer: flags & 0x10 ? this.o() : undefined,
+      saved_from_msg_id: flags & 0x10 ? this.i32() : undefined,
     }
   }
-
-  inputMessagesFilterMusic() {
+  IV = () => ({_: 'updateEditChannelMessage', message: this.o(), pts: this.i32(), pts_count: this.i32()})
+  IW = () => ({_: 'updateChannelPinnedMessage', channel_id: this.i32(), id: this.i32()})
+  EJ = () => ({_: 'messageActionPinMessage'})
+  SP = () => ({_: 'auth.codeTypeSms'})
+  SQ = () => ({_: 'auth.codeTypeCall'})
+  SR = () => ({_: 'auth.codeTypeFlashCall'})
+  SS = () => ({_: 'auth.sentCodeTypeApp', length: this.i32()})
+  ST = () => ({_: 'auth.sentCodeTypeSms', length: this.i32()})
+  SU = () => ({_: 'auth.sentCodeTypeCall', length: this.i32()})
+  SV = () => ({_: 'auth.sentCodeTypeFlashCall', pattern: this.s()})
+  PK = () => ({_: 'keyboardButtonUrl', text: this.s(), url: this.s()})
+  PL = () => ({_: 'keyboardButtonCallback', text: this.s(), data: this.b()})
+  PM = () => ({_: 'keyboardButtonRequestPhone', text: this.s()})
+  PN = () => ({_: 'keyboardButtonRequestGeoLocation', text: this.s()})
+  PO() {
+    const flags = this.i32();
     return {
-      _: 'inputMessagesFilterMusic',
-    }
-  }
-
-  inputPrivacyKeyChatInvite() {
-    return {
-      _: 'inputPrivacyKeyChatInvite',
-    }
-  }
-
-  privacyKeyChatInvite() {
-    return {
-      _: 'privacyKeyChatInvite',
-    }
-  }
-
-  exportedMessageLink() {
-    return {
-      _: 'exportedMessageLink',
-      link: this.readString(),
-      html: this.readString(),
-    }
-  }
-
-  messageFwdHeader() {
-    const flags = this.readInt();
-    return {
-      _: 'messageFwdHeader',
-      from_id: (flags & 0x1) ? this.readInt() : undefined,
-      from_name: (flags & 0x32) ? this.readString() : undefined,
-      date: this.readInt(),
-      channel_id: (flags & 0x2) ? this.readInt() : undefined,
-      channel_post: (flags & 0x4) ? this.readInt() : undefined,
-      post_author: (flags & 0x8) ? this.readString() : undefined,
-      saved_from_peer: (flags & 0x16) ? this.readObject() : undefined,
-      saved_from_msg_id: (flags & 0x16) ? this.readInt() : undefined,
-    }
-  }
-
-  updateEditChannelMessage() {
-    return {
-      _: 'updateEditChannelMessage',
-      message: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  updateChannelPinnedMessage() {
-    return {
-      _: 'updateChannelPinnedMessage',
-      channel_id: this.readInt(),
-      id: this.readInt(),
-    }
-  }
-
-  messageActionPinMessage() {
-    return {
-      _: 'messageActionPinMessage',
-    }
-  }
-
-  auth_codeTypeSms() {
-    return {
-      _: 'auth.codeTypeSms',
-    }
-  }
-
-  auth_codeTypeCall() {
-    return {
-      _: 'auth.codeTypeCall',
-    }
-  }
-
-  auth_codeTypeFlashCall() {
-    return {
-      _: 'auth.codeTypeFlashCall',
-    }
-  }
-
-  auth_sentCodeTypeApp() {
-    return {
-      _: 'auth.sentCodeTypeApp',
-      length: this.readInt(),
-    }
-  }
-
-  auth_sentCodeTypeSms() {
-    return {
-      _: 'auth.sentCodeTypeSms',
-      length: this.readInt(),
-    }
-  }
-
-  auth_sentCodeTypeCall() {
-    return {
-      _: 'auth.sentCodeTypeCall',
-      length: this.readInt(),
-    }
-  }
-
-  auth_sentCodeTypeFlashCall() {
-    return {
-      _: 'auth.sentCodeTypeFlashCall',
-      pattern: this.readString(),
-    }
-  }
-
-  keyboardButtonUrl() {
-    return {
-      _: 'keyboardButtonUrl',
-      text: this.readString(),
-      url: this.readString(),
-    }
-  }
-
-  keyboardButtonCallback() {
-    return {
-      _: 'keyboardButtonCallback',
-      text: this.readString(),
-      data: this.readObject(),
-    }
-  }
-
-  keyboardButtonRequestPhone() {
-    return {
-      _: 'keyboardButtonRequestPhone',
-      text: this.readString(),
-    }
-  }
-
-  keyboardButtonRequestGeoLocation() {
-    return {
-      _: 'keyboardButtonRequestGeoLocation',
-      text: this.readString(),
-    }
-  }
-
-  keyboardButtonSwitchInline() {
-    const flags = this.readInt();
-    return {
-      _: 'keyboardButtonSwitchInline',
+      _: 'keyboardButtonSwitchInline' as const,
       same_peer: !!(flags & 0x1),
-      text: this.readString(),
-      query: this.readString(),
+      text: this.s(),
+      query: this.s(),
     }
   }
-
-  replyInlineMarkup() {
+  PX = () => ({_: 'replyInlineMarkup', rows: this.v(this.o)})
+  SW() {
+    const flags = this.i32();
     return {
-      _: 'replyInlineMarkup',
-      rows: this.readObject(),
-    }
-  }
-
-  messages_botCallbackAnswer() {
-    const flags = this.readInt();
-    return {
-      _: 'messages.botCallbackAnswer',
+      _: 'messages.botCallbackAnswer' as const,
       alert: !!(flags & 0x2),
       has_url: !!(flags & 0x8),
-      native_ui: !!(flags & 0x16),
-      message: (flags & 0x1) ? this.readString() : undefined,
-      url: (flags & 0x4) ? this.readString() : undefined,
-      cache_time: this.readInt(),
+      native_ui: !!(flags & 0x10),
+      message: flags & 0x1 ? this.s() : undefined,
+      url: flags & 0x4 ? this.s() : undefined,
+      cache_time: this.i32(),
     }
   }
-
-  updateBotCallbackQuery() {
-    const flags = this.readInt();
+  IX() {
+    const flags = this.i32();
     return {
-      _: 'updateBotCallbackQuery',
-      query_id: this.readLong(),
-      user_id: this.readInt(),
-      peer: this.readObject(),
-      msg_id: this.readInt(),
-      chat_instance: this.readLong(),
-      data: (flags & 0x1) ? this.readObject() : undefined,
-      game_short_name: (flags & 0x2) ? this.readString() : undefined,
+      _: 'updateBotCallbackQuery' as const,
+      query_id: this.i64(),
+      user_id: this.i32(),
+      peer: this.o(),
+      msg_id: this.i32(),
+      chat_instance: this.i64(),
+      data: flags & 0x1 ? this.b() : undefined,
+      game_short_name: flags & 0x2 ? this.s() : undefined,
     }
   }
-
-  messages_messageEditData() {
-    const flags = this.readInt();
+  SX() {
+    const flags = this.i32();
     return {
-      _: 'messages.messageEditData',
+      _: 'messages.messageEditData' as const,
       caption: !!(flags & 0x1),
     }
   }
-
-  updateEditMessage() {
+  IY = () => ({_: 'updateEditMessage', message: this.o(), pts: this.i32(), pts_count: this.i32()})
+  RX() {
+    const flags = this.i32();
     return {
-      _: 'updateEditMessage',
-      message: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
+      _: 'inputBotInlineMessageMediaGeo' as const,
+      geo_point: this.o(),
+      period: this.i32(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  inputBotInlineMessageMediaGeo() {
-    const flags = this.readInt();
+  RY() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineMessageMediaGeo',
-      geo_point: this.readObject(),
-      period: this.readInt(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'inputBotInlineMessageMediaVenue' as const,
+      geo_point: this.o(),
+      title: this.s(),
+      address: this.s(),
+      provider: this.s(),
+      venue_id: this.s(),
+      venue_type: this.s(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  inputBotInlineMessageMediaVenue() {
-    const flags = this.readInt();
+  RZ() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineMessageMediaVenue',
-      geo_point: this.readObject(),
-      title: this.readString(),
-      address: this.readString(),
-      provider: this.readString(),
-      venue_id: this.readString(),
-      venue_type: this.readString(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'inputBotInlineMessageMediaContact' as const,
+      phone_number: this.s(),
+      first_name: this.s(),
+      last_name: this.s(),
+      vcard: this.s(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  inputBotInlineMessageMediaContact() {
-    const flags = this.readInt();
+  SH() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineMessageMediaContact',
-      phone_number: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      vcard: this.readString(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'botInlineMessageMediaGeo' as const,
+      geo: this.o(),
+      period: this.i32(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  botInlineMessageMediaGeo() {
-    const flags = this.readInt();
+  SI() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMessageMediaGeo',
-      geo: this.readObject(),
-      period: this.readInt(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'botInlineMessageMediaVenue' as const,
+      geo: this.o(),
+      title: this.s(),
+      address: this.s(),
+      provider: this.s(),
+      venue_id: this.s(),
+      venue_type: this.s(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  botInlineMessageMediaVenue() {
-    const flags = this.readInt();
+  SJ() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMessageMediaVenue',
-      geo: this.readObject(),
-      title: this.readString(),
-      address: this.readString(),
-      provider: this.readString(),
-      venue_id: this.readString(),
-      venue_type: this.readString(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'botInlineMessageMediaContact' as const,
+      phone_number: this.s(),
+      first_name: this.s(),
+      last_name: this.s(),
+      vcard: this.s(),
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  botInlineMessageMediaContact() {
-    const flags = this.readInt();
+  SC = () => ({_: 'inputBotInlineResultPhoto', id: this.s(), type: this.s(), photo: this.o(), send_message: this.o()})
+  SD() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMessageMediaContact',
-      phone_number: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      vcard: this.readString(),
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
+      _: 'inputBotInlineResultDocument' as const,
+      id: this.s(),
+      type: this.s(),
+      title: flags & 0x2 ? this.s() : undefined,
+      description: flags & 0x4 ? this.s() : undefined,
+      document: this.o(),
+      send_message: this.o(),
     }
   }
-
-  inputBotInlineResultPhoto() {
+  SL() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineResultPhoto',
-      id: this.readString(),
-      type: this.readString(),
-      photo: this.readObject(),
-      send_message: this.readObject(),
+      _: 'botInlineMediaResult' as const,
+      id: this.s(),
+      type: this.s(),
+      photo: flags & 0x1 ? this.o() : undefined,
+      document: flags & 0x2 ? this.o() : undefined,
+      title: flags & 0x4 ? this.s() : undefined,
+      description: flags & 0x8 ? this.s() : undefined,
+      send_message: this.o(),
     }
   }
-
-  inputBotInlineResultDocument() {
-    const flags = this.readInt();
+  SY = () => ({_: 'inputBotInlineMessageID', dc_id: this.i32(), id: this.i64(), access_hash: this.i64()})
+  IZ() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineResultDocument',
-      id: this.readString(),
-      type: this.readString(),
-      title: (flags & 0x2) ? this.readString() : undefined,
-      description: (flags & 0x4) ? this.readString() : undefined,
-      document: this.readObject(),
-      send_message: this.readObject(),
+      _: 'updateInlineBotCallbackQuery' as const,
+      query_id: this.i64(),
+      user_id: this.i32(),
+      msg_id: this.o(),
+      chat_instance: this.i64(),
+      data: flags & 0x1 ? this.b() : undefined,
+      game_short_name: flags & 0x2 ? this.s() : undefined,
     }
   }
-
-  botInlineMediaResult() {
-    const flags = this.readInt();
+  SZ = () => ({_: 'inlineBotSwitchPM', text: this.s(), start_param: this.s()})
+  TA = () => ({_: 'messages.peerDialogs', dialogs: this.v(this.o), messages: this.v(this.o), chats: this.v(this.o), users: this.v(this.o), state: this.o()})
+  TB = () => ({_: 'topPeer', peer: this.o(), rating: this.d()})
+  TC = () => ({_: 'topPeerCategoryBotsPM'})
+  TD = () => ({_: 'topPeerCategoryBotsInline'})
+  TE = () => ({_: 'topPeerCategoryCorrespondents'})
+  TF = () => ({_: 'topPeerCategoryGroups'})
+  TG = () => ({_: 'topPeerCategoryChannels'})
+  TK = () => ({_: 'topPeerCategoryPeers', category: this.o(), count: this.i32(), peers: this.v(this.o)})
+  TL = () => ({_: 'contacts.topPeersNotModified'})
+  TM = () => ({_: 'contacts.topPeers', categories: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  QJ = () => ({_: 'messageEntityMentionName', offset: this.i32(), length: this.i32(), user_id: this.i32()})
+  QK = () => ({_: 'inputMessageEntityMentionName', offset: this.i32(), length: this.i32(), user_id: this.o()})
+  HC = () => ({_: 'inputMessagesFilterChatPhotos'})
+  JA = () => ({_: 'updateReadChannelOutbox', channel_id: this.i32(), max_id: this.i32()})
+  JB = () => ({_: 'updateDraftMessage', peer: this.o(), draft: this.o()})
+  TO() {
+    const flags = this.i32();
     return {
-      _: 'botInlineMediaResult',
-      id: this.readString(),
-      type: this.readString(),
-      photo: (flags & 0x1) ? this.readObject() : undefined,
-      document: (flags & 0x2) ? this.readObject() : undefined,
-      title: (flags & 0x4) ? this.readString() : undefined,
-      description: (flags & 0x8) ? this.readString() : undefined,
-      send_message: this.readObject(),
+      _: 'draftMessageEmpty' as const,
+      date: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  inputBotInlineMessageID() {
+  TP() {
+    const flags = this.i32();
     return {
-      _: 'inputBotInlineMessageID',
-      dc_id: this.readInt(),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  updateInlineBotCallbackQuery() {
-    const flags = this.readInt();
-    return {
-      _: 'updateInlineBotCallbackQuery',
-      query_id: this.readLong(),
-      user_id: this.readInt(),
-      msg_id: this.readObject(),
-      chat_instance: this.readLong(),
-      data: (flags & 0x1) ? this.readObject() : undefined,
-      game_short_name: (flags & 0x2) ? this.readString() : undefined,
-    }
-  }
-
-  inlineBotSwitchPM() {
-    return {
-      _: 'inlineBotSwitchPM',
-      text: this.readString(),
-      start_param: this.readString(),
-    }
-  }
-
-  messages_peerDialogs() {
-    return {
-      _: 'messages.peerDialogs',
-      dialogs: this.readObject(),
-      messages: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-      state: this.readObject(),
-    }
-  }
-
-  topPeer() {
-    return {
-      _: 'topPeer',
-      peer: this.readObject(),
-      rating: this.readObject(),
-    }
-  }
-
-  topPeerCategoryBotsPM() {
-    return {
-      _: 'topPeerCategoryBotsPM',
-    }
-  }
-
-  topPeerCategoryBotsInline() {
-    return {
-      _: 'topPeerCategoryBotsInline',
-    }
-  }
-
-  topPeerCategoryCorrespondents() {
-    return {
-      _: 'topPeerCategoryCorrespondents',
-    }
-  }
-
-  topPeerCategoryGroups() {
-    return {
-      _: 'topPeerCategoryGroups',
-    }
-  }
-
-  topPeerCategoryChannels() {
-    return {
-      _: 'topPeerCategoryChannels',
-    }
-  }
-
-  topPeerCategoryPeers() {
-    return {
-      _: 'topPeerCategoryPeers',
-      category: this.readObject(),
-      count: this.readInt(),
-      peers: this.readObject(),
-    }
-  }
-
-  contacts_topPeersNotModified() {
-    return {
-      _: 'contacts.topPeersNotModified',
-    }
-  }
-
-  contacts_topPeers() {
-    return {
-      _: 'contacts.topPeers',
-      categories: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  messageEntityMentionName() {
-    return {
-      _: 'messageEntityMentionName',
-      offset: this.readInt(),
-      length: this.readInt(),
-      user_id: this.readInt(),
-    }
-  }
-
-  inputMessageEntityMentionName() {
-    return {
-      _: 'inputMessageEntityMentionName',
-      offset: this.readInt(),
-      length: this.readInt(),
-      user_id: this.readObject(),
-    }
-  }
-
-  inputMessagesFilterChatPhotos() {
-    return {
-      _: 'inputMessagesFilterChatPhotos',
-    }
-  }
-
-  updateReadChannelOutbox() {
-    return {
-      _: 'updateReadChannelOutbox',
-      channel_id: this.readInt(),
-      max_id: this.readInt(),
-    }
-  }
-
-  updateDraftMessage() {
-    return {
-      _: 'updateDraftMessage',
-      peer: this.readObject(),
-      draft: this.readObject(),
-    }
-  }
-
-  draftMessageEmpty() {
-    const flags = this.readInt();
-    return {
-      _: 'draftMessageEmpty',
-      date: (flags & 0x1) ? this.readInt() : undefined,
-    }
-  }
-
-  draftMessage() {
-    const flags = this.readInt();
-    return {
-      _: 'draftMessage',
+      _: 'draftMessage' as const,
       no_webpage: !!(flags & 0x2),
-      reply_to_msg_id: (flags & 0x1) ? this.readInt() : undefined,
-      message: this.readString(),
-      entities: (flags & 0x8) ? this.readObject() : undefined,
-      date: this.readInt(),
+      reply_to_msg_id: flags & 0x1 ? this.i32() : undefined,
+      message: this.s(),
+      entities: flags & 0x8 ? this.v(this.o) : undefined,
+      date: this.i32(),
     }
   }
-
-  messageActionHistoryClear() {
+  EK = () => ({_: 'messageActionHistoryClear'})
+  TQ = () => ({_: 'messages.featuredStickersNotModified'})
+  TR = () => ({_: 'messages.featuredStickers', hash: this.i32(), sets: this.v(this.o), unread: this.v(this.i64)})
+  JC = () => ({_: 'updateReadFeaturedStickers'})
+  TS = () => ({_: 'messages.recentStickersNotModified'})
+  TT = () => ({_: 'messages.recentStickers', hash: this.i32(), packs: this.v(this.o), stickers: this.v(this.o), dates: this.v(this.i32)})
+  JD = () => ({_: 'updateRecentStickers'})
+  TU = () => ({_: 'messages.archivedStickers', count: this.i32(), sets: this.v(this.o)})
+  TV = () => ({_: 'messages.stickerSetInstallResultSuccess'})
+  TW = () => ({_: 'messages.stickerSetInstallResultArchive', sets: this.v(this.o)})
+  TX = () => ({_: 'stickerSetCovered', set: this.o(), cover: this.o()})
+  JE = () => ({_: 'updateConfig'})
+  JF = () => ({_: 'updatePtsChanged'})
+  BD() {
+    const flags = this.i32();
     return {
-      _: 'messageActionHistoryClear',
+      _: 'inputMediaPhotoExternal' as const,
+      url: this.s(),
+      ttl_seconds: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  messages_featuredStickersNotModified() {
+  BE() {
+    const flags = this.i32();
     return {
-      _: 'messages.featuredStickersNotModified',
+      _: 'inputMediaDocumentExternal' as const,
+      url: this.s(),
+      ttl_seconds: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  messages_featuredStickers() {
+  TY = () => ({_: 'stickerSetMultiCovered', set: this.o(), covers: this.v(this.o)})
+  TZ = () => ({_: 'maskCoords', n: this.i32(), x: this.d(), y: this.d(), zoom: this.d()})
+  OF = () => ({_: 'documentAttributeHasStickers'})
+  UA = () => ({_: 'inputStickeredMediaPhoto', id: this.o()})
+  UB = () => ({_: 'inputStickeredMediaDocument', id: this.o()})
+  UC() {
+    const flags = this.i32();
     return {
-      _: 'messages.featuredStickers',
-      hash: this.readInt(),
-      sets: this.readObject(),
-      unread: this.readObject(),
+      _: 'game' as const,
+      id: this.i64(),
+      access_hash: this.i64(),
+      short_name: this.s(),
+      title: this.s(),
+      description: this.s(),
+      photo: this.o(),
+      document: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  updateReadFeaturedStickers() {
+  SE = () => ({_: 'inputBotInlineResultGame', id: this.s(), short_name: this.s(), send_message: this.o()})
+  SA() {
+    const flags = this.i32();
     return {
-      _: 'updateReadFeaturedStickers',
+      _: 'inputBotInlineMessageGame' as const,
+      reply_markup: flags & 0x4 ? this.o() : undefined,
     }
   }
-
-  messages_recentStickersNotModified() {
+  DU = () => ({_: 'messageMediaGame', game: this.o()})
+  BF = () => ({_: 'inputMediaGame', id: this.o()})
+  UD = () => ({_: 'inputGameID', id: this.i64(), access_hash: this.i64()})
+  UE = () => ({_: 'inputGameShortName', bot_id: this.o(), short_name: this.s()})
+  PP = () => ({_: 'keyboardButtonGame', text: this.s()})
+  EL = () => ({_: 'messageActionGameScore', game_id: this.i64(), score: this.i32()})
+  UF = () => ({_: 'highScore', pos: this.i32(), user_id: this.i32(), score: this.i32()})
+  UG = () => ({_: 'messages.highScores', scores: this.v(this.o), users: this.v(this.o)})
+  KJ = () => ({_: 'updates.differenceTooLong', pts: this.i32()})
+  JG = () => ({_: 'updateChannelWebPage', channel_id: this.i32(), webpage: this.o(), pts: this.i32(), pts_count: this.i32()})
+  GQ = () => ({_: 'messages.chatsSlice', count: this.i32(), chats: this.v(this.o)})
+  UH = () => ({_: 'textEmpty'})
+  UI = () => ({_: 'textPlain', text: this.s()})
+  UJ = () => ({_: 'textBold', text: this.o()})
+  UK = () => ({_: 'textItalic', text: this.o()})
+  UL = () => ({_: 'textUnderline', text: this.o()})
+  UM = () => ({_: 'textStrike', text: this.o()})
+  UN = () => ({_: 'textFixed', text: this.o()})
+  UO = () => ({_: 'textUrl', text: this.o(), url: this.s(), webpage_id: this.i64()})
+  UP = () => ({_: 'textEmail', text: this.o(), email: this.s()})
+  UQ = () => ({_: 'textConcat', texts: this.v(this.o)})
+  UX = () => ({_: 'pageBlockUnsupported'})
+  UY = () => ({_: 'pageBlockTitle', text: this.o()})
+  UZ = () => ({_: 'pageBlockSubtitle', text: this.o()})
+  VA = () => ({_: 'pageBlockAuthorDate', author: this.o(), published_date: this.i32()})
+  VB = () => ({_: 'pageBlockHeader', text: this.o()})
+  VC = () => ({_: 'pageBlockSubheader', text: this.o()})
+  VD = () => ({_: 'pageBlockParagraph', text: this.o()})
+  VE = () => ({_: 'pageBlockPreformatted', text: this.o(), language: this.s()})
+  VF = () => ({_: 'pageBlockFooter', text: this.o()})
+  VG = () => ({_: 'pageBlockDivider'})
+  VH = () => ({_: 'pageBlockAnchor', name: this.s()})
+  VI = () => ({_: 'pageBlockList', items: this.v(this.o)})
+  VJ = () => ({_: 'pageBlockBlockquote', text: this.o(), caption: this.o()})
+  VK = () => ({_: 'pageBlockPullquote', text: this.o(), caption: this.o()})
+  VL() {
+    const flags = this.i32();
     return {
-      _: 'messages.recentStickersNotModified',
+      _: 'pageBlockPhoto' as const,
+      photo_id: this.i64(),
+      caption: this.o(),
+      url: flags & 0x1 ? this.s() : undefined,
+      webpage_id: flags & 0x1 ? this.i64() : undefined,
     }
   }
-
-  messages_recentStickers() {
+  VM() {
+    const flags = this.i32();
     return {
-      _: 'messages.recentStickers',
-      hash: this.readInt(),
-      packs: this.readObject(),
-      stickers: this.readObject(),
-      dates: this.readObject(),
-    }
-  }
-
-  updateRecentStickers() {
-    return {
-      _: 'updateRecentStickers',
-    }
-  }
-
-  messages_archivedStickers() {
-    return {
-      _: 'messages.archivedStickers',
-      count: this.readInt(),
-      sets: this.readObject(),
-    }
-  }
-
-  messages_stickerSetInstallResultSuccess() {
-    return {
-      _: 'messages.stickerSetInstallResultSuccess',
-    }
-  }
-
-  messages_stickerSetInstallResultArchive() {
-    return {
-      _: 'messages.stickerSetInstallResultArchive',
-      sets: this.readObject(),
-    }
-  }
-
-  stickerSetCovered() {
-    return {
-      _: 'stickerSetCovered',
-      set: this.readObject(),
-      cover: this.readObject(),
-    }
-  }
-
-  updateConfig() {
-    return {
-      _: 'updateConfig',
-    }
-  }
-
-  updatePtsChanged() {
-    return {
-      _: 'updatePtsChanged',
-    }
-  }
-
-  inputMediaPhotoExternal() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaPhotoExternal',
-      url: this.readString(),
-      ttl_seconds: (flags & 0x1) ? this.readInt() : undefined,
-    }
-  }
-
-  inputMediaDocumentExternal() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaDocumentExternal',
-      url: this.readString(),
-      ttl_seconds: (flags & 0x1) ? this.readInt() : undefined,
-    }
-  }
-
-  stickerSetMultiCovered() {
-    return {
-      _: 'stickerSetMultiCovered',
-      set: this.readObject(),
-      covers: this.readObject(),
-    }
-  }
-
-  maskCoords() {
-    return {
-      _: 'maskCoords',
-      n: this.readInt(),
-      x: this.readObject(),
-      y: this.readObject(),
-      zoom: this.readObject(),
-    }
-  }
-
-  documentAttributeHasStickers() {
-    return {
-      _: 'documentAttributeHasStickers',
-    }
-  }
-
-  inputStickeredMediaPhoto() {
-    return {
-      _: 'inputStickeredMediaPhoto',
-      id: this.readObject(),
-    }
-  }
-
-  inputStickeredMediaDocument() {
-    return {
-      _: 'inputStickeredMediaDocument',
-      id: this.readObject(),
-    }
-  }
-
-  game() {
-    const flags = this.readInt();
-    return {
-      _: 'game',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      short_name: this.readString(),
-      title: this.readString(),
-      description: this.readString(),
-      photo: this.readObject(),
-      document: (flags & 0x1) ? this.readObject() : undefined,
-    }
-  }
-
-  inputBotInlineResultGame() {
-    return {
-      _: 'inputBotInlineResultGame',
-      id: this.readString(),
-      short_name: this.readString(),
-      send_message: this.readObject(),
-    }
-  }
-
-  inputBotInlineMessageGame() {
-    const flags = this.readInt();
-    return {
-      _: 'inputBotInlineMessageGame',
-      reply_markup: (flags & 0x4) ? this.readObject() : undefined,
-    }
-  }
-
-  messageMediaGame() {
-    return {
-      _: 'messageMediaGame',
-      game: this.readObject(),
-    }
-  }
-
-  inputMediaGame() {
-    return {
-      _: 'inputMediaGame',
-      id: this.readObject(),
-    }
-  }
-
-  inputGameID() {
-    return {
-      _: 'inputGameID',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputGameShortName() {
-    return {
-      _: 'inputGameShortName',
-      bot_id: this.readObject(),
-      short_name: this.readString(),
-    }
-  }
-
-  keyboardButtonGame() {
-    return {
-      _: 'keyboardButtonGame',
-      text: this.readString(),
-    }
-  }
-
-  messageActionGameScore() {
-    return {
-      _: 'messageActionGameScore',
-      game_id: this.readLong(),
-      score: this.readInt(),
-    }
-  }
-
-  highScore() {
-    return {
-      _: 'highScore',
-      pos: this.readInt(),
-      user_id: this.readInt(),
-      score: this.readInt(),
-    }
-  }
-
-  messages_highScores() {
-    return {
-      _: 'messages.highScores',
-      scores: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  updates_differenceTooLong() {
-    return {
-      _: 'updates.differenceTooLong',
-      pts: this.readInt(),
-    }
-  }
-
-  updateChannelWebPage() {
-    return {
-      _: 'updateChannelWebPage',
-      channel_id: this.readInt(),
-      webpage: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  messages_chatsSlice() {
-    return {
-      _: 'messages.chatsSlice',
-      count: this.readInt(),
-      chats: this.readObject(),
-    }
-  }
-
-  textEmpty() {
-    return {
-      _: 'textEmpty',
-    }
-  }
-
-  textPlain() {
-    return {
-      _: 'textPlain',
-      text: this.readString(),
-    }
-  }
-
-  textBold() {
-    return {
-      _: 'textBold',
-      text: this.readObject(),
-    }
-  }
-
-  textItalic() {
-    return {
-      _: 'textItalic',
-      text: this.readObject(),
-    }
-  }
-
-  textUnderline() {
-    return {
-      _: 'textUnderline',
-      text: this.readObject(),
-    }
-  }
-
-  textStrike() {
-    return {
-      _: 'textStrike',
-      text: this.readObject(),
-    }
-  }
-
-  textFixed() {
-    return {
-      _: 'textFixed',
-      text: this.readObject(),
-    }
-  }
-
-  textUrl() {
-    return {
-      _: 'textUrl',
-      text: this.readObject(),
-      url: this.readString(),
-      webpage_id: this.readLong(),
-    }
-  }
-
-  textEmail() {
-    return {
-      _: 'textEmail',
-      text: this.readObject(),
-      email: this.readString(),
-    }
-  }
-
-  textConcat() {
-    return {
-      _: 'textConcat',
-      texts: this.readObject(),
-    }
-  }
-
-  pageBlockUnsupported() {
-    return {
-      _: 'pageBlockUnsupported',
-    }
-  }
-
-  pageBlockTitle() {
-    return {
-      _: 'pageBlockTitle',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockSubtitle() {
-    return {
-      _: 'pageBlockSubtitle',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockAuthorDate() {
-    return {
-      _: 'pageBlockAuthorDate',
-      author: this.readObject(),
-      published_date: this.readInt(),
-    }
-  }
-
-  pageBlockHeader() {
-    return {
-      _: 'pageBlockHeader',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockSubheader() {
-    return {
-      _: 'pageBlockSubheader',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockParagraph() {
-    return {
-      _: 'pageBlockParagraph',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockPreformatted() {
-    return {
-      _: 'pageBlockPreformatted',
-      text: this.readObject(),
-      language: this.readString(),
-    }
-  }
-
-  pageBlockFooter() {
-    return {
-      _: 'pageBlockFooter',
-      text: this.readObject(),
-    }
-  }
-
-  pageBlockDivider() {
-    return {
-      _: 'pageBlockDivider',
-    }
-  }
-
-  pageBlockAnchor() {
-    return {
-      _: 'pageBlockAnchor',
-      name: this.readString(),
-    }
-  }
-
-  pageBlockList() {
-    return {
-      _: 'pageBlockList',
-      items: this.readObject(),
-    }
-  }
-
-  pageBlockBlockquote() {
-    return {
-      _: 'pageBlockBlockquote',
-      text: this.readObject(),
-      caption: this.readObject(),
-    }
-  }
-
-  pageBlockPullquote() {
-    return {
-      _: 'pageBlockPullquote',
-      text: this.readObject(),
-      caption: this.readObject(),
-    }
-  }
-
-  pageBlockPhoto() {
-    const flags = this.readInt();
-    return {
-      _: 'pageBlockPhoto',
-      photo_id: this.readLong(),
-      caption: this.readObject(),
-      url: (flags & 0x1) ? this.readString() : undefined,
-      webpage_id: (flags & 0x1) ? this.readLong() : undefined,
-    }
-  }
-
-  pageBlockVideo() {
-    const flags = this.readInt();
-    return {
-      _: 'pageBlockVideo',
+      _: 'pageBlockVideo' as const,
       autoplay: !!(flags & 0x1),
       loop: !!(flags & 0x2),
-      video_id: this.readLong(),
-      caption: this.readObject(),
+      video_id: this.i64(),
+      caption: this.o(),
     }
   }
-
-  pageBlockCover() {
+  VN = () => ({_: 'pageBlockCover', cover: this.o()})
+  VO() {
+    const flags = this.i32();
     return {
-      _: 'pageBlockCover',
-      cover: this.readObject(),
-    }
-  }
-
-  pageBlockEmbed() {
-    const flags = this.readInt();
-    return {
-      _: 'pageBlockEmbed',
+      _: 'pageBlockEmbed' as const,
       full_width: !!(flags & 0x1),
       allow_scrolling: !!(flags & 0x8),
-      url: (flags & 0x2) ? this.readString() : undefined,
-      html: (flags & 0x4) ? this.readString() : undefined,
-      poster_photo_id: (flags & 0x16) ? this.readLong() : undefined,
-      w: (flags & 0x32) ? this.readInt() : undefined,
-      h: (flags & 0x32) ? this.readInt() : undefined,
-      caption: this.readObject(),
+      url: flags & 0x2 ? this.s() : undefined,
+      html: flags & 0x4 ? this.s() : undefined,
+      poster_photo_id: flags & 0x10 ? this.i64() : undefined,
+      w: flags & 0x20 ? this.i32() : undefined,
+      h: flags & 0x20 ? this.i32() : undefined,
+      caption: this.o(),
     }
   }
-
-  pageBlockEmbedPost() {
+  VP = () => ({_: 'pageBlockEmbedPost', url: this.s(), webpage_id: this.i64(), author_photo_id: this.i64(), author: this.s(), date: this.i32(), blocks: this.v(this.o), caption: this.o()})
+  VQ = () => ({_: 'pageBlockCollage', items: this.v(this.o), caption: this.o()})
+  VR = () => ({_: 'pageBlockSlideshow', items: this.v(this.o), caption: this.o()})
+  OP = () => ({_: 'webPageNotModified'})
+  MT = () => ({_: 'inputPrivacyKeyPhoneCall'})
+  NB = () => ({_: 'privacyKeyPhoneCall'})
+  MN = () => ({_: 'sendMessageGamePlayAction'})
+  WA = () => ({_: 'phoneCallDiscardReasonMissed'})
+  WB = () => ({_: 'phoneCallDiscardReasonDisconnect'})
+  WC = () => ({_: 'phoneCallDiscardReasonHangup'})
+  WD = () => ({_: 'phoneCallDiscardReasonBusy'})
+  JH() {
+    const flags = this.i32();
     return {
-      _: 'pageBlockEmbedPost',
-      url: this.readString(),
-      webpage_id: this.readLong(),
-      author_photo_id: this.readLong(),
-      author: this.readString(),
-      date: this.readInt(),
-      blocks: this.readObject(),
-      caption: this.readObject(),
-    }
-  }
-
-  pageBlockCollage() {
-    return {
-      _: 'pageBlockCollage',
-      items: this.readObject(),
-      caption: this.readObject(),
-    }
-  }
-
-  pageBlockSlideshow() {
-    return {
-      _: 'pageBlockSlideshow',
-      items: this.readObject(),
-      caption: this.readObject(),
-    }
-  }
-
-  webPageNotModified() {
-    return {
-      _: 'webPageNotModified',
-    }
-  }
-
-  inputPrivacyKeyPhoneCall() {
-    return {
-      _: 'inputPrivacyKeyPhoneCall',
-    }
-  }
-
-  privacyKeyPhoneCall() {
-    return {
-      _: 'privacyKeyPhoneCall',
-    }
-  }
-
-  sendMessageGamePlayAction() {
-    return {
-      _: 'sendMessageGamePlayAction',
-    }
-  }
-
-  phoneCallDiscardReasonMissed() {
-    return {
-      _: 'phoneCallDiscardReasonMissed',
-    }
-  }
-
-  phoneCallDiscardReasonDisconnect() {
-    return {
-      _: 'phoneCallDiscardReasonDisconnect',
-    }
-  }
-
-  phoneCallDiscardReasonHangup() {
-    return {
-      _: 'phoneCallDiscardReasonHangup',
-    }
-  }
-
-  phoneCallDiscardReasonBusy() {
-    return {
-      _: 'phoneCallDiscardReasonBusy',
-    }
-  }
-
-  updateDialogPinned() {
-    const flags = this.readInt();
-    return {
-      _: 'updateDialogPinned',
+      _: 'updateDialogPinned' as const,
       pinned: !!(flags & 0x1),
-      folder_id: (flags & 0x2) ? this.readInt() : undefined,
-      peer: this.readObject(),
+      folder_id: flags & 0x2 ? this.i32() : undefined,
+      peer: this.o(),
     }
   }
-
-  updatePinnedDialogs() {
-    const flags = this.readInt();
+  JI() {
+    const flags = this.i32();
     return {
-      _: 'updatePinnedDialogs',
-      folder_id: (flags & 0x2) ? this.readInt() : undefined,
-      order: (flags & 0x1) ? this.readObject() : undefined,
+      _: 'updatePinnedDialogs' as const,
+      folder_id: flags & 0x2 ? this.i32() : undefined,
+      order: flags & 0x1 ? this.v(this.o) : undefined,
     }
   }
-
-  dataJSON() {
+  WE = () => ({_: 'dataJSON', data: this.s()})
+  JJ = () => ({_: 'updateBotWebhookJSON', data: this.o()})
+  JK = () => ({_: 'updateBotWebhookJSONQuery', query_id: this.i64(), data: this.o(), timeout: this.i32()})
+  WF = () => ({_: 'labeledPrice', label: this.s(), amount: this.i64()})
+  WG() {
+    const flags = this.i32();
     return {
-      _: 'dataJSON',
-      data: this.readString(),
-    }
-  }
-
-  updateBotWebhookJSON() {
-    return {
-      _: 'updateBotWebhookJSON',
-      data: this.readObject(),
-    }
-  }
-
-  updateBotWebhookJSONQuery() {
-    return {
-      _: 'updateBotWebhookJSONQuery',
-      query_id: this.readLong(),
-      data: this.readObject(),
-      timeout: this.readInt(),
-    }
-  }
-
-  labeledPrice() {
-    return {
-      _: 'labeledPrice',
-      label: this.readString(),
-      amount: this.readLong(),
-    }
-  }
-
-  invoice() {
-    const flags = this.readInt();
-    return {
-      _: 'invoice',
+      _: 'invoice' as const,
       test: !!(flags & 0x1),
       name_requested: !!(flags & 0x2),
       phone_requested: !!(flags & 0x4),
       email_requested: !!(flags & 0x8),
-      shipping_address_requested: !!(flags & 0x16),
-      flexible: !!(flags & 0x32),
-      phone_to_provider: !!(flags & 0x64),
-      email_to_provider: !!(flags & 0x128),
-      currency: this.readString(),
-      prices: this.readObject(),
+      shipping_address_requested: !!(flags & 0x10),
+      flexible: !!(flags & 0x20),
+      phone_to_provider: !!(flags & 0x40),
+      email_to_provider: !!(flags & 0x80),
+      currency: this.s(),
+      prices: this.v(this.o),
     }
   }
-
-  inputMediaInvoice() {
-    const flags = this.readInt();
+  BG() {
+    const flags = this.i32();
     return {
-      _: 'inputMediaInvoice',
-      title: this.readString(),
-      description: this.readString(),
-      photo: (flags & 0x1) ? this.readObject() : undefined,
-      invoice: this.readObject(),
-      payload: this.readObject(),
-      provider: this.readString(),
-      provider_data: this.readObject(),
-      start_param: this.readString(),
+      _: 'inputMediaInvoice' as const,
+      title: this.s(),
+      description: this.s(),
+      photo: flags & 0x1 ? this.o() : undefined,
+      invoice: this.o(),
+      payload: this.b(),
+      provider: this.s(),
+      provider_data: this.o(),
+      start_param: this.s(),
     }
   }
-
-  paymentCharge() {
+  WH = () => ({_: 'paymentCharge', id: this.s(), provider_charge_id: this.s()})
+  EM() {
+    const flags = this.i32();
     return {
-      _: 'paymentCharge',
-      id: this.readString(),
-      provider_charge_id: this.readString(),
+      _: 'messageActionPaymentSentMe' as const,
+      currency: this.s(),
+      total_amount: this.i64(),
+      payload: this.b(),
+      info: flags & 0x1 ? this.o() : undefined,
+      shipping_option_id: flags & 0x2 ? this.s() : undefined,
+      charge: this.o(),
     }
   }
-
-  messageActionPaymentSentMe() {
-    const flags = this.readInt();
+  DV() {
+    const flags = this.i32();
     return {
-      _: 'messageActionPaymentSentMe',
-      currency: this.readString(),
-      total_amount: this.readLong(),
-      payload: this.readObject(),
-      info: (flags & 0x1) ? this.readObject() : undefined,
-      shipping_option_id: (flags & 0x2) ? this.readString() : undefined,
-      charge: this.readObject(),
-    }
-  }
-
-  messageMediaInvoice() {
-    const flags = this.readInt();
-    return {
-      _: 'messageMediaInvoice',
+      _: 'messageMediaInvoice' as const,
       shipping_address_requested: !!(flags & 0x2),
       test: !!(flags & 0x8),
-      title: this.readString(),
-      description: this.readString(),
-      photo: (flags & 0x1) ? this.readObject() : undefined,
-      receipt_msg_id: (flags & 0x4) ? this.readInt() : undefined,
-      currency: this.readString(),
-      total_amount: this.readLong(),
-      start_param: this.readString(),
+      title: this.s(),
+      description: this.s(),
+      photo: flags & 0x1 ? this.o() : undefined,
+      receipt_msg_id: flags & 0x4 ? this.i32() : undefined,
+      currency: this.s(),
+      total_amount: this.i64(),
+      start_param: this.s(),
     }
   }
-
-  postAddress() {
+  WI = () => ({_: 'postAddress', street_line1: this.s(), street_line2: this.s(), city: this.s(), state: this.s(), country_iso2: this.s(), post_code: this.s()})
+  WJ() {
+    const flags = this.i32();
     return {
-      _: 'postAddress',
-      street_line1: this.readString(),
-      street_line2: this.readString(),
-      city: this.readString(),
-      state: this.readString(),
-      country_iso2: this.readString(),
-      post_code: this.readString(),
+      _: 'paymentRequestedInfo' as const,
+      name: flags & 0x1 ? this.s() : undefined,
+      phone: flags & 0x2 ? this.s() : undefined,
+      email: flags & 0x4 ? this.s() : undefined,
+      shipping_address: flags & 0x8 ? this.o() : undefined,
     }
   }
-
-  paymentRequestedInfo() {
-    const flags = this.readInt();
+  PQ = () => ({_: 'keyboardButtonBuy', text: this.s()})
+  EN = () => ({_: 'messageActionPaymentSent', currency: this.s(), total_amount: this.i64()})
+  WK = () => ({_: 'paymentSavedCredentialsCard', id: this.s(), title: this.s()})
+  WL = () => ({_: 'webDocument', url: this.s(), access_hash: this.i64(), size: this.i32(), mime_type: this.s(), attributes: this.v(this.o)})
+  WN = () => ({_: 'inputWebDocument', url: this.s(), size: this.i32(), mime_type: this.s(), attributes: this.v(this.o)})
+  WO = () => ({_: 'inputWebFileLocation', url: this.s(), access_hash: this.i64()})
+  WQ = () => ({_: 'upload.webFile', size: this.i32(), mime_type: this.s(), file_type: this.o(), mtime: this.i32(), bytes: this.b()})
+  WR() {
+    const flags = this.i32();
     return {
-      _: 'paymentRequestedInfo',
-      name: (flags & 0x1) ? this.readString() : undefined,
-      phone: (flags & 0x2) ? this.readString() : undefined,
-      email: (flags & 0x4) ? this.readString() : undefined,
-      shipping_address: (flags & 0x8) ? this.readObject() : undefined,
-    }
-  }
-
-  keyboardButtonBuy() {
-    return {
-      _: 'keyboardButtonBuy',
-      text: this.readString(),
-    }
-  }
-
-  messageActionPaymentSent() {
-    return {
-      _: 'messageActionPaymentSent',
-      currency: this.readString(),
-      total_amount: this.readLong(),
-    }
-  }
-
-  paymentSavedCredentialsCard() {
-    return {
-      _: 'paymentSavedCredentialsCard',
-      id: this.readString(),
-      title: this.readString(),
-    }
-  }
-
-  webDocument() {
-    return {
-      _: 'webDocument',
-      url: this.readString(),
-      access_hash: this.readLong(),
-      size: this.readInt(),
-      mime_type: this.readString(),
-      attributes: this.readObject(),
-    }
-  }
-
-  inputWebDocument() {
-    return {
-      _: 'inputWebDocument',
-      url: this.readString(),
-      size: this.readInt(),
-      mime_type: this.readString(),
-      attributes: this.readObject(),
-    }
-  }
-
-  inputWebFileLocation() {
-    return {
-      _: 'inputWebFileLocation',
-      url: this.readString(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  upload_webFile() {
-    return {
-      _: 'upload.webFile',
-      size: this.readInt(),
-      mime_type: this.readString(),
-      file_type: this.readObject(),
-      mtime: this.readInt(),
-      bytes: this.readObject(),
-    }
-  }
-
-  payments_paymentForm() {
-    const flags = this.readInt();
-    return {
-      _: 'payments.paymentForm',
+      _: 'payments.paymentForm' as const,
       can_save_credentials: !!(flags & 0x4),
       password_missing: !!(flags & 0x8),
-      bot_id: this.readInt(),
-      invoice: this.readObject(),
-      provider_id: this.readInt(),
-      url: this.readString(),
-      native_provider: (flags & 0x16) ? this.readString() : undefined,
-      native_params: (flags & 0x16) ? this.readObject() : undefined,
-      saved_info: (flags & 0x1) ? this.readObject() : undefined,
-      saved_credentials: (flags & 0x2) ? this.readObject() : undefined,
-      users: this.readObject(),
+      bot_id: this.i32(),
+      invoice: this.o(),
+      provider_id: this.i32(),
+      url: this.s(),
+      native_provider: flags & 0x10 ? this.s() : undefined,
+      native_params: flags & 0x10 ? this.o() : undefined,
+      saved_info: flags & 0x1 ? this.o() : undefined,
+      saved_credentials: flags & 0x2 ? this.o() : undefined,
+      users: this.v(this.o),
     }
   }
-
-  payments_validatedRequestedInfo() {
-    const flags = this.readInt();
+  WS() {
+    const flags = this.i32();
     return {
-      _: 'payments.validatedRequestedInfo',
-      id: (flags & 0x1) ? this.readString() : undefined,
-      shipping_options: (flags & 0x2) ? this.readObject() : undefined,
+      _: 'payments.validatedRequestedInfo' as const,
+      id: flags & 0x1 ? this.s() : undefined,
+      shipping_options: flags & 0x2 ? this.v(this.o) : undefined,
     }
   }
-
-  payments_paymentResult() {
+  WT = () => ({_: 'payments.paymentResult', updates: this.o()})
+  WV() {
+    const flags = this.i32();
     return {
-      _: 'payments.paymentResult',
-      updates: this.readObject(),
+      _: 'payments.paymentReceipt' as const,
+      date: this.i32(),
+      bot_id: this.i32(),
+      invoice: this.o(),
+      provider_id: this.i32(),
+      info: flags & 0x1 ? this.o() : undefined,
+      shipping: flags & 0x2 ? this.o() : undefined,
+      currency: this.s(),
+      total_amount: this.i64(),
+      credentials_title: this.s(),
+      users: this.v(this.o),
     }
   }
-
-  payments_paymentReceipt() {
-    const flags = this.readInt();
+  WW() {
+    const flags = this.i32();
     return {
-      _: 'payments.paymentReceipt',
-      date: this.readInt(),
-      bot_id: this.readInt(),
-      invoice: this.readObject(),
-      provider_id: this.readInt(),
-      info: (flags & 0x1) ? this.readObject() : undefined,
-      shipping: (flags & 0x2) ? this.readObject() : undefined,
-      currency: this.readString(),
-      total_amount: this.readLong(),
-      credentials_title: this.readString(),
-      users: this.readObject(),
-    }
-  }
-
-  payments_savedInfo() {
-    const flags = this.readInt();
-    return {
-      _: 'payments.savedInfo',
+      _: 'payments.savedInfo' as const,
       has_saved_credentials: !!(flags & 0x2),
-      saved_info: (flags & 0x1) ? this.readObject() : undefined,
+      saved_info: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  inputPaymentCredentialsSaved() {
+  WX = () => ({_: 'inputPaymentCredentialsSaved', id: this.s(), tmp_password: this.b()})
+  WY() {
+    const flags = this.i32();
     return {
-      _: 'inputPaymentCredentialsSaved',
-      id: this.readString(),
-      tmp_password: this.readObject(),
-    }
-  }
-
-  inputPaymentCredentials() {
-    const flags = this.readInt();
-    return {
-      _: 'inputPaymentCredentials',
+      _: 'inputPaymentCredentials' as const,
       save: !!(flags & 0x1),
-      data: this.readObject(),
+      data: this.o(),
     }
   }
-
-  account_tmpPassword() {
+  XB = () => ({_: 'account.tmpPassword', tmp_password: this.b(), valid_until: this.i32()})
+  XC = () => ({_: 'shippingOption', id: this.s(), title: this.s(), prices: this.v(this.o)})
+  JL = () => ({_: 'updateBotShippingQuery', query_id: this.i64(), user_id: this.i32(), payload: this.b(), shipping_address: this.o()})
+  JM() {
+    const flags = this.i32();
     return {
-      _: 'account.tmpPassword',
-      tmp_password: this.readObject(),
-      valid_until: this.readInt(),
+      _: 'updateBotPrecheckoutQuery' as const,
+      query_id: this.i64(),
+      user_id: this.i32(),
+      payload: this.b(),
+      info: flags & 0x1 ? this.o() : undefined,
+      shipping_option_id: flags & 0x2 ? this.s() : undefined,
+      currency: this.s(),
+      total_amount: this.i64(),
     }
   }
-
-  shippingOption() {
+  XD() {
+    const flags = this.i32();
     return {
-      _: 'shippingOption',
-      id: this.readString(),
-      title: this.readString(),
-      prices: this.readObject(),
+      _: 'inputStickerSetItem' as const,
+      document: this.o(),
+      emoji: this.s(),
+      mask_coords: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  updateBotShippingQuery() {
+  JN = () => ({_: 'updatePhoneCall', phone_call: this.o()})
+  XE = () => ({_: 'inputPhoneCall', id: this.i64(), access_hash: this.i64()})
+  XF = () => ({_: 'phoneCallEmpty', id: this.i64()})
+  XG() {
+    const flags = this.i32();
     return {
-      _: 'updateBotShippingQuery',
-      query_id: this.readLong(),
-      user_id: this.readInt(),
-      payload: this.readObject(),
-      shipping_address: this.readObject(),
+      _: 'phoneCallWaiting' as const,
+      video: !!(flags & 0x20),
+      id: this.i64(),
+      access_hash: this.i64(),
+      date: this.i32(),
+      admin_id: this.i32(),
+      participant_id: this.i32(),
+      protocol: this.o(),
+      receive_date: flags & 0x1 ? this.i32() : undefined,
     }
   }
-
-  updateBotPrecheckoutQuery() {
-    const flags = this.readInt();
+  XH() {
+    const flags = this.i32();
     return {
-      _: 'updateBotPrecheckoutQuery',
-      query_id: this.readLong(),
-      user_id: this.readInt(),
-      payload: this.readObject(),
-      info: (flags & 0x1) ? this.readObject() : undefined,
-      shipping_option_id: (flags & 0x2) ? this.readString() : undefined,
-      currency: this.readString(),
-      total_amount: this.readLong(),
+      _: 'phoneCallRequested' as const,
+      video: !!(flags & 0x20),
+      id: this.i64(),
+      access_hash: this.i64(),
+      date: this.i32(),
+      admin_id: this.i32(),
+      participant_id: this.i32(),
+      g_a_hash: this.b(),
+      protocol: this.o(),
     }
   }
-
-  inputStickerSetItem() {
-    const flags = this.readInt();
+  XI() {
+    const flags = this.i32();
     return {
-      _: 'inputStickerSetItem',
-      document: this.readObject(),
-      emoji: this.readString(),
-      mask_coords: (flags & 0x1) ? this.readObject() : undefined,
+      _: 'phoneCallAccepted' as const,
+      video: !!(flags & 0x20),
+      id: this.i64(),
+      access_hash: this.i64(),
+      date: this.i32(),
+      admin_id: this.i32(),
+      participant_id: this.i32(),
+      g_b: this.b(),
+      protocol: this.o(),
     }
   }
-
-  updatePhoneCall() {
+  XJ() {
+    const flags = this.i32();
     return {
-      _: 'updatePhoneCall',
-      phone_call: this.readObject(),
+      _: 'phoneCall' as const,
+      p2p_allowed: !!(flags & 0x20),
+      id: this.i64(),
+      access_hash: this.i64(),
+      date: this.i32(),
+      admin_id: this.i32(),
+      participant_id: this.i32(),
+      g_a_or_b: this.b(),
+      key_fingerprint: this.i64(),
+      protocol: this.o(),
+      connections: this.v(this.o),
+      start_date: this.i32(),
     }
   }
-
-  inputPhoneCall() {
+  XK() {
+    const flags = this.i32();
     return {
-      _: 'inputPhoneCall',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  phoneCallEmpty() {
-    return {
-      _: 'phoneCallEmpty',
-      id: this.readLong(),
-    }
-  }
-
-  phoneCallWaiting() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCallWaiting',
-      video: !!(flags & 0x32),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      protocol: this.readObject(),
-      receive_date: (flags & 0x1) ? this.readInt() : undefined,
-    }
-  }
-
-  phoneCallRequested() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCallRequested',
-      video: !!(flags & 0x32),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      g_a_hash: this.readObject(),
-      protocol: this.readObject(),
-    }
-  }
-
-  phoneCallAccepted() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCallAccepted',
-      video: !!(flags & 0x32),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      g_b: this.readObject(),
-      protocol: this.readObject(),
-    }
-  }
-
-  phoneCall() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCall',
-      p2p_allowed: !!(flags & 0x32),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      date: this.readInt(),
-      admin_id: this.readInt(),
-      participant_id: this.readInt(),
-      g_a_or_b: this.readObject(),
-      key_fingerprint: this.readLong(),
-      protocol: this.readObject(),
-      connections: this.readObject(),
-      start_date: this.readInt(),
-    }
-  }
-
-  phoneCallDiscarded() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCallDiscarded',
+      _: 'phoneCallDiscarded' as const,
       need_rating: !!(flags & 0x4),
       need_debug: !!(flags & 0x8),
-      video: !!(flags & 0x32),
-      id: this.readLong(),
-      reason: (flags & 0x1) ? this.readObject() : undefined,
-      duration: (flags & 0x2) ? this.readInt() : undefined,
+      video: !!(flags & 0x20),
+      id: this.i64(),
+      reason: flags & 0x1 ? this.o() : undefined,
+      duration: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  phoneConnection() {
+  XL = () => ({_: 'phoneConnection', id: this.i64(), ip: this.s(), ipv6: this.s(), port: this.i32(), peer_tag: this.b()})
+  XM() {
+    const flags = this.i32();
     return {
-      _: 'phoneConnection',
-      id: this.readLong(),
-      ip: this.readString(),
-      ipv6: this.readString(),
-      port: this.readInt(),
-      peer_tag: this.readObject(),
-    }
-  }
-
-  phoneCallProtocol() {
-    const flags = this.readInt();
-    return {
-      _: 'phoneCallProtocol',
+      _: 'phoneCallProtocol' as const,
       udp_p2p: !!(flags & 0x1),
       udp_reflector: !!(flags & 0x2),
-      min_layer: this.readInt(),
-      max_layer: this.readInt(),
+      min_layer: this.i32(),
+      max_layer: this.i32(),
     }
   }
-
-  phone_phoneCall() {
+  XN = () => ({_: 'phone.phoneCall', phone_call: this.o(), users: this.v(this.o)})
+  HD() {
+    const flags = this.i32();
     return {
-      _: 'phone.phoneCall',
-      phone_call: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  inputMessagesFilterPhoneCalls() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMessagesFilterPhoneCalls',
+      _: 'inputMessagesFilterPhoneCalls' as const,
       missed: !!(flags & 0x1),
     }
   }
-
-  messageActionPhoneCall() {
-    const flags = this.readInt();
+  EO() {
+    const flags = this.i32();
     return {
-      _: 'messageActionPhoneCall',
+      _: 'messageActionPhoneCall' as const,
       video: !!(flags & 0x4),
-      call_id: this.readLong(),
-      reason: (flags & 0x1) ? this.readObject() : undefined,
-      duration: (flags & 0x2) ? this.readInt() : undefined,
+      call_id: this.i64(),
+      reason: flags & 0x1 ? this.o() : undefined,
+      duration: flags & 0x2 ? this.i32() : undefined,
     }
   }
-
-  inputMessagesFilterRoundVoice() {
+  HE = () => ({_: 'inputMessagesFilterRoundVoice'})
+  HF = () => ({_: 'inputMessagesFilterRoundVideo'})
+  MO = () => ({_: 'sendMessageRecordRoundAction'})
+  MP = () => ({_: 'sendMessageUploadRoundAction', progress: this.i32()})
+  KV = () => ({_: 'upload.fileCdnRedirect', dc_id: this.i32(), file_token: this.b(), encryption_key: this.b(), encryption_iv: this.b(), file_hashes: this.v(this.o)})
+  XO = () => ({_: 'upload.cdnFileReuploadNeeded', request_token: this.b()})
+  XP = () => ({_: 'upload.cdnFile', bytes: this.b()})
+  XQ = () => ({_: 'cdnPublicKey', dc_id: this.i32(), public_key: this.s()})
+  XR = () => ({_: 'cdnConfig', public_keys: this.v(this.o)})
+  VS = () => ({_: 'pageBlockChannel', channel: this.o()})
+  XS = () => ({_: 'langPackString', key: this.s(), value: this.s()})
+  XT() {
+    const flags = this.i32();
     return {
-      _: 'inputMessagesFilterRoundVoice',
+      _: 'langPackStringPluralized' as const,
+      key: this.s(),
+      zero_value: flags & 0x1 ? this.s() : undefined,
+      one_value: flags & 0x2 ? this.s() : undefined,
+      two_value: flags & 0x4 ? this.s() : undefined,
+      few_value: flags & 0x8 ? this.s() : undefined,
+      many_value: flags & 0x10 ? this.s() : undefined,
+      other_value: this.s(),
     }
   }
-
-  inputMessagesFilterRoundVideo() {
+  XU = () => ({_: 'langPackStringDeleted', key: this.s()})
+  XV = () => ({_: 'langPackDifference', lang_code: this.s(), from_version: this.i32(), version: this.i32(), strings: this.v(this.o)})
+  XW() {
+    const flags = this.i32();
     return {
-      _: 'inputMessagesFilterRoundVideo',
-    }
-  }
-
-  sendMessageRecordRoundAction() {
-    return {
-      _: 'sendMessageRecordRoundAction',
-    }
-  }
-
-  sendMessageUploadRoundAction() {
-    return {
-      _: 'sendMessageUploadRoundAction',
-      progress: this.readInt(),
-    }
-  }
-
-  upload_fileCdnRedirect() {
-    return {
-      _: 'upload.fileCdnRedirect',
-      dc_id: this.readInt(),
-      file_token: this.readObject(),
-      encryption_key: this.readObject(),
-      encryption_iv: this.readObject(),
-      file_hashes: this.readObject(),
-    }
-  }
-
-  upload_cdnFileReuploadNeeded() {
-    return {
-      _: 'upload.cdnFileReuploadNeeded',
-      request_token: this.readObject(),
-    }
-  }
-
-  upload_cdnFile() {
-    return {
-      _: 'upload.cdnFile',
-      bytes: this.readObject(),
-    }
-  }
-
-  cdnPublicKey() {
-    return {
-      _: 'cdnPublicKey',
-      dc_id: this.readInt(),
-      public_key: this.readString(),
-    }
-  }
-
-  cdnConfig() {
-    return {
-      _: 'cdnConfig',
-      public_keys: this.readObject(),
-    }
-  }
-
-  pageBlockChannel() {
-    return {
-      _: 'pageBlockChannel',
-      channel: this.readObject(),
-    }
-  }
-
-  langPackString() {
-    return {
-      _: 'langPackString',
-      key: this.readString(),
-      value: this.readString(),
-    }
-  }
-
-  langPackStringPluralized() {
-    const flags = this.readInt();
-    return {
-      _: 'langPackStringPluralized',
-      key: this.readString(),
-      zero_value: (flags & 0x1) ? this.readString() : undefined,
-      one_value: (flags & 0x2) ? this.readString() : undefined,
-      two_value: (flags & 0x4) ? this.readString() : undefined,
-      few_value: (flags & 0x8) ? this.readString() : undefined,
-      many_value: (flags & 0x16) ? this.readString() : undefined,
-      other_value: this.readString(),
-    }
-  }
-
-  langPackStringDeleted() {
-    return {
-      _: 'langPackStringDeleted',
-      key: this.readString(),
-    }
-  }
-
-  langPackDifference() {
-    return {
-      _: 'langPackDifference',
-      lang_code: this.readString(),
-      from_version: this.readInt(),
-      version: this.readInt(),
-      strings: this.readObject(),
-    }
-  }
-
-  langPackLanguage() {
-    const flags = this.readInt();
-    return {
-      _: 'langPackLanguage',
+      _: 'langPackLanguage' as const,
       official: !!(flags & 0x1),
       rtl: !!(flags & 0x4),
       beta: !!(flags & 0x8),
-      name: this.readString(),
-      native_name: this.readString(),
-      lang_code: this.readString(),
-      base_lang_code: (flags & 0x2) ? this.readString() : undefined,
-      plural_code: this.readString(),
-      strings_count: this.readInt(),
-      translated_count: this.readInt(),
-      translations_url: this.readString(),
+      name: this.s(),
+      native_name: this.s(),
+      lang_code: this.s(),
+      base_lang_code: flags & 0x2 ? this.s() : undefined,
+      plural_code: this.s(),
+      strings_count: this.i32(),
+      translated_count: this.i32(),
+      translations_url: this.s(),
     }
   }
-
-  updateLangPackTooLong() {
+  JO = () => ({_: 'updateLangPackTooLong', lang_code: this.s()})
+  JP = () => ({_: 'updateLangPack', difference: this.o()})
+  RD() {
+    const flags = this.i32();
     return {
-      _: 'updateLangPackTooLong',
-      lang_code: this.readString(),
-    }
-  }
-
-  updateLangPack() {
-    return {
-      _: 'updateLangPack',
-      difference: this.readObject(),
-    }
-  }
-
-  channelParticipantAdmin() {
-    const flags = this.readInt();
-    return {
-      _: 'channelParticipantAdmin',
+      _: 'channelParticipantAdmin' as const,
       can_edit: !!(flags & 0x1),
       self: !!(flags & 0x2),
-      user_id: this.readInt(),
-      inviter_id: (flags & 0x2) ? this.readInt() : undefined,
-      promoted_by: this.readInt(),
-      date: this.readInt(),
-      admin_rights: this.readObject(),
-      rank: (flags & 0x4) ? this.readString() : undefined,
+      user_id: this.i32(),
+      inviter_id: flags & 0x2 ? this.i32() : undefined,
+      promoted_by: this.i32(),
+      date: this.i32(),
+      admin_rights: this.o(),
+      rank: flags & 0x4 ? this.s() : undefined,
     }
   }
-
-  channelParticipantBanned() {
-    const flags = this.readInt();
+  RE() {
+    const flags = this.i32();
     return {
-      _: 'channelParticipantBanned',
+      _: 'channelParticipantBanned' as const,
       left: !!(flags & 0x1),
-      user_id: this.readInt(),
-      kicked_by: this.readInt(),
-      date: this.readInt(),
-      banned_rights: this.readObject(),
+      user_id: this.i32(),
+      kicked_by: this.i32(),
+      date: this.i32(),
+      banned_rights: this.o(),
     }
   }
-
-  channelParticipantsBanned() {
+  RJ = () => ({_: 'channelParticipantsBanned', q: this.s()})
+  RK = () => ({_: 'channelParticipantsSearch', q: this.s()})
+  XX = () => ({_: 'channelAdminLogEventActionChangeTitle', prev_value: this.s(), new_value: this.s()})
+  XY = () => ({_: 'channelAdminLogEventActionChangeAbout', prev_value: this.s(), new_value: this.s()})
+  XZ = () => ({_: 'channelAdminLogEventActionChangeUsername', prev_value: this.s(), new_value: this.s()})
+  YA = () => ({_: 'channelAdminLogEventActionChangePhoto', prev_photo: this.o(), new_photo: this.o()})
+  YB = () => ({_: 'channelAdminLogEventActionToggleInvites', new_value: this.o()})
+  YC = () => ({_: 'channelAdminLogEventActionToggleSignatures', new_value: this.o()})
+  YD = () => ({_: 'channelAdminLogEventActionUpdatePinned', message: this.o()})
+  YE = () => ({_: 'channelAdminLogEventActionEditMessage', prev_message: this.o(), new_message: this.o()})
+  YF = () => ({_: 'channelAdminLogEventActionDeleteMessage', message: this.o()})
+  YG = () => ({_: 'channelAdminLogEventActionParticipantJoin'})
+  YH = () => ({_: 'channelAdminLogEventActionParticipantLeave'})
+  YI = () => ({_: 'channelAdminLogEventActionParticipantInvite', participant: this.o()})
+  YJ = () => ({_: 'channelAdminLogEventActionParticipantToggleBan', prev_participant: this.o(), new_participant: this.o()})
+  YK = () => ({_: 'channelAdminLogEventActionParticipantToggleAdmin', prev_participant: this.o(), new_participant: this.o()})
+  YS = () => ({_: 'channelAdminLogEvent', id: this.i64(), date: this.i32(), user_id: this.i32(), action: this.o()})
+  YT = () => ({_: 'channels.adminLogResults', events: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  YU() {
+    const flags = this.i32();
     return {
-      _: 'channelParticipantsBanned',
-      q: this.readString(),
-    }
-  }
-
-  channelParticipantsSearch() {
-    return {
-      _: 'channelParticipantsSearch',
-      q: this.readString(),
-    }
-  }
-
-  channelAdminLogEventActionChangeTitle() {
-    return {
-      _: 'channelAdminLogEventActionChangeTitle',
-      prev_value: this.readString(),
-      new_value: this.readString(),
-    }
-  }
-
-  channelAdminLogEventActionChangeAbout() {
-    return {
-      _: 'channelAdminLogEventActionChangeAbout',
-      prev_value: this.readString(),
-      new_value: this.readString(),
-    }
-  }
-
-  channelAdminLogEventActionChangeUsername() {
-    return {
-      _: 'channelAdminLogEventActionChangeUsername',
-      prev_value: this.readString(),
-      new_value: this.readString(),
-    }
-  }
-
-  channelAdminLogEventActionChangePhoto() {
-    return {
-      _: 'channelAdminLogEventActionChangePhoto',
-      prev_photo: this.readObject(),
-      new_photo: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionToggleInvites() {
-    return {
-      _: 'channelAdminLogEventActionToggleInvites',
-      new_value: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionToggleSignatures() {
-    return {
-      _: 'channelAdminLogEventActionToggleSignatures',
-      new_value: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionUpdatePinned() {
-    return {
-      _: 'channelAdminLogEventActionUpdatePinned',
-      message: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionEditMessage() {
-    return {
-      _: 'channelAdminLogEventActionEditMessage',
-      prev_message: this.readObject(),
-      new_message: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionDeleteMessage() {
-    return {
-      _: 'channelAdminLogEventActionDeleteMessage',
-      message: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionParticipantJoin() {
-    return {
-      _: 'channelAdminLogEventActionParticipantJoin',
-    }
-  }
-
-  channelAdminLogEventActionParticipantLeave() {
-    return {
-      _: 'channelAdminLogEventActionParticipantLeave',
-    }
-  }
-
-  channelAdminLogEventActionParticipantInvite() {
-    return {
-      _: 'channelAdminLogEventActionParticipantInvite',
-      participant: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionParticipantToggleBan() {
-    return {
-      _: 'channelAdminLogEventActionParticipantToggleBan',
-      prev_participant: this.readObject(),
-      new_participant: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionParticipantToggleAdmin() {
-    return {
-      _: 'channelAdminLogEventActionParticipantToggleAdmin',
-      prev_participant: this.readObject(),
-      new_participant: this.readObject(),
-    }
-  }
-
-  channelAdminLogEvent() {
-    return {
-      _: 'channelAdminLogEvent',
-      id: this.readLong(),
-      date: this.readInt(),
-      user_id: this.readInt(),
-      action: this.readObject(),
-    }
-  }
-
-  channels_adminLogResults() {
-    return {
-      _: 'channels.adminLogResults',
-      events: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventsFilter() {
-    const flags = this.readInt();
-    return {
-      _: 'channelAdminLogEventsFilter',
+      _: 'channelAdminLogEventsFilter' as const,
       join: !!(flags & 0x1),
       leave: !!(flags & 0x2),
       invite: !!(flags & 0x4),
       ban: !!(flags & 0x8),
-      unban: !!(flags & 0x16),
-      kick: !!(flags & 0x32),
-      unkick: !!(flags & 0x64),
-      promote: !!(flags & 0x128),
-      demote: !!(flags & 0x256),
-      info: !!(flags & 0x512),
-      settings: !!(flags & 0x1024),
-      pinned: !!(flags & 0x2048),
-      edit: !!(flags & 0x4096),
-      delete: !!(flags & 0x8192),
+      unban: !!(flags & 0x10),
+      kick: !!(flags & 0x20),
+      unkick: !!(flags & 0x40),
+      promote: !!(flags & 0x80),
+      demote: !!(flags & 0x100),
+      info: !!(flags & 0x200),
+      settings: !!(flags & 0x400),
+      pinned: !!(flags & 0x800),
+      edit: !!(flags & 0x1000),
+      delete: !!(flags & 0x2000),
     }
   }
-
-  topPeerCategoryPhoneCalls() {
+  TH = () => ({_: 'topPeerCategoryPhoneCalls'})
+  VT = () => ({_: 'pageBlockAudio', audio_id: this.i64(), caption: this.o()})
+  YV = () => ({_: 'popularContact', client_id: this.i64(), importers: this.i32()})
+  EP = () => ({_: 'messageActionScreenshotTaken'})
+  YW = () => ({_: 'messages.favedStickersNotModified'})
+  YX = () => ({_: 'messages.favedStickers', hash: this.i32(), packs: this.v(this.o), stickers: this.v(this.o)})
+  JQ = () => ({_: 'updateFavedStickers'})
+  JR = () => ({_: 'updateChannelReadMessagesContents', channel_id: this.i32(), messages: this.v(this.i32)})
+  HG = () => ({_: 'inputMessagesFilterMyMentions'})
+  JS = () => ({_: 'updateContactsReset'})
+  YL = () => ({_: 'channelAdminLogEventActionChangeStickerSet', prev_stickerset: this.o(), new_stickerset: this.o()})
+  EQ = () => ({_: 'messageActionCustomAction', message: this.s()})
+  WZ = () => ({_: 'inputPaymentCredentialsApplePay', payment_data: this.o()})
+  XA = () => ({_: 'inputPaymentCredentialsAndroidPay', payment_token: this.o(), google_transaction_id: this.s()})
+  HH = () => ({_: 'inputMessagesFilterGeo'})
+  HI = () => ({_: 'inputMessagesFilterContacts'})
+  JT = () => ({_: 'updateChannelAvailableMessages', channel_id: this.i32(), available_min_id: this.i32()})
+  YM = () => ({_: 'channelAdminLogEventActionTogglePreHistoryHidden', new_value: this.o()})
+  BH() {
+    const flags = this.i32();
     return {
-      _: 'topPeerCategoryPhoneCalls',
-    }
-  }
-
-  pageBlockAudio() {
-    return {
-      _: 'pageBlockAudio',
-      audio_id: this.readLong(),
-      caption: this.readObject(),
-    }
-  }
-
-  popularContact() {
-    return {
-      _: 'popularContact',
-      client_id: this.readLong(),
-      importers: this.readInt(),
-    }
-  }
-
-  messageActionScreenshotTaken() {
-    return {
-      _: 'messageActionScreenshotTaken',
-    }
-  }
-
-  messages_favedStickersNotModified() {
-    return {
-      _: 'messages.favedStickersNotModified',
-    }
-  }
-
-  messages_favedStickers() {
-    return {
-      _: 'messages.favedStickers',
-      hash: this.readInt(),
-      packs: this.readObject(),
-      stickers: this.readObject(),
-    }
-  }
-
-  updateFavedStickers() {
-    return {
-      _: 'updateFavedStickers',
-    }
-  }
-
-  updateChannelReadMessagesContents() {
-    return {
-      _: 'updateChannelReadMessagesContents',
-      channel_id: this.readInt(),
-      messages: this.readObject(),
-    }
-  }
-
-  inputMessagesFilterMyMentions() {
-    return {
-      _: 'inputMessagesFilterMyMentions',
-    }
-  }
-
-  updateContactsReset() {
-    return {
-      _: 'updateContactsReset',
-    }
-  }
-
-  channelAdminLogEventActionChangeStickerSet() {
-    return {
-      _: 'channelAdminLogEventActionChangeStickerSet',
-      prev_stickerset: this.readObject(),
-      new_stickerset: this.readObject(),
-    }
-  }
-
-  messageActionCustomAction() {
-    return {
-      _: 'messageActionCustomAction',
-      message: this.readString(),
-    }
-  }
-
-  inputPaymentCredentialsApplePay() {
-    return {
-      _: 'inputPaymentCredentialsApplePay',
-      payment_data: this.readObject(),
-    }
-  }
-
-  inputPaymentCredentialsAndroidPay() {
-    return {
-      _: 'inputPaymentCredentialsAndroidPay',
-      payment_token: this.readObject(),
-      google_transaction_id: this.readString(),
-    }
-  }
-
-  inputMessagesFilterGeo() {
-    return {
-      _: 'inputMessagesFilterGeo',
-    }
-  }
-
-  inputMessagesFilterContacts() {
-    return {
-      _: 'inputMessagesFilterContacts',
-    }
-  }
-
-  updateChannelAvailableMessages() {
-    return {
-      _: 'updateChannelAvailableMessages',
-      channel_id: this.readInt(),
-      available_min_id: this.readInt(),
-    }
-  }
-
-  channelAdminLogEventActionTogglePreHistoryHidden() {
-    return {
-      _: 'channelAdminLogEventActionTogglePreHistoryHidden',
-      new_value: this.readObject(),
-    }
-  }
-
-  inputMediaGeoLive() {
-    const flags = this.readInt();
-    return {
-      _: 'inputMediaGeoLive',
+      _: 'inputMediaGeoLive' as const,
       stopped: !!(flags & 0x1),
-      geo_point: this.readObject(),
-      period: (flags & 0x2) ? this.readInt() : undefined,
-    }
-  }
-
-  messageMediaGeoLive() {
-    return {
-      _: 'messageMediaGeoLive',
-      geo: this.readObject(),
-      period: this.readInt(),
-    }
-  }
-
-  recentMeUrlUnknown() {
-    return {
-      _: 'recentMeUrlUnknown',
-      url: this.readString(),
-    }
-  }
-
-  recentMeUrlUser() {
-    return {
-      _: 'recentMeUrlUser',
-      url: this.readString(),
-      user_id: this.readInt(),
-    }
-  }
-
-  recentMeUrlChat() {
-    return {
-      _: 'recentMeUrlChat',
-      url: this.readString(),
-      chat_id: this.readInt(),
-    }
-  }
-
-  recentMeUrlChatInvite() {
-    return {
-      _: 'recentMeUrlChatInvite',
-      url: this.readString(),
-      chat_invite: this.readObject(),
-    }
-  }
-
-  recentMeUrlStickerSet() {
-    return {
-      _: 'recentMeUrlStickerSet',
-      url: this.readString(),
-      set: this.readObject(),
-    }
-  }
-
-  help_recentMeUrls() {
-    return {
-      _: 'help.recentMeUrls',
-      urls: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  channels_channelParticipantsNotModified() {
-    return {
-      _: 'channels.channelParticipantsNotModified',
-    }
-  }
-
-  messages_messagesNotModified() {
-    return {
-      _: 'messages.messagesNotModified',
-      count: this.readInt(),
-    }
-  }
-
-  inputSingleMedia() {
-    const flags = this.readInt();
-    return {
-      _: 'inputSingleMedia',
-      media: this.readObject(),
-      random_id: this.readLong(),
-      message: this.readString(),
-      entities: (flags & 0x1) ? this.readObject() : undefined,
-    }
-  }
-
-  webAuthorization() {
-    return {
-      _: 'webAuthorization',
-      hash: this.readLong(),
-      bot_id: this.readInt(),
-      domain: this.readString(),
-      browser: this.readString(),
-      platform: this.readString(),
-      date_created: this.readInt(),
-      date_active: this.readInt(),
-      ip: this.readString(),
-      region: this.readString(),
-    }
-  }
-
-  account_webAuthorizations() {
-    return {
-      _: 'account.webAuthorizations',
-      authorizations: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  inputMessageID() {
-    return {
-      _: 'inputMessageID',
-      id: this.readInt(),
-    }
-  }
-
-  inputMessageReplyTo() {
-    return {
-      _: 'inputMessageReplyTo',
-      id: this.readInt(),
-    }
-  }
-
-  inputMessagePinned() {
-    return {
-      _: 'inputMessagePinned',
-    }
-  }
-
-  messageEntityPhone() {
-    return {
-      _: 'messageEntityPhone',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityCashtag() {
-    return {
-      _: 'messageEntityCashtag',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageActionBotAllowed() {
-    return {
-      _: 'messageActionBotAllowed',
-      domain: this.readString(),
-    }
-  }
-
-  inputDialogPeer() {
-    return {
-      _: 'inputDialogPeer',
-      peer: this.readObject(),
-    }
-  }
-
-  dialogPeer() {
-    return {
-      _: 'dialogPeer',
-      peer: this.readObject(),
-    }
-  }
-
-  messages_foundStickerSetsNotModified() {
-    return {
-      _: 'messages.foundStickerSetsNotModified',
-    }
-  }
-
-  messages_foundStickerSets() {
-    return {
-      _: 'messages.foundStickerSets',
-      hash: this.readInt(),
-      sets: this.readObject(),
-    }
-  }
-
-  fileHash() {
-    return {
-      _: 'fileHash',
-      offset: this.readInt(),
-      limit: this.readInt(),
-      hash: this.readObject(),
-    }
-  }
-
-  webDocumentNoProxy() {
-    return {
-      _: 'webDocumentNoProxy',
-      url: this.readString(),
-      size: this.readInt(),
-      mime_type: this.readString(),
-      attributes: this.readObject(),
-    }
-  }
-
-  inputClientProxy() {
-    return {
-      _: 'inputClientProxy',
-      address: this.readString(),
-      port: this.readInt(),
-    }
-  }
-
-  help_proxyDataEmpty() {
-    return {
-      _: 'help.proxyDataEmpty',
-      expires: this.readInt(),
-    }
-  }
-
-  help_proxyDataPromo() {
-    return {
-      _: 'help.proxyDataPromo',
-      expires: this.readInt(),
-      peer: this.readObject(),
-      chats: this.readObject(),
-      users: this.readObject(),
-    }
-  }
-
-  help_termsOfServiceUpdateEmpty() {
-    return {
-      _: 'help.termsOfServiceUpdateEmpty',
-      expires: this.readInt(),
-    }
-  }
-
-  help_termsOfServiceUpdate() {
-    return {
-      _: 'help.termsOfServiceUpdate',
-      expires: this.readInt(),
-      terms_of_service: this.readObject(),
-    }
-  }
-
-  inputSecureFileUploaded() {
-    return {
-      _: 'inputSecureFileUploaded',
-      id: this.readLong(),
-      parts: this.readInt(),
-      md5_checksum: this.readString(),
-      file_hash: this.readObject(),
-      secret: this.readObject(),
-    }
-  }
-
-  inputSecureFile() {
-    return {
-      _: 'inputSecureFile',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputSecureFileLocation() {
-    return {
-      _: 'inputSecureFileLocation',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  secureFileEmpty() {
-    return {
-      _: 'secureFileEmpty',
-    }
-  }
-
-  secureFile() {
-    return {
-      _: 'secureFile',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      size: this.readInt(),
-      dc_id: this.readInt(),
-      date: this.readInt(),
-      file_hash: this.readObject(),
-      secret: this.readObject(),
-    }
-  }
-
-  secureData() {
-    return {
-      _: 'secureData',
-      data: this.readObject(),
-      data_hash: this.readObject(),
-      secret: this.readObject(),
-    }
-  }
-
-  securePlainPhone() {
-    return {
-      _: 'securePlainPhone',
-      phone: this.readString(),
-    }
-  }
-
-  securePlainEmail() {
-    return {
-      _: 'securePlainEmail',
-      email: this.readString(),
-    }
-  }
-
-  secureValueTypePersonalDetails() {
-    return {
-      _: 'secureValueTypePersonalDetails',
-    }
-  }
-
-  secureValueTypePassport() {
-    return {
-      _: 'secureValueTypePassport',
-    }
-  }
-
-  secureValueTypeDriverLicense() {
-    return {
-      _: 'secureValueTypeDriverLicense',
-    }
-  }
-
-  secureValueTypeIdentityCard() {
-    return {
-      _: 'secureValueTypeIdentityCard',
-    }
-  }
-
-  secureValueTypeInternalPassport() {
-    return {
-      _: 'secureValueTypeInternalPassport',
-    }
-  }
-
-  secureValueTypeAddress() {
-    return {
-      _: 'secureValueTypeAddress',
-    }
-  }
-
-  secureValueTypeUtilityBill() {
-    return {
-      _: 'secureValueTypeUtilityBill',
-    }
-  }
-
-  secureValueTypeBankStatement() {
-    return {
-      _: 'secureValueTypeBankStatement',
-    }
-  }
-
-  secureValueTypeRentalAgreement() {
-    return {
-      _: 'secureValueTypeRentalAgreement',
-    }
-  }
-
-  secureValueTypePassportRegistration() {
-    return {
-      _: 'secureValueTypePassportRegistration',
-    }
-  }
-
-  secureValueTypeTemporaryRegistration() {
-    return {
-      _: 'secureValueTypeTemporaryRegistration',
-    }
-  }
-
-  secureValueTypePhone() {
-    return {
-      _: 'secureValueTypePhone',
-    }
-  }
-
-  secureValueTypeEmail() {
-    return {
-      _: 'secureValueTypeEmail',
-    }
-  }
-
-  secureValue() {
-    const flags = this.readInt();
-    return {
-      _: 'secureValue',
-      type: this.readObject(),
-      data: (flags & 0x1) ? this.readObject() : undefined,
-      front_side: (flags & 0x2) ? this.readObject() : undefined,
-      reverse_side: (flags & 0x4) ? this.readObject() : undefined,
-      selfie: (flags & 0x8) ? this.readObject() : undefined,
-      translation: (flags & 0x64) ? this.readObject() : undefined,
-      files: (flags & 0x16) ? this.readObject() : undefined,
-      plain_data: (flags & 0x32) ? this.readObject() : undefined,
-      hash: this.readObject(),
-    }
-  }
-
-  inputSecureValue() {
-    const flags = this.readInt();
-    return {
-      _: 'inputSecureValue',
-      type: this.readObject(),
-      data: (flags & 0x1) ? this.readObject() : undefined,
-      front_side: (flags & 0x2) ? this.readObject() : undefined,
-      reverse_side: (flags & 0x4) ? this.readObject() : undefined,
-      selfie: (flags & 0x8) ? this.readObject() : undefined,
-      translation: (flags & 0x64) ? this.readObject() : undefined,
-      files: (flags & 0x16) ? this.readObject() : undefined,
-      plain_data: (flags & 0x32) ? this.readObject() : undefined,
-    }
-  }
-
-  secureValueHash() {
-    return {
-      _: 'secureValueHash',
-      type: this.readObject(),
-      hash: this.readObject(),
-    }
-  }
-
-  secureValueErrorData() {
-    return {
-      _: 'secureValueErrorData',
-      type: this.readObject(),
-      data_hash: this.readObject(),
-      field: this.readString(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorFrontSide() {
-    return {
-      _: 'secureValueErrorFrontSide',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorReverseSide() {
-    return {
-      _: 'secureValueErrorReverseSide',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorSelfie() {
-    return {
-      _: 'secureValueErrorSelfie',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorFile() {
-    return {
-      _: 'secureValueErrorFile',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorFiles() {
-    return {
-      _: 'secureValueErrorFiles',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureCredentialsEncrypted() {
-    return {
-      _: 'secureCredentialsEncrypted',
-      data: this.readObject(),
-      hash: this.readObject(),
-      secret: this.readObject(),
-    }
-  }
-
-  account_authorizationForm() {
-    const flags = this.readInt();
-    return {
-      _: 'account.authorizationForm',
-      required_types: this.readObject(),
-      values: this.readObject(),
-      errors: this.readObject(),
-      users: this.readObject(),
-      privacy_policy_url: (flags & 0x1) ? this.readString() : undefined,
-    }
-  }
-
-  account_sentEmailCode() {
-    return {
-      _: 'account.sentEmailCode',
-      email_pattern: this.readString(),
-      length: this.readInt(),
-    }
-  }
-
-  messageActionSecureValuesSentMe() {
-    return {
-      _: 'messageActionSecureValuesSentMe',
-      values: this.readObject(),
-      credentials: this.readObject(),
-    }
-  }
-
-  messageActionSecureValuesSent() {
-    return {
-      _: 'messageActionSecureValuesSent',
-      types: this.readObject(),
-    }
-  }
-
-  help_deepLinkInfoEmpty() {
-    return {
-      _: 'help.deepLinkInfoEmpty',
-    }
-  }
-
-  help_deepLinkInfo() {
-    const flags = this.readInt();
-    return {
-      _: 'help.deepLinkInfo',
+      geo_point: this.o(),
+      period: flags & 0x2 ? this.i32() : undefined,
+    }
+  }
+  DW = () => ({_: 'messageMediaGeoLive', geo: this.o(), period: this.i32()})
+  YY = () => ({_: 'recentMeUrlUnknown', url: this.s()})
+  YZ = () => ({_: 'recentMeUrlUser', url: this.s(), user_id: this.i32()})
+  ZA = () => ({_: 'recentMeUrlChat', url: this.s(), chat_id: this.i32()})
+  ZB = () => ({_: 'recentMeUrlChatInvite', url: this.s(), chat_invite: this.o()})
+  ZC = () => ({_: 'recentMeUrlStickerSet', url: this.s(), set: this.o()})
+  ZD = () => ({_: 'help.recentMeUrls', urls: this.v(this.o), chats: this.v(this.o), users: this.v(this.o)})
+  RN = () => ({_: 'channels.channelParticipantsNotModified'})
+  GO = () => ({_: 'messages.messagesNotModified', count: this.i32()})
+  ZE() {
+    const flags = this.i32();
+    return {
+      _: 'inputSingleMedia' as const,
+      media: this.o(),
+      random_id: this.i64(),
+      message: this.s(),
+      entities: flags & 0x1 ? this.v(this.o) : undefined,
+    }
+  }
+  ZF = () => ({_: 'webAuthorization', hash: this.i64(), bot_id: this.i32(), domain: this.s(), browser: this.s(), platform: this.s(), date_created: this.i32(), date_active: this.i32(), ip: this.s(), region: this.s()})
+  ZG = () => ({_: 'account.webAuthorizations', authorizations: this.v(this.o), users: this.v(this.o)})
+  ZH = () => ({_: 'inputMessageID', id: this.i32()})
+  ZI = () => ({_: 'inputMessageReplyTo', id: this.i32()})
+  ZJ = () => ({_: 'inputMessagePinned'})
+  QL = () => ({_: 'messageEntityPhone', offset: this.i32(), length: this.i32()})
+  QM = () => ({_: 'messageEntityCashtag', offset: this.i32(), length: this.i32()})
+  ER = () => ({_: 'messageActionBotAllowed', domain: this.s()})
+  ZK = () => ({_: 'inputDialogPeer', peer: this.o()})
+  ZM = () => ({_: 'dialogPeer', peer: this.o()})
+  ZO = () => ({_: 'messages.foundStickerSetsNotModified'})
+  ZP = () => ({_: 'messages.foundStickerSets', hash: this.i32(), sets: this.v(this.o)})
+  ZQ = () => ({_: 'fileHash', offset: this.i32(), limit: this.i32(), hash: this.b()})
+  WM = () => ({_: 'webDocumentNoProxy', url: this.s(), size: this.i32(), mime_type: this.s(), attributes: this.v(this.o)})
+  ZR = () => ({_: 'inputClientProxy', address: this.s(), port: this.i32()})
+  ZS = () => ({_: 'help.proxyDataEmpty', expires: this.i32()})
+  ZT = () => ({_: 'help.proxyDataPromo', expires: this.i32(), peer: this.o(), chats: this.v(this.o), users: this.v(this.o)})
+  ZU = () => ({_: 'help.termsOfServiceUpdateEmpty', expires: this.i32()})
+  ZV = () => ({_: 'help.termsOfServiceUpdate', expires: this.i32(), terms_of_service: this.o()})
+  ZW = () => ({_: 'inputSecureFileUploaded', id: this.i64(), parts: this.i32(), md5_checksum: this.s(), file_hash: this.b(), secret: this.b()})
+  ZX = () => ({_: 'inputSecureFile', id: this.i64(), access_hash: this.i64()})
+  BT = () => ({_: 'inputSecureFileLocation', id: this.i64(), access_hash: this.i64()})
+  ZY = () => ({_: 'secureFileEmpty'})
+  ZZ = () => ({_: 'secureFile', id: this.i64(), access_hash: this.i64(), size: this.i32(), dc_id: this.i32(), date: this.i32(), file_hash: this.b(), secret: this.b()})
+  BAA = () => ({_: 'secureData', data: this.b(), data_hash: this.b(), secret: this.b()})
+  BAB = () => ({_: 'securePlainPhone', phone: this.s()})
+  BAC = () => ({_: 'securePlainEmail', email: this.s()})
+  BAD = () => ({_: 'secureValueTypePersonalDetails'})
+  BAE = () => ({_: 'secureValueTypePassport'})
+  BAF = () => ({_: 'secureValueTypeDriverLicense'})
+  BAG = () => ({_: 'secureValueTypeIdentityCard'})
+  BAH = () => ({_: 'secureValueTypeInternalPassport'})
+  BAI = () => ({_: 'secureValueTypeAddress'})
+  BAJ = () => ({_: 'secureValueTypeUtilityBill'})
+  BAK = () => ({_: 'secureValueTypeBankStatement'})
+  BAL = () => ({_: 'secureValueTypeRentalAgreement'})
+  BAM = () => ({_: 'secureValueTypePassportRegistration'})
+  BAN = () => ({_: 'secureValueTypeTemporaryRegistration'})
+  BAO = () => ({_: 'secureValueTypePhone'})
+  BAP = () => ({_: 'secureValueTypeEmail'})
+  BAQ() {
+    const flags = this.i32();
+    return {
+      _: 'secureValue' as const,
+      type: this.o(),
+      data: flags & 0x1 ? this.o() : undefined,
+      front_side: flags & 0x2 ? this.o() : undefined,
+      reverse_side: flags & 0x4 ? this.o() : undefined,
+      selfie: flags & 0x8 ? this.o() : undefined,
+      translation: flags & 0x40 ? this.v(this.o) : undefined,
+      files: flags & 0x10 ? this.v(this.o) : undefined,
+      plain_data: flags & 0x20 ? this.o() : undefined,
+      hash: this.b(),
+    }
+  }
+  BAR() {
+    const flags = this.i32();
+    return {
+      _: 'inputSecureValue' as const,
+      type: this.o(),
+      data: flags & 0x1 ? this.o() : undefined,
+      front_side: flags & 0x2 ? this.o() : undefined,
+      reverse_side: flags & 0x4 ? this.o() : undefined,
+      selfie: flags & 0x8 ? this.o() : undefined,
+      translation: flags & 0x40 ? this.v(this.o) : undefined,
+      files: flags & 0x10 ? this.v(this.o) : undefined,
+      plain_data: flags & 0x20 ? this.o() : undefined,
+    }
+  }
+  BAS = () => ({_: 'secureValueHash', type: this.o(), hash: this.b()})
+  BAT = () => ({_: 'secureValueErrorData', type: this.o(), data_hash: this.b(), field: this.s(), text: this.s()})
+  BAU = () => ({_: 'secureValueErrorFrontSide', type: this.o(), file_hash: this.b(), text: this.s()})
+  BAV = () => ({_: 'secureValueErrorReverseSide', type: this.o(), file_hash: this.b(), text: this.s()})
+  BAW = () => ({_: 'secureValueErrorSelfie', type: this.o(), file_hash: this.b(), text: this.s()})
+  BAX = () => ({_: 'secureValueErrorFile', type: this.o(), file_hash: this.b(), text: this.s()})
+  BAY = () => ({_: 'secureValueErrorFiles', type: this.o(), file_hash: this.v(this.b), text: this.s()})
+  BBC = () => ({_: 'secureCredentialsEncrypted', data: this.b(), hash: this.b(), secret: this.b()})
+  BBD() {
+    const flags = this.i32();
+    return {
+      _: 'account.authorizationForm' as const,
+      required_types: this.v(this.o),
+      values: this.v(this.o),
+      errors: this.v(this.o),
+      users: this.v(this.o),
+      privacy_policy_url: flags & 0x1 ? this.s() : undefined,
+    }
+  }
+  BBE = () => ({_: 'account.sentEmailCode', email_pattern: this.s(), length: this.i32()})
+  ES = () => ({_: 'messageActionSecureValuesSentMe', values: this.v(this.o), credentials: this.o()})
+  ET = () => ({_: 'messageActionSecureValuesSent', types: this.v(this.o)})
+  BBF = () => ({_: 'help.deepLinkInfoEmpty'})
+  BBG() {
+    const flags = this.i32();
+    return {
+      _: 'help.deepLinkInfo' as const,
       update_app: !!(flags & 0x1),
-      message: this.readString(),
-      entities: (flags & 0x2) ? this.readObject() : undefined,
+      message: this.s(),
+      entities: flags & 0x2 ? this.v(this.o) : undefined,
     }
   }
-
-  savedPhoneContact() {
+  BBH = () => ({_: 'savedPhoneContact', phone: this.s(), first_name: this.s(), last_name: this.s(), date: this.i32()})
+  BBI = () => ({_: 'account.takeout', id: this.i64()})
+  BU = () => ({_: 'inputTakeoutFileLocation'})
+  JU() {
+    const flags = this.i32();
     return {
-      _: 'savedPhoneContact',
-      phone: this.readString(),
-      first_name: this.readString(),
-      last_name: this.readString(),
-      date: this.readInt(),
-    }
-  }
-
-  account_takeout() {
-    return {
-      _: 'account.takeout',
-      id: this.readLong(),
-    }
-  }
-
-  inputTakeoutFileLocation() {
-    return {
-      _: 'inputTakeoutFileLocation',
-    }
-  }
-
-  updateDialogUnreadMark() {
-    const flags = this.readInt();
-    return {
-      _: 'updateDialogUnreadMark',
+      _: 'updateDialogUnreadMark' as const,
       unread: !!(flags & 0x1),
-      peer: this.readObject(),
+      peer: this.o(),
     }
   }
-
-  messages_dialogsNotModified() {
+  GK = () => ({_: 'messages.dialogsNotModified', count: this.i32()})
+  WP = () => ({_: 'inputWebFileGeoPointLocation', geo_point: this.o(), access_hash: this.i64(), w: this.i32(), h: this.i32(), zoom: this.i32(), scale: this.i32()})
+  TN = () => ({_: 'contacts.topPeersDisabled'})
+  FW = () => ({_: 'inputReportReasonCopyright'})
+  BBJ = () => ({_: 'passwordKdfAlgoUnknown'})
+  BBL = () => ({_: 'securePasswordKdfAlgoUnknown'})
+  BBM = () => ({_: 'securePasswordKdfAlgoPBKDF2HMACSHA512iter100000', salt: this.b()})
+  BBN = () => ({_: 'securePasswordKdfAlgoSHA512', salt: this.b()})
+  BBO = () => ({_: 'secureSecretSettings', secure_algo: this.o(), secure_secret: this.b(), secure_secret_id: this.i64()})
+  BBK = () => ({_: 'passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow', salt1: this.b(), salt2: this.b(), g: this.i32(), p: this.b()})
+  BBP = () => ({_: 'inputCheckPasswordEmpty'})
+  BBQ = () => ({_: 'inputCheckPasswordSRP', srp_id: this.i64(), A: this.b(), M1: this.b()})
+  BAZ = () => ({_: 'secureValueError', type: this.o(), hash: this.b(), text: this.s()})
+  BBA = () => ({_: 'secureValueErrorTranslationFile', type: this.o(), file_hash: this.b(), text: this.s()})
+  BBB = () => ({_: 'secureValueErrorTranslationFiles', type: this.o(), file_hash: this.v(this.b), text: this.s()})
+  BBR() {
+    const flags = this.i32();
     return {
-      _: 'messages.dialogsNotModified',
-      count: this.readInt(),
-    }
-  }
-
-  inputWebFileGeoPointLocation() {
-    return {
-      _: 'inputWebFileGeoPointLocation',
-      geo_point: this.readObject(),
-      access_hash: this.readLong(),
-      w: this.readInt(),
-      h: this.readInt(),
-      zoom: this.readInt(),
-      scale: this.readInt(),
-    }
-  }
-
-  contacts_topPeersDisabled() {
-    return {
-      _: 'contacts.topPeersDisabled',
-    }
-  }
-
-  inputReportReasonCopyright() {
-    return {
-      _: 'inputReportReasonCopyright',
-    }
-  }
-
-  passwordKdfAlgoUnknown() {
-    return {
-      _: 'passwordKdfAlgoUnknown',
-    }
-  }
-
-  securePasswordKdfAlgoUnknown() {
-    return {
-      _: 'securePasswordKdfAlgoUnknown',
-    }
-  }
-
-  securePasswordKdfAlgoPBKDF2HMACSHA512iter100000() {
-    return {
-      _: 'securePasswordKdfAlgoPBKDF2HMACSHA512iter100000',
-      salt: this.readObject(),
-    }
-  }
-
-  securePasswordKdfAlgoSHA512() {
-    return {
-      _: 'securePasswordKdfAlgoSHA512',
-      salt: this.readObject(),
-    }
-  }
-
-  secureSecretSettings() {
-    return {
-      _: 'secureSecretSettings',
-      secure_algo: this.readObject(),
-      secure_secret: this.readObject(),
-      secure_secret_id: this.readLong(),
-    }
-  }
-
-  passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow() {
-    return {
-      _: 'passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow',
-      salt1: this.readObject(),
-      salt2: this.readObject(),
-      g: this.readInt(),
-      p: this.readObject(),
-    }
-  }
-
-  inputCheckPasswordEmpty() {
-    return {
-      _: 'inputCheckPasswordEmpty',
-    }
-  }
-
-  inputCheckPasswordSRP() {
-    return {
-      _: 'inputCheckPasswordSRP',
-      srp_id: this.readLong(),
-      A: this.readObject(),
-      M1: this.readObject(),
-    }
-  }
-
-  secureValueError() {
-    return {
-      _: 'secureValueError',
-      type: this.readObject(),
-      hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorTranslationFile() {
-    return {
-      _: 'secureValueErrorTranslationFile',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureValueErrorTranslationFiles() {
-    return {
-      _: 'secureValueErrorTranslationFiles',
-      type: this.readObject(),
-      file_hash: this.readObject(),
-      text: this.readString(),
-    }
-  }
-
-  secureRequiredType() {
-    const flags = this.readInt();
-    return {
-      _: 'secureRequiredType',
+      _: 'secureRequiredType' as const,
       native_names: !!(flags & 0x1),
       selfie_required: !!(flags & 0x2),
       translation_required: !!(flags & 0x4),
-      type: this.readObject(),
+      type: this.o(),
     }
   }
-
-  secureRequiredTypeOneOf() {
+  BBS = () => ({_: 'secureRequiredTypeOneOf', types: this.v(this.o)})
+  BBT = () => ({_: 'help.passportConfigNotModified'})
+  BBU = () => ({_: 'help.passportConfig', hash: this.i32(), countries_langs: this.o()})
+  BBV = () => ({_: 'inputAppEvent', time: this.d(), type: this.s(), peer: this.i64(), data: this.o()})
+  BBW = () => ({_: 'jsonObjectValue', key: this.s(), value: this.o()})
+  BBX = () => ({_: 'jsonNull'})
+  BBY = () => ({_: 'jsonBool', value: this.o()})
+  BBZ = () => ({_: 'jsonNumber', value: this.d()})
+  BCA = () => ({_: 'jsonString', value: this.s()})
+  BCB = () => ({_: 'jsonArray', value: this.v(this.o)})
+  BCC = () => ({_: 'jsonObject', value: this.v(this.o)})
+  JV = () => ({_: 'updateUserPinnedMessage', user_id: this.i32(), id: this.i32()})
+  JW = () => ({_: 'updateChatPinnedMessage', chat_id: this.i32(), id: this.i32(), version: this.i32()})
+  FM = () => ({_: 'inputNotifyBroadcasts'})
+  MC = () => ({_: 'notifyBroadcasts'})
+  UR = () => ({_: 'textSubscript', text: this.o()})
+  US = () => ({_: 'textSuperscript', text: this.o()})
+  UT = () => ({_: 'textMarked', text: this.o()})
+  UU = () => ({_: 'textPhone', text: this.o(), phone: this.s()})
+  UV = () => ({_: 'textImage', document_id: this.i64(), w: this.i32(), h: this.i32()})
+  VU = () => ({_: 'pageBlockKicker', text: this.o()})
+  BCD() {
+    const flags = this.i32();
     return {
-      _: 'secureRequiredTypeOneOf',
-      types: this.readObject(),
-    }
-  }
-
-  help_passportConfigNotModified() {
-    return {
-      _: 'help.passportConfigNotModified',
-    }
-  }
-
-  help_passportConfig() {
-    return {
-      _: 'help.passportConfig',
-      hash: this.readInt(),
-      countries_langs: this.readObject(),
-    }
-  }
-
-  inputAppEvent() {
-    return {
-      _: 'inputAppEvent',
-      time: this.readObject(),
-      type: this.readString(),
-      peer: this.readLong(),
-      data: this.readObject(),
-    }
-  }
-
-  jsonObjectValue() {
-    return {
-      _: 'jsonObjectValue',
-      key: this.readString(),
-      value: this.readObject(),
-    }
-  }
-
-  jsonNull() {
-    return {
-      _: 'jsonNull',
-    }
-  }
-
-  jsonBool() {
-    return {
-      _: 'jsonBool',
-      value: this.readObject(),
-    }
-  }
-
-  jsonNumber() {
-    return {
-      _: 'jsonNumber',
-      value: this.readObject(),
-    }
-  }
-
-  jsonString() {
-    return {
-      _: 'jsonString',
-      value: this.readString(),
-    }
-  }
-
-  jsonArray() {
-    return {
-      _: 'jsonArray',
-      value: this.readObject(),
-    }
-  }
-
-  jsonObject() {
-    return {
-      _: 'jsonObject',
-      value: this.readObject(),
-    }
-  }
-
-  updateUserPinnedMessage() {
-    return {
-      _: 'updateUserPinnedMessage',
-      user_id: this.readInt(),
-      id: this.readInt(),
-    }
-  }
-
-  updateChatPinnedMessage() {
-    return {
-      _: 'updateChatPinnedMessage',
-      chat_id: this.readInt(),
-      id: this.readInt(),
-      version: this.readInt(),
-    }
-  }
-
-  inputNotifyBroadcasts() {
-    return {
-      _: 'inputNotifyBroadcasts',
-    }
-  }
-
-  notifyBroadcasts() {
-    return {
-      _: 'notifyBroadcasts',
-    }
-  }
-
-  textSubscript() {
-    return {
-      _: 'textSubscript',
-      text: this.readObject(),
-    }
-  }
-
-  textSuperscript() {
-    return {
-      _: 'textSuperscript',
-      text: this.readObject(),
-    }
-  }
-
-  textMarked() {
-    return {
-      _: 'textMarked',
-      text: this.readObject(),
-    }
-  }
-
-  textPhone() {
-    return {
-      _: 'textPhone',
-      text: this.readObject(),
-      phone: this.readString(),
-    }
-  }
-
-  textImage() {
-    return {
-      _: 'textImage',
-      document_id: this.readLong(),
-      w: this.readInt(),
-      h: this.readInt(),
-    }
-  }
-
-  pageBlockKicker() {
-    return {
-      _: 'pageBlockKicker',
-      text: this.readObject(),
-    }
-  }
-
-  pageTableCell() {
-    const flags = this.readInt();
-    return {
-      _: 'pageTableCell',
+      _: 'pageTableCell' as const,
       header: !!(flags & 0x1),
       align_center: !!(flags & 0x8),
-      align_right: !!(flags & 0x16),
-      valign_middle: !!(flags & 0x32),
-      valign_bottom: !!(flags & 0x64),
-      text: (flags & 0x128) ? this.readObject() : undefined,
-      colspan: (flags & 0x2) ? this.readInt() : undefined,
-      rowspan: (flags & 0x4) ? this.readInt() : undefined,
+      align_right: !!(flags & 0x10),
+      valign_middle: !!(flags & 0x20),
+      valign_bottom: !!(flags & 0x40),
+      text: flags & 0x80 ? this.o() : undefined,
+      colspan: flags & 0x2 ? this.i32() : undefined,
+      rowspan: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  pageTableRow() {
+  BCE = () => ({_: 'pageTableRow', cells: this.v(this.o)})
+  VV() {
+    const flags = this.i32();
     return {
-      _: 'pageTableRow',
-      cells: this.readObject(),
-    }
-  }
-
-  pageBlockTable() {
-    const flags = this.readInt();
-    return {
-      _: 'pageBlockTable',
+      _: 'pageBlockTable' as const,
       bordered: !!(flags & 0x1),
       striped: !!(flags & 0x2),
-      title: this.readObject(),
-      rows: this.readObject(),
+      title: this.o(),
+      rows: this.v(this.o),
     }
   }
-
-  pageCaption() {
+  BCF = () => ({_: 'pageCaption', text: this.o(), credit: this.o()})
+  BCG = () => ({_: 'pageListItemText', text: this.o()})
+  BCH = () => ({_: 'pageListItemBlocks', blocks: this.v(this.o)})
+  BCI = () => ({_: 'pageListOrderedItemText', num: this.s(), text: this.o()})
+  BCJ = () => ({_: 'pageListOrderedItemBlocks', num: this.s(), blocks: this.v(this.o)})
+  VW = () => ({_: 'pageBlockOrderedList', items: this.v(this.o)})
+  VX() {
+    const flags = this.i32();
     return {
-      _: 'pageCaption',
-      text: this.readObject(),
-      credit: this.readObject(),
-    }
-  }
-
-  pageListItemText() {
-    return {
-      _: 'pageListItemText',
-      text: this.readObject(),
-    }
-  }
-
-  pageListItemBlocks() {
-    return {
-      _: 'pageListItemBlocks',
-      blocks: this.readObject(),
-    }
-  }
-
-  pageListOrderedItemText() {
-    return {
-      _: 'pageListOrderedItemText',
-      num: this.readString(),
-      text: this.readObject(),
-    }
-  }
-
-  pageListOrderedItemBlocks() {
-    return {
-      _: 'pageListOrderedItemBlocks',
-      num: this.readString(),
-      blocks: this.readObject(),
-    }
-  }
-
-  pageBlockOrderedList() {
-    return {
-      _: 'pageBlockOrderedList',
-      items: this.readObject(),
-    }
-  }
-
-  pageBlockDetails() {
-    const flags = this.readInt();
-    return {
-      _: 'pageBlockDetails',
+      _: 'pageBlockDetails' as const,
       open: !!(flags & 0x1),
-      blocks: this.readObject(),
-      title: this.readObject(),
+      blocks: this.v(this.o),
+      title: this.o(),
     }
   }
-
-  pageRelatedArticle() {
-    const flags = this.readInt();
+  BCK() {
+    const flags = this.i32();
     return {
-      _: 'pageRelatedArticle',
-      url: this.readString(),
-      webpage_id: this.readLong(),
-      title: (flags & 0x1) ? this.readString() : undefined,
-      description: (flags & 0x2) ? this.readString() : undefined,
-      photo_id: (flags & 0x4) ? this.readLong() : undefined,
-      author: (flags & 0x8) ? this.readString() : undefined,
-      published_date: (flags & 0x16) ? this.readInt() : undefined,
+      _: 'pageRelatedArticle' as const,
+      url: this.s(),
+      webpage_id: this.i64(),
+      title: flags & 0x1 ? this.s() : undefined,
+      description: flags & 0x2 ? this.s() : undefined,
+      photo_id: flags & 0x4 ? this.i64() : undefined,
+      author: flags & 0x8 ? this.s() : undefined,
+      published_date: flags & 0x10 ? this.i32() : undefined,
     }
   }
-
-  pageBlockRelatedArticles() {
+  VY = () => ({_: 'pageBlockRelatedArticles', title: this.o(), articles: this.v(this.o)})
+  VZ = () => ({_: 'pageBlockMap', geo: this.o(), zoom: this.i32(), w: this.i32(), h: this.i32(), caption: this.o()})
+  BCL() {
+    const flags = this.i32();
     return {
-      _: 'pageBlockRelatedArticles',
-      title: this.readObject(),
-      articles: this.readObject(),
-    }
-  }
-
-  pageBlockMap() {
-    return {
-      _: 'pageBlockMap',
-      geo: this.readObject(),
-      zoom: this.readInt(),
-      w: this.readInt(),
-      h: this.readInt(),
-      caption: this.readObject(),
-    }
-  }
-
-  page() {
-    const flags = this.readInt();
-    return {
-      _: 'page',
+      _: 'page' as const,
       part: !!(flags & 0x1),
       rtl: !!(flags & 0x2),
       v2: !!(flags & 0x4),
-      url: this.readString(),
-      blocks: this.readObject(),
-      photos: this.readObject(),
-      documents: this.readObject(),
+      url: this.s(),
+      blocks: this.v(this.o),
+      photos: this.v(this.o),
+      documents: this.v(this.o),
     }
   }
-
-  inputPrivacyKeyPhoneP2P() {
+  MU = () => ({_: 'inputPrivacyKeyPhoneP2P'})
+  NC = () => ({_: 'privacyKeyPhoneP2P'})
+  UW = () => ({_: 'textAnchor', text: this.o(), name: this.s()})
+  BCM = () => ({_: 'help.supportName', name: this.s()})
+  BCN = () => ({_: 'help.userInfoEmpty'})
+  BCO = () => ({_: 'help.userInfo', message: this.s(), entities: this.v(this.o), author: this.s(), date: this.i32()})
+  EU = () => ({_: 'messageActionContactSignUp'})
+  JX() {
+    const flags = this.i32();
     return {
-      _: 'inputPrivacyKeyPhoneP2P',
+      _: 'updateMessagePoll' as const,
+      poll_id: this.i64(),
+      poll: flags & 0x1 ? this.o() : undefined,
+      results: this.o(),
     }
   }
-
-  privacyKeyPhoneP2P() {
+  BCP = () => ({_: 'pollAnswer', text: this.s(), option: this.b()})
+  BCQ() {
+    const flags = this.i32();
     return {
-      _: 'privacyKeyPhoneP2P',
-    }
-  }
-
-  textAnchor() {
-    return {
-      _: 'textAnchor',
-      text: this.readObject(),
-      name: this.readString(),
-    }
-  }
-
-  help_supportName() {
-    return {
-      _: 'help.supportName',
-      name: this.readString(),
-    }
-  }
-
-  help_userInfoEmpty() {
-    return {
-      _: 'help.userInfoEmpty',
-    }
-  }
-
-  help_userInfo() {
-    return {
-      _: 'help.userInfo',
-      message: this.readString(),
-      entities: this.readObject(),
-      author: this.readString(),
-      date: this.readInt(),
-    }
-  }
-
-  messageActionContactSignUp() {
-    return {
-      _: 'messageActionContactSignUp',
-    }
-  }
-
-  updateMessagePoll() {
-    const flags = this.readInt();
-    return {
-      _: 'updateMessagePoll',
-      poll_id: this.readLong(),
-      poll: (flags & 0x1) ? this.readObject() : undefined,
-      results: this.readObject(),
-    }
-  }
-
-  pollAnswer() {
-    return {
-      _: 'pollAnswer',
-      text: this.readString(),
-      option: this.readObject(),
-    }
-  }
-
-  poll() {
-    const flags = this.readInt();
-    return {
-      _: 'poll',
-      id: this.readLong(),
+      _: 'poll' as const,
+      id: this.i64(),
       closed: !!(flags & 0x1),
-      question: this.readString(),
-      answers: this.readObject(),
+      question: this.s(),
+      answers: this.v(this.o),
     }
   }
-
-  pollAnswerVoters() {
-    const flags = this.readInt();
+  BCR() {
+    const flags = this.i32();
     return {
-      _: 'pollAnswerVoters',
+      _: 'pollAnswerVoters' as const,
       chosen: !!(flags & 0x1),
-      option: this.readObject(),
-      voters: this.readInt(),
+      option: this.b(),
+      voters: this.i32(),
     }
   }
-
-  pollResults() {
-    const flags = this.readInt();
+  BCS() {
+    const flags = this.i32();
     return {
-      _: 'pollResults',
+      _: 'pollResults' as const,
       min: !!(flags & 0x1),
-      results: (flags & 0x2) ? this.readObject() : undefined,
-      total_voters: (flags & 0x4) ? this.readInt() : undefined,
+      results: flags & 0x2 ? this.v(this.o) : undefined,
+      total_voters: flags & 0x4 ? this.i32() : undefined,
     }
   }
-
-  inputMediaPoll() {
+  BI = () => ({_: 'inputMediaPoll', poll: this.o()})
+  DX = () => ({_: 'messageMediaPoll', poll: this.o(), results: this.o()})
+  BCT = () => ({_: 'chatOnlines', onlines: this.i32()})
+  BCU = () => ({_: 'statsURL', url: this.s()})
+  FC = () => ({_: 'photoStrippedSize', type: this.s(), bytes: this.b()})
+  BCV() {
+    const flags = this.i32();
     return {
-      _: 'inputMediaPoll',
-      poll: this.readObject(),
-    }
-  }
-
-  messageMediaPoll() {
-    return {
-      _: 'messageMediaPoll',
-      poll: this.readObject(),
-      results: this.readObject(),
-    }
-  }
-
-  chatOnlines() {
-    return {
-      _: 'chatOnlines',
-      onlines: this.readInt(),
-    }
-  }
-
-  statsURL() {
-    return {
-      _: 'statsURL',
-      url: this.readString(),
-    }
-  }
-
-  photoStrippedSize() {
-    return {
-      _: 'photoStrippedSize',
-      type: this.readString(),
-      bytes: this.readObject(),
-    }
-  }
-
-  chatAdminRights() {
-    const flags = this.readInt();
-    return {
-      _: 'chatAdminRights',
+      _: 'chatAdminRights' as const,
       change_info: !!(flags & 0x1),
       post_messages: !!(flags & 0x2),
       edit_messages: !!(flags & 0x4),
       delete_messages: !!(flags & 0x8),
-      ban_users: !!(flags & 0x16),
-      invite_users: !!(flags & 0x32),
-      pin_messages: !!(flags & 0x128),
-      add_admins: !!(flags & 0x512),
+      ban_users: !!(flags & 0x10),
+      invite_users: !!(flags & 0x20),
+      pin_messages: !!(flags & 0x80),
+      add_admins: !!(flags & 0x200),
     }
   }
-
-  chatBannedRights() {
-    const flags = this.readInt();
+  BCW() {
+    const flags = this.i32();
     return {
-      _: 'chatBannedRights',
+      _: 'chatBannedRights' as const,
       view_messages: !!(flags & 0x1),
       send_messages: !!(flags & 0x2),
       send_media: !!(flags & 0x4),
       send_stickers: !!(flags & 0x8),
-      send_gifs: !!(flags & 0x16),
-      send_games: !!(flags & 0x32),
-      send_inline: !!(flags & 0x64),
-      embed_links: !!(flags & 0x128),
-      send_polls: !!(flags & 0x256),
-      change_info: !!(flags & 0x1024),
-      invite_users: !!(flags & 0x32768),
-      pin_messages: !!(flags & 0x131072),
-      until_date: this.readInt(),
+      send_gifs: !!(flags & 0x10),
+      send_games: !!(flags & 0x20),
+      send_inline: !!(flags & 0x40),
+      embed_links: !!(flags & 0x80),
+      send_polls: !!(flags & 0x100),
+      change_info: !!(flags & 0x400),
+      invite_users: !!(flags & 0x8000),
+      pin_messages: !!(flags & 0x20000),
+      until_date: this.i32(),
     }
   }
-
-  updateChatDefaultBannedRights() {
+  JY = () => ({_: 'updateChatDefaultBannedRights', peer: this.o(), default_banned_rights: this.o(), version: this.i32()})
+  BCX = () => ({_: 'inputWallPaper', id: this.i64(), access_hash: this.i64()})
+  BCY = () => ({_: 'inputWallPaperSlug', slug: this.s()})
+  RL = () => ({_: 'channelParticipantsContacts', q: this.s()})
+  YN = () => ({_: 'channelAdminLogEventActionDefaultBannedRights', prev_banned_rights: this.o(), new_banned_rights: this.o()})
+  YO = () => ({_: 'channelAdminLogEventActionStopPoll', message: this.o()})
+  BCZ = () => ({_: 'account.wallPapersNotModified'})
+  BDA = () => ({_: 'account.wallPapers', hash: this.i32(), wallpapers: this.v(this.o)})
+  BDB() {
+    const flags = this.i32();
     return {
-      _: 'updateChatDefaultBannedRights',
-      peer: this.readObject(),
-      default_banned_rights: this.readObject(),
-      version: this.readInt(),
-    }
-  }
-
-  inputWallPaper() {
-    return {
-      _: 'inputWallPaper',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputWallPaperSlug() {
-    return {
-      _: 'inputWallPaperSlug',
-      slug: this.readString(),
-    }
-  }
-
-  channelParticipantsContacts() {
-    return {
-      _: 'channelParticipantsContacts',
-      q: this.readString(),
-    }
-  }
-
-  channelAdminLogEventActionDefaultBannedRights() {
-    return {
-      _: 'channelAdminLogEventActionDefaultBannedRights',
-      prev_banned_rights: this.readObject(),
-      new_banned_rights: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionStopPoll() {
-    return {
-      _: 'channelAdminLogEventActionStopPoll',
-      message: this.readObject(),
-    }
-  }
-
-  account_wallPapersNotModified() {
-    return {
-      _: 'account.wallPapersNotModified',
-    }
-  }
-
-  account_wallPapers() {
-    return {
-      _: 'account.wallPapers',
-      hash: this.readInt(),
-      wallpapers: this.readObject(),
-    }
-  }
-
-  codeSettings() {
-    const flags = this.readInt();
-    return {
-      _: 'codeSettings',
+      _: 'codeSettings' as const,
       allow_flashcall: !!(flags & 0x1),
       current_number: !!(flags & 0x2),
-      allow_app_hash: !!(flags & 0x16),
+      allow_app_hash: !!(flags & 0x10),
     }
   }
-
-  wallPaperSettings() {
-    const flags = this.readInt();
+  BDC() {
+    const flags = this.i32();
     return {
-      _: 'wallPaperSettings',
+      _: 'wallPaperSettings' as const,
       blur: !!(flags & 0x2),
       motion: !!(flags & 0x4),
-      background_color: (flags & 0x1) ? this.readInt() : undefined,
-      intensity: (flags & 0x8) ? this.readInt() : undefined,
+      background_color: flags & 0x1 ? this.i32() : undefined,
+      intensity: flags & 0x8 ? this.i32() : undefined,
     }
   }
-
-  autoDownloadSettings() {
-    const flags = this.readInt();
+  BDD() {
+    const flags = this.i32();
     return {
-      _: 'autoDownloadSettings',
+      _: 'autoDownloadSettings' as const,
       disabled: !!(flags & 0x1),
       video_preload_large: !!(flags & 0x2),
       audio_preload_next: !!(flags & 0x4),
       phonecalls_less_data: !!(flags & 0x8),
-      photo_size_max: this.readInt(),
-      video_size_max: this.readInt(),
-      file_size_max: this.readInt(),
+      photo_size_max: this.i32(),
+      video_size_max: this.i32(),
+      file_size_max: this.i32(),
     }
   }
-
-  account_autoDownloadSettings() {
+  BDE = () => ({_: 'account.autoDownloadSettings', low: this.o(), medium: this.o(), high: this.o()})
+  BDF = () => ({_: 'emojiKeyword', keyword: this.s(), emoticons: this.v(this.s)})
+  BDG = () => ({_: 'emojiKeywordDeleted', keyword: this.s(), emoticons: this.v(this.s)})
+  BDH = () => ({_: 'emojiKeywordsDifference', lang_code: this.s(), from_version: this.i32(), version: this.i32(), keywords: this.v(this.o)})
+  BDI = () => ({_: 'emojiURL', url: this.s()})
+  BDJ = () => ({_: 'emojiLanguage', lang_code: this.s()})
+  MV = () => ({_: 'inputPrivacyKeyForwards'})
+  ND = () => ({_: 'privacyKeyForwards'})
+  MW = () => ({_: 'inputPrivacyKeyProfilePhoto'})
+  NE = () => ({_: 'privacyKeyProfilePhoto'})
+  BDK = () => ({_: 'fileLocationToBeDeprecated', volume_id: this.i64(), local_id: this.i32()})
+  BV = () => ({_: 'inputPhotoFileLocation', id: this.i64(), access_hash: this.i64(), file_reference: this.b(), thumb_size: this.s()})
+  BW() {
+    const flags = this.i32();
     return {
-      _: 'account.autoDownloadSettings',
-      low: this.readObject(),
-      medium: this.readObject(),
-      high: this.readObject(),
-    }
-  }
-
-  emojiKeyword() {
-    return {
-      _: 'emojiKeyword',
-      keyword: this.readString(),
-      emoticons: this.readObject(),
-    }
-  }
-
-  emojiKeywordDeleted() {
-    return {
-      _: 'emojiKeywordDeleted',
-      keyword: this.readString(),
-      emoticons: this.readObject(),
-    }
-  }
-
-  emojiKeywordsDifference() {
-    return {
-      _: 'emojiKeywordsDifference',
-      lang_code: this.readString(),
-      from_version: this.readInt(),
-      version: this.readInt(),
-      keywords: this.readObject(),
-    }
-  }
-
-  emojiURL() {
-    return {
-      _: 'emojiURL',
-      url: this.readString(),
-    }
-  }
-
-  emojiLanguage() {
-    return {
-      _: 'emojiLanguage',
-      lang_code: this.readString(),
-    }
-  }
-
-  inputPrivacyKeyForwards() {
-    return {
-      _: 'inputPrivacyKeyForwards',
-    }
-  }
-
-  privacyKeyForwards() {
-    return {
-      _: 'privacyKeyForwards',
-    }
-  }
-
-  inputPrivacyKeyProfilePhoto() {
-    return {
-      _: 'inputPrivacyKeyProfilePhoto',
-    }
-  }
-
-  privacyKeyProfilePhoto() {
-    return {
-      _: 'privacyKeyProfilePhoto',
-    }
-  }
-
-  fileLocationToBeDeprecated() {
-    return {
-      _: 'fileLocationToBeDeprecated',
-      volume_id: this.readLong(),
-      local_id: this.readInt(),
-    }
-  }
-
-  inputPhotoFileLocation() {
-    return {
-      _: 'inputPhotoFileLocation',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      file_reference: this.readObject(),
-      thumb_size: this.readString(),
-    }
-  }
-
-  inputPeerPhotoFileLocation() {
-    const flags = this.readInt();
-    return {
-      _: 'inputPeerPhotoFileLocation',
+      _: 'inputPeerPhotoFileLocation' as const,
       big: !!(flags & 0x1),
-      peer: this.readObject(),
-      volume_id: this.readLong(),
-      local_id: this.readInt(),
+      peer: this.o(),
+      volume_id: this.i64(),
+      local_id: this.i32(),
     }
   }
-
-  inputStickerSetThumb() {
+  BX = () => ({_: 'inputStickerSetThumb', stickerset: this.o(), volume_id: this.i64(), local_id: this.i32()})
+  BDL() {
+    const flags = this.i32();
     return {
-      _: 'inputStickerSetThumb',
-      stickerset: this.readObject(),
-      volume_id: this.readLong(),
-      local_id: this.readInt(),
-    }
-  }
-
-  folder() {
-    const flags = this.readInt();
-    return {
-      _: 'folder',
+      _: 'folder' as const,
       autofill_new_broadcasts: !!(flags & 0x1),
       autofill_public_groups: !!(flags & 0x2),
       autofill_new_correspondents: !!(flags & 0x4),
-      id: this.readInt(),
-      title: this.readString(),
-      photo: (flags & 0x8) ? this.readObject() : undefined,
+      id: this.i32(),
+      title: this.s(),
+      photo: flags & 0x8 ? this.o() : undefined,
     }
   }
-
-  dialogFolder() {
-    const flags = this.readInt();
+  EW() {
+    const flags = this.i32();
     return {
-      _: 'dialogFolder',
+      _: 'dialogFolder' as const,
       pinned: !!(flags & 0x4),
-      folder: this.readObject(),
-      peer: this.readObject(),
-      top_message: this.readInt(),
-      unread_muted_peers_count: this.readInt(),
-      unread_unmuted_peers_count: this.readInt(),
-      unread_muted_messages_count: this.readInt(),
-      unread_unmuted_messages_count: this.readInt(),
+      folder: this.o(),
+      peer: this.o(),
+      top_message: this.i32(),
+      unread_muted_peers_count: this.i32(),
+      unread_unmuted_peers_count: this.i32(),
+      unread_muted_messages_count: this.i32(),
+      unread_unmuted_messages_count: this.i32(),
     }
   }
-
-  inputDialogPeerFolder() {
+  ZL = () => ({_: 'inputDialogPeerFolder', folder_id: this.i32()})
+  ZN = () => ({_: 'dialogPeerFolder', folder_id: this.i32()})
+  BDM = () => ({_: 'inputFolderPeer', peer: this.o(), folder_id: this.i32()})
+  BDN = () => ({_: 'folderPeer', peer: this.o(), folder_id: this.i32()})
+  JZ = () => ({_: 'updateFolderPeers', folder_peers: this.v(this.o), pts: this.i32(), pts_count: this.i32()})
+  Q = () => ({_: 'inputUserFromMessage', peer: this.o(), msg_id: this.i32(), user_id: this.i32()})
+  QS = () => ({_: 'inputChannelFromMessage', peer: this.o(), msg_id: this.i32(), channel_id: this.i32()})
+  L = () => ({_: 'inputPeerUserFromMessage', peer: this.o(), msg_id: this.i32(), user_id: this.i32()})
+  M = () => ({_: 'inputPeerChannelFromMessage', peer: this.o(), msg_id: this.i32(), channel_id: this.i32()})
+  MX = () => ({_: 'inputPrivacyKeyPhoneNumber'})
+  NF = () => ({_: 'privacyKeyPhoneNumber'})
+  TI = () => ({_: 'topPeerCategoryForwardUsers'})
+  TJ = () => ({_: 'topPeerCategoryForwardChats'})
+  YP = () => ({_: 'channelAdminLogEventActionChangeLinkedChat', prev_value: this.i32(), new_value: this.i32()})
+  BDO() {
+    const flags = this.i32();
     return {
-      _: 'inputDialogPeerFolder',
-      folder_id: this.readInt(),
-    }
-  }
-
-  dialogPeerFolder() {
-    return {
-      _: 'dialogPeerFolder',
-      folder_id: this.readInt(),
-    }
-  }
-
-  inputFolderPeer() {
-    return {
-      _: 'inputFolderPeer',
-      peer: this.readObject(),
-      folder_id: this.readInt(),
-    }
-  }
-
-  folderPeer() {
-    return {
-      _: 'folderPeer',
-      peer: this.readObject(),
-      folder_id: this.readInt(),
-    }
-  }
-
-  updateFolderPeers() {
-    return {
-      _: 'updateFolderPeers',
-      folder_peers: this.readObject(),
-      pts: this.readInt(),
-      pts_count: this.readInt(),
-    }
-  }
-
-  inputUserFromMessage() {
-    return {
-      _: 'inputUserFromMessage',
-      peer: this.readObject(),
-      msg_id: this.readInt(),
-      user_id: this.readInt(),
-    }
-  }
-
-  inputChannelFromMessage() {
-    return {
-      _: 'inputChannelFromMessage',
-      peer: this.readObject(),
-      msg_id: this.readInt(),
-      channel_id: this.readInt(),
-    }
-  }
-
-  inputPeerUserFromMessage() {
-    return {
-      _: 'inputPeerUserFromMessage',
-      peer: this.readObject(),
-      msg_id: this.readInt(),
-      user_id: this.readInt(),
-    }
-  }
-
-  inputPeerChannelFromMessage() {
-    return {
-      _: 'inputPeerChannelFromMessage',
-      peer: this.readObject(),
-      msg_id: this.readInt(),
-      channel_id: this.readInt(),
-    }
-  }
-
-  inputPrivacyKeyPhoneNumber() {
-    return {
-      _: 'inputPrivacyKeyPhoneNumber',
-    }
-  }
-
-  privacyKeyPhoneNumber() {
-    return {
-      _: 'privacyKeyPhoneNumber',
-    }
-  }
-
-  topPeerCategoryForwardUsers() {
-    return {
-      _: 'topPeerCategoryForwardUsers',
-    }
-  }
-
-  topPeerCategoryForwardChats() {
-    return {
-      _: 'topPeerCategoryForwardChats',
-    }
-  }
-
-  channelAdminLogEventActionChangeLinkedChat() {
-    return {
-      _: 'channelAdminLogEventActionChangeLinkedChat',
-      prev_value: this.readInt(),
-      new_value: this.readInt(),
-    }
-  }
-
-  messages_searchCounter() {
-    const flags = this.readInt();
-    return {
-      _: 'messages.searchCounter',
+      _: 'messages.searchCounter' as const,
       inexact: !!(flags & 0x2),
-      filter: this.readObject(),
-      count: this.readInt(),
+      filter: this.o(),
+      count: this.i32(),
     }
   }
-
-  keyboardButtonUrlAuth() {
-    const flags = this.readInt();
+  PR() {
+    const flags = this.i32();
     return {
-      _: 'keyboardButtonUrlAuth',
-      text: this.readString(),
-      fwd_text: (flags & 0x1) ? this.readString() : undefined,
-      url: this.readString(),
-      button_id: this.readInt(),
+      _: 'keyboardButtonUrlAuth' as const,
+      text: this.s(),
+      fwd_text: flags & 0x1 ? this.s() : undefined,
+      url: this.s(),
+      button_id: this.i32(),
     }
   }
-
-  inputKeyboardButtonUrlAuth() {
-    const flags = this.readInt();
+  PS() {
+    const flags = this.i32();
     return {
-      _: 'inputKeyboardButtonUrlAuth',
+      _: 'inputKeyboardButtonUrlAuth' as const,
       request_write_access: !!(flags & 0x1),
-      text: this.readString(),
-      fwd_text: (flags & 0x2) ? this.readString() : undefined,
-      url: this.readString(),
-      bot: this.readObject(),
+      text: this.s(),
+      fwd_text: flags & 0x2 ? this.s() : undefined,
+      url: this.s(),
+      bot: this.o(),
     }
   }
-
-  urlAuthResultRequest() {
-    const flags = this.readInt();
+  BDP() {
+    const flags = this.i32();
     return {
-      _: 'urlAuthResultRequest',
+      _: 'urlAuthResultRequest' as const,
       request_write_access: !!(flags & 0x1),
-      bot: this.readObject(),
-      domain: this.readString(),
+      bot: this.o(),
+      domain: this.s(),
     }
   }
-
-  urlAuthResultAccepted() {
+  BDQ = () => ({_: 'urlAuthResultAccepted', url: this.s()})
+  BDR = () => ({_: 'urlAuthResultDefault'})
+  NN = () => ({_: 'inputPrivacyValueAllowChatParticipants', chats: this.v(this.i32)})
+  NO = () => ({_: 'inputPrivacyValueDisallowChatParticipants', chats: this.v(this.i32)})
+  NV = () => ({_: 'privacyValueAllowChatParticipants', chats: this.v(this.i32)})
+  NW = () => ({_: 'privacyValueDisallowChatParticipants', chats: this.v(this.i32)})
+  QN = () => ({_: 'messageEntityUnderline', offset: this.i32(), length: this.i32()})
+  QO = () => ({_: 'messageEntityStrike', offset: this.i32(), length: this.i32()})
+  QP = () => ({_: 'messageEntityBlockquote', offset: this.i32(), length: this.i32()})
+  KA = () => ({_: 'updatePeerSettings', peer: this.o(), settings: this.o()})
+  BDS = () => ({_: 'channelLocationEmpty'})
+  BDT = () => ({_: 'channelLocation', geo_point: this.o(), address: this.s()})
+  BDU = () => ({_: 'peerLocated', peer: this.o(), expires: this.i32(), distance: this.i32()})
+  KB = () => ({_: 'updatePeerLocated', peers: this.v(this.o)})
+  YQ = () => ({_: 'channelAdminLogEventActionChangeLocation', prev_value: this.o(), new_value: this.o()})
+  FX = () => ({_: 'inputReportReasonGeoIrrelevant'})
+  YR = () => ({_: 'channelAdminLogEventActionToggleSlowMode', prev_value: this.i32(), new_value: this.i32()})
+  FH() {
+    const flags = this.i32();
     return {
-      _: 'urlAuthResultAccepted',
-      url: this.readString(),
+      _: 'auth.authorizationSignUpRequired' as const,
+      terms_of_service: flags & 0x1 ? this.o() : undefined,
     }
   }
-
-  urlAuthResultDefault() {
+  WU = () => ({_: 'payments.paymentVerificationNeeded', url: this.s()})
+  PE = () => ({_: 'inputStickerSetAnimatedEmoji'})
+  KC = () => ({_: 'updateNewScheduledMessage', message: this.o()})
+  KD = () => ({_: 'updateDeleteScheduledMessages', peer: this.o(), messages: this.v(this.i32)})
+  BDV = () => ({_: 'restrictionReason', platform: this.s(), reason: this.s(), text: this.s()})
+  BDW = () => ({_: 'inputTheme', id: this.i64(), access_hash: this.i64()})
+  BDX = () => ({_: 'inputThemeSlug', slug: this.s()})
+  BDY = () => ({_: 'themeDocumentNotModified'})
+  BDZ() {
+    const flags = this.i32();
     return {
-      _: 'urlAuthResultDefault',
-    }
-  }
-
-  inputPrivacyValueAllowChatParticipants() {
-    return {
-      _: 'inputPrivacyValueAllowChatParticipants',
-      chats: this.readObject(),
-    }
-  }
-
-  inputPrivacyValueDisallowChatParticipants() {
-    return {
-      _: 'inputPrivacyValueDisallowChatParticipants',
-      chats: this.readObject(),
-    }
-  }
-
-  privacyValueAllowChatParticipants() {
-    return {
-      _: 'privacyValueAllowChatParticipants',
-      chats: this.readObject(),
-    }
-  }
-
-  privacyValueDisallowChatParticipants() {
-    return {
-      _: 'privacyValueDisallowChatParticipants',
-      chats: this.readObject(),
-    }
-  }
-
-  messageEntityUnderline() {
-    return {
-      _: 'messageEntityUnderline',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityStrike() {
-    return {
-      _: 'messageEntityStrike',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  messageEntityBlockquote() {
-    return {
-      _: 'messageEntityBlockquote',
-      offset: this.readInt(),
-      length: this.readInt(),
-    }
-  }
-
-  updatePeerSettings() {
-    return {
-      _: 'updatePeerSettings',
-      peer: this.readObject(),
-      settings: this.readObject(),
-    }
-  }
-
-  channelLocationEmpty() {
-    return {
-      _: 'channelLocationEmpty',
-    }
-  }
-
-  channelLocation() {
-    return {
-      _: 'channelLocation',
-      geo_point: this.readObject(),
-      address: this.readString(),
-    }
-  }
-
-  peerLocated() {
-    return {
-      _: 'peerLocated',
-      peer: this.readObject(),
-      expires: this.readInt(),
-      distance: this.readInt(),
-    }
-  }
-
-  updatePeerLocated() {
-    return {
-      _: 'updatePeerLocated',
-      peers: this.readObject(),
-    }
-  }
-
-  channelAdminLogEventActionChangeLocation() {
-    return {
-      _: 'channelAdminLogEventActionChangeLocation',
-      prev_value: this.readObject(),
-      new_value: this.readObject(),
-    }
-  }
-
-  inputReportReasonGeoIrrelevant() {
-    return {
-      _: 'inputReportReasonGeoIrrelevant',
-    }
-  }
-
-  channelAdminLogEventActionToggleSlowMode() {
-    return {
-      _: 'channelAdminLogEventActionToggleSlowMode',
-      prev_value: this.readInt(),
-      new_value: this.readInt(),
-    }
-  }
-
-  auth_authorizationSignUpRequired() {
-    const flags = this.readInt();
-    return {
-      _: 'auth.authorizationSignUpRequired',
-      terms_of_service: (flags & 0x1) ? this.readObject() : undefined,
-    }
-  }
-
-  payments_paymentVerificationNeeded() {
-    return {
-      _: 'payments.paymentVerificationNeeded',
-      url: this.readString(),
-    }
-  }
-
-  inputStickerSetAnimatedEmoji() {
-    return {
-      _: 'inputStickerSetAnimatedEmoji',
-    }
-  }
-
-  updateNewScheduledMessage() {
-    return {
-      _: 'updateNewScheduledMessage',
-      message: this.readObject(),
-    }
-  }
-
-  updateDeleteScheduledMessages() {
-    return {
-      _: 'updateDeleteScheduledMessages',
-      peer: this.readObject(),
-      messages: this.readObject(),
-    }
-  }
-
-  restrictionReason() {
-    return {
-      _: 'restrictionReason',
-      platform: this.readString(),
-      reason: this.readString(),
-      text: this.readString(),
-    }
-  }
-
-  inputTheme() {
-    return {
-      _: 'inputTheme',
-      id: this.readLong(),
-      access_hash: this.readLong(),
-    }
-  }
-
-  inputThemeSlug() {
-    return {
-      _: 'inputThemeSlug',
-      slug: this.readString(),
-    }
-  }
-
-  themeDocumentNotModified() {
-    return {
-      _: 'themeDocumentNotModified',
-    }
-  }
-
-  theme() {
-    const flags = this.readInt();
-    return {
-      _: 'theme',
+      _: 'theme' as const,
       creator: !!(flags & 0x1),
       default: !!(flags & 0x2),
-      id: this.readLong(),
-      access_hash: this.readLong(),
-      slug: this.readString(),
-      title: this.readString(),
-      document: (flags & 0x4) ? this.readObject() : undefined,
-      installs_count: this.readInt(),
+      id: this.i64(),
+      access_hash: this.i64(),
+      slug: this.s(),
+      title: this.s(),
+      document: flags & 0x4 ? this.o() : undefined,
+      installs_count: this.i32(),
     }
   }
-
-  account_themesNotModified() {
-    return {
-      _: 'account.themesNotModified',
-    }
-  }
-
-  account_themes() {
-    return {
-      _: 'account.themes',
-      hash: this.readInt(),
-      themes: this.readObject(),
-    }
-  }
-
-  updateTheme() {
-    return {
-      _: 'updateTheme',
-      theme: this.readObject(),
-    }
-  }
-
-  inputPrivacyKeyAddedByPhone() {
-    return {
-      _: 'inputPrivacyKeyAddedByPhone',
-    }
-  }
-
-  privacyKeyAddedByPhone() {
-    return {
-      _: 'privacyKeyAddedByPhone',
-    }
-  }
-
+  BEA = () => ({_: 'account.themesNotModified'})
+  BEB = () => ({_: 'account.themes', hash: this.i32(), themes: this.v(this.o)})
+  KE = () => ({_: 'updateTheme', theme: this.o()})
+  MY = () => ({_: 'inputPrivacyKeyAddedByPhone'})
+  NG = () => ({_: 'privacyKeyAddedByPhone'})
+}
