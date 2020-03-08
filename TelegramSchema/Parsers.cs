@@ -23,6 +23,18 @@ namespace TelegramSchema
             using var fileStream = File.Open(Path.Combine(outputFolder, $"{schemaName}.parser.ts"), FileMode.Create);
             using var streamWriter = new StreamWriter(fileStream);
             using var writer = new IndentedTextWriter(streamWriter, "  ") {NewLine = "\n"};
+            
+            writer.WriteLine("/*******************************************************************************************/");
+            writer.WriteLine("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */");
+            writer.WriteLine("/*                                                                                         */");
+            writer.WriteLine("/* Do not make changes to this file unless you know what you are doing -- modify           */");
+            writer.WriteLine("/* the tool instead.                                                                       */");
+            writer.WriteLine("/*                                                                                         */");
+            writer.WriteLine("/* Source: " + $"{schemaName}.json".PadRight(80, ' ') + "*/");
+            writer.WriteLine("/*                                                                                         */");
+            writer.WriteLine("/*******************************************************************************************/");
+            writer.WriteLine();
+
             foreach (var type in types)
             {
                 foreach (var constructor in type.Value)

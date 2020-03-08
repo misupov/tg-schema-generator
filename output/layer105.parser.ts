@@ -1,3 +1,13 @@
+/*******************************************************************************************/
+/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
+/*                                                                                         */
+/* Do not make changes to this file unless you know what you are doing -- modify           */
+/* the tool instead.                                                                       */
+/*                                                                                         */
+/* Source: layer105.json                                                                   */
+/*                                                                                         */
+/*******************************************************************************************/
+
 interface ByteStream {
   readInt32(): number;
   readUint32(): number;
