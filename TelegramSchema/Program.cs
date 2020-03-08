@@ -22,6 +22,7 @@ namespace TelegramSchema
             var (typeOrder, types) = BuildTypes(schema);
 
             Parsers.WriteParsers(outputFolder, schemaName, types, schema);
+            Builders.WriteBuilders(outputFolder, schemaName, types, schema);
             Declarations.WriteDeclarations(outputFolder, schemaName, genRefs, typeOrder, types, schema);
         }
 
