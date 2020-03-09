@@ -3,13 +3,12 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using static TelegramSchema.Utils;
 
 namespace TelegramSchema
 {
-    class Builders
+    static class Builders
     {
         public static void WriteBuilders(
             string outputFolder,
@@ -42,7 +41,6 @@ namespace TelegramSchema
             writer.WriteLine("interface ByteStream {");
             writer.Indent++;
             writer.WriteLine("writeInt32(value: number) : void;");
-            writer.WriteLine("writeUint32(value: number): void;");
             writer.WriteLine("writeInt64(value: string): void;");
             writer.WriteLine("writeInt128(value: string): void;");
             writer.WriteLine("writeInt256(value: string): void;");
@@ -52,24 +50,21 @@ namespace TelegramSchema
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("function i32(s: ByteStream, value: number) {");
-            writer.Indent++;
-            writer.WriteLine("s.writeInt32(value);");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine("");
+            writer.WriteLine("let s: ByteStream;");
+            writer.WriteLine("function i32(value: number) { s.writeInt32(value); }");
+            writer.WriteLine();
             foreach (var type in types)
             {
                 foreach (var constructor in type.Value)
                 {
                     writer.WriteLine(
-                        $"function _{FixConstructorName(constructor.predicate)}(s: ByteStream, o: any) {{");
+                        $"function _{FixConstructorName(constructor)}(o: any) {{");
                     writer.Indent++;
-                    writer.WriteLine($"i32(s, 0x{Convert.ToString(int.Parse(constructor.id), 16)});");
-                    if (constructor.@params.Any(p => p.name == "flags" && p.type == "#"))
+                    writer.WriteLine($"i32(0x{Convert.ToString(int.Parse(constructor.id), 16)});");
+                    if (HasFlags(constructor))
                     {
-                        writer.Write($"const flags = ");
-                        bool prependOr = false;
+                        writer.Write("const flags = ");
+                        var prependOr = false;
                         foreach (var param in constructor.@params)
                         {
                             var flagsMatch = Regex.Match(param.type, @"flags.(\d+)\?(.+)");
@@ -97,7 +92,7 @@ namespace TelegramSchema
                             }
                         }
                         writer.WriteLine(";");
-                        writer.WriteLine("i32(s, flags);");
+                        writer.WriteLine("i32(flags);");
                     }
                     foreach (var param in constructor.@params)
                     {
@@ -112,10 +107,28 @@ namespace TelegramSchema
                             switch (param.type)
                             {
                                 case "int": 
-                                    writer.WriteLine($"i32(s, o.{param.name});");
+                                    writer.WriteLine($"i32(o.{param.name});");
+                                    break;
+                                case "long": 
+                                    writer.WriteLine($"i64(o.{param.name});");
+                                    break;
+                                case "int128": 
+                                    writer.WriteLine($"i128(o.{param.name});");
+                                    break;
+                                case "int256": 
+                                    writer.WriteLine($"i256(o.{param.name});");
+                                    break;
+                                case "double": 
+                                    writer.WriteLine($"f64(o.{param.name});");
+                                    break;
+                                case "string": 
+                                    writer.WriteLine($"str(o.{param.name});");
+                                    break;
+                                case "bytes": 
+                                    writer.WriteLine($"bytes(o.{param.name});");
                                     break;
                                 default:
-                                    writer.WriteLine($"o.{param.name}");
+                                    writer.WriteLine($"obj(o.{param.name}); // {param.type}");
                                     break;
                             }
                             
@@ -128,29 +141,30 @@ namespace TelegramSchema
                 }
             }
 
-            writer.WriteLine("const builderMap: Record<string, (s: ByteStream, o: any) => void> = {");
+            writer.WriteLine("const builderMap: Record<string, (o: any) => void> = {");
             writer.Indent++;
             foreach (var type in types)
             {
                 foreach (var constructor in type.Value)
                 {
-                    writer.WriteLine($"'{constructor.predicate}': _{FixConstructorName(constructor.predicate)},");
+                    writer.WriteLine($"'{constructor.predicate}': _{FixConstructorName(constructor)},");
                 }
             }
 
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine("");
-            writer.WriteLine("function obj(s: ByteStream, o: any) {");
+            writer.WriteLine("function obj(o: any) {");
             writer.Indent++;
             writer.WriteLine("const func = builderMap[o._];");
-            writer.WriteLine("func(s, o);");
+            writer.WriteLine("func(o);");
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine("");
-            writer.WriteLine("export function build(s: ByteStream, o: any) {");
+            writer.WriteLine("export function build(stream: ByteStream, o: any) {");
             writer.Indent++;
-            writer.WriteLine("return obj(s, o);");
+            writer.WriteLine("s = stream;");
+            writer.WriteLine("return obj(o);");
             writer.Indent--;
             writer.WriteLine("}");
         }

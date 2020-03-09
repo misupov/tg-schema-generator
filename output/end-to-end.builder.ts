@@ -10,7 +10,6 @@
 
 interface ByteStream {
   writeInt32(value: number) : void;
-  writeUint32(value: number): void;
   writeInt64(value: string): void;
   writeInt128(value: string): void;
   writeInt256(value: string): void;
@@ -19,606 +18,606 @@ interface ByteStream {
   writeBytes(value: ArrayBuffer): void;
 }
 
-function i32(s: ByteStream, value: number) {
-  s.writeInt32(value);
+let s: ByteStream;
+function i32(value: number) { s.writeInt32(value); }
+
+function _decryptedMessage8(o: any) {
+  i32(0x1f814f1f);
+  i64(o.random_id);
+  bytes(o.random_bytes);
+  str(o.message);
+  obj(o.media); // DecryptedMessageMedia
 }
 
-function _decryptedMessage(s: ByteStream, o: any) {
-  i32(s, 0x1f814f1f);
-  o.random_id
-  o.random_bytes
-  o.message
-  o.media
+function _decryptedMessage17(o: any) {
+  i32(0x204d3878);
+  i64(o.random_id);
+  i32(o.ttl);
+  str(o.message);
+  obj(o.media); // DecryptedMessageMedia
 }
 
-function _decryptedMessage(s: ByteStream, o: any) {
-  i32(s, 0x204d3878);
-  o.random_id
-  i32(s, o.ttl);
-  o.message
-  o.media
-}
-
-function _decryptedMessage(s: ByteStream, o: any) {
-  i32(s, 0x36b091de);
+function _decryptedMessage45(o: any) {
+  i32(0x36b091de);
   const flags = +!!o.media << 9 | +!!o.entities << 7 | +!!o.via_bot_name << 11 | +!!o.reply_to_random_id << 3;
-  i32(s, flags);
-  o.random_id
-  i32(s, o.ttl);
-  o.message
-  if (o.media !== undefined) o.media
-  if (o.entities !== undefined) o.entities
-  if (o.via_bot_name !== undefined) o.via_bot_name
-  if (o.reply_to_random_id !== undefined) o.reply_to_random_id
+  i32(flags);
+  i64(o.random_id);
+  i32(o.ttl);
+  str(o.message);
+  if (o.media !== undefined) obj(o.media); // flags.9?DecryptedMessageMedia
+  if (o.entities !== undefined) obj(o.entities); // flags.7?Vector<MessageEntity>
+  if (o.via_bot_name !== undefined) obj(o.via_bot_name); // flags.11?string
+  if (o.reply_to_random_id !== undefined) obj(o.reply_to_random_id); // flags.3?long
 }
 
-function _decryptedMessage(s: ByteStream, o: any) {
-  i32(s, 0x91cc4674);
+function _decryptedMessage73(o: any) {
+  i32(0x91cc4674);
   const flags = +!!o.media << 9 | +!!o.entities << 7 | +!!o.via_bot_name << 11 | +!!o.reply_to_random_id << 3 | +!!o.grouped_id << 17;
-  i32(s, flags);
-  o.random_id
-  i32(s, o.ttl);
-  o.message
-  if (o.media !== undefined) o.media
-  if (o.entities !== undefined) o.entities
-  if (o.via_bot_name !== undefined) o.via_bot_name
-  if (o.reply_to_random_id !== undefined) o.reply_to_random_id
-  if (o.grouped_id !== undefined) o.grouped_id
+  i32(flags);
+  i64(o.random_id);
+  i32(o.ttl);
+  str(o.message);
+  if (o.media !== undefined) obj(o.media); // flags.9?DecryptedMessageMedia
+  if (o.entities !== undefined) obj(o.entities); // flags.7?Vector<MessageEntity>
+  if (o.via_bot_name !== undefined) obj(o.via_bot_name); // flags.11?string
+  if (o.reply_to_random_id !== undefined) obj(o.reply_to_random_id); // flags.3?long
+  if (o.grouped_id !== undefined) obj(o.grouped_id); // flags.17?long
 }
 
-function _decryptedMessageService(s: ByteStream, o: any) {
-  i32(s, 0xaa48327d);
-  o.random_id
-  o.random_bytes
-  o.action
+function _decryptedMessageService8(o: any) {
+  i32(0xaa48327d);
+  i64(o.random_id);
+  bytes(o.random_bytes);
+  obj(o.action); // DecryptedMessageAction
 }
 
-function _decryptedMessageService(s: ByteStream, o: any) {
-  i32(s, 0x73164160);
-  o.random_id
-  o.action
+function _decryptedMessageService17(o: any) {
+  i32(0x73164160);
+  i64(o.random_id);
+  obj(o.action); // DecryptedMessageAction
 }
 
-function _decryptedMessageMediaEmpty(s: ByteStream, o: any) {
-  i32(s, 0x89f5c4a);
+function _decryptedMessageMediaEmpty8(o: any) {
+  i32(0x89f5c4a);
 }
 
-function _decryptedMessageMediaPhoto(s: ByteStream, o: any) {
-  i32(s, 0x32798a8c);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaPhoto8(o: any) {
+  i32(0x32798a8c);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaPhoto(s: ByteStream, o: any) {
-  i32(s, 0xf1fa8d78);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
-  o.key
-  o.iv
-  o.caption
+function _decryptedMessageMediaPhoto45(o: any) {
+  i32(0xf1fa8d78);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
+  str(o.caption);
 }
 
-function _decryptedMessageMediaVideo(s: ByteStream, o: any) {
-  i32(s, 0x4cee6ef3);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  i32(s, o.duration);
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaVideo8(o: any) {
+  i32(0x4cee6ef3);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  i32(o.duration);
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaVideo(s: ByteStream, o: any) {
-  i32(s, 0x524a415d);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  i32(s, o.duration);
-  o.mime_type
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaVideo17(o: any) {
+  i32(0x524a415d);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  i32(o.duration);
+  str(o.mime_type);
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaVideo(s: ByteStream, o: any) {
-  i32(s, 0x970c8c0e);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  i32(s, o.duration);
-  o.mime_type
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
-  o.key
-  o.iv
-  o.caption
+function _decryptedMessageMediaVideo45(o: any) {
+  i32(0x970c8c0e);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  i32(o.duration);
+  str(o.mime_type);
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
+  str(o.caption);
 }
 
-function _decryptedMessageMediaGeoPoint(s: ByteStream, o: any) {
-  i32(s, 0x35480a59);
-  o.lat
-  o.long
+function _decryptedMessageMediaGeoPoint8(o: any) {
+  i32(0x35480a59);
+  f64(o.lat);
+  f64(o.long);
 }
 
-function _decryptedMessageMediaContact(s: ByteStream, o: any) {
-  i32(s, 0x588a0a97);
-  o.phone_number
-  o.first_name
-  o.last_name
-  i32(s, o.user_id);
+function _decryptedMessageMediaContact8(o: any) {
+  i32(0x588a0a97);
+  str(o.phone_number);
+  str(o.first_name);
+  str(o.last_name);
+  i32(o.user_id);
 }
 
-function _decryptedMessageMediaDocument(s: ByteStream, o: any) {
-  i32(s, 0xb095434b);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  o.file_name
-  o.mime_type
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaDocument8(o: any) {
+  i32(0xb095434b);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  str(o.file_name);
+  str(o.mime_type);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaDocument(s: ByteStream, o: any) {
-  i32(s, 0x7afe8ae2);
-  o.thumb
-  i32(s, o.thumb_w);
-  i32(s, o.thumb_h);
-  o.mime_type
-  i32(s, o.size);
-  o.key
-  o.iv
-  o.attributes
-  o.caption
+function _decryptedMessageMediaDocument45(o: any) {
+  i32(0x7afe8ae2);
+  bytes(o.thumb);
+  i32(o.thumb_w);
+  i32(o.thumb_h);
+  str(o.mime_type);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
+  obj(o.attributes); // Vector<DocumentAttribute>
+  str(o.caption);
 }
 
-function _decryptedMessageMediaAudio(s: ByteStream, o: any) {
-  i32(s, 0x6080758f);
-  i32(s, o.duration);
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaAudio8(o: any) {
+  i32(0x6080758f);
+  i32(o.duration);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaAudio(s: ByteStream, o: any) {
-  i32(s, 0x57e0a9cb);
-  i32(s, o.duration);
-  o.mime_type
-  i32(s, o.size);
-  o.key
-  o.iv
+function _decryptedMessageMediaAudio17(o: any) {
+  i32(0x57e0a9cb);
+  i32(o.duration);
+  str(o.mime_type);
+  i32(o.size);
+  bytes(o.key);
+  bytes(o.iv);
 }
 
-function _decryptedMessageMediaExternalDocument(s: ByteStream, o: any) {
-  i32(s, 0xfa95b0dd);
-  o.id
-  o.access_hash
-  i32(s, o.date);
-  o.mime_type
-  i32(s, o.size);
-  o.thumb
-  i32(s, o.dc_id);
-  o.attributes
+function _decryptedMessageMediaExternalDocument23(o: any) {
+  i32(0xfa95b0dd);
+  i64(o.id);
+  i64(o.access_hash);
+  i32(o.date);
+  str(o.mime_type);
+  i32(o.size);
+  obj(o.thumb); // PhotoSize
+  i32(o.dc_id);
+  obj(o.attributes); // Vector<DocumentAttribute>
 }
 
-function _decryptedMessageMediaVenue(s: ByteStream, o: any) {
-  i32(s, 0x8a0df56f);
-  o.lat
-  o.long
-  o.title
-  o.address
-  o.provider
-  o.venue_id
+function _decryptedMessageMediaVenue45(o: any) {
+  i32(0x8a0df56f);
+  f64(o.lat);
+  f64(o.long);
+  str(o.title);
+  str(o.address);
+  str(o.provider);
+  str(o.venue_id);
 }
 
-function _decryptedMessageMediaWebPage(s: ByteStream, o: any) {
-  i32(s, 0xe50511d8);
-  o.url
+function _decryptedMessageMediaWebPage45(o: any) {
+  i32(0xe50511d8);
+  str(o.url);
 }
 
-function _decryptedMessageActionSetMessageTTL(s: ByteStream, o: any) {
-  i32(s, 0xa1733aec);
-  i32(s, o.ttl_seconds);
+function _decryptedMessageActionSetMessageTTL8(o: any) {
+  i32(0xa1733aec);
+  i32(o.ttl_seconds);
 }
 
-function _decryptedMessageActionReadMessages(s: ByteStream, o: any) {
-  i32(s, 0xc4f40be);
-  o.random_ids
+function _decryptedMessageActionReadMessages8(o: any) {
+  i32(0xc4f40be);
+  obj(o.random_ids); // Vector<long>
 }
 
-function _decryptedMessageActionDeleteMessages(s: ByteStream, o: any) {
-  i32(s, 0x65614304);
-  o.random_ids
+function _decryptedMessageActionDeleteMessages8(o: any) {
+  i32(0x65614304);
+  obj(o.random_ids); // Vector<long>
 }
 
-function _decryptedMessageActionScreenshotMessages(s: ByteStream, o: any) {
-  i32(s, 0x8ac1f475);
-  o.random_ids
+function _decryptedMessageActionScreenshotMessages8(o: any) {
+  i32(0x8ac1f475);
+  obj(o.random_ids); // Vector<long>
 }
 
-function _decryptedMessageActionFlushHistory(s: ByteStream, o: any) {
-  i32(s, 0x6719e45c);
+function _decryptedMessageActionFlushHistory8(o: any) {
+  i32(0x6719e45c);
 }
 
-function _decryptedMessageActionResend(s: ByteStream, o: any) {
-  i32(s, 0x511110b0);
-  i32(s, o.start_seq_no);
-  i32(s, o.end_seq_no);
+function _decryptedMessageActionResend17(o: any) {
+  i32(0x511110b0);
+  i32(o.start_seq_no);
+  i32(o.end_seq_no);
 }
 
-function _decryptedMessageActionNotifyLayer(s: ByteStream, o: any) {
-  i32(s, 0xf3048883);
-  i32(s, o.layer);
+function _decryptedMessageActionNotifyLayer17(o: any) {
+  i32(0xf3048883);
+  i32(o.layer);
 }
 
-function _decryptedMessageActionTyping(s: ByteStream, o: any) {
-  i32(s, 0xccb27641);
-  o.action
+function _decryptedMessageActionTyping17(o: any) {
+  i32(0xccb27641);
+  obj(o.action); // SendMessageAction
 }
 
-function _decryptedMessageActionRequestKey(s: ByteStream, o: any) {
-  i32(s, 0xf3c9611b);
-  o.exchange_id
-  o.g_a
+function _decryptedMessageActionRequestKey20(o: any) {
+  i32(0xf3c9611b);
+  i64(o.exchange_id);
+  bytes(o.g_a);
 }
 
-function _decryptedMessageActionAcceptKey(s: ByteStream, o: any) {
-  i32(s, 0x6fe1735b);
-  o.exchange_id
-  o.g_b
-  o.key_fingerprint
+function _decryptedMessageActionAcceptKey20(o: any) {
+  i32(0x6fe1735b);
+  i64(o.exchange_id);
+  bytes(o.g_b);
+  i64(o.key_fingerprint);
 }
 
-function _decryptedMessageActionAbortKey(s: ByteStream, o: any) {
-  i32(s, 0xdd05ec6b);
-  o.exchange_id
+function _decryptedMessageActionAbortKey20(o: any) {
+  i32(0xdd05ec6b);
+  i64(o.exchange_id);
 }
 
-function _decryptedMessageActionCommitKey(s: ByteStream, o: any) {
-  i32(s, 0xec2e0b9b);
-  o.exchange_id
-  o.key_fingerprint
+function _decryptedMessageActionCommitKey20(o: any) {
+  i32(0xec2e0b9b);
+  i64(o.exchange_id);
+  i64(o.key_fingerprint);
 }
 
-function _decryptedMessageActionNoop(s: ByteStream, o: any) {
-  i32(s, 0xa82fdd63);
+function _decryptedMessageActionNoop20(o: any) {
+  i32(0xa82fdd63);
 }
 
-function _decryptedMessageLayer(s: ByteStream, o: any) {
-  i32(s, 0x1be31789);
-  o.random_bytes
-  i32(s, o.layer);
-  i32(s, o.in_seq_no);
-  i32(s, o.out_seq_no);
-  o.message
+function _decryptedMessageLayer17(o: any) {
+  i32(0x1be31789);
+  bytes(o.random_bytes);
+  i32(o.layer);
+  i32(o.in_seq_no);
+  i32(o.out_seq_no);
+  obj(o.message); // DecryptedMessage
 }
 
-function _sendMessageTypingAction(s: ByteStream, o: any) {
-  i32(s, 0x16bf744e);
+function _sendMessageTypingAction17(o: any) {
+  i32(0x16bf744e);
 }
 
-function _sendMessageCancelAction(s: ByteStream, o: any) {
-  i32(s, 0xfd5ec8f5);
+function _sendMessageCancelAction17(o: any) {
+  i32(0xfd5ec8f5);
 }
 
-function _sendMessageRecordVideoAction(s: ByteStream, o: any) {
-  i32(s, 0xa187d66f);
+function _sendMessageRecordVideoAction17(o: any) {
+  i32(0xa187d66f);
 }
 
-function _sendMessageUploadVideoAction(s: ByteStream, o: any) {
-  i32(s, 0x92042ff7);
+function _sendMessageUploadVideoAction17(o: any) {
+  i32(0x92042ff7);
 }
 
-function _sendMessageRecordAudioAction(s: ByteStream, o: any) {
-  i32(s, 0xd52f73f7);
+function _sendMessageRecordAudioAction17(o: any) {
+  i32(0xd52f73f7);
 }
 
-function _sendMessageUploadAudioAction(s: ByteStream, o: any) {
-  i32(s, 0xe6ac8a6f);
+function _sendMessageUploadAudioAction17(o: any) {
+  i32(0xe6ac8a6f);
 }
 
-function _sendMessageUploadPhotoAction(s: ByteStream, o: any) {
-  i32(s, 0x990a3c1a);
+function _sendMessageUploadPhotoAction17(o: any) {
+  i32(0x990a3c1a);
 }
 
-function _sendMessageUploadDocumentAction(s: ByteStream, o: any) {
-  i32(s, 0x8faee98e);
+function _sendMessageUploadDocumentAction17(o: any) {
+  i32(0x8faee98e);
 }
 
-function _sendMessageGeoLocationAction(s: ByteStream, o: any) {
-  i32(s, 0x176f8ba1);
+function _sendMessageGeoLocationAction17(o: any) {
+  i32(0x176f8ba1);
 }
 
-function _sendMessageChooseContactAction(s: ByteStream, o: any) {
-  i32(s, 0x628cbc6f);
+function _sendMessageChooseContactAction17(o: any) {
+  i32(0x628cbc6f);
 }
 
-function _sendMessageRecordRoundAction(s: ByteStream, o: any) {
-  i32(s, 0x88f27fbc);
+function _sendMessageRecordRoundAction66(o: any) {
+  i32(0x88f27fbc);
 }
 
-function _sendMessageUploadRoundAction(s: ByteStream, o: any) {
-  i32(s, 0xbb718624);
+function _sendMessageUploadRoundAction66(o: any) {
+  i32(0xbb718624);
 }
 
-function _documentAttributeImageSize(s: ByteStream, o: any) {
-  i32(s, 0x6c37c15c);
-  i32(s, o.w);
-  i32(s, o.h);
+function _documentAttributeImageSize23(o: any) {
+  i32(0x6c37c15c);
+  i32(o.w);
+  i32(o.h);
 }
 
-function _documentAttributeAnimated(s: ByteStream, o: any) {
-  i32(s, 0x11b58939);
+function _documentAttributeAnimated23(o: any) {
+  i32(0x11b58939);
 }
 
-function _documentAttributeSticker(s: ByteStream, o: any) {
-  i32(s, 0xfb0a5727);
+function _documentAttributeSticker23(o: any) {
+  i32(0xfb0a5727);
 }
 
-function _documentAttributeSticker(s: ByteStream, o: any) {
-  i32(s, 0x3a556302);
-  o.alt
-  o.stickerset
+function _documentAttributeSticker45(o: any) {
+  i32(0x3a556302);
+  str(o.alt);
+  obj(o.stickerset); // InputStickerSet
 }
 
-function _documentAttributeVideo(s: ByteStream, o: any) {
-  i32(s, 0x5910cccb);
-  i32(s, o.duration);
-  i32(s, o.w);
-  i32(s, o.h);
+function _documentAttributeVideo23(o: any) {
+  i32(0x5910cccb);
+  i32(o.duration);
+  i32(o.w);
+  i32(o.h);
 }
 
-function _documentAttributeVideo(s: ByteStream, o: any) {
-  i32(s, 0xef02ce6);
+function _documentAttributeVideo66(o: any) {
+  i32(0xef02ce6);
   const flags = ;
-  i32(s, flags);
-  i32(s, o.duration);
-  i32(s, o.w);
-  i32(s, o.h);
+  i32(flags);
+  i32(o.duration);
+  i32(o.w);
+  i32(o.h);
 }
 
-function _documentAttributeAudio(s: ByteStream, o: any) {
-  i32(s, 0x51448e5);
-  i32(s, o.duration);
+function _documentAttributeAudio23(o: any) {
+  i32(0x51448e5);
+  i32(o.duration);
 }
 
-function _documentAttributeAudio(s: ByteStream, o: any) {
-  i32(s, 0xded218e0);
-  i32(s, o.duration);
-  o.title
-  o.performer
+function _documentAttributeAudio45(o: any) {
+  i32(0xded218e0);
+  i32(o.duration);
+  str(o.title);
+  str(o.performer);
 }
 
-function _documentAttributeAudio(s: ByteStream, o: any) {
-  i32(s, 0x9852f9c6);
+function _documentAttributeAudio46(o: any) {
+  i32(0x9852f9c6);
   const flags = +!!o.title | +!!o.performer << 1 | +!!o.waveform << 2;
-  i32(s, flags);
-  i32(s, o.duration);
-  if (o.title !== undefined) o.title
-  if (o.performer !== undefined) o.performer
-  if (o.waveform !== undefined) o.waveform
+  i32(flags);
+  i32(o.duration);
+  if (o.title !== undefined) obj(o.title); // flags.0?string
+  if (o.performer !== undefined) obj(o.performer); // flags.1?string
+  if (o.waveform !== undefined) obj(o.waveform); // flags.2?bytes
 }
 
-function _documentAttributeFilename(s: ByteStream, o: any) {
-  i32(s, 0x15590068);
-  o.file_name
+function _documentAttributeFilename23(o: any) {
+  i32(0x15590068);
+  str(o.file_name);
 }
 
-function _photoSizeEmpty(s: ByteStream, o: any) {
-  i32(s, 0xe17e23c);
-  o.type
+function _photoSizeEmpty23(o: any) {
+  i32(0xe17e23c);
+  str(o.type);
 }
 
-function _photoSize(s: ByteStream, o: any) {
-  i32(s, 0x77bfb61b);
-  o.type
-  o.location
-  i32(s, o.w);
-  i32(s, o.h);
-  i32(s, o.size);
+function _photoSize23(o: any) {
+  i32(0x77bfb61b);
+  str(o.type);
+  obj(o.location); // FileLocation
+  i32(o.w);
+  i32(o.h);
+  i32(o.size);
 }
 
-function _photoCachedSize(s: ByteStream, o: any) {
-  i32(s, 0xe9a734fa);
-  o.type
-  o.location
-  i32(s, o.w);
-  i32(s, o.h);
-  o.bytes
+function _photoCachedSize23(o: any) {
+  i32(0xe9a734fa);
+  str(o.type);
+  obj(o.location); // FileLocation
+  i32(o.w);
+  i32(o.h);
+  bytes(o.bytes);
 }
 
-function _fileLocationUnavailable(s: ByteStream, o: any) {
-  i32(s, 0x7c596b46);
-  o.volume_id
-  i32(s, o.local_id);
-  o.secret
+function _fileLocationUnavailable23(o: any) {
+  i32(0x7c596b46);
+  i64(o.volume_id);
+  i32(o.local_id);
+  i64(o.secret);
 }
 
-function _fileLocation(s: ByteStream, o: any) {
-  i32(s, 0x53d69076);
-  i32(s, o.dc_id);
-  o.volume_id
-  i32(s, o.local_id);
-  o.secret
+function _fileLocation23(o: any) {
+  i32(0x53d69076);
+  i32(o.dc_id);
+  i64(o.volume_id);
+  i32(o.local_id);
+  i64(o.secret);
 }
 
-function _messageEntityUnknown(s: ByteStream, o: any) {
-  i32(s, 0xbb92ba95);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityUnknown45(o: any) {
+  i32(0xbb92ba95);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityMention(s: ByteStream, o: any) {
-  i32(s, 0xfa04579d);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityMention45(o: any) {
+  i32(0xfa04579d);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityHashtag(s: ByteStream, o: any) {
-  i32(s, 0x6f635b0d);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityHashtag45(o: any) {
+  i32(0x6f635b0d);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityBotCommand(s: ByteStream, o: any) {
-  i32(s, 0x6cef8ac7);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityBotCommand45(o: any) {
+  i32(0x6cef8ac7);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityUrl(s: ByteStream, o: any) {
-  i32(s, 0x6ed02538);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityUrl45(o: any) {
+  i32(0x6ed02538);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityEmail(s: ByteStream, o: any) {
-  i32(s, 0x64e475c2);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityEmail45(o: any) {
+  i32(0x64e475c2);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityBold(s: ByteStream, o: any) {
-  i32(s, 0xbd610bc9);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityBold45(o: any) {
+  i32(0xbd610bc9);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityItalic(s: ByteStream, o: any) {
-  i32(s, 0x826f8b60);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityItalic45(o: any) {
+  i32(0x826f8b60);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityCode(s: ByteStream, o: any) {
-  i32(s, 0x28a20571);
-  i32(s, o.offset);
-  i32(s, o.length);
+function _messageEntityCode45(o: any) {
+  i32(0x28a20571);
+  i32(o.offset);
+  i32(o.length);
 }
 
-function _messageEntityPre(s: ByteStream, o: any) {
-  i32(s, 0x73924be0);
-  i32(s, o.offset);
-  i32(s, o.length);
-  o.language
+function _messageEntityPre45(o: any) {
+  i32(0x73924be0);
+  i32(o.offset);
+  i32(o.length);
+  str(o.language);
 }
 
-function _messageEntityTextUrl(s: ByteStream, o: any) {
-  i32(s, 0x76a6d327);
-  i32(s, o.offset);
-  i32(s, o.length);
-  o.url
+function _messageEntityTextUrl45(o: any) {
+  i32(0x76a6d327);
+  i32(o.offset);
+  i32(o.length);
+  str(o.url);
 }
 
-function _inputStickerSetShortName(s: ByteStream, o: any) {
-  i32(s, 0x861cc8a0);
-  o.short_name
+function _inputStickerSetShortName45(o: any) {
+  i32(0x861cc8a0);
+  str(o.short_name);
 }
 
-function _inputStickerSetEmpty(s: ByteStream, o: any) {
-  i32(s, 0xffb62b95);
+function _inputStickerSetEmpty45(o: any) {
+  i32(0xffb62b95);
 }
 
-const builderMap: Record<string, (s: ByteStream, o: any) => void> = {
-  'decryptedMessage': _decryptedMessage,
-  'decryptedMessage': _decryptedMessage,
-  'decryptedMessage': _decryptedMessage,
-  'decryptedMessage': _decryptedMessage,
-  'decryptedMessageService': _decryptedMessageService,
-  'decryptedMessageService': _decryptedMessageService,
-  'decryptedMessageMediaEmpty': _decryptedMessageMediaEmpty,
-  'decryptedMessageMediaPhoto': _decryptedMessageMediaPhoto,
-  'decryptedMessageMediaPhoto': _decryptedMessageMediaPhoto,
-  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo,
-  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo,
-  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo,
-  'decryptedMessageMediaGeoPoint': _decryptedMessageMediaGeoPoint,
-  'decryptedMessageMediaContact': _decryptedMessageMediaContact,
-  'decryptedMessageMediaDocument': _decryptedMessageMediaDocument,
-  'decryptedMessageMediaDocument': _decryptedMessageMediaDocument,
-  'decryptedMessageMediaAudio': _decryptedMessageMediaAudio,
-  'decryptedMessageMediaAudio': _decryptedMessageMediaAudio,
-  'decryptedMessageMediaExternalDocument': _decryptedMessageMediaExternalDocument,
-  'decryptedMessageMediaVenue': _decryptedMessageMediaVenue,
-  'decryptedMessageMediaWebPage': _decryptedMessageMediaWebPage,
-  'decryptedMessageActionSetMessageTTL': _decryptedMessageActionSetMessageTTL,
-  'decryptedMessageActionReadMessages': _decryptedMessageActionReadMessages,
-  'decryptedMessageActionDeleteMessages': _decryptedMessageActionDeleteMessages,
-  'decryptedMessageActionScreenshotMessages': _decryptedMessageActionScreenshotMessages,
-  'decryptedMessageActionFlushHistory': _decryptedMessageActionFlushHistory,
-  'decryptedMessageActionResend': _decryptedMessageActionResend,
-  'decryptedMessageActionNotifyLayer': _decryptedMessageActionNotifyLayer,
-  'decryptedMessageActionTyping': _decryptedMessageActionTyping,
-  'decryptedMessageActionRequestKey': _decryptedMessageActionRequestKey,
-  'decryptedMessageActionAcceptKey': _decryptedMessageActionAcceptKey,
-  'decryptedMessageActionAbortKey': _decryptedMessageActionAbortKey,
-  'decryptedMessageActionCommitKey': _decryptedMessageActionCommitKey,
-  'decryptedMessageActionNoop': _decryptedMessageActionNoop,
-  'decryptedMessageLayer': _decryptedMessageLayer,
-  'sendMessageTypingAction': _sendMessageTypingAction,
-  'sendMessageCancelAction': _sendMessageCancelAction,
-  'sendMessageRecordVideoAction': _sendMessageRecordVideoAction,
-  'sendMessageUploadVideoAction': _sendMessageUploadVideoAction,
-  'sendMessageRecordAudioAction': _sendMessageRecordAudioAction,
-  'sendMessageUploadAudioAction': _sendMessageUploadAudioAction,
-  'sendMessageUploadPhotoAction': _sendMessageUploadPhotoAction,
-  'sendMessageUploadDocumentAction': _sendMessageUploadDocumentAction,
-  'sendMessageGeoLocationAction': _sendMessageGeoLocationAction,
-  'sendMessageChooseContactAction': _sendMessageChooseContactAction,
-  'sendMessageRecordRoundAction': _sendMessageRecordRoundAction,
-  'sendMessageUploadRoundAction': _sendMessageUploadRoundAction,
-  'documentAttributeImageSize': _documentAttributeImageSize,
-  'documentAttributeAnimated': _documentAttributeAnimated,
-  'documentAttributeSticker': _documentAttributeSticker,
-  'documentAttributeSticker': _documentAttributeSticker,
-  'documentAttributeVideo': _documentAttributeVideo,
-  'documentAttributeVideo': _documentAttributeVideo,
-  'documentAttributeAudio': _documentAttributeAudio,
-  'documentAttributeAudio': _documentAttributeAudio,
-  'documentAttributeAudio': _documentAttributeAudio,
-  'documentAttributeFilename': _documentAttributeFilename,
-  'photoSizeEmpty': _photoSizeEmpty,
-  'photoSize': _photoSize,
-  'photoCachedSize': _photoCachedSize,
-  'fileLocationUnavailable': _fileLocationUnavailable,
-  'fileLocation': _fileLocation,
-  'messageEntityUnknown': _messageEntityUnknown,
-  'messageEntityMention': _messageEntityMention,
-  'messageEntityHashtag': _messageEntityHashtag,
-  'messageEntityBotCommand': _messageEntityBotCommand,
-  'messageEntityUrl': _messageEntityUrl,
-  'messageEntityEmail': _messageEntityEmail,
-  'messageEntityBold': _messageEntityBold,
-  'messageEntityItalic': _messageEntityItalic,
-  'messageEntityCode': _messageEntityCode,
-  'messageEntityPre': _messageEntityPre,
-  'messageEntityTextUrl': _messageEntityTextUrl,
-  'inputStickerSetShortName': _inputStickerSetShortName,
-  'inputStickerSetEmpty': _inputStickerSetEmpty,
+const builderMap: Record<string, (o: any) => void> = {
+  'decryptedMessage': _decryptedMessage8,
+  'decryptedMessage': _decryptedMessage17,
+  'decryptedMessage': _decryptedMessage45,
+  'decryptedMessage': _decryptedMessage73,
+  'decryptedMessageService': _decryptedMessageService8,
+  'decryptedMessageService': _decryptedMessageService17,
+  'decryptedMessageMediaEmpty': _decryptedMessageMediaEmpty8,
+  'decryptedMessageMediaPhoto': _decryptedMessageMediaPhoto8,
+  'decryptedMessageMediaPhoto': _decryptedMessageMediaPhoto45,
+  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo8,
+  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo17,
+  'decryptedMessageMediaVideo': _decryptedMessageMediaVideo45,
+  'decryptedMessageMediaGeoPoint': _decryptedMessageMediaGeoPoint8,
+  'decryptedMessageMediaContact': _decryptedMessageMediaContact8,
+  'decryptedMessageMediaDocument': _decryptedMessageMediaDocument8,
+  'decryptedMessageMediaDocument': _decryptedMessageMediaDocument45,
+  'decryptedMessageMediaAudio': _decryptedMessageMediaAudio8,
+  'decryptedMessageMediaAudio': _decryptedMessageMediaAudio17,
+  'decryptedMessageMediaExternalDocument': _decryptedMessageMediaExternalDocument23,
+  'decryptedMessageMediaVenue': _decryptedMessageMediaVenue45,
+  'decryptedMessageMediaWebPage': _decryptedMessageMediaWebPage45,
+  'decryptedMessageActionSetMessageTTL': _decryptedMessageActionSetMessageTTL8,
+  'decryptedMessageActionReadMessages': _decryptedMessageActionReadMessages8,
+  'decryptedMessageActionDeleteMessages': _decryptedMessageActionDeleteMessages8,
+  'decryptedMessageActionScreenshotMessages': _decryptedMessageActionScreenshotMessages8,
+  'decryptedMessageActionFlushHistory': _decryptedMessageActionFlushHistory8,
+  'decryptedMessageActionResend': _decryptedMessageActionResend17,
+  'decryptedMessageActionNotifyLayer': _decryptedMessageActionNotifyLayer17,
+  'decryptedMessageActionTyping': _decryptedMessageActionTyping17,
+  'decryptedMessageActionRequestKey': _decryptedMessageActionRequestKey20,
+  'decryptedMessageActionAcceptKey': _decryptedMessageActionAcceptKey20,
+  'decryptedMessageActionAbortKey': _decryptedMessageActionAbortKey20,
+  'decryptedMessageActionCommitKey': _decryptedMessageActionCommitKey20,
+  'decryptedMessageActionNoop': _decryptedMessageActionNoop20,
+  'decryptedMessageLayer': _decryptedMessageLayer17,
+  'sendMessageTypingAction': _sendMessageTypingAction17,
+  'sendMessageCancelAction': _sendMessageCancelAction17,
+  'sendMessageRecordVideoAction': _sendMessageRecordVideoAction17,
+  'sendMessageUploadVideoAction': _sendMessageUploadVideoAction17,
+  'sendMessageRecordAudioAction': _sendMessageRecordAudioAction17,
+  'sendMessageUploadAudioAction': _sendMessageUploadAudioAction17,
+  'sendMessageUploadPhotoAction': _sendMessageUploadPhotoAction17,
+  'sendMessageUploadDocumentAction': _sendMessageUploadDocumentAction17,
+  'sendMessageGeoLocationAction': _sendMessageGeoLocationAction17,
+  'sendMessageChooseContactAction': _sendMessageChooseContactAction17,
+  'sendMessageRecordRoundAction': _sendMessageRecordRoundAction66,
+  'sendMessageUploadRoundAction': _sendMessageUploadRoundAction66,
+  'documentAttributeImageSize': _documentAttributeImageSize23,
+  'documentAttributeAnimated': _documentAttributeAnimated23,
+  'documentAttributeSticker': _documentAttributeSticker23,
+  'documentAttributeSticker': _documentAttributeSticker45,
+  'documentAttributeVideo': _documentAttributeVideo23,
+  'documentAttributeVideo': _documentAttributeVideo66,
+  'documentAttributeAudio': _documentAttributeAudio23,
+  'documentAttributeAudio': _documentAttributeAudio45,
+  'documentAttributeAudio': _documentAttributeAudio46,
+  'documentAttributeFilename': _documentAttributeFilename23,
+  'photoSizeEmpty': _photoSizeEmpty23,
+  'photoSize': _photoSize23,
+  'photoCachedSize': _photoCachedSize23,
+  'fileLocationUnavailable': _fileLocationUnavailable23,
+  'fileLocation': _fileLocation23,
+  'messageEntityUnknown': _messageEntityUnknown45,
+  'messageEntityMention': _messageEntityMention45,
+  'messageEntityHashtag': _messageEntityHashtag45,
+  'messageEntityBotCommand': _messageEntityBotCommand45,
+  'messageEntityUrl': _messageEntityUrl45,
+  'messageEntityEmail': _messageEntityEmail45,
+  'messageEntityBold': _messageEntityBold45,
+  'messageEntityItalic': _messageEntityItalic45,
+  'messageEntityCode': _messageEntityCode45,
+  'messageEntityPre': _messageEntityPre45,
+  'messageEntityTextUrl': _messageEntityTextUrl45,
+  'inputStickerSetShortName': _inputStickerSetShortName45,
+  'inputStickerSetEmpty': _inputStickerSetEmpty45,
 }
 
-function obj(s: ByteStream, o: any) {
+function obj(o: any) {
   const func = builderMap[o._];
-  func(s, o);
+  func(o);
 }
 
-export function build(s: ByteStream, o: any) {
-  return obj(s, o);
+export function build(stream: ByteStream, o: any) {
+  s = stream;
+  return obj(o);
 }

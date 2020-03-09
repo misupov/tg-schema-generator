@@ -69,15 +69,25 @@ namespace TelegramSchema
                 _ => (char.ToUpper(type[0]) + type.Substring(1)).Replace(".", "")
             };
         }
+
+        public static bool HasFlags(Constructor constructor)
+        {
+            return constructor.@params.Any(p => p.type == "#");
+        }
         
-        public static string FixConstructorName(string type)
+        public static string FixConstructorName(string type, int layer = 0)
         {
             var sb = new StringBuilder(type);
             for (var i = 0; i < sb.Length - 1; i++)
             {
                 if (sb[i] == '.') sb[i + 1] = char.ToUpper(sb[i + 1]);
             }
-            return sb.Replace(".", "").ToString();
+            return $"{sb.Replace(".", "")}{(layer > 0 ? layer.ToString() : "")}";
+        }
+
+        public static string FixConstructorName(Constructor ctor)
+        {
+            return FixConstructorName(ctor.predicate, ctor.layer);
         }
 
         public static string FixMethodName(string type)

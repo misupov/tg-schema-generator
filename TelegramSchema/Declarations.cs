@@ -67,7 +67,7 @@ namespace TelegramSchema
                 }
                 foreach (var constructor in types[type])
                 {
-                    writer.WriteLine($"  | {typeName}.{FixConstructorName(constructor.predicate)}{(constructor.layer > 0 ? constructor.layer.ToString() : "")}");
+                    writer.WriteLine($"  | {typeName}.{FixConstructorName(constructor)}");
                 }
 
                 writer.WriteLine(";");
@@ -77,7 +77,7 @@ namespace TelegramSchema
                 foreach (var constructor in types[type])
                 {
                     writer.Indent++;
-                    writer.WriteLine($"export type {FixConstructorName(constructor.predicate)}{(constructor.layer > 0 ? constructor.layer.ToString() : "")} = {{");
+                    writer.WriteLine($"export type {FixConstructorName(constructor)} = {{");
                     writer.Indent++;
                     writer.WriteLine($"_: '{constructor.predicate}',");
                     foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
@@ -99,7 +99,7 @@ namespace TelegramSchema
             {
                 if (!IsPrimitiveType(constructor.type))
                 {
-                    writer.WriteLine($"'{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor.predicate)},");
+                    writer.WriteLine($"'{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor)},");
                 }
             }
             writer.Indent--;

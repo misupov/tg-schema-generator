@@ -10,7 +10,6 @@
 
 interface ByteStream {
   writeInt32(value: number) : void;
-  writeUint32(value: number): void;
   writeInt64(value: string): void;
   writeInt128(value: string): void;
   writeInt256(value: string): void;
@@ -19,290 +18,289 @@ interface ByteStream {
   writeBytes(value: ArrayBuffer): void;
 }
 
-function i32(s: ByteStream, value: number) {
-  s.writeInt32(value);
+let s: ByteStream;
+function i32(value: number) { s.writeInt32(value); }
+
+function _vector(o: any) {
+  i32(0x1cb5c415);
 }
 
-function _vector(s: ByteStream, o: any) {
-  i32(s, 0x1cb5c415);
+function _resPQ(o: any) {
+  i32(0x5162463);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  bytes(o.pq);
+  obj(o.server_public_key_fingerprints); // Vector<long>
 }
 
-function _resPQ(s: ByteStream, o: any) {
-  i32(s, 0x5162463);
-  o.nonce
-  o.server_nonce
-  o.pq
-  o.server_public_key_fingerprints
+function _p_q_inner_data(o: any) {
+  i32(0x83c95aec);
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
 }
 
-function _p_q_inner_data(s: ByteStream, o: any) {
-  i32(s, 0x83c95aec);
-  o.pq
-  o.p
-  o.q
-  o.nonce
-  o.server_nonce
-  o.new_nonce
+function _p_q_inner_data_dc(o: any) {
+  i32(0xa9f55f95);
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
+  i32(o.dc);
 }
 
-function _p_q_inner_data_dc(s: ByteStream, o: any) {
-  i32(s, 0xa9f55f95);
-  o.pq
-  o.p
-  o.q
-  o.nonce
-  o.server_nonce
-  o.new_nonce
-  i32(s, o.dc);
+function _p_q_inner_data_temp(o: any) {
+  i32(0x3c6a84d4);
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
+  i32(o.expires_in);
 }
 
-function _p_q_inner_data_temp(s: ByteStream, o: any) {
-  i32(s, 0x3c6a84d4);
-  o.pq
-  o.p
-  o.q
-  o.nonce
-  o.server_nonce
-  o.new_nonce
-  i32(s, o.expires_in);
+function _p_q_inner_data_temp_dc(o: any) {
+  i32(0x56fddf88);
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
+  i32(o.dc);
+  i32(o.expires_in);
 }
 
-function _p_q_inner_data_temp_dc(s: ByteStream, o: any) {
-  i32(s, 0x56fddf88);
-  o.pq
-  o.p
-  o.q
-  o.nonce
-  o.server_nonce
-  o.new_nonce
-  i32(s, o.dc);
-  i32(s, o.expires_in);
+function _server_DH_params_fail(o: any) {
+  i32(0x79cb045d);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i128(o.new_nonce_hash);
 }
 
-function _server_DH_params_fail(s: ByteStream, o: any) {
-  i32(s, 0x79cb045d);
-  o.nonce
-  o.server_nonce
-  o.new_nonce_hash
+function _server_DH_params_ok(o: any) {
+  i32(0xd0e8075c);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  bytes(o.encrypted_answer);
 }
 
-function _server_DH_params_ok(s: ByteStream, o: any) {
-  i32(s, 0xd0e8075c);
-  o.nonce
-  o.server_nonce
-  o.encrypted_answer
+function _server_DH_inner_data(o: any) {
+  i32(0xb5890dba);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i32(o.g);
+  bytes(o.dh_prime);
+  bytes(o.g_a);
+  i32(o.server_time);
 }
 
-function _server_DH_inner_data(s: ByteStream, o: any) {
-  i32(s, 0xb5890dba);
-  o.nonce
-  o.server_nonce
-  i32(s, o.g);
-  o.dh_prime
-  o.g_a
-  i32(s, o.server_time);
+function _client_DH_inner_data(o: any) {
+  i32(0x6643b654);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i64(o.retry_id);
+  bytes(o.g_b);
 }
 
-function _client_DH_inner_data(s: ByteStream, o: any) {
-  i32(s, 0x6643b654);
-  o.nonce
-  o.server_nonce
-  o.retry_id
-  o.g_b
+function _dh_gen_ok(o: any) {
+  i32(0x3bcbf734);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i128(o.new_nonce_hash1);
 }
 
-function _dh_gen_ok(s: ByteStream, o: any) {
-  i32(s, 0x3bcbf734);
-  o.nonce
-  o.server_nonce
-  o.new_nonce_hash1
+function _dh_gen_retry(o: any) {
+  i32(0x46dc1fb9);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i128(o.new_nonce_hash2);
 }
 
-function _dh_gen_retry(s: ByteStream, o: any) {
-  i32(s, 0x46dc1fb9);
-  o.nonce
-  o.server_nonce
-  o.new_nonce_hash2
+function _dh_gen_fail(o: any) {
+  i32(0xa69dae02);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i128(o.new_nonce_hash3);
 }
 
-function _dh_gen_fail(s: ByteStream, o: any) {
-  i32(s, 0xa69dae02);
-  o.nonce
-  o.server_nonce
-  o.new_nonce_hash3
+function _rpc_result(o: any) {
+  i32(0xf35c6d01);
+  i64(o.req_msg_id);
+  obj(o.result); // Object
 }
 
-function _rpc_result(s: ByteStream, o: any) {
-  i32(s, 0xf35c6d01);
-  o.req_msg_id
-  o.result
+function _rpc_error(o: any) {
+  i32(0x2144ca19);
+  i32(o.error_code);
+  str(o.error_message);
 }
 
-function _rpc_error(s: ByteStream, o: any) {
-  i32(s, 0x2144ca19);
-  i32(s, o.error_code);
-  o.error_message
+function _rpc_answer_unknown(o: any) {
+  i32(0x5e2ad36e);
 }
 
-function _rpc_answer_unknown(s: ByteStream, o: any) {
-  i32(s, 0x5e2ad36e);
+function _rpc_answer_dropped_running(o: any) {
+  i32(0xcd78e586);
 }
 
-function _rpc_answer_dropped_running(s: ByteStream, o: any) {
-  i32(s, 0xcd78e586);
+function _rpc_answer_dropped(o: any) {
+  i32(0xa43ad8b7);
+  i64(o.msg_id);
+  i32(o.seq_no);
+  i32(o.bytes);
 }
 
-function _rpc_answer_dropped(s: ByteStream, o: any) {
-  i32(s, 0xa43ad8b7);
-  o.msg_id
-  i32(s, o.seq_no);
-  i32(s, o.bytes);
+function _future_salt(o: any) {
+  i32(0x949d9dc);
+  i32(o.valid_since);
+  i32(o.valid_until);
+  i64(o.salt);
 }
 
-function _future_salt(s: ByteStream, o: any) {
-  i32(s, 0x949d9dc);
-  i32(s, o.valid_since);
-  i32(s, o.valid_until);
-  o.salt
+function _future_salts(o: any) {
+  i32(0xae500895);
+  i64(o.req_msg_id);
+  i32(o.now);
+  obj(o.salts); // vector<future_salt>
 }
 
-function _future_salts(s: ByteStream, o: any) {
-  i32(s, 0xae500895);
-  o.req_msg_id
-  i32(s, o.now);
-  o.salts
+function _pong(o: any) {
+  i32(0x347773c5);
+  i64(o.msg_id);
+  i64(o.ping_id);
 }
 
-function _pong(s: ByteStream, o: any) {
-  i32(s, 0x347773c5);
-  o.msg_id
-  o.ping_id
+function _new_session_created(o: any) {
+  i32(0x9ec20908);
+  i64(o.first_msg_id);
+  i64(o.unique_id);
+  i64(o.server_salt);
 }
 
-function _new_session_created(s: ByteStream, o: any) {
-  i32(s, 0x9ec20908);
-  o.first_msg_id
-  o.unique_id
-  o.server_salt
+function _msg_container(o: any) {
+  i32(0x73f1f8dc);
+  obj(o.messages); // vector<%Message>
 }
 
-function _msg_container(s: ByteStream, o: any) {
-  i32(s, 0x73f1f8dc);
-  o.messages
+function _message(o: any) {
+  i32(0x5bb8e511);
+  i64(o.msg_id);
+  i32(o.seqno);
+  i32(o.bytes);
+  obj(o.body); // Object
 }
 
-function _message(s: ByteStream, o: any) {
-  i32(s, 0x5bb8e511);
-  o.msg_id
-  i32(s, o.seqno);
-  i32(s, o.bytes);
-  o.body
+function _msg_copy(o: any) {
+  i32(0xe06046b2);
+  obj(o.orig_message); // Message
 }
 
-function _msg_copy(s: ByteStream, o: any) {
-  i32(s, 0xe06046b2);
-  o.orig_message
+function _gzip_packed(o: any) {
+  i32(0x3072cfa1);
+  bytes(o.packed_data);
 }
 
-function _gzip_packed(s: ByteStream, o: any) {
-  i32(s, 0x3072cfa1);
-  o.packed_data
+function _msgs_ack(o: any) {
+  i32(0x62d6b459);
+  obj(o.msg_ids); // Vector<long>
 }
 
-function _msgs_ack(s: ByteStream, o: any) {
-  i32(s, 0x62d6b459);
-  o.msg_ids
+function _bad_msg_notification(o: any) {
+  i32(0xa7eff811);
+  i64(o.bad_msg_id);
+  i32(o.bad_msg_seqno);
+  i32(o.error_code);
 }
 
-function _bad_msg_notification(s: ByteStream, o: any) {
-  i32(s, 0xa7eff811);
-  o.bad_msg_id
-  i32(s, o.bad_msg_seqno);
-  i32(s, o.error_code);
+function _bad_server_salt(o: any) {
+  i32(0xedab447b);
+  i64(o.bad_msg_id);
+  i32(o.bad_msg_seqno);
+  i32(o.error_code);
+  i64(o.new_server_salt);
 }
 
-function _bad_server_salt(s: ByteStream, o: any) {
-  i32(s, 0xedab447b);
-  o.bad_msg_id
-  i32(s, o.bad_msg_seqno);
-  i32(s, o.error_code);
-  o.new_server_salt
+function _msg_resend_req(o: any) {
+  i32(0x7d861a08);
+  obj(o.msg_ids); // Vector<long>
 }
 
-function _msg_resend_req(s: ByteStream, o: any) {
-  i32(s, 0x7d861a08);
-  o.msg_ids
+function _msg_resend_ans_req(o: any) {
+  i32(0x8610baeb);
+  obj(o.msg_ids); // Vector<long>
 }
 
-function _msg_resend_ans_req(s: ByteStream, o: any) {
-  i32(s, 0x8610baeb);
-  o.msg_ids
+function _msgs_state_req(o: any) {
+  i32(0xda69fb52);
+  obj(o.msg_ids); // Vector<long>
 }
 
-function _msgs_state_req(s: ByteStream, o: any) {
-  i32(s, 0xda69fb52);
-  o.msg_ids
+function _msgs_state_info(o: any) {
+  i32(0x4deb57d);
+  i64(o.req_msg_id);
+  bytes(o.info);
 }
 
-function _msgs_state_info(s: ByteStream, o: any) {
-  i32(s, 0x4deb57d);
-  o.req_msg_id
-  o.info
+function _msgs_all_info(o: any) {
+  i32(0x8cc0d131);
+  obj(o.msg_ids); // Vector<long>
+  bytes(o.info);
 }
 
-function _msgs_all_info(s: ByteStream, o: any) {
-  i32(s, 0x8cc0d131);
-  o.msg_ids
-  o.info
+function _msg_detailed_info(o: any) {
+  i32(0x276d3ec6);
+  i64(o.msg_id);
+  i64(o.answer_msg_id);
+  i32(o.bytes);
+  i32(o.status);
 }
 
-function _msg_detailed_info(s: ByteStream, o: any) {
-  i32(s, 0x276d3ec6);
-  o.msg_id
-  o.answer_msg_id
-  i32(s, o.bytes);
-  i32(s, o.status);
+function _msg_new_detailed_info(o: any) {
+  i32(0x809db6df);
+  i64(o.answer_msg_id);
+  i32(o.bytes);
+  i32(o.status);
 }
 
-function _msg_new_detailed_info(s: ByteStream, o: any) {
-  i32(s, 0x809db6df);
-  o.answer_msg_id
-  i32(s, o.bytes);
-  i32(s, o.status);
+function _bind_auth_key_inner(o: any) {
+  i32(0x75a3f765);
+  i64(o.nonce);
+  i64(o.temp_auth_key_id);
+  i64(o.perm_auth_key_id);
+  i64(o.temp_session_id);
+  i32(o.expires_at);
 }
 
-function _bind_auth_key_inner(s: ByteStream, o: any) {
-  i32(s, 0x75a3f765);
-  o.nonce
-  o.temp_auth_key_id
-  o.perm_auth_key_id
-  o.temp_session_id
-  i32(s, o.expires_at);
+function _destroy_auth_key_ok(o: any) {
+  i32(0xf660e1d4);
 }
 
-function _destroy_auth_key_ok(s: ByteStream, o: any) {
-  i32(s, 0xf660e1d4);
+function _destroy_auth_key_none(o: any) {
+  i32(0xa9f2259);
 }
 
-function _destroy_auth_key_none(s: ByteStream, o: any) {
-  i32(s, 0xa9f2259);
+function _destroy_auth_key_fail(o: any) {
+  i32(0xea109b13);
 }
 
-function _destroy_auth_key_fail(s: ByteStream, o: any) {
-  i32(s, 0xea109b13);
+function _destroy_session_ok(o: any) {
+  i32(0xe22045fc);
+  i64(o.session_id);
 }
 
-function _destroy_session_ok(s: ByteStream, o: any) {
-  i32(s, 0xe22045fc);
-  o.session_id
+function _destroy_session_none(o: any) {
+  i32(0x62d350c9);
+  i64(o.session_id);
 }
 
-function _destroy_session_none(s: ByteStream, o: any) {
-  i32(s, 0x62d350c9);
-  o.session_id
-}
-
-const builderMap: Record<string, (s: ByteStream, o: any) => void> = {
+const builderMap: Record<string, (o: any) => void> = {
   'vector': _vector,
   'resPQ': _resPQ,
   'p_q_inner_data': _p_q_inner_data,
@@ -347,11 +345,12 @@ const builderMap: Record<string, (s: ByteStream, o: any) => void> = {
   'destroy_session_none': _destroy_session_none,
 }
 
-function obj(s: ByteStream, o: any) {
+function obj(o: any) {
   const func = builderMap[o._];
-  func(s, o);
+  func(o);
 }
 
-export function build(s: ByteStream, o: any) {
-  return obj(s, o);
+export function build(stream: ByteStream, o: any) {
+  s = stream;
+  return obj(o);
 }

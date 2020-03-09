@@ -3,17 +3,13 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using static TelegramSchema.Utils;
 
 namespace TelegramSchema
 {
-    class Parsers
+    static class Parsers
     {
-        private static Dictionary<string, string> aliases = new Dictionary<string, string>();
-        private static int aliasCounter = 0;
-
         public static void WriteParsers(
             string outputFolder,
             string schemaName,
@@ -34,19 +30,9 @@ namespace TelegramSchema
             writer.WriteLine("/*                                                                                         */");
             writer.WriteLine("/*******************************************************************************************/");
             writer.WriteLine();
-
-            foreach (var type in types)
-            {
-                foreach (var constructor in type.Value)
-                {
-                    GetConstructorAlias(constructor);
-                }
-            }
-
             writer.WriteLine("interface ByteStream {");
             writer.Indent++;
             writer.WriteLine("readInt32(): number;");
-            writer.WriteLine("readUint32(): number;");
             writer.WriteLine("readInt64(): string;");
             writer.WriteLine("readInt128(): string;");
             writer.WriteLine("readInt256(): string;");
@@ -57,62 +43,78 @@ namespace TelegramSchema
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("interface Parser {");
+            writer.WriteLine("let s: ByteStream;");
+            writer.WriteLine("let fallbackParse: ((stream: ByteStream) => any) | undefined;");
+            writer.WriteLine();
+            writer.WriteLine("export default function parse(stream: ByteStream, fallback?: (stream: ByteStream) => any) {");
             writer.Indent++;
-            writer.WriteLine("parse(stream: ByteStream): any;");
+            writer.WriteLine("s = stream;");
+            writer.WriteLine("fallbackParse = fallback;");
+            writer.WriteLine("return obj();");
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("export default class MessageParser implements Parser {");
+            writer.WriteLine("function i32() { return s.readInt32(); }");
+            writer.WriteLine("function i64() { return s.readInt64(); }");
+            writer.WriteLine("function i128() { return s.readInt128(); }");
+            writer.WriteLine("function i256() { return s.readInt256(); }");
+            writer.WriteLine("function f64() { return s.readDouble(); }");
+            writer.WriteLine("function str() { return s.readString(); }");
+            writer.WriteLine("function bytes() { return s.readBytes(); }");
+            writer.WriteLine();
+            writer.WriteLine("function vector(t: () => any, bare = false) {");
             writer.Indent++;
-            writer.WriteLine("private _s!: ByteStream;");
-            writer.WriteLine();
-            writer.WriteLine("constructor(private fallbackParser?: Parser) {}");
-            writer.WriteLine();
-            writer.WriteLine("public parse(stream: ByteStream) {");
-            writer.Indent++;
-            writer.WriteLine("this._s = stream;");
-            writer.WriteLine("return this.o();");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
-            writer.WriteLine("private i32 = () => this._s.readInt32();");
-            writer.WriteLine("private u32 = () => this._s.readUint32();");
-            writer.WriteLine("private i64 = () => this._s.readInt64();");
-            writer.WriteLine("private i128 = () => this._s.readInt128();");
-            writer.WriteLine("private i256 = () => this._s.readInt256();");
-            writer.WriteLine("private d = () => this._s.readDouble();");
-            writer.WriteLine("private s = () => this._s.readString();");
-            writer.WriteLine("private b = () => this._s.readBytes();");
-            writer.WriteLine();
-            writer.WriteLine("private v = (t: () => any, bare = false) => {");
-            writer.Indent++;
-            writer.WriteLine("if (!bare) { this.u32(); } // should always be 481674261");
-            writer.WriteLine("const len = this.u32();");
+            writer.WriteLine("if (!bare) { i32(); /* ignoring constructor id. */ }");
+            writer.WriteLine("const len = i32();");
             writer.WriteLine("const result = [];");
             writer.WriteLine("for (let i = 0; i < len; ++i) result.push(t());");
             writer.WriteLine("return result;");
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("private o = (): any => {");
-            writer.Indent++;
-            writer.WriteLine("const t = this;");
-            writer.WriteLine("const c = this.u32();");
-            writer.WriteLine("switch (c) {");
+            
+            foreach (var constructor in schema.constructors)
+            {
+                if (constructor.predicate == "boolTrue")
+                {
+                    writer.WriteLine($"function _{FixConstructorName(constructor)}() {{ return true; }}");
+                } 
+                else if (constructor.predicate == "boolFalse")
+                {
+                    writer.WriteLine($"function _{FixConstructorName(constructor)}() {{ return false; }}");
+                } 
+                else if (!HasFlags(constructor))
+                {
+                    WriteParserConstructorLambda(writer, types, constructor);
+                }
+                else
+                {
+                    WriteParserConstructor(writer, types, constructor);
+                }
+            }
+            writer.WriteLine("");
+            writer.WriteLine("const parserMap: Record<number, () => any> = {");
             writer.Indent++;
             foreach (var constructor in schema.constructors)
             {
                 var constructorId = int.Parse(constructor.id);
-                writer.WriteLine($"case 0x{constructorId:x}: return t.{GetConstructorAlias(constructor)}();");
+                writer.WriteLine($"0x{constructorId:x}: _{FixConstructorName(constructor)},");
             }
-
-            writer.WriteLine("default: {");
+            writer.Indent--;
+            writer.WriteLine("};");
+            writer.WriteLine("");
+            writer.WriteLine("function obj() {");
             writer.Indent++;
-            writer.WriteLine("if (this.fallbackParser) {");
+            writer.WriteLine("const c = i32() >>> 0;");
+            writer.WriteLine("const f = parserMap[c];");
+            writer.WriteLine("if (f) {");
             writer.Indent++;
-            writer.WriteLine("this._s.revert(4);");
-            writer.WriteLine("return this.fallbackParser.parse(this._s);");
+            writer.WriteLine("return f();");
+            writer.Indent--;
+            writer.WriteLine("} else if (fallbackParse) {");
+            writer.Indent++;
+            writer.WriteLine("s.revert(4);");
+            writer.WriteLine("return fallbackParse(s);");
             writer.Indent--;
             writer.WriteLine("} else {");
             writer.Indent++;
@@ -122,53 +124,26 @@ namespace TelegramSchema
             writer.WriteLine("}");
             writer.Indent--;
             writer.WriteLine("}");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
-            
-            foreach (var constructor in schema.constructors)
-            {
-                if (constructor.predicate == "boolTrue")
-                {
-                    writer.WriteLine($"{GetConstructorAlias(constructor)} = () => true;");
-                } 
-                else if (constructor.predicate == "boolFalse")
-                {
-                    writer.WriteLine($"{GetConstructorAlias(constructor)} = () => false;");
-                } 
-                else if (constructor.@params.All(p => p.name != "flags"))
-                {
-                    WriteParserConstructorLambda(writer, types, constructor);
-                }
-                else
-                {
-                    WriteParserConstructor(writer, types, constructor);
-                }
-            }
-            writer.Indent--;
-            writer.WriteLine("}");
         }
 
         private static void WriteParserConstructorLambda(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.Write($"{GetConstructorAlias(constructor)} = () => ({{");
+            writer.Write($"function _{FixConstructorName(constructor)}() {{ return {{");
             writer.Write($"_: '{constructor.predicate}'");
             foreach (var param in constructor.@params)
             {
                 writer.Write($", {param.name}: {FormatAccessor(types, param.type)}");
             }
-            writer.WriteLine("})");
+            writer.WriteLine("}; }");
         }
 
         private static void WriteParserConstructor(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.WriteLine($"{GetConstructorAlias(constructor)}() {{");
+            writer.WriteLine($"function _{FixConstructorName(constructor)}() {{");
             writer.Indent++;
-            if (constructor.@params.Any(p => p.type == "#"))
+            if (HasFlags(constructor))
             {
-                writer.WriteLine("const flags = this.i32();");
+                writer.WriteLine("const flags = i32();");
             }
 
             writer.WriteLine("return {");
@@ -186,27 +161,7 @@ namespace TelegramSchema
             writer.Indent--;
             writer.WriteLine("}");
         }
-
-        private static string GetConstructorAlias(Constructor constructor)
-        {
-            const string r = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
-            var cName = constructor.predicate.Replace('.', '_');
-            if (!aliases.TryGetValue(cName, out var alias))
-            {
-                var c = aliasCounter++;
-                var sb = new StringBuilder();
-                do
-                {
-                    sb.Insert(0, r[c % r.Length]);
-                    c /= r.Length;
-                } while (c > 0);
-
-                aliases[cName] = sb.ToString();
-            }
-
-            return aliases[cName];
-        }
-
+        
         private static string FormatAccessor(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType)
         {
             var flagsMatch = Regex.Match(paramType, @"flags\.(.+)\?(.*)");
@@ -233,39 +188,39 @@ namespace TelegramSchema
                 
                 if (IsType(types, param))
                 {
-                    return $"this.v(this.o)";
+                    return "vector(obj)";
                 }
 
                 if (param.StartsWith("%"))
                 {
                     param = types[param.Substring(1)].First().predicate;
-                    return $"this.v(this.{aliases[param]}, true)";
+                    return $"vector(_{FixConstructorName(param)}, true)";
                 }
                 
                 switch (param)
                 {
-                    case "int": return "this.v(this.i32)";
-                    case "long": return "this.v(this.i64)";
-                    case "int128": return "this.v(this.i128)";
-                    case "int256": return "this.v(this.i256)";
-                    case "double": return "this.v(this.d)";
-                    case "string": return "this.v(this.s)";
-                    case "bytes": return "this.v(this.b)";
+                    case "int": return "vector(i32)";
+                    case "long": return "vector(i64)";
+                    case "int128": return "vector(i128)";
+                    case "int256": return "vector(i256)";
+                    case "double": return "vector(f64)";
+                    case "string": return "vector(str)";
+                    case "bytes": return "vector(bytes)";
                 }
-                return $"this.v(this.{aliases[param]})";
+                return $"vector(_{FixConstructorName(param)})";
             }
 
             switch (paramType)
             {
-                case "int": return "this.i32()";
-                case "long": return "this.i64()";
-                case "int128": return "this.i128()";
-                case "int256": return "this.i256()";
-                case "double": return "this.d()";
-                case "string": return "this.s()";
-                case "bytes": return "this.b()";
-                case "vector": return "this.v()";
-                default: return "this.o()"; 
+                case "int": return "i32()";
+                case "long": return "i64()";
+                case "int128": return "i128()";
+                case "int256": return "i256()";
+                case "double": return "f64()";
+                case "string": return "str()";
+                case "bytes": return "bytes()";
+                case "vector": return "vector()";
+                default: return "obj()"; 
             }
         }
     }
