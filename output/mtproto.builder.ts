@@ -19,7 +19,6 @@ interface ByteStream {
 }
 
 let s: ByteStream;
-function i32(value: number) { s.writeInt32(value); }
 
 function _vector(o: any) {
   i32(0x1cb5c415);
@@ -300,6 +299,13 @@ function _destroy_session_none(o: any) {
   i64(o.session_id);
 }
 
+function i32(value: number) { s.writeInt32(value); }
+function i64(value: string) { s.writeInt64(value); }
+function i128(value: string) { s.writeInt128(value); }
+function i256(value: string) { s.writeInt256(value); }
+function str(value: string) { s.writeString(value); }
+function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+
 const builderMap: Record<string, (o: any) => void> = {
   'vector': _vector,
   'resPQ': _resPQ,
@@ -350,7 +356,7 @@ function obj(o: any) {
   func(o);
 }
 
-export function build(stream: ByteStream, o: any) {
+export default function build(stream: ByteStream, o: any) {
   s = stream;
   return obj(o);
 }

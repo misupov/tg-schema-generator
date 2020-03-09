@@ -80,6 +80,10 @@ namespace TelegramSchema
                     writer.WriteLine($"export type {FixConstructorName(constructor)} = {{");
                     writer.Indent++;
                     writer.WriteLine($"_: '{constructor.predicate}',");
+                    if (constructor.layer > 0)
+                    {
+                        writer.WriteLine($"_layer: {constructor.layer},");
+                    }
                     foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
                     {
                         writer.WriteLine($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(types, parameter.type, constructors)},");
@@ -95,11 +99,14 @@ namespace TelegramSchema
             
             writer.WriteLine("export interface ConstructorDeclMap {");
             writer.Indent++;
-            foreach (var constructor in constructors)
+            
+            foreach (var group in constructors.GroupBy(c => c.predicate))
             {
-                if (!IsPrimitiveType(constructor.type))
+                var first = group.First();
+                if (!IsPrimitiveType(first.type))
                 {
-                    writer.WriteLine($"'{constructor.predicate}': {FixTypeName(constructor.type)}.{FixConstructorName(constructor)},");
+                    var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixConstructorName(c)}").ToArray();
+                    writer.WriteLine($"'{first.predicate}': {string.Join(" | ", decls)},");
                 }
             }
             writer.Indent--;

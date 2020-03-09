@@ -19,7 +19,6 @@ interface ByteStream {
 }
 
 let s: ByteStream;
-function i32(value: number) { s.writeInt32(value); }
 
 function _decryptedMessage8(o: any) {
   i32(0x1f814f1f);
@@ -534,6 +533,12 @@ function _inputStickerSetEmpty45(o: any) {
   i32(0xffb62b95);
 }
 
+function i32(value: number) { s.writeInt32(value); }
+function i64(value: string) { s.writeInt64(value); }
+function f64(value: number) { s.writeDouble(value); }
+function str(value: string) { s.writeString(value); }
+function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+
 const builderMap: Record<string, (o: any) => void> = {
   'decryptedMessage': _decryptedMessage8,
   'decryptedMessage': _decryptedMessage17,
@@ -617,7 +622,7 @@ function obj(o: any) {
   func(o);
 }
 
-export function build(stream: ByteStream, o: any) {
+export default function build(stream: ByteStream, o: any) {
   s = stream;
   return obj(o);
 }

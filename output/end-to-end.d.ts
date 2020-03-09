@@ -26,6 +26,7 @@ export type DecryptedMessage =
 export namespace DecryptedMessage {
   export type decryptedMessage8 = {
     _: 'decryptedMessage',
+    _layer: 8,
     random_id: string,
     random_bytes: ArrayBuffer,
     message: string,
@@ -33,6 +34,7 @@ export namespace DecryptedMessage {
   };
   export type decryptedMessage17 = {
     _: 'decryptedMessage',
+    _layer: 17,
     random_id: string,
     ttl: number,
     message: string,
@@ -40,6 +42,7 @@ export namespace DecryptedMessage {
   };
   export type decryptedMessage45 = {
     _: 'decryptedMessage',
+    _layer: 45,
     random_id: string,
     ttl: number,
     message: string,
@@ -50,6 +53,7 @@ export namespace DecryptedMessage {
   };
   export type decryptedMessage73 = {
     _: 'decryptedMessage',
+    _layer: 73,
     random_id: string,
     ttl: number,
     message: string,
@@ -61,12 +65,14 @@ export namespace DecryptedMessage {
   };
   export type decryptedMessageService8 = {
     _: 'decryptedMessageService',
+    _layer: 8,
     random_id: string,
     random_bytes: ArrayBuffer,
     action: DecryptedMessageAction,
   };
   export type decryptedMessageService17 = {
     _: 'decryptedMessageService',
+    _layer: 17,
     random_id: string,
     action: DecryptedMessageAction,
   };
@@ -93,9 +99,11 @@ export type DecryptedMessageMedia =
 export namespace DecryptedMessageMedia {
   export type decryptedMessageMediaEmpty8 = {
     _: 'decryptedMessageMediaEmpty',
+    _layer: 8,
   };
   export type decryptedMessageMediaPhoto8 = {
     _: 'decryptedMessageMediaPhoto',
+    _layer: 8,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -107,6 +115,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaPhoto45 = {
     _: 'decryptedMessageMediaPhoto',
+    _layer: 45,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -119,6 +128,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaVideo8 = {
     _: 'decryptedMessageMediaVideo',
+    _layer: 8,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -131,6 +141,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaVideo17 = {
     _: 'decryptedMessageMediaVideo',
+    _layer: 17,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -144,6 +155,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaVideo45 = {
     _: 'decryptedMessageMediaVideo',
+    _layer: 45,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -158,11 +170,13 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaGeoPoint8 = {
     _: 'decryptedMessageMediaGeoPoint',
+    _layer: 8,
     lat: number,
     long: number,
   };
   export type decryptedMessageMediaContact8 = {
     _: 'decryptedMessageMediaContact',
+    _layer: 8,
     phone_number: string,
     first_name: string,
     last_name: string,
@@ -170,6 +184,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaDocument8 = {
     _: 'decryptedMessageMediaDocument',
+    _layer: 8,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -181,6 +196,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaDocument45 = {
     _: 'decryptedMessageMediaDocument',
+    _layer: 45,
     thumb: ArrayBuffer,
     thumb_w: number,
     thumb_h: number,
@@ -193,6 +209,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaAudio8 = {
     _: 'decryptedMessageMediaAudio',
+    _layer: 8,
     duration: number,
     size: number,
     key: ArrayBuffer,
@@ -200,6 +217,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaAudio17 = {
     _: 'decryptedMessageMediaAudio',
+    _layer: 17,
     duration: number,
     mime_type: string,
     size: number,
@@ -208,6 +226,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaExternalDocument23 = {
     _: 'decryptedMessageMediaExternalDocument',
+    _layer: 23,
     id: string,
     access_hash: string,
     date: number,
@@ -219,6 +238,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaVenue45 = {
     _: 'decryptedMessageMediaVenue',
+    _layer: 45,
     lat: number,
     long: number,
     title: string,
@@ -228,6 +248,7 @@ export namespace DecryptedMessageMedia {
   };
   export type decryptedMessageMediaWebPage45 = {
     _: 'decryptedMessageMediaWebPage',
+    _layer: 45,
     url: string,
   };
 }
@@ -251,58 +272,71 @@ export type DecryptedMessageAction =
 export namespace DecryptedMessageAction {
   export type decryptedMessageActionSetMessageTTL8 = {
     _: 'decryptedMessageActionSetMessageTTL',
+    _layer: 8,
     ttl_seconds: number,
   };
   export type decryptedMessageActionReadMessages8 = {
     _: 'decryptedMessageActionReadMessages',
+    _layer: 8,
     random_ids: string[],
   };
   export type decryptedMessageActionDeleteMessages8 = {
     _: 'decryptedMessageActionDeleteMessages',
+    _layer: 8,
     random_ids: string[],
   };
   export type decryptedMessageActionScreenshotMessages8 = {
     _: 'decryptedMessageActionScreenshotMessages',
+    _layer: 8,
     random_ids: string[],
   };
   export type decryptedMessageActionFlushHistory8 = {
     _: 'decryptedMessageActionFlushHistory',
+    _layer: 8,
   };
   export type decryptedMessageActionResend17 = {
     _: 'decryptedMessageActionResend',
+    _layer: 17,
     start_seq_no: number,
     end_seq_no: number,
   };
   export type decryptedMessageActionNotifyLayer17 = {
     _: 'decryptedMessageActionNotifyLayer',
+    _layer: 17,
     layer: number,
   };
   export type decryptedMessageActionTyping17 = {
     _: 'decryptedMessageActionTyping',
+    _layer: 17,
     action: SendMessageAction,
   };
   export type decryptedMessageActionRequestKey20 = {
     _: 'decryptedMessageActionRequestKey',
+    _layer: 20,
     exchange_id: string,
     g_a: ArrayBuffer,
   };
   export type decryptedMessageActionAcceptKey20 = {
     _: 'decryptedMessageActionAcceptKey',
+    _layer: 20,
     exchange_id: string,
     g_b: ArrayBuffer,
     key_fingerprint: string,
   };
   export type decryptedMessageActionAbortKey20 = {
     _: 'decryptedMessageActionAbortKey',
+    _layer: 20,
     exchange_id: string,
   };
   export type decryptedMessageActionCommitKey20 = {
     _: 'decryptedMessageActionCommitKey',
+    _layer: 20,
     exchange_id: string,
     key_fingerprint: string,
   };
   export type decryptedMessageActionNoop20 = {
     _: 'decryptedMessageActionNoop',
+    _layer: 20,
   };
 }
 
@@ -313,6 +347,7 @@ export type DecryptedMessageLayer =
 export namespace DecryptedMessageLayer {
   export type decryptedMessageLayer17 = {
     _: 'decryptedMessageLayer',
+    _layer: 17,
     random_bytes: ArrayBuffer,
     layer: number,
     in_seq_no: number,
@@ -339,39 +374,51 @@ export type SendMessageAction =
 export namespace SendMessageAction {
   export type sendMessageTypingAction17 = {
     _: 'sendMessageTypingAction',
+    _layer: 17,
   };
   export type sendMessageCancelAction17 = {
     _: 'sendMessageCancelAction',
+    _layer: 17,
   };
   export type sendMessageRecordVideoAction17 = {
     _: 'sendMessageRecordVideoAction',
+    _layer: 17,
   };
   export type sendMessageUploadVideoAction17 = {
     _: 'sendMessageUploadVideoAction',
+    _layer: 17,
   };
   export type sendMessageRecordAudioAction17 = {
     _: 'sendMessageRecordAudioAction',
+    _layer: 17,
   };
   export type sendMessageUploadAudioAction17 = {
     _: 'sendMessageUploadAudioAction',
+    _layer: 17,
   };
   export type sendMessageUploadPhotoAction17 = {
     _: 'sendMessageUploadPhotoAction',
+    _layer: 17,
   };
   export type sendMessageUploadDocumentAction17 = {
     _: 'sendMessageUploadDocumentAction',
+    _layer: 17,
   };
   export type sendMessageGeoLocationAction17 = {
     _: 'sendMessageGeoLocationAction',
+    _layer: 17,
   };
   export type sendMessageChooseContactAction17 = {
     _: 'sendMessageChooseContactAction',
+    _layer: 17,
   };
   export type sendMessageRecordRoundAction66 = {
     _: 'sendMessageRecordRoundAction',
+    _layer: 66,
   };
   export type sendMessageUploadRoundAction66 = {
     _: 'sendMessageUploadRoundAction',
+    _layer: 66,
   };
 }
 
@@ -391,44 +438,53 @@ export type DocumentAttribute =
 export namespace DocumentAttribute {
   export type documentAttributeImageSize23 = {
     _: 'documentAttributeImageSize',
+    _layer: 23,
     w: number,
     h: number,
   };
   export type documentAttributeAnimated23 = {
     _: 'documentAttributeAnimated',
+    _layer: 23,
   };
   export type documentAttributeSticker23 = {
     _: 'documentAttributeSticker',
+    _layer: 23,
   };
   export type documentAttributeSticker45 = {
     _: 'documentAttributeSticker',
+    _layer: 45,
     alt: string,
     stickerset: InputStickerSet,
   };
   export type documentAttributeVideo23 = {
     _: 'documentAttributeVideo',
+    _layer: 23,
     duration: number,
     w: number,
     h: number,
   };
   export type documentAttributeVideo66 = {
     _: 'documentAttributeVideo',
+    _layer: 66,
     duration: number,
     w: number,
     h: number,
   };
   export type documentAttributeAudio23 = {
     _: 'documentAttributeAudio',
+    _layer: 23,
     duration: number,
   };
   export type documentAttributeAudio45 = {
     _: 'documentAttributeAudio',
+    _layer: 45,
     duration: number,
     title: string,
     performer: string,
   };
   export type documentAttributeAudio46 = {
     _: 'documentAttributeAudio',
+    _layer: 46,
     duration: number,
     title?: string,
     performer?: string,
@@ -436,6 +492,7 @@ export namespace DocumentAttribute {
   };
   export type documentAttributeFilename23 = {
     _: 'documentAttributeFilename',
+    _layer: 23,
     file_name: string,
   };
 }
@@ -449,10 +506,12 @@ export type PhotoSize =
 export namespace PhotoSize {
   export type photoSizeEmpty23 = {
     _: 'photoSizeEmpty',
+    _layer: 23,
     type: string,
   };
   export type photoSize23 = {
     _: 'photoSize',
+    _layer: 23,
     type: string,
     location: FileLocation,
     w: number,
@@ -461,6 +520,7 @@ export namespace PhotoSize {
   };
   export type photoCachedSize23 = {
     _: 'photoCachedSize',
+    _layer: 23,
     type: string,
     location: FileLocation,
     w: number,
@@ -477,12 +537,14 @@ export type FileLocation =
 export namespace FileLocation {
   export type fileLocationUnavailable23 = {
     _: 'fileLocationUnavailable',
+    _layer: 23,
     volume_id: string,
     local_id: number,
     secret: string,
   };
   export type fileLocation23 = {
     _: 'fileLocation',
+    _layer: 23,
     dc_id: number,
     volume_id: string,
     local_id: number,
@@ -507,57 +569,68 @@ export type MessageEntity =
 export namespace MessageEntity {
   export type messageEntityUnknown45 = {
     _: 'messageEntityUnknown',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityMention45 = {
     _: 'messageEntityMention',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityHashtag45 = {
     _: 'messageEntityHashtag',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityBotCommand45 = {
     _: 'messageEntityBotCommand',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityUrl45 = {
     _: 'messageEntityUrl',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityEmail45 = {
     _: 'messageEntityEmail',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityBold45 = {
     _: 'messageEntityBold',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityItalic45 = {
     _: 'messageEntityItalic',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityCode45 = {
     _: 'messageEntityCode',
+    _layer: 45,
     offset: number,
     length: number,
   };
   export type messageEntityPre45 = {
     _: 'messageEntityPre',
+    _layer: 45,
     offset: number,
     length: number,
     language: string,
   };
   export type messageEntityTextUrl45 = {
     _: 'messageEntityTextUrl',
+    _layer: 45,
     offset: number,
     length: number,
     url: string,
@@ -572,33 +645,26 @@ export type InputStickerSet =
 export namespace InputStickerSet {
   export type inputStickerSetShortName45 = {
     _: 'inputStickerSetShortName',
+    _layer: 45,
     short_name: string,
   };
   export type inputStickerSetEmpty45 = {
     _: 'inputStickerSetEmpty',
+    _layer: 45,
   };
 }
 
 export interface ConstructorDeclMap {
-  'decryptedMessage': DecryptedMessage.decryptedMessage8,
-  'decryptedMessage': DecryptedMessage.decryptedMessage17,
-  'decryptedMessage': DecryptedMessage.decryptedMessage45,
-  'decryptedMessage': DecryptedMessage.decryptedMessage73,
-  'decryptedMessageService': DecryptedMessage.decryptedMessageService8,
-  'decryptedMessageService': DecryptedMessage.decryptedMessageService17,
+  'decryptedMessage': DecryptedMessage.decryptedMessage8 | DecryptedMessage.decryptedMessage17 | DecryptedMessage.decryptedMessage45 | DecryptedMessage.decryptedMessage73,
+  'decryptedMessageService': DecryptedMessage.decryptedMessageService8 | DecryptedMessage.decryptedMessageService17,
   'decryptedMessageMediaEmpty': DecryptedMessageMedia.decryptedMessageMediaEmpty8,
-  'decryptedMessageMediaPhoto': DecryptedMessageMedia.decryptedMessageMediaPhoto8,
-  'decryptedMessageMediaPhoto': DecryptedMessageMedia.decryptedMessageMediaPhoto45,
-  'decryptedMessageMediaVideo': DecryptedMessageMedia.decryptedMessageMediaVideo8,
-  'decryptedMessageMediaVideo': DecryptedMessageMedia.decryptedMessageMediaVideo17,
-  'decryptedMessageMediaVideo': DecryptedMessageMedia.decryptedMessageMediaVideo45,
+  'decryptedMessageMediaPhoto': DecryptedMessageMedia.decryptedMessageMediaPhoto8 | DecryptedMessageMedia.decryptedMessageMediaPhoto45,
+  'decryptedMessageMediaVideo': DecryptedMessageMedia.decryptedMessageMediaVideo8 | DecryptedMessageMedia.decryptedMessageMediaVideo17 | DecryptedMessageMedia.decryptedMessageMediaVideo45,
   'decryptedMessageMediaGeoPoint': DecryptedMessageMedia.decryptedMessageMediaGeoPoint8,
   'decryptedMessageMediaContact': DecryptedMessageMedia.decryptedMessageMediaContact8,
   'decryptedMessageActionSetMessageTTL': DecryptedMessageAction.decryptedMessageActionSetMessageTTL8,
-  'decryptedMessageMediaDocument': DecryptedMessageMedia.decryptedMessageMediaDocument8,
-  'decryptedMessageMediaDocument': DecryptedMessageMedia.decryptedMessageMediaDocument45,
-  'decryptedMessageMediaAudio': DecryptedMessageMedia.decryptedMessageMediaAudio8,
-  'decryptedMessageMediaAudio': DecryptedMessageMedia.decryptedMessageMediaAudio17,
+  'decryptedMessageMediaDocument': DecryptedMessageMedia.decryptedMessageMediaDocument8 | DecryptedMessageMedia.decryptedMessageMediaDocument45,
+  'decryptedMessageMediaAudio': DecryptedMessageMedia.decryptedMessageMediaAudio8 | DecryptedMessageMedia.decryptedMessageMediaAudio17,
   'decryptedMessageActionReadMessages': DecryptedMessageAction.decryptedMessageActionReadMessages8,
   'decryptedMessageActionDeleteMessages': DecryptedMessageAction.decryptedMessageActionDeleteMessages8,
   'decryptedMessageActionScreenshotMessages': DecryptedMessageAction.decryptedMessageActionScreenshotMessages8,
@@ -624,13 +690,9 @@ export interface ConstructorDeclMap {
   'decryptedMessageActionNoop': DecryptedMessageAction.decryptedMessageActionNoop20,
   'documentAttributeImageSize': DocumentAttribute.documentAttributeImageSize23,
   'documentAttributeAnimated': DocumentAttribute.documentAttributeAnimated23,
-  'documentAttributeSticker': DocumentAttribute.documentAttributeSticker23,
-  'documentAttributeSticker': DocumentAttribute.documentAttributeSticker45,
-  'documentAttributeVideo': DocumentAttribute.documentAttributeVideo23,
-  'documentAttributeVideo': DocumentAttribute.documentAttributeVideo66,
-  'documentAttributeAudio': DocumentAttribute.documentAttributeAudio23,
-  'documentAttributeAudio': DocumentAttribute.documentAttributeAudio45,
-  'documentAttributeAudio': DocumentAttribute.documentAttributeAudio46,
+  'documentAttributeSticker': DocumentAttribute.documentAttributeSticker23 | DocumentAttribute.documentAttributeSticker45,
+  'documentAttributeVideo': DocumentAttribute.documentAttributeVideo23 | DocumentAttribute.documentAttributeVideo66,
+  'documentAttributeAudio': DocumentAttribute.documentAttributeAudio23 | DocumentAttribute.documentAttributeAudio45 | DocumentAttribute.documentAttributeAudio46,
   'documentAttributeFilename': DocumentAttribute.documentAttributeFilename23,
   'photoSizeEmpty': PhotoSize.photoSizeEmpty23,
   'photoSize': PhotoSize.photoSize23,

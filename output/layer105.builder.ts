@@ -19,7 +19,6 @@ interface ByteStream {
 }
 
 let s: ByteStream;
-function i32(value: number) { s.writeInt32(value); }
 
 function _boolFalse(o: any) {
   i32(0xbc799737);
@@ -5418,6 +5417,12 @@ function _accountThemes(o: any) {
   obj(o.themes); // Vector<Theme>
 }
 
+function i32(value: number) { s.writeInt32(value); }
+function i64(value: string) { s.writeInt64(value); }
+function f64(value: number) { s.writeDouble(value); }
+function str(value: string) { s.writeString(value); }
+function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+
 const builderMap: Record<string, (o: any) => void> = {
   'boolFalse': _boolFalse,
   'boolTrue': _boolTrue,
@@ -6208,7 +6213,7 @@ function obj(o: any) {
   func(o);
 }
 
-export function build(stream: ByteStream, o: any) {
+export default function build(stream: ByteStream, o: any) {
   s = stream;
   return obj(o);
 }
