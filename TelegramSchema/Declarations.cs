@@ -161,8 +161,8 @@ namespace TelegramSchema
                     WriteUpdateDeclarations(writer, "Updates", types);
                     WriteUpdateDeclarations(writer, "User", types);
                     WriteUpdateDeclarations(writer, "Chat", types);
-                    writer.Indent--;
                 }
+                writer.WriteLine("}");
             }
         }
 
