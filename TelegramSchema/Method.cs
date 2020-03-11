@@ -1,6 +1,6 @@
 namespace TelegramSchema
 {
-    class Method
+    class Method: IEntity
     {
         public string id { get; set; }
         public string method { get; set; }

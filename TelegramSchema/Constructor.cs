@@ -1,6 +1,6 @@
 namespace TelegramSchema
 {
-    class Constructor
+    class Constructor: IEntity
     {
         public string id { get; set; }
         public string predicate { get; set; }

@@ -77,11 +77,11 @@ namespace TelegramSchema
             {
                 if (constructor.predicate == "boolTrue")
                 {
-                    writer.WriteLine($"function _{FixConstructorName(constructor)}() {{ return true; }}");
+                    writer.WriteLine($"function _{FixEntityName(constructor)}() {{ return true; }}");
                 } 
                 else if (constructor.predicate == "boolFalse")
                 {
-                    writer.WriteLine($"function _{FixConstructorName(constructor)}() {{ return false; }}");
+                    writer.WriteLine($"function _{FixEntityName(constructor)}() {{ return false; }}");
                 } 
                 else if (!HasFlags(constructor))
                 {
@@ -98,7 +98,7 @@ namespace TelegramSchema
             foreach (var constructor in schema.constructors)
             {
                 var constructorId = int.Parse(constructor.id);
-                writer.WriteLine($"0x{constructorId:x}: _{FixConstructorName(constructor)},");
+                writer.WriteLine($"0x{constructorId:x}: _{FixEntityName(constructor)},");
             }
             writer.Indent--;
             writer.WriteLine("};");
@@ -128,7 +128,7 @@ namespace TelegramSchema
 
         private static void WriteParserConstructorLambda(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.Write($"function _{FixConstructorName(constructor)}() {{ return {{");
+            writer.Write($"function _{FixEntityName(constructor)}() {{ return {{");
             writer.Write($"_: '{constructor.predicate}'");
             foreach (var param in constructor.@params)
             {
@@ -139,7 +139,7 @@ namespace TelegramSchema
 
         private static void WriteParserConstructor(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.WriteLine($"function _{FixConstructorName(constructor)}() {{");
+            writer.WriteLine($"function _{FixEntityName(constructor)}() {{");
             writer.Indent++;
             if (HasFlags(constructor))
             {
@@ -194,7 +194,7 @@ namespace TelegramSchema
                 if (param.StartsWith("%"))
                 {
                     param = types[param.Substring(1)].First().predicate;
-                    return $"vector(_{FixConstructorName(param)}, true)";
+                    return $"vector(_{FixEntityName(param)}, true)";
                 }
                 
                 switch (param)
@@ -207,7 +207,7 @@ namespace TelegramSchema
                     case "string": return "vector(str)";
                     case "bytes": return "vector(bytes)";
                 }
-                return $"vector(_{FixConstructorName(param)})";
+                return $"vector(_{FixEntityName(param)})";
             }
 
             switch (paramType)

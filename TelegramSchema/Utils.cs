@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,13 +70,13 @@ namespace TelegramSchema
                 _ => (char.ToUpper(type[0]) + type.Substring(1)).Replace(".", "")
             };
         }
-
-        public static bool HasFlags(Constructor constructor)
+        
+        public static bool HasFlags(IEntity entity)
         {
-            return constructor.@params.Any(p => p.type == "#");
+            return entity.@params.Any(p => p.type == "#");
         }
         
-        public static string FixConstructorName(string type, int layer = 0)
+        public static string FixEntityName(string type, int layer = 0)
         {
             var sb = new StringBuilder(type);
             for (var i = 0; i < sb.Length - 1; i++)
@@ -85,9 +86,17 @@ namespace TelegramSchema
             return $"{sb.Replace(".", "")}{(layer > 0 ? layer.ToString() : "")}";
         }
 
-        public static string FixConstructorName(Constructor ctor)
+        public static string FixEntityName(IEntity entity)
         {
-            return FixConstructorName(ctor.predicate, ctor.layer);
+            switch (entity)
+            {
+                case Constructor c:
+                    return FixEntityName(c.predicate, c.layer);
+                case Method m:
+                    return FixEntityName(m.method);
+                default:
+                    throw new ArgumentException("WTF???");
+            }
         }
 
         public static string FixMethodName(string type)
@@ -108,8 +117,7 @@ namespace TelegramSchema
         
         public static string FormatType(IReadOnlyDictionary<string, HashSet<Constructor>> types, string type, Constructor[] constructors)
         {
-            var vector2Match = Regex.Match(type, "[Vv]ector<(.+)>");
-            if (vector2Match.Success)
+            if (IsVector(type))
             {
                 var vectorType = UnwrapVector(type);
                 if (vectorType.StartsWith('%') || IsType(types, vectorType) || IsPrimitiveType((vectorType)))
@@ -117,7 +125,7 @@ namespace TelegramSchema
                     return FixTypeName(vectorType) + "[]";
                 }
 
-                return constructors.First(c => c.predicate == vectorType).type + "." + FixConstructorName(vectorType) + "[]";
+                return constructors.First(c => c.predicate == vectorType).type + "." + FixEntityName(vectorType) + "[]";
             }
 
             var flagsMatch = Regex.Match(type, @"flags.(\d+)\?(.+)");
@@ -129,5 +137,24 @@ namespace TelegramSchema
             return FixTypeName(type);
         }
 
+        public static (int? flag, bool vector, string type) ParseType(string type)
+        {
+            int? flag = null;
+            var vector = false;
+            var flagsMatch = Regex.Match(type, @"flags.(\d+)\?(.+)");
+            if (flagsMatch.Success)
+            {
+                flag = int.Parse(flagsMatch.Groups[1].Value);
+                type = flagsMatch.Groups[2].Value;
+            }
+            var vectorMatch = Regex.Match(type, @"[Vv]ector<(.+)>");
+            if (vectorMatch.Success)
+            {
+                type = vectorMatch.Groups[1].Value;
+                vector = true;
+            }
+
+            return (flag, vector, type);
+        } 
     }
 }

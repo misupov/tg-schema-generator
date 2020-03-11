@@ -19,21 +19,16 @@ interface ByteStream {
 }
 
 let s: ByteStream;
-
-function _vector(o: any) {
-  i32(0x1cb5c415);
-}
+let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
 
 function _resPQ(o: any) {
-  i32(0x5162463);
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.pq);
-  obj(o.server_public_key_fingerprints); // Vector<long>
+  vector(i64, o.server_public_key_fingerprints);
 }
 
 function _p_q_inner_data(o: any) {
-  i32(0x83c95aec);
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
@@ -43,7 +38,6 @@ function _p_q_inner_data(o: any) {
 }
 
 function _p_q_inner_data_dc(o: any) {
-  i32(0xa9f55f95);
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
@@ -54,7 +48,6 @@ function _p_q_inner_data_dc(o: any) {
 }
 
 function _p_q_inner_data_temp(o: any) {
-  i32(0x3c6a84d4);
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
@@ -65,7 +58,6 @@ function _p_q_inner_data_temp(o: any) {
 }
 
 function _p_q_inner_data_temp_dc(o: any) {
-  i32(0x56fddf88);
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
@@ -77,21 +69,18 @@ function _p_q_inner_data_temp_dc(o: any) {
 }
 
 function _server_DH_params_fail(o: any) {
-  i32(0x79cb045d);
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash);
 }
 
 function _server_DH_params_ok(o: any) {
-  i32(0xd0e8075c);
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.encrypted_answer);
 }
 
 function _server_DH_inner_data(o: any) {
-  i32(0xb5890dba);
   i128(o.nonce);
   i128(o.server_nonce);
   i32(o.g);
@@ -101,7 +90,6 @@ function _server_DH_inner_data(o: any) {
 }
 
 function _client_DH_inner_data(o: any) {
-  i32(0x6643b654);
   i128(o.nonce);
   i128(o.server_nonce);
   i64(o.retry_id);
@@ -109,117 +97,92 @@ function _client_DH_inner_data(o: any) {
 }
 
 function _dh_gen_ok(o: any) {
-  i32(0x3bcbf734);
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash1);
 }
 
 function _dh_gen_retry(o: any) {
-  i32(0x46dc1fb9);
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash2);
 }
 
 function _dh_gen_fail(o: any) {
-  i32(0xa69dae02);
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash3);
 }
 
 function _rpc_result(o: any) {
-  i32(0xf35c6d01);
   i64(o.req_msg_id);
-  obj(o.result); // Object
+  obj(o.result);
 }
 
 function _rpc_error(o: any) {
-  i32(0x2144ca19);
   i32(o.error_code);
   str(o.error_message);
 }
 
-function _rpc_answer_unknown(o: any) {
-  i32(0x5e2ad36e);
-}
-
-function _rpc_answer_dropped_running(o: any) {
-  i32(0xcd78e586);
-}
-
 function _rpc_answer_dropped(o: any) {
-  i32(0xa43ad8b7);
   i64(o.msg_id);
   i32(o.seq_no);
   i32(o.bytes);
 }
 
 function _future_salt(o: any) {
-  i32(0x949d9dc);
   i32(o.valid_since);
   i32(o.valid_until);
   i64(o.salt);
 }
 
 function _future_salts(o: any) {
-  i32(0xae500895);
   i64(o.req_msg_id);
   i32(o.now);
-  obj(o.salts); // vector<future_salt>
+  vector(obj, o.salts, 0x949d9dc);
 }
 
 function _pong(o: any) {
-  i32(0x347773c5);
   i64(o.msg_id);
   i64(o.ping_id);
 }
 
 function _new_session_created(o: any) {
-  i32(0x9ec20908);
   i64(o.first_msg_id);
   i64(o.unique_id);
   i64(o.server_salt);
 }
 
 function _msg_container(o: any) {
-  i32(0x73f1f8dc);
-  obj(o.messages); // vector<%Message>
+  vector(obj, o.messages);
 }
 
 function _message(o: any) {
-  i32(0x5bb8e511);
   i64(o.msg_id);
   i32(o.seqno);
   i32(o.bytes);
-  obj(o.body); // Object
+  obj(o.body);
 }
 
 function _msg_copy(o: any) {
-  i32(0xe06046b2);
-  obj(o.orig_message); // Message
+  obj(o.orig_message);
 }
 
 function _gzip_packed(o: any) {
-  i32(0x3072cfa1);
   bytes(o.packed_data);
 }
 
 function _msgs_ack(o: any) {
-  i32(0x62d6b459);
-  obj(o.msg_ids); // Vector<long>
+  vector(i64, o.msg_ids);
 }
 
 function _bad_msg_notification(o: any) {
-  i32(0xa7eff811);
   i64(o.bad_msg_id);
   i32(o.bad_msg_seqno);
   i32(o.error_code);
 }
 
 function _bad_server_salt(o: any) {
-  i32(0xedab447b);
   i64(o.bad_msg_id);
   i32(o.bad_msg_seqno);
   i32(o.error_code);
@@ -227,34 +190,28 @@ function _bad_server_salt(o: any) {
 }
 
 function _msg_resend_req(o: any) {
-  i32(0x7d861a08);
-  obj(o.msg_ids); // Vector<long>
+  vector(i64, o.msg_ids);
 }
 
 function _msg_resend_ans_req(o: any) {
-  i32(0x8610baeb);
-  obj(o.msg_ids); // Vector<long>
+  vector(i64, o.msg_ids);
 }
 
 function _msgs_state_req(o: any) {
-  i32(0xda69fb52);
-  obj(o.msg_ids); // Vector<long>
+  vector(i64, o.msg_ids);
 }
 
 function _msgs_state_info(o: any) {
-  i32(0x4deb57d);
   i64(o.req_msg_id);
   bytes(o.info);
 }
 
 function _msgs_all_info(o: any) {
-  i32(0x8cc0d131);
-  obj(o.msg_ids); // Vector<long>
+  vector(i64, o.msg_ids);
   bytes(o.info);
 }
 
 function _msg_detailed_info(o: any) {
-  i32(0x276d3ec6);
   i64(o.msg_id);
   i64(o.answer_msg_id);
   i32(o.bytes);
@@ -262,14 +219,12 @@ function _msg_detailed_info(o: any) {
 }
 
 function _msg_new_detailed_info(o: any) {
-  i32(0x809db6df);
   i64(o.answer_msg_id);
   i32(o.bytes);
   i32(o.status);
 }
 
 function _bind_auth_key_inner(o: any) {
-  i32(0x75a3f765);
   i64(o.nonce);
   i64(o.temp_auth_key_id);
   i64(o.perm_auth_key_id);
@@ -277,26 +232,119 @@ function _bind_auth_key_inner(o: any) {
   i32(o.expires_at);
 }
 
-function _destroy_auth_key_ok(o: any) {
-  i32(0xf660e1d4);
-}
-
-function _destroy_auth_key_none(o: any) {
-  i32(0xa9f2259);
-}
-
-function _destroy_auth_key_fail(o: any) {
-  i32(0xea109b13);
-}
-
 function _destroy_session_ok(o: any) {
-  i32(0xe22045fc);
   i64(o.session_id);
 }
 
 function _destroy_session_none(o: any) {
-  i32(0x62d350c9);
   i64(o.session_id);
+}
+
+function _req_pq(o: any) {
+  i128(o.nonce);
+}
+
+function _req_pq_multi(o: any) {
+  i128(o.nonce);
+}
+
+function _req_DH_params(o: any) {
+  i128(o.nonce);
+  i128(o.server_nonce);
+  bytes(o.p);
+  bytes(o.q);
+  i64(o.public_key_fingerprint);
+  bytes(o.encrypted_data);
+}
+
+function _set_client_DH_params(o: any) {
+  i128(o.nonce);
+  i128(o.server_nonce);
+  bytes(o.encrypted_data);
+}
+
+function _rpc_drop_answer(o: any) {
+  i64(o.req_msg_id);
+}
+
+function _get_future_salts(o: any) {
+  i32(o.num);
+}
+
+function _ping(o: any) {
+  i64(o.ping_id);
+}
+
+function _ping_delay_disconnect(o: any) {
+  i64(o.ping_id);
+  i32(o.disconnect_delay);
+}
+
+function _http_wait(o: any) {
+  i32(o.max_delay);
+  i32(o.wait_after);
+  i32(o.max_wait);
+}
+
+function _destroy_session(o: any) {
+  i64(o.session_id);
+}
+
+
+const builderMap: Record<string, [number, ((o: any) => void)?]> = {
+  'vector': [0x1cb5c415],
+  'resPQ': [0x5162463, _resPQ],
+  'p_q_inner_data': [0x83c95aec, _p_q_inner_data],
+  'p_q_inner_data_dc': [0xa9f55f95, _p_q_inner_data_dc],
+  'p_q_inner_data_temp': [0x3c6a84d4, _p_q_inner_data_temp],
+  'p_q_inner_data_temp_dc': [0x56fddf88, _p_q_inner_data_temp_dc],
+  'server_DH_params_fail': [0x79cb045d, _server_DH_params_fail],
+  'server_DH_params_ok': [0xd0e8075c, _server_DH_params_ok],
+  'server_DH_inner_data': [0xb5890dba, _server_DH_inner_data],
+  'client_DH_inner_data': [0x6643b654, _client_DH_inner_data],
+  'dh_gen_ok': [0x3bcbf734, _dh_gen_ok],
+  'dh_gen_retry': [0x46dc1fb9, _dh_gen_retry],
+  'dh_gen_fail': [0xa69dae02, _dh_gen_fail],
+  'rpc_result': [0xf35c6d01, _rpc_result],
+  'rpc_error': [0x2144ca19, _rpc_error],
+  'rpc_answer_unknown': [0x5e2ad36e],
+  'rpc_answer_dropped_running': [0xcd78e586],
+  'rpc_answer_dropped': [0xa43ad8b7, _rpc_answer_dropped],
+  'future_salt': [0x949d9dc, _future_salt],
+  'future_salts': [0xae500895, _future_salts],
+  'pong': [0x347773c5, _pong],
+  'new_session_created': [0x9ec20908, _new_session_created],
+  'msg_container': [0x73f1f8dc, _msg_container],
+  'message': [0x5bb8e511, _message],
+  'msg_copy': [0xe06046b2, _msg_copy],
+  'gzip_packed': [0x3072cfa1, _gzip_packed],
+  'msgs_ack': [0x62d6b459, _msgs_ack],
+  'bad_msg_notification': [0xa7eff811, _bad_msg_notification],
+  'bad_server_salt': [0xedab447b, _bad_server_salt],
+  'msg_resend_req': [0x7d861a08, _msg_resend_req],
+  'msg_resend_ans_req': [0x8610baeb, _msg_resend_ans_req],
+  'msgs_state_req': [0xda69fb52, _msgs_state_req],
+  'msgs_state_info': [0x4deb57d, _msgs_state_info],
+  'msgs_all_info': [0x8cc0d131, _msgs_all_info],
+  'msg_detailed_info': [0x276d3ec6, _msg_detailed_info],
+  'msg_new_detailed_info': [0x809db6df, _msg_new_detailed_info],
+  'bind_auth_key_inner': [0x75a3f765, _bind_auth_key_inner],
+  'destroy_auth_key_ok': [0xf660e1d4],
+  'destroy_auth_key_none': [0xa9f2259],
+  'destroy_auth_key_fail': [0xea109b13],
+  'destroy_session_ok': [0xe22045fc, _destroy_session_ok],
+  'destroy_session_none': [0x62d350c9, _destroy_session_none],
+  'req_pq': [0x60469778, _req_pq],
+  'req_pq_multi': [0xbe7e8ef1, _req_pq_multi],
+  'req_DH_params': [0xd712e4be, _req_DH_params],
+  'set_client_DH_params': [0xf5045f1f, _set_client_DH_params],
+  'rpc_drop_answer': [0x58e4a740, _rpc_drop_answer],
+  'get_future_salts': [0xb921bd04, _get_future_salts],
+  'ping': [0x7abe77ec, _ping],
+  'ping_delay_disconnect': [0xf3427b8c, _ping_delay_disconnect],
+  'http_wait': [0x9299359f, _http_wait],
+  'destroy_auth_key': [0xd1435160],
+  'destroy_session': [0xe7512126, _destroy_session],
 }
 
 function i32(value: number) { s.writeInt32(value); }
@@ -306,57 +354,44 @@ function i256(value: string) { s.writeInt256(value); }
 function str(value: string) { s.writeString(value); }
 function bytes(value: ArrayBuffer) { s.writeBytes(value); }
 
-const builderMap: Record<string, (o: any) => void> = {
-  'vector': _vector,
-  'resPQ': _resPQ,
-  'p_q_inner_data': _p_q_inner_data,
-  'p_q_inner_data_dc': _p_q_inner_data_dc,
-  'p_q_inner_data_temp': _p_q_inner_data_temp,
-  'p_q_inner_data_temp_dc': _p_q_inner_data_temp_dc,
-  'server_DH_params_fail': _server_DH_params_fail,
-  'server_DH_params_ok': _server_DH_params_ok,
-  'server_DH_inner_data': _server_DH_inner_data,
-  'client_DH_inner_data': _client_DH_inner_data,
-  'dh_gen_ok': _dh_gen_ok,
-  'dh_gen_retry': _dh_gen_retry,
-  'dh_gen_fail': _dh_gen_fail,
-  'rpc_result': _rpc_result,
-  'rpc_error': _rpc_error,
-  'rpc_answer_unknown': _rpc_answer_unknown,
-  'rpc_answer_dropped_running': _rpc_answer_dropped_running,
-  'rpc_answer_dropped': _rpc_answer_dropped,
-  'future_salt': _future_salt,
-  'future_salts': _future_salts,
-  'pong': _pong,
-  'new_session_created': _new_session_created,
-  'msg_container': _msg_container,
-  'message': _message,
-  'msg_copy': _msg_copy,
-  'gzip_packed': _gzip_packed,
-  'msgs_ack': _msgs_ack,
-  'bad_msg_notification': _bad_msg_notification,
-  'bad_server_salt': _bad_server_salt,
-  'msg_resend_req': _msg_resend_req,
-  'msg_resend_ans_req': _msg_resend_ans_req,
-  'msgs_state_req': _msgs_state_req,
-  'msgs_state_info': _msgs_state_info,
-  'msgs_all_info': _msgs_all_info,
-  'msg_detailed_info': _msg_detailed_info,
-  'msg_new_detailed_info': _msg_new_detailed_info,
-  'bind_auth_key_inner': _bind_auth_key_inner,
-  'destroy_auth_key_ok': _destroy_auth_key_ok,
-  'destroy_auth_key_none': _destroy_auth_key_none,
-  'destroy_auth_key_fail': _destroy_auth_key_fail,
-  'destroy_session_ok': _destroy_session_ok,
-  'destroy_session_none': _destroy_session_none,
+function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }
+
+function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+  i32(0x1cb5c415);
+  i32(value.length);
+  for (let i = 0; i < value.length; i++) {
+    if (ctorId != undefined) i32(ctorId);
+    fn(value[i]);
+  }
 }
 
-function obj(o: any) {
-  const func = builderMap[o._];
-  func(o);
+function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+  if (value === undefined || value.length === 0) return;
+  vector(fn, value, ctorId);
 }
 
-export default function build(stream: ByteStream, o: any) {
+function flag(fn: (value: any) => void, value: any) {
+  if (has(value)) fn(value);
+}
+
+function has(value: any) {
+  return +!!value;
+}
+
+function obj(o: any, bare = false) {
+  const descriptor = builderMap[o._];
+  if (descriptor) {
+    const [id, fn] = descriptor;
+    if (!bare) i32(id);
+    if (fn) fn(o);
+  } else if (fallbackBuilder) fallbackBuilder(s, o);
+  else {
+    console.error('Cannot serialize object', o);
+  }
+}
+
+export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
   s = stream;
+  fallbackBuilder = fallback;
   return obj(o);
 }

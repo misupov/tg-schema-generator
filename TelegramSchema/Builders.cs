@@ -3,13 +3,17 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using static TelegramSchema.Utils;
 
 namespace TelegramSchema
 {
     static class Builders
     {
+        private static string ToHex(string i)
+        {
+            return "0x" + Convert.ToString(int.Parse(i), 16);
+        }
+        
         public static void WriteBuilders(
             string outputFolder,
             string schemaName,
@@ -20,13 +24,7 @@ namespace TelegramSchema
             using var streamWriter = new StreamWriter(fileStream);
             using var writer = new IndentedTextWriter(streamWriter, "  ") {NewLine = "\n"};
 
-            var i32 = false;
-            var i64 = false;
-            var i128 = false;
-            var i256 = false;
-            var f64 = false;
-            var str = false;
-            var bytes = false;
+            var ops = new HashSet<string>();
 
             writer.WriteLine("/*******************************************************************************************/");
             writer.WriteLine("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */");
@@ -51,136 +49,188 @@ namespace TelegramSchema
             writer.WriteLine("}");
             writer.WriteLine();
             writer.WriteLine("let s: ByteStream;");
+            writer.WriteLine("let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;");
             writer.WriteLine();
-            foreach (var type in types)
+            foreach (var constructor in schema.constructors.Where(c => c.@params.Length > 0))
             {
-                foreach (var constructor in type.Value)
-                {
-                    writer.WriteLine($"function _{FixConstructorName(constructor)}(o: any) {{");
-                    writer.Indent++;
-                    writer.WriteLine($"i32(0x{Convert.ToString(int.Parse(constructor.id), 16)});");
-                    if (HasFlags(constructor))
-                    {
-                        writer.Write("const flags = ");
-                        var prependOr = false;
-                        foreach (var param in constructor.@params)
-                        {
-                            var flagsMatch = Regex.Match(param.type, @"flags.(\d+)\?(.+)");
-                            if (flagsMatch.Success)
-                            {
-                                if (prependOr)
-                                {
-                                    writer.Write($" | ");
-                                }
-
-                                var shift = flagsMatch.Groups[1].Value;
-                                if (flagsMatch.Groups[2].Value == "true")
-                                {
-                                    writer.Write($"+o.{param.name}");
-                                }
-                                else
-                                {
-                                    writer.Write($"+!!o.{param.name}");
-                                }
-                                if (shift != "0")
-                                {
-                                    writer.Write($" << {flagsMatch.Groups[1].Value}");
-                                }
-                                prependOr = true;
-                            }
-                        }
-                        writer.WriteLine(";");
-                        writer.WriteLine("i32(flags);");
-                    }
-                    foreach (var param in constructor.@params)
-                    {
-                        if (param.name != "flags" && param.type != "#")
-                        {
-                            var flagsMatch = Regex.Match(param.type, @"flags.(\d+)\?(.+)");
-                            if (flagsMatch.Success)
-                            { 
-                                writer.Write($"if (o.{param.name} !== undefined) ");
-                            }
-
-                            switch (param.type)
-                            {
-                                case "int": 
-                                    writer.WriteLine($"i32(o.{param.name});");
-                                    i32 = true;
-                                    break;
-                                case "long": 
-                                    writer.WriteLine($"i64(o.{param.name});");
-                                    i64 = true;
-                                    break;
-                                case "int128": 
-                                    writer.WriteLine($"i128(o.{param.name});");
-                                    i128 = true;
-                                    break;
-                                case "int256": 
-                                    writer.WriteLine($"i256(o.{param.name});");
-                                    i256 = true;
-                                    break;
-                                case "double": 
-                                    writer.WriteLine($"f64(o.{param.name});");
-                                    f64 = true;
-                                    break;
-                                case "string": 
-                                    writer.WriteLine($"str(o.{param.name});");
-                                    str = true;
-                                    break;
-                                case "bytes": 
-                                    writer.WriteLine($"bytes(o.{param.name});");
-                                    bytes = true;
-                                    break;
-                                default:
-                                    writer.WriteLine($"obj(o.{param.name}); // {param.type}");
-                                    break;
-                            }
-                            
-                        }
-                    }
-
-                    writer.Indent--;
-                    writer.WriteLine("}");
-                    writer.WriteLine();
-                }
+                WriteEntity(schema, writer, constructor, ops);
+            }
+            
+            foreach (var method in schema.methods.Where(c => c.@params.Length > 0))
+            {
+                WriteEntity(schema, writer, method, ops);
             }
 
-            if (i32) writer.WriteLine("function i32(value: number) { s.writeInt32(value); }");
-            if (i64) writer.WriteLine("function i64(value: string) { s.writeInt64(value); }");
-            if (i128) writer.WriteLine("function i128(value: string) { s.writeInt128(value); }");
-            if (i256) writer.WriteLine("function i256(value: string) { s.writeInt256(value); }");
-            if (f64) writer.WriteLine("function f64(value: number) { s.writeDouble(value); }");
-            if (str) writer.WriteLine("function str(value: string) { s.writeString(value); }");
-            if (bytes) writer.WriteLine("function bytes(value: ArrayBuffer) { s.writeBytes(value); }");
-
             writer.WriteLine();
-            writer.WriteLine("const builderMap: Record<string, (o: any) => void> = {");
+            writer.WriteLine("const builderMap: Record<string, [number, ((o: any) => void)?]> = {");
             writer.Indent++;
-            foreach (var type in types)
+            foreach (var constructor in schema.constructors)
             {
-                foreach (var constructor in type.Value)
-                {
-                    writer.WriteLine($"'{constructor.predicate}': _{FixConstructorName(constructor)},");
-                }
+                writer.WriteLine(constructor.@params.Length == 0
+                    ? $"'{constructor.predicate}': [{ToHex(constructor.id)}],"
+                    : $"'{constructor.predicate}': [{ToHex(constructor.id)}, _{FixEntityName(constructor)}],");
+            }
+            foreach (var method in schema.methods)
+            {
+                writer.WriteLine(method.@params.Length == 0
+                    ? $"'{method.method}': [{ToHex(method.id)}],"
+                    : $"'{method.method}': [{ToHex(method.id)}, _{FixEntityName(method)}],");
             }
 
             writer.Indent--;
             writer.WriteLine("}");
-            writer.WriteLine("");
-            writer.WriteLine("function obj(o: any) {");
+            writer.WriteLine();
+            if (ops.Contains("i32")) writer.WriteLine("function i32(value: number) { s.writeInt32(value); }");
+            if (ops.Contains("i64")) writer.WriteLine("function i64(value: string) { s.writeInt64(value); }");
+            if (ops.Contains("i128")) writer.WriteLine("function i128(value: string) { s.writeInt128(value); }");
+            if (ops.Contains("i256")) writer.WriteLine("function i256(value: string) { s.writeInt256(value); }");
+            if (ops.Contains("f64")) writer.WriteLine("function f64(value: number) { s.writeDouble(value); }");
+            if (ops.Contains("str")) writer.WriteLine("function str(value: string) { s.writeString(value); }");
+            if (ops.Contains("bytes")) writer.WriteLine("function bytes(value: ArrayBuffer) { s.writeBytes(value); }");
+            writer.WriteLine();
+            {
+                writer.WriteLine("function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }");
+            }
+            writer.WriteLine();
+            var vectorConstructor = schema.constructors.FirstOrDefault(c => c.predicate == "vector");
+            if (vectorConstructor != null)
+            {
+                writer.WriteLine("function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {");
+                writer.Indent++;
+                writer.WriteLine($"i32({ToHex(vectorConstructor.id)});");
+                writer.WriteLine("i32(value.length);");
+                writer.WriteLine("for (let i = 0; i < value.length; i++) {");
+                writer.Indent++;
+                writer.WriteLine("if (ctorId != undefined) i32(ctorId);");
+                writer.WriteLine("fn(value[i]);");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.WriteLine();
+            }
+            writer.WriteLine("function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {");
             writer.Indent++;
-            writer.WriteLine("const func = builderMap[o._];");
-            writer.WriteLine("func(o);");
+            writer.WriteLine("if (value === undefined || value.length === 0) return;");
+            writer.WriteLine("vector(fn, value, ctorId);");
             writer.Indent--;
             writer.WriteLine("}");
-            writer.WriteLine("");
-            writer.WriteLine("export default function build(stream: ByteStream, o: any) {");
+            writer.WriteLine();
+            writer.WriteLine("function flag(fn: (value: any) => void, value: any) {");
+            writer.Indent++;
+            writer.WriteLine("if (has(value)) fn(value);");
+            writer.Indent--;
+            writer.WriteLine("}");
+            writer.WriteLine();
+            writer.WriteLine("function has(value: any) {");
+            writer.Indent++;
+            writer.WriteLine("return +!!value;");
+            writer.Indent--;
+            writer.WriteLine("}");
+            writer.WriteLine();
+            writer.WriteLine("function obj(o: any, bare = false) {");
+            writer.Indent++;
+            writer.WriteLine("const descriptor = builderMap[o._];");
+            writer.WriteLine("if (descriptor) {");
+            writer.Indent++;
+            writer.WriteLine("const [id, fn] = descriptor;");
+            writer.WriteLine("if (!bare) i32(id);");
+            writer.WriteLine("if (fn) fn(o);");
+            writer.Indent--;
+            writer.WriteLine("} else if (fallbackBuilder) fallbackBuilder(s, o);");
+            writer.WriteLine("else {");
+            writer.Indent++;
+            writer.WriteLine("console.error('Cannot serialize object', o);");
+            writer.Indent--;
+            writer.WriteLine("}");
+            writer.Indent--;
+            writer.WriteLine("}");
+            writer.WriteLine();
+            writer.WriteLine("export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {");
             writer.Indent++;
             writer.WriteLine("s = stream;");
+            writer.WriteLine("fallbackBuilder = fallback;");
             writer.WriteLine("return obj(o);");
             writer.Indent--;
             writer.WriteLine("}");
+        }
+
+        private static void WriteEntity(Schema schema, IndentedTextWriter writer, IEntity entity, ISet<string> ops)
+        {
+            writer.WriteLine($"function _{FixEntityName(entity)}(o: any) {{");
+            writer.Indent++;
+            if (HasFlags(entity))
+            {
+                writer.WriteLine("const flags = ");
+                writer.Indent++;
+                var first = true;
+                foreach (var param in entity.@params)
+                {
+                    var (flag, _, _) = ParseType(param.type);
+                    if (flag.HasValue)
+                    {
+                        writer.Write(first ? "  " : "| ");
+                        writer.Write($"has(o.{param.name})");
+                        if (flag.Value > 0)
+                        {
+                            writer.Write($" << {flag.Value}");
+                        }
+
+                        writer.WriteLine(param != entity.@params.Last() ? "" : ";");
+                        first = false;
+                    }
+                }
+
+                writer.Indent--;
+                writer.WriteLine("i32(flags);");
+                writer.WriteLine();
+            }
+
+            foreach (var param in entity.@params)
+            {
+                var (flag, vector, pType) = ParseType(param.type);
+                if (param.name == "flags" || pType == "#" || pType == "true")
+                {
+                    continue;
+                }
+
+                var ctor = schema.constructors.FirstOrDefault(c => c.predicate == pType);
+
+                if (vector)
+                {
+                    var op = TypeNameToBuilderOp(pType);
+                    ops.Add(op);
+                    writer.WriteLine(flag.HasValue
+                        ? $"flagVector({TypeNameToBuilderOp(pType)}, o.{param.name}{(ctor != null ? ", " + ToHex(ctor.id) : "")});"
+                        : $"vector({TypeNameToBuilderOp(pType)}, o.{param.name}{(ctor != null ? ", " + ToHex(ctor.id) : "")});");
+                }
+                else
+                {
+                    var op = TypeNameToBuilderOp(pType);
+                    ops.Add(op);
+                    writer.WriteLine(flag.HasValue ? $"flag({op}, o.{param.name});" : $"{op}(o.{param.name});");
+                }
+            }
+
+            writer.Indent--;
+            writer.WriteLine("}");
+            writer.WriteLine();
+        }
+
+        private static string TypeNameToBuilderOp(string type)
+        {
+            return type switch
+            {
+                "int" => "i32",
+                "long" => "i64",
+                "int128" => "i128",
+                "int256" => "i256",
+                "double" => "f64",
+                "string" => "str",
+                "bytes" => "bytes",
+                "Bool" => "bool",
+                _ => "obj"
+            };
         }
     }
 }

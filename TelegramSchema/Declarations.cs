@@ -67,7 +67,7 @@ namespace TelegramSchema
                 }
                 foreach (var constructor in types[type])
                 {
-                    writer.WriteLine($"  | {typeName}.{FixConstructorName(constructor)}");
+                    writer.WriteLine($"  | {typeName}.{FixEntityName(constructor)}");
                 }
 
                 writer.WriteLine(";");
@@ -77,7 +77,7 @@ namespace TelegramSchema
                 foreach (var constructor in types[type])
                 {
                     writer.Indent++;
-                    writer.WriteLine($"export type {FixConstructorName(constructor)} = {{");
+                    writer.WriteLine($"export type {FixEntityName(constructor)} = {{");
                     writer.Indent++;
                     writer.WriteLine($"_: '{constructor.predicate}',");
                     if (constructor.layer > 0)
@@ -105,7 +105,7 @@ namespace TelegramSchema
                 var first = group.First();
                 if (!IsPrimitiveType(first.type))
                 {
-                    var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixConstructorName(c)}").ToArray();
+                    var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixEntityName(c)}").ToArray();
                     writer.WriteLine($"'{first.predicate}': {string.Join(" | ", decls)},");
                 }
             }
