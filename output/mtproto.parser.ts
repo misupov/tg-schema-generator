@@ -28,23 +28,6 @@ export default function parse(stream: ByteStream, fallback?: (stream: ByteStream
   return obj();
 }
 
-const u = undefined;
-function i32() { return s.readInt32(); }
-function i64() { return s.readInt64(); }
-function i128() { return s.readInt128(); }
-function i256() { return s.readInt256(); }
-function f64() { return s.readDouble(); }
-function str() { return s.readString(); }
-function bytes() { return s.readBytes(); }
-
-function vector(t: () => any, bare = false) {
-  if (!bare) { i32(); /* ignoring constructor id. */ }
-  const len = i32();
-  const result = [];
-  for (let i = 0; i < len; ++i) result.push(t());
-  return result;
-}
-
 const _vector: any = () => ({_: 'vector'});
 const _resPQ: any = () => ({_: 'resPQ', nonce: i128(), server_nonce: i128(), pq: bytes(), server_public_key_fingerprints: vector(i64)});
 const _p_q_inner_data: any = () => ({_: 'p_q_inner_data', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256()});
@@ -64,7 +47,7 @@ const _rpc_answer_unknown: any = () => ({_: 'rpc_answer_unknown'});
 const _rpc_answer_dropped_running: any = () => ({_: 'rpc_answer_dropped_running'});
 const _rpc_answer_dropped: any = () => ({_: 'rpc_answer_dropped', msg_id: i64(), seq_no: i32(), bytes: i32()});
 const _future_salt: any = () => ({_: 'future_salt', valid_since: i32(), valid_until: i32(), salt: i64()});
-const _future_salts: any = () => ({_: 'future_salts', req_msg_id: i64(), now: i32(), salts: vector(_future_salt)});
+const _future_salts: any = () => ({_: 'future_salts', req_msg_id: i64(), now: i32(), salts: vector(_future_salt, true)});
 const _pong: any = () => ({_: 'pong', msg_id: i64(), ping_id: i64()});
 const _new_session_created: any = () => ({_: 'new_session_created', first_msg_id: i64(), unique_id: i64(), server_salt: i64()});
 const _msg_container: any = () => ({_: 'msg_container', messages: vector(_message, true)});
@@ -132,6 +115,21 @@ const parserMap = new Map<number, () => any>([
   [0xe22045fc, _destroy_session_ok],
   [0x62d350c9, _destroy_session_none],
 ]);
+
+function i32() { return s.readInt32(); }
+function i64() { return s.readInt64(); }
+function i128() { return s.readInt128(); }
+function i256() { return s.readInt256(); }
+function str() { return s.readString(); }
+function bytes() { return s.readBytes(); }
+
+function vector(t: () => any, bare = false) {
+  if (!bare) { i32(); /* ignoring constructor id. */ }
+  const len = i32();
+  const result = [];
+  for (let i = 0; i < len; ++i) result.push(t());
+  return result;
+}
 
 function obj() {
   const c = i32() >>> 0;

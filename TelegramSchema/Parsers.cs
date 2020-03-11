@@ -20,6 +20,8 @@ namespace TelegramSchema
             using var streamWriter = new StreamWriter(fileStream);
             using var writer = new IndentedTextWriter(streamWriter, "  ") {NewLine = "\n"};
             
+            var ops = new HashSet<string>();
+
             writer.WriteLine("/*******************************************************************************************/");
             writer.WriteLine("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */");
             writer.WriteLine("/*                                                                                         */");
@@ -54,26 +56,6 @@ namespace TelegramSchema
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("const u = undefined;");
-            writer.WriteLine("function i32() { return s.readInt32(); }");
-            writer.WriteLine("function i64() { return s.readInt64(); }");
-            writer.WriteLine("function i128() { return s.readInt128(); }");
-            writer.WriteLine("function i256() { return s.readInt256(); }");
-            writer.WriteLine("function f64() { return s.readDouble(); }");
-            writer.WriteLine("function str() { return s.readString(); }");
-            writer.WriteLine("function bytes() { return s.readBytes(); }");
-            writer.WriteLine();
-            writer.WriteLine("function vector(t: () => any, bare = false) {");
-            writer.Indent++;
-            writer.WriteLine("if (!bare) { i32(); /* ignoring constructor id. */ }");
-            writer.WriteLine("const len = i32();");
-            writer.WriteLine("const result = [];");
-            writer.WriteLine("for (let i = 0; i < len; ++i) result.push(t());");
-            writer.WriteLine("return result;");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
-            
             foreach (var constructor in schema.constructors)
             {
                 if (constructor.predicate == "boolTrue")
@@ -86,11 +68,11 @@ namespace TelegramSchema
                 } 
                 else if (!HasFlags(constructor))
                 {
-                    WriteParserConstructorLambda(writer, types, constructor);
+                    WriteParserConstructorLambda(writer, types, constructor, ops);
                 }
                 else
                 {
-                    WriteParserConstructor(writer, types, constructor);
+                    WriteParserConstructor(writer, types, constructor, ops);
                 }
             }
             writer.WriteLine("");
@@ -103,7 +85,30 @@ namespace TelegramSchema
             }
             writer.Indent--;
             writer.WriteLine("]);");
-            writer.WriteLine("");
+            writer.WriteLine();
+            if (ops.Contains("u")) writer.WriteLine("const u = undefined;");
+            if (ops.Contains("i32")) writer.WriteLine("function i32() { return s.readInt32(); }");
+            if (ops.Contains("i64")) writer.WriteLine("function i64() { return s.readInt64(); }");
+            if (ops.Contains("i128")) writer.WriteLine("function i128() { return s.readInt128(); }");
+            if (ops.Contains("i256")) writer.WriteLine("function i256() { return s.readInt256(); }");
+            if (ops.Contains("f64")) writer.WriteLine("function f64() { return s.readDouble(); }");
+            if (ops.Contains("str")) writer.WriteLine("function str() { return s.readString(); }");
+            if (ops.Contains("bytes")) writer.WriteLine("function bytes() { return s.readBytes(); }");
+            writer.WriteLine();
+            if (ops.Contains("vector"))
+            {
+                writer.WriteLine("function vector(t: () => any, bare = false) {");
+                writer.Indent++;
+                writer.WriteLine("if (!bare) { i32(); /* ignoring constructor id. */ }");
+                writer.WriteLine("const len = i32();");
+                writer.WriteLine("const result = [];");
+                writer.WriteLine("for (let i = 0; i < len; ++i) result.push(t());");
+                writer.WriteLine("return result;");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.WriteLine();
+            }
+
             writer.WriteLine("function obj() {");
             writer.Indent++;
             writer.WriteLine("const c = i32() >>> 0;");
@@ -127,18 +132,26 @@ namespace TelegramSchema
             writer.WriteLine("}");
         }
 
-        private static void WriteParserConstructorLambda(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
+        private static void WriteParserConstructorLambda(
+            IndentedTextWriter writer,
+            IReadOnlyDictionary<string, HashSet<Constructor>> types,
+            Constructor constructor,
+            ISet<string> ops)
         {
             writer.Write($"const _{FixEntityName(constructor)}: any = () => ({{");
             writer.Write($"_: '{constructor.predicate}'");
             foreach (var param in constructor.@params)
             {
-                writer.Write($", {param.name}: {FormatAccessor(types, param.type)}");
+                writer.Write($", {param.name}: {FormatAccessor(types, param.type, ops)}");
             }
             writer.WriteLine("});");
         }
 
-        private static void WriteParserConstructor(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
+        private static void WriteParserConstructor(
+            IndentedTextWriter writer,
+            IReadOnlyDictionary<string, HashSet<Constructor>> types,
+            Constructor constructor,
+            ISet<string> ops)
         {
             writer.WriteLine($"function _{FixEntityName(constructor)}(): any {{");
             writer.Indent++;
@@ -154,7 +167,7 @@ namespace TelegramSchema
             {
                 if (param.type != "#")
                 {
-                    writer.WriteLine($"{param.name}: {FormatAccessor(types, param.type)},");
+                    writer.WriteLine($"{param.name}: {FormatAccessor(types, param.type, ops)},");
                 }
             }
             writer.Indent--;
@@ -163,7 +176,7 @@ namespace TelegramSchema
             writer.WriteLine("}");
         }
         
-        private static string FormatAccessor(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType)
+        private static string FormatAccessor(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType, ISet<string> ops)
         {
             var flagsMatch = Regex.Match(paramType, @"flags\.(.+)\?(.*)");
             var bit = -1;
@@ -174,55 +187,44 @@ namespace TelegramSchema
             }
             switch (paramType)
             {
-                case "true": return bit >= 0 ? ("!!(flags & 0x" + Convert.ToString(1 << bit, 16) + ")") : FormatAccessorMandatory(types, paramType); 
-                default: return bit >= 0 
-                    ? ("flags & 0x" + Convert.ToString(1 << bit, 16) + " ? " + FormatAccessorMandatory(types, paramType) + " : u")
-                    : FormatAccessorMandatory(types, paramType); 
+                case "true": return bit >= 0 ? ("!!(flags & 0x" + Convert.ToString(1 << bit, 16) + ")") : FormatAccessorMandatory(types, paramType, ops); 
+                default:
+                    if (bit >= 0) ops.Add("u");
+                    return bit >= 0 
+                    ? ("flags & 0x" + Convert.ToString(1 << bit, 16) + " ? " + FormatAccessorMandatory(types, paramType, ops) + " : u")
+                    : FormatAccessorMandatory(types, paramType, ops); 
             }
         }
         
-        private static string FormatAccessorMandatory(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType)
+        private static string FormatAccessorMandatory(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType, ISet<string> ops, bool addBraces = true)
         {
             if (IsVector(paramType))
             {
-                var param = UnwrapVector(paramType);
+                ops.Add("vector");
+                var (param, bare) = UnwrapVector(paramType);
                 
-                if (IsType(types, param))
-                {
-                    return "vector(obj)";
-                }
-
                 if (param.StartsWith("%"))
                 {
                     param = types[param.Substring(1)].First().predicate;
-                    return $"vector(_{FixEntityName(param)}, true)";
                 }
-                
-                switch (param)
-                {
-                    case "int": return "vector(i32)";
-                    case "long": return "vector(i64)";
-                    case "int128": return "vector(i128)";
-                    case "int256": return "vector(i256)";
-                    case "double": return "vector(f64)";
-                    case "string": return "vector(str)";
-                    case "bytes": return "vector(bytes)";
-                }
-                return $"vector(_{FixEntityName(param)})";
+
+                return $"vector({FormatAccessorMandatory(types, param, ops, false)}{(bare ? ", true" : "")})";
             }
 
-            switch (paramType)
+            var braces = addBraces ? "()" : "";
+            var b = paramType switch
             {
-                case "int": return "i32()";
-                case "long": return "i64()";
-                case "int128": return "i128()";
-                case "int256": return "i256()";
-                case "double": return "f64()";
-                case "string": return "str()";
-                case "bytes": return "bytes()";
-                case "vector": return "vector()";
-                default: return "obj()"; 
-            }
+                "int" => "i32",
+                "long" => "i64",
+                "int128" => "i128",
+                "int256" => "i256",
+                "double" => "f64",
+                "string" => "str",
+                "bytes" => "bytes",
+                _ => $"{(IsType(types, paramType) ? "obj" : $"_{FixEntityName(paramType)}")}"
+            };
+            ops.Add(b);
+            return $"{b}{braces}";
         }
     }
 }

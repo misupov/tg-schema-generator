@@ -49,7 +49,6 @@ const _inputMediaUploadedPhoto = (o: any) => {
       has(o.stickers)
     | has(o.ttl_seconds) << 1;
   i32(flags);
-  
   obj(o.file);
   flagVector(obj, o.stickers);
   flag(i32, o.ttl_seconds);
@@ -59,7 +58,6 @@ const _inputMediaPhoto = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
-  
   obj(o.id);
   flag(i32, o.ttl_seconds);
 };
@@ -142,7 +140,6 @@ const _chat = (o: any) => {
     | has(o.admin_rights) << 14
     | has(o.default_banned_rights) << 18;
   i32(flags);
-  
   i32(o.id);
   str(o.title);
   obj(o.photo);
@@ -168,7 +165,6 @@ const _chatFull = (o: any) => {
     | has(o.pinned_msg_id) << 6
     | has(o.folder_id) << 11;
   i32(flags);
-  
   i32(o.id);
   str(o.about);
   obj(o.participants);
@@ -190,7 +186,6 @@ const _chatParticipantsForbidden = (o: any) => {
   const flags = 
       has(o.self_participant);
   i32(flags);
-  
   i32(o.chat_id);
   flag(obj, o.self_participant);
 };
@@ -234,7 +229,6 @@ const _message = (o: any) => {
     | has(o.grouped_id) << 17
     | has(o.restriction_reason) << 22;
   i32(flags);
-  
   i32(o.id);
   flag(i32, o.from_id);
   obj(o.to_id);
@@ -264,7 +258,6 @@ const _messageService = (o: any) => {
     | has(o.from_id) << 8
     | has(o.reply_to_msg_id) << 3
   i32(flags);
-  
   i32(o.id);
   flag(i32, o.from_id);
   obj(o.to_id);
@@ -278,7 +271,6 @@ const _messageMediaPhoto = (o: any) => {
       has(o.photo)
     | has(o.ttl_seconds) << 2;
   i32(flags);
-  
   flag(obj, o.photo);
   flag(i32, o.ttl_seconds);
 };
@@ -324,7 +316,6 @@ const _dialog = (o: any) => {
     | has(o.draft) << 1
     | has(o.folder_id) << 4;
   i32(flags);
-  
   obj(o.peer);
   i32(o.top_message);
   i32(o.read_inbox_max_id);
@@ -345,7 +336,6 @@ const _photo = (o: any) => {
   const flags = 
       has(o.has_stickers)
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
@@ -385,7 +375,6 @@ const _authSentCode = (o: any) => {
       has(o.next_type) << 1
     | has(o.timeout) << 2;
   i32(flags);
-  
   obj(o.type);
   str(o.phone_code_hash);
   flag(obj, o.next_type);
@@ -396,7 +385,6 @@ const _authAuthorization = (o: any) => {
   const flags = 
       has(o.tmp_sessions)
   i32(flags);
-  
   flag(i32, o.tmp_sessions);
   obj(o.user);
 };
@@ -417,7 +405,6 @@ const _inputPeerNotifySettings = (o: any) => {
     | has(o.mute_until) << 2
     | has(o.sound) << 3;
   i32(flags);
-  
   flag(bool, o.show_previews);
   flag(bool, o.silent);
   flag(i32, o.mute_until);
@@ -431,7 +418,6 @@ const _peerNotifySettings = (o: any) => {
     | has(o.mute_until) << 2
     | has(o.sound) << 3;
   i32(flags);
-  
   flag(bool, o.show_previews);
   flag(bool, o.silent);
   flag(i32, o.mute_until);
@@ -447,7 +433,6 @@ const _peerSettings = (o: any) => {
     | has(o.need_contacts_exception) << 4
     | has(o.report_geo) << 5;
   i32(flags);
-  
 };
 
 const _wallPaper = (o: any) => {
@@ -458,7 +443,6 @@ const _wallPaper = (o: any) => {
     | has(o.dark) << 4
     | has(o.settings) << 2;
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   str(o.slug);
@@ -483,7 +467,6 @@ const _userFull = (o: any) => {
     | has(o.pinned_msg_id) << 6
     | has(o.folder_id) << 11;
   i32(flags);
-  
   obj(o.user);
   flag(str, o.about);
   obj(o.settings);
@@ -565,7 +548,6 @@ const _messagesMessagesSlice = (o: any) => {
       has(o.inexact) << 1
     | has(o.next_rate)
   i32(flags);
-  
   i32(o.count);
   flag(i32, o.next_rate);
   vector(obj, o.messages);
@@ -682,7 +664,6 @@ const _updateShortMessage = (o: any) => {
     | has(o.reply_to_msg_id) << 3
     | has(o.entities) << 7;
   i32(flags);
-  
   i32(o.id);
   i32(o.user_id);
   str(o.message);
@@ -706,7 +687,6 @@ const _updateShortChatMessage = (o: any) => {
     | has(o.reply_to_msg_id) << 3
     | has(o.entities) << 7;
   i32(flags);
-  
   i32(o.id);
   i32(o.from_id);
   i32(o.chat_id);
@@ -773,7 +753,6 @@ const _dcOption = (o: any) => {
     | has(o.static) << 4
     | has(o.secret) << 10;
   i32(flags);
-  
   i32(o.id);
   str(o.ip_address);
   i32(o.port);
@@ -799,7 +778,6 @@ const _config = (o: any) => {
     | has(o.lang_pack_version) << 2
     | has(o.base_lang_pack_version) << 2;
   i32(flags);
-  
   i32(o.date);
   i32(o.expires);
   bool(o.test_mode);
@@ -858,7 +836,6 @@ const _helpAppUpdate = (o: any) => {
     | has(o.document) << 1
     | has(o.url) << 2;
   i32(flags);
-  
   i32(o.id);
   str(o.version);
   str(o.text);
@@ -1028,7 +1005,6 @@ const _inputMediaUploadedDocument = (o: any) => {
     | has(o.stickers)
     | has(o.ttl_seconds) << 1;
   i32(flags);
-  
   obj(o.file);
   flag(obj, o.thumb);
   str(o.mime_type);
@@ -1041,7 +1017,6 @@ const _inputMediaDocument = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
-  
   obj(o.id);
   flag(i32, o.ttl_seconds);
 };
@@ -1051,7 +1026,6 @@ const _messageMediaDocument = (o: any) => {
       has(o.document)
     | has(o.ttl_seconds) << 2;
   i32(flags);
-  
   flag(obj, o.document);
   flag(i32, o.ttl_seconds);
 };
@@ -1077,7 +1051,6 @@ const _document = (o: any) => {
   const flags = 
       has(o.thumbs)
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
@@ -1136,7 +1109,6 @@ const _updateServiceNotification = (o: any) => {
       has(o.popup)
     | has(o.inbox_date) << 1
   i32(flags);
-  
   flag(i32, o.inbox_date);
   str(o.type);
   str(o.message);
@@ -1190,7 +1162,6 @@ const _documentAttributeSticker = (o: any) => {
       has(o.mask) << 1
     | has(o.mask_coords);
   i32(flags);
-  
   str(o.alt);
   obj(o.stickerset);
   flag(obj, o.mask_coords);
@@ -1201,7 +1172,6 @@ const _documentAttributeVideo = (o: any) => {
       has(o.round_message)
     | has(o.supports_streaming) << 1
   i32(flags);
-  
   i32(o.duration);
   i32(o.w);
   i32(o.h);
@@ -1214,7 +1184,6 @@ const _documentAttributeAudio = (o: any) => {
     | has(o.performer) << 1
     | has(o.waveform) << 2;
   i32(flags);
-  
   i32(o.duration);
   flag(str, o.title);
   flag(str, o.performer);
@@ -1244,7 +1213,6 @@ const _updateReadHistoryInbox = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
-  
   flag(i32, o.folder_id);
   obj(o.peer);
   i32(o.max_id);
@@ -1297,7 +1265,6 @@ const _webPage = (o: any) => {
     | has(o.cached_page) << 10
     | has(o.attributes) << 12;
   i32(flags);
-  
   i64(o.id);
   str(o.url);
   str(o.display_url);
@@ -1328,7 +1295,6 @@ const _authorization = (o: any) => {
     | has(o.official_app) << 1
     | has(o.password_pending) << 2
   i32(flags);
-  
   i64(o.hash);
   str(o.device_model);
   str(o.platform);
@@ -1358,7 +1324,6 @@ const _accountPassword = (o: any) => {
     | has(o.hint) << 3
     | has(o.email_unconfirmed_pattern) << 4
   i32(flags);
-  
   flag(obj, o.current_algo);
   flag(bytes, o.srp_B);
   flag(i64, o.srp_id);
@@ -1374,7 +1339,6 @@ const _accountPasswordSettings = (o: any) => {
       has(o.email)
     | has(o.secure_settings) << 1;
   i32(flags);
-  
   flag(str, o.email);
   flag(obj, o.secure_settings);
 };
@@ -1387,7 +1351,6 @@ const _accountPasswordInputSettings = (o: any) => {
     | has(o.email) << 1
     | has(o.new_secure_settings) << 2;
   i32(flags);
-  
   flag(obj, o.new_algo);
   flag(bytes, o.new_password_hash);
   flag(str, o.hint);
@@ -1437,7 +1400,6 @@ const _chatInvite = (o: any) => {
     | has(o.megagroup) << 3
     | has(o.participants) << 4;
   i32(flags);
-  
   str(o.title);
   obj(o.photo);
   i32(o.participants_count);
@@ -1473,7 +1435,6 @@ const _stickerSet = (o: any) => {
     | has(o.thumb) << 4
     | has(o.thumb_dc_id) << 4
   i32(flags);
-  
   flag(i32, o.installed_date);
   i64(o.id);
   i64(o.access_hash);
@@ -1518,7 +1479,6 @@ const _user = (o: any) => {
     | has(o.bot_inline_placeholder) << 19
     | has(o.lang_code) << 22;
   i32(flags);
-  
   i32(o.id);
   flag(i64, o.access_hash);
   flag(str, o.first_name);
@@ -1556,7 +1516,6 @@ const _replyKeyboardHide = (o: any) => {
   const flags = 
       has(o.selective) << 2;
   i32(flags);
-  
 };
 
 const _replyKeyboardForceReply = (o: any) => {
@@ -1564,7 +1523,6 @@ const _replyKeyboardForceReply = (o: any) => {
       has(o.single_use) << 1
     | has(o.selective) << 2;
   i32(flags);
-  
 };
 
 const _replyKeyboardMarkup = (o: any) => {
@@ -1573,7 +1531,6 @@ const _replyKeyboardMarkup = (o: any) => {
     | has(o.single_use) << 1
     | has(o.selective) << 2
   i32(flags);
-  
   vector(obj, o.rows);
 };
 
@@ -1650,7 +1607,6 @@ const _updateShortSentMessage = (o: any) => {
     | has(o.media) << 9
     | has(o.entities) << 7;
   i32(flags);
-  
   i32(o.id);
   i32(o.pts);
   i32(o.pts_count);
@@ -1695,7 +1651,6 @@ const _channel = (o: any) => {
     | has(o.default_banned_rights) << 18
     | has(o.participants_count) << 17;
   i32(flags);
-  
   i32(o.id);
   flag(i64, o.access_hash);
   str(o.title);
@@ -1716,7 +1671,6 @@ const _channelForbidden = (o: any) => {
     | has(o.megagroup) << 8
     | has(o.until_date) << 16;
   i32(flags);
-  
   i32(o.id);
   i64(o.access_hash);
   str(o.title);
@@ -1754,7 +1708,6 @@ const _channelFull = (o: any) => {
     | has(o.slowmode_seconds) << 17
     | has(o.slowmode_next_send_date) << 18
   i32(flags);
-  
   i32(o.id);
   str(o.about);
   flag(i32, o.participants_count);
@@ -1791,7 +1744,6 @@ const _messagesChannelMessages = (o: any) => {
   const flags = 
       has(o.inexact) << 1
   i32(flags);
-  
   i32(o.pts);
   i32(o.count);
   vector(obj, o.messages);
@@ -1807,7 +1759,6 @@ const _updateChannelTooLong = (o: any) => {
   const flags = 
       has(o.pts);
   i32(flags);
-  
   i32(o.channel_id);
   flag(i32, o.pts);
 };
@@ -1826,7 +1777,6 @@ const _updateReadChannelInbox = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
-  
   flag(i32, o.folder_id);
   i32(o.channel_id);
   i32(o.max_id);
@@ -1852,7 +1802,6 @@ const _updatesChannelDifferenceEmpty = (o: any) => {
       has(o.final)
     | has(o.timeout) << 1;
   i32(flags);
-  
   i32(o.pts);
   flag(i32, o.timeout);
 };
@@ -1862,7 +1811,6 @@ const _updatesChannelDifferenceTooLong = (o: any) => {
       has(o.final)
     | has(o.timeout) << 1
   i32(flags);
-  
   flag(i32, o.timeout);
   obj(o.dialog);
   vector(obj, o.messages);
@@ -1875,7 +1823,6 @@ const _updatesChannelDifference = (o: any) => {
       has(o.final)
     | has(o.timeout) << 1
   i32(flags);
-  
   i32(o.pts);
   flag(i32, o.timeout);
   vector(obj, o.new_messages);
@@ -1888,7 +1835,6 @@ const _channelMessagesFilter = (o: any) => {
   const flags = 
       has(o.exclude_new_messages) << 1
   i32(flags);
-  
   vector(obj, o.ranges);
 };
 
@@ -1907,7 +1853,6 @@ const _channelParticipantCreator = (o: any) => {
   const flags = 
       has(o.rank);
   i32(flags);
-  
   i32(o.user_id);
   flag(str, o.rank);
 };
@@ -1958,7 +1903,6 @@ const _helpTermsOfService = (o: any) => {
       has(o.popup)
     | has(o.min_age_confirm) << 1;
   i32(flags);
-  
   obj(o.id);
   str(o.text);
   vector(obj, o.entities);
@@ -1973,7 +1917,6 @@ const _updateStickerSetsOrder = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
-  
   vector(i64, o.order);
 };
 
@@ -2012,7 +1955,6 @@ const _inputBotInlineMessageMediaAuto = (o: any) => {
       has(o.entities) << 1
     | has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
@@ -2024,7 +1966,6 @@ const _inputBotInlineMessageText = (o: any) => {
     | has(o.entities) << 1
     | has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
@@ -2038,7 +1979,6 @@ const _inputBotInlineResult = (o: any) => {
     | has(o.thumb) << 4
     | has(o.content) << 5
   i32(flags);
-  
   str(o.id);
   str(o.type);
   flag(str, o.title);
@@ -2054,7 +1994,6 @@ const _botInlineMessageMediaAuto = (o: any) => {
       has(o.entities) << 1
     | has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
@@ -2066,7 +2005,6 @@ const _botInlineMessageText = (o: any) => {
     | has(o.entities) << 1
     | has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
@@ -2080,7 +2018,6 @@ const _botInlineResult = (o: any) => {
     | has(o.thumb) << 4
     | has(o.content) << 5
   i32(flags);
-  
   str(o.id);
   str(o.type);
   flag(str, o.title);
@@ -2097,7 +2034,6 @@ const _messagesBotResults = (o: any) => {
     | has(o.next_offset) << 1
     | has(o.switch_pm) << 2
   i32(flags);
-  
   i64(o.query_id);
   flag(str, o.next_offset);
   flag(obj, o.switch_pm);
@@ -2110,7 +2046,6 @@ const _updateBotInlineQuery = (o: any) => {
   const flags = 
       has(o.geo)
   i32(flags);
-  
   i64(o.query_id);
   i32(o.user_id);
   str(o.query);
@@ -2123,7 +2058,6 @@ const _updateBotInlineSend = (o: any) => {
       has(o.geo)
     | has(o.msg_id) << 1;
   i32(flags);
-  
   i32(o.user_id);
   str(o.query);
   flag(obj, o.geo);
@@ -2146,7 +2080,6 @@ const _messageFwdHeader = (o: any) => {
     | has(o.saved_from_peer) << 4
     | has(o.saved_from_msg_id) << 4;
   i32(flags);
-  
   flag(i32, o.from_id);
   flag(str, o.from_name);
   i32(o.date);
@@ -2206,7 +2139,6 @@ const _keyboardButtonSwitchInline = (o: any) => {
   const flags = 
       has(o.same_peer)
   i32(flags);
-  
   str(o.text);
   str(o.query);
 };
@@ -2223,7 +2155,6 @@ const _messagesBotCallbackAnswer = (o: any) => {
     | has(o.message)
     | has(o.url) << 2
   i32(flags);
-  
   flag(str, o.message);
   flag(str, o.url);
   i32(o.cache_time);
@@ -2234,7 +2165,6 @@ const _updateBotCallbackQuery = (o: any) => {
       has(o.data)
     | has(o.game_short_name) << 1;
   i32(flags);
-  
   i64(o.query_id);
   i32(o.user_id);
   obj(o.peer);
@@ -2248,7 +2178,6 @@ const _messagesMessageEditData = (o: any) => {
   const flags = 
       has(o.caption);
   i32(flags);
-  
 };
 
 const _updateEditMessage = (o: any) => {
@@ -2261,7 +2190,6 @@ const _inputBotInlineMessageMediaGeo = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   obj(o.geo_point);
   i32(o.period);
   flag(obj, o.reply_markup);
@@ -2271,7 +2199,6 @@ const _inputBotInlineMessageMediaVenue = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   obj(o.geo_point);
   str(o.title);
   str(o.address);
@@ -2285,7 +2212,6 @@ const _inputBotInlineMessageMediaContact = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.phone_number);
   str(o.first_name);
   str(o.last_name);
@@ -2297,7 +2223,6 @@ const _botInlineMessageMediaGeo = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   obj(o.geo);
   i32(o.period);
   flag(obj, o.reply_markup);
@@ -2307,7 +2232,6 @@ const _botInlineMessageMediaVenue = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   obj(o.geo);
   str(o.title);
   str(o.address);
@@ -2321,7 +2245,6 @@ const _botInlineMessageMediaContact = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   str(o.phone_number);
   str(o.first_name);
   str(o.last_name);
@@ -2341,7 +2264,6 @@ const _inputBotInlineResultDocument = (o: any) => {
       has(o.title) << 1
     | has(o.description) << 2
   i32(flags);
-  
   str(o.id);
   str(o.type);
   flag(str, o.title);
@@ -2357,7 +2279,6 @@ const _botInlineMediaResult = (o: any) => {
     | has(o.title) << 2
     | has(o.description) << 3
   i32(flags);
-  
   str(o.id);
   str(o.type);
   flag(obj, o.photo);
@@ -2378,7 +2299,6 @@ const _updateInlineBotCallbackQuery = (o: any) => {
       has(o.data)
     | has(o.game_short_name) << 1;
   i32(flags);
-  
   i64(o.query_id);
   i32(o.user_id);
   obj(o.msg_id);
@@ -2443,7 +2363,6 @@ const _draftMessageEmpty = (o: any) => {
   const flags = 
       has(o.date);
   i32(flags);
-  
   flag(i32, o.date);
 };
 
@@ -2453,7 +2372,6 @@ const _draftMessage = (o: any) => {
     | has(o.reply_to_msg_id)
     | has(o.entities) << 3
   i32(flags);
-  
   flag(i32, o.reply_to_msg_id);
   str(o.message);
   flagVector(obj, o.entities);
@@ -2491,7 +2409,6 @@ const _inputMediaPhotoExternal = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
-  
   str(o.url);
   flag(i32, o.ttl_seconds);
 };
@@ -2500,7 +2417,6 @@ const _inputMediaDocumentExternal = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
-  
   str(o.url);
   flag(i32, o.ttl_seconds);
 };
@@ -2529,7 +2445,6 @@ const _game = (o: any) => {
   const flags = 
       has(o.document);
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   str(o.short_name);
@@ -2549,7 +2464,6 @@ const _inputBotInlineMessageGame = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
-  
   flag(obj, o.reply_markup);
 };
 
@@ -2703,7 +2617,6 @@ const _pageBlockPhoto = (o: any) => {
       has(o.url)
     | has(o.webpage_id);
   i32(flags);
-  
   i64(o.photo_id);
   obj(o.caption);
   flag(str, o.url);
@@ -2715,7 +2628,6 @@ const _pageBlockVideo = (o: any) => {
       has(o.autoplay)
     | has(o.loop) << 1
   i32(flags);
-  
   i64(o.video_id);
   obj(o.caption);
 };
@@ -2734,7 +2646,6 @@ const _pageBlockEmbed = (o: any) => {
     | has(o.w) << 5
     | has(o.h) << 5
   i32(flags);
-  
   flag(str, o.url);
   flag(str, o.html);
   flag(i64, o.poster_photo_id);
@@ -2768,7 +2679,6 @@ const _updateDialogPinned = (o: any) => {
       has(o.pinned)
     | has(o.folder_id) << 1
   i32(flags);
-  
   flag(i32, o.folder_id);
   obj(o.peer);
 };
@@ -2778,7 +2688,6 @@ const _updatePinnedDialogs = (o: any) => {
       has(o.folder_id) << 1
     | has(o.order);
   i32(flags);
-  
   flag(i32, o.folder_id);
   flagVector(obj, o.order);
 };
@@ -2813,7 +2722,6 @@ const _invoice = (o: any) => {
     | has(o.phone_to_provider) << 6
     | has(o.email_to_provider) << 7
   i32(flags);
-  
   str(o.currency);
   vector(obj, o.prices);
 };
@@ -2822,7 +2730,6 @@ const _inputMediaInvoice = (o: any) => {
   const flags = 
       has(o.photo)
   i32(flags);
-  
   str(o.title);
   str(o.description);
   flag(obj, o.photo);
@@ -2843,7 +2750,6 @@ const _messageActionPaymentSentMe = (o: any) => {
       has(o.info)
     | has(o.shipping_option_id) << 1
   i32(flags);
-  
   str(o.currency);
   i64(o.total_amount);
   bytes(o.payload);
@@ -2859,7 +2765,6 @@ const _messageMediaInvoice = (o: any) => {
     | has(o.photo)
     | has(o.receipt_msg_id) << 2
   i32(flags);
-  
   str(o.title);
   str(o.description);
   flag(obj, o.photo);
@@ -2885,7 +2790,6 @@ const _paymentRequestedInfo = (o: any) => {
     | has(o.email) << 2
     | has(o.shipping_address) << 3;
   i32(flags);
-  
   flag(str, o.name);
   flag(str, o.phone);
   flag(str, o.email);
@@ -2943,7 +2847,6 @@ const _paymentsPaymentForm = (o: any) => {
     | has(o.saved_info)
     | has(o.saved_credentials) << 1
   i32(flags);
-  
   i32(o.bot_id);
   obj(o.invoice);
   i32(o.provider_id);
@@ -2960,7 +2863,6 @@ const _paymentsValidatedRequestedInfo = (o: any) => {
       has(o.id)
     | has(o.shipping_options) << 1;
   i32(flags);
-  
   flag(str, o.id);
   flagVector(obj, o.shipping_options);
 };
@@ -2974,7 +2876,6 @@ const _paymentsPaymentReceipt = (o: any) => {
       has(o.info)
     | has(o.shipping) << 1
   i32(flags);
-  
   i32(o.date);
   i32(o.bot_id);
   obj(o.invoice);
@@ -2992,7 +2893,6 @@ const _paymentsSavedInfo = (o: any) => {
       has(o.has_saved_credentials) << 1
     | has(o.saved_info);
   i32(flags);
-  
   flag(obj, o.saved_info);
 };
 
@@ -3005,7 +2905,6 @@ const _inputPaymentCredentials = (o: any) => {
   const flags = 
       has(o.save)
   i32(flags);
-  
   obj(o.data);
 };
 
@@ -3032,7 +2931,6 @@ const _updateBotPrecheckoutQuery = (o: any) => {
       has(o.info)
     | has(o.shipping_option_id) << 1
   i32(flags);
-  
   i64(o.query_id);
   i32(o.user_id);
   bytes(o.payload);
@@ -3046,7 +2944,6 @@ const _inputStickerSetItem = (o: any) => {
   const flags = 
       has(o.mask_coords);
   i32(flags);
-  
   obj(o.document);
   str(o.emoji);
   flag(obj, o.mask_coords);
@@ -3070,7 +2967,6 @@ const _phoneCallWaiting = (o: any) => {
       has(o.video) << 5
     | has(o.receive_date);
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -3084,7 +2980,6 @@ const _phoneCallRequested = (o: any) => {
   const flags = 
       has(o.video) << 5
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -3098,7 +2993,6 @@ const _phoneCallAccepted = (o: any) => {
   const flags = 
       has(o.video) << 5
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -3112,7 +3006,6 @@ const _phoneCall = (o: any) => {
   const flags = 
       has(o.p2p_allowed) << 5
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -3133,7 +3026,6 @@ const _phoneCallDiscarded = (o: any) => {
     | has(o.reason)
     | has(o.duration) << 1;
   i32(flags);
-  
   i64(o.id);
   flag(obj, o.reason);
   flag(i32, o.duration);
@@ -3152,7 +3044,6 @@ const _phoneCallProtocol = (o: any) => {
       has(o.udp_p2p)
     | has(o.udp_reflector) << 1
   i32(flags);
-  
   i32(o.min_layer);
   i32(o.max_layer);
 };
@@ -3166,7 +3057,6 @@ const _inputMessagesFilterPhoneCalls = (o: any) => {
   const flags = 
       has(o.missed);
   i32(flags);
-  
 };
 
 const _messageActionPhoneCall = (o: any) => {
@@ -3175,7 +3065,6 @@ const _messageActionPhoneCall = (o: any) => {
     | has(o.reason)
     | has(o.duration) << 1;
   i32(flags);
-  
   i64(o.call_id);
   flag(obj, o.reason);
   flag(i32, o.duration);
@@ -3227,7 +3116,6 @@ const _langPackStringPluralized = (o: any) => {
     | has(o.few_value) << 3
     | has(o.many_value) << 4
   i32(flags);
-  
   str(o.key);
   flag(str, o.zero_value);
   flag(str, o.one_value);
@@ -3255,7 +3143,6 @@ const _langPackLanguage = (o: any) => {
     | has(o.beta) << 3
     | has(o.base_lang_code) << 1
   i32(flags);
-  
   str(o.name);
   str(o.native_name);
   str(o.lang_code);
@@ -3281,7 +3168,6 @@ const _channelParticipantAdmin = (o: any) => {
     | has(o.inviter_id) << 1
     | has(o.rank) << 2;
   i32(flags);
-  
   i32(o.user_id);
   flag(i32, o.inviter_id);
   i32(o.promoted_by);
@@ -3294,7 +3180,6 @@ const _channelParticipantBanned = (o: any) => {
   const flags = 
       has(o.left)
   i32(flags);
-  
   i32(o.user_id);
   i32(o.kicked_by);
   i32(o.date);
@@ -3394,7 +3279,6 @@ const _channelAdminLogEventsFilter = (o: any) => {
     | has(o.edit) << 12
     | has(o.delete) << 13;
   i32(flags);
-  
 };
 
 const _pageBlockAudio = (o: any) => {
@@ -3450,7 +3334,6 @@ const _inputMediaGeoLive = (o: any) => {
       has(o.stopped)
     | has(o.period) << 1;
   i32(flags);
-  
   obj(o.geo_point);
   flag(i32, o.period);
 };
@@ -3498,7 +3381,6 @@ const _inputSingleMedia = (o: any) => {
   const flags = 
       has(o.entities);
   i32(flags);
-  
   obj(o.media);
   i64(o.random_id);
   str(o.message);
@@ -3647,7 +3529,6 @@ const _secureValue = (o: any) => {
     | has(o.files) << 4
     | has(o.plain_data) << 5
   i32(flags);
-  
   obj(o.type);
   flag(obj, o.data);
   flag(obj, o.front_side);
@@ -3669,7 +3550,6 @@ const _inputSecureValue = (o: any) => {
     | has(o.files) << 4
     | has(o.plain_data) << 5;
   i32(flags);
-  
   obj(o.type);
   flag(obj, o.data);
   flag(obj, o.front_side);
@@ -3732,7 +3612,6 @@ const _accountAuthorizationForm = (o: any) => {
   const flags = 
       has(o.privacy_policy_url);
   i32(flags);
-  
   vector(obj, o.required_types);
   vector(obj, o.values);
   vector(obj, o.errors);
@@ -3759,7 +3638,6 @@ const _helpDeepLinkInfo = (o: any) => {
       has(o.update_app)
     | has(o.entities) << 1;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
 };
@@ -3779,7 +3657,6 @@ const _updateDialogUnreadMark = (o: any) => {
   const flags = 
       has(o.unread)
   i32(flags);
-  
   obj(o.peer);
 };
 
@@ -3847,7 +3724,6 @@ const _secureRequiredType = (o: any) => {
     | has(o.selfie_required) << 1
     | has(o.translation_required) << 2
   i32(flags);
-  
   obj(o.type);
 };
 
@@ -3941,7 +3817,6 @@ const _pageTableCell = (o: any) => {
     | has(o.colspan) << 1
     | has(o.rowspan) << 2;
   i32(flags);
-  
   flag(obj, o.text);
   flag(i32, o.colspan);
   flag(i32, o.rowspan);
@@ -3956,7 +3831,6 @@ const _pageBlockTable = (o: any) => {
       has(o.bordered)
     | has(o.striped) << 1
   i32(flags);
-  
   obj(o.title);
   vector(obj, o.rows);
 };
@@ -3992,7 +3866,6 @@ const _pageBlockDetails = (o: any) => {
   const flags = 
       has(o.open)
   i32(flags);
-  
   vector(obj, o.blocks);
   obj(o.title);
 };
@@ -4005,7 +3878,6 @@ const _pageRelatedArticle = (o: any) => {
     | has(o.author) << 3
     | has(o.published_date) << 4;
   i32(flags);
-  
   str(o.url);
   i64(o.webpage_id);
   flag(str, o.title);
@@ -4034,7 +3906,6 @@ const _page = (o: any) => {
     | has(o.rtl) << 1
     | has(o.v2) << 2
   i32(flags);
-  
   str(o.url);
   vector(obj, o.blocks);
   vector(obj, o.photos);
@@ -4061,7 +3932,6 @@ const _updateMessagePoll = (o: any) => {
   const flags = 
       has(o.poll)
   i32(flags);
-  
   i64(o.poll_id);
   flag(obj, o.poll);
   obj(o.results);
@@ -4079,7 +3949,6 @@ const _poll = (o: any) => {
     | has(o.multiple_choice) << 2
     | has(o.quiz) << 3
   i32(flags);
-  
   i64(o.id);
   str(o.question);
   vector(obj, o.answers);
@@ -4090,7 +3959,6 @@ const _pollAnswerVoters = (o: any) => {
       has(o.chosen)
     | has(o.correct) << 1
   i32(flags);
-  
   bytes(o.option);
   i32(o.voters);
 };
@@ -4101,7 +3969,6 @@ const _pollResults = (o: any) => {
     | has(o.results) << 1
     | has(o.total_voters) << 2;
   i32(flags);
-  
   flagVector(obj, o.results);
   flag(i32, o.total_voters);
 };
@@ -4139,7 +4006,6 @@ const _chatAdminRights = (o: any) => {
     | has(o.pin_messages) << 7
     | has(o.add_admins) << 9;
   i32(flags);
-  
 };
 
 const _chatBannedRights = (o: any) => {
@@ -4157,7 +4023,6 @@ const _chatBannedRights = (o: any) => {
     | has(o.invite_users) << 15
     | has(o.pin_messages) << 17
   i32(flags);
-  
   i32(o.until_date);
 };
 
@@ -4200,7 +4065,6 @@ const _codeSettings = (o: any) => {
     | has(o.current_number) << 1
     | has(o.allow_app_hash) << 4;
   i32(flags);
-  
 };
 
 const _wallPaperSettings = (o: any) => {
@@ -4212,7 +4076,6 @@ const _wallPaperSettings = (o: any) => {
     | has(o.intensity) << 3
     | has(o.rotation) << 4;
   i32(flags);
-  
   flag(i32, o.background_color);
   flag(i32, o.second_background_color);
   flag(i32, o.intensity);
@@ -4226,7 +4089,6 @@ const _autoDownloadSettings = (o: any) => {
     | has(o.audio_preload_next) << 2
     | has(o.phonecalls_less_data) << 3
   i32(flags);
-  
   i32(o.photo_size_max);
   i32(o.video_size_max);
   i32(o.file_size_max);
@@ -4289,7 +4151,6 @@ const _inputPeerPhotoFileLocation = (o: any) => {
   const flags = 
       has(o.big)
   i32(flags);
-  
   obj(o.peer);
   i64(o.volume_id);
   i32(o.local_id);
@@ -4308,7 +4169,6 @@ const _folder = (o: any) => {
     | has(o.autofill_new_correspondents) << 2
     | has(o.photo) << 3;
   i32(flags);
-  
   i32(o.id);
   str(o.title);
   flag(obj, o.photo);
@@ -4318,7 +4178,6 @@ const _dialogFolder = (o: any) => {
   const flags = 
       has(o.pinned) << 2
   i32(flags);
-  
   obj(o.folder);
   obj(o.peer);
   i32(o.top_message);
@@ -4385,7 +4244,6 @@ const _messagesSearchCounter = (o: any) => {
   const flags = 
       has(o.inexact) << 1
   i32(flags);
-  
   obj(o.filter);
   i32(o.count);
 };
@@ -4394,7 +4252,6 @@ const _keyboardButtonUrlAuth = (o: any) => {
   const flags = 
       has(o.fwd_text)
   i32(flags);
-  
   str(o.text);
   flag(str, o.fwd_text);
   str(o.url);
@@ -4406,7 +4263,6 @@ const _inputKeyboardButtonUrlAuth = (o: any) => {
       has(o.request_write_access)
     | has(o.fwd_text) << 1
   i32(flags);
-  
   str(o.text);
   flag(str, o.fwd_text);
   str(o.url);
@@ -4417,7 +4273,6 @@ const _urlAuthResultRequest = (o: any) => {
   const flags = 
       has(o.request_write_access)
   i32(flags);
-  
   obj(o.bot);
   str(o.domain);
 };
@@ -4491,7 +4346,6 @@ const _authAuthorizationSignUpRequired = (o: any) => {
   const flags = 
       has(o.terms_of_service);
   i32(flags);
-  
   flag(obj, o.terms_of_service);
 };
 
@@ -4530,7 +4384,6 @@ const _theme = (o: any) => {
     | has(o.document) << 2
     | has(o.settings) << 3
   i32(flags);
-  
   i64(o.id);
   i64(o.access_hash);
   str(o.slug);
@@ -4573,7 +4426,6 @@ const _accountContentSettings = (o: any) => {
       has(o.sensitive_enabled)
     | has(o.sensitive_can_change) << 1;
   i32(flags);
-  
 };
 
 const _messagesInactiveChats = (o: any) => {
@@ -4588,7 +4440,6 @@ const _wallPaperNoFile = (o: any) => {
     | has(o.dark) << 4
     | has(o.settings) << 2;
   i32(flags);
-  
   flag(obj, o.settings);
 };
 
@@ -4599,7 +4450,6 @@ const _inputThemeSettings = (o: any) => {
     | has(o.wallpaper) << 1
     | has(o.wallpaper_settings) << 1;
   i32(flags);
-  
   obj(o.base_theme);
   i32(o.accent_color);
   flag(i32, o.message_top_color);
@@ -4614,7 +4464,6 @@ const _themeSettings = (o: any) => {
     | has(o.message_bottom_color)
     | has(o.wallpaper) << 1;
   i32(flags);
-  
   obj(o.base_theme);
   i32(o.accent_color);
   flag(i32, o.message_top_color);
@@ -4627,7 +4476,6 @@ const _webPageAttributeTheme = (o: any) => {
       has(o.documents)
     | has(o.settings) << 1;
   i32(flags);
-  
   flagVector(obj, o.documents);
   flag(obj, o.settings);
 };
@@ -4682,7 +4530,6 @@ const _accountRegisterDevice = (o: any) => {
   const flags = 
       has(o.no_muted)
   i32(flags);
-  
   i32(o.token_type);
   str(o.token);
   bool(o.app_sandbox);
@@ -4711,7 +4558,6 @@ const _accountUpdateProfile = (o: any) => {
     | has(o.last_name) << 1
     | has(o.about) << 2;
   i32(flags);
-  
   flag(str, o.first_name);
   flag(str, o.last_name);
   flag(str, o.about);
@@ -4780,7 +4626,6 @@ const _messagesGetDialogs = (o: any) => {
       has(o.exclude_pinned)
     | has(o.folder_id) << 1
   i32(flags);
-  
   flag(i32, o.folder_id);
   i32(o.offset_date);
   i32(o.offset_id);
@@ -4804,7 +4649,6 @@ const _messagesSearch = (o: any) => {
   const flags = 
       has(o.from_id)
   i32(flags);
-  
   obj(o.peer);
   str(o.q);
   flag(obj, o.from_id);
@@ -4829,7 +4673,6 @@ const _messagesDeleteHistory = (o: any) => {
       has(o.just_clear)
     | has(o.revoke) << 1
   i32(flags);
-  
   obj(o.peer);
   i32(o.max_id);
 };
@@ -4838,7 +4681,6 @@ const _messagesDeleteMessages = (o: any) => {
   const flags = 
       has(o.revoke)
   i32(flags);
-  
   vector(i32, o.id);
 };
 
@@ -4862,7 +4704,6 @@ const _messagesSendMessage = (o: any) => {
     | has(o.entities) << 3
     | has(o.schedule_date) << 10;
   i32(flags);
-  
   obj(o.peer);
   flag(i32, o.reply_to_msg_id);
   str(o.message);
@@ -4882,7 +4723,6 @@ const _messagesSendMedia = (o: any) => {
     | has(o.entities) << 3
     | has(o.schedule_date) << 10;
   i32(flags);
-  
   obj(o.peer);
   flag(i32, o.reply_to_msg_id);
   obj(o.media);
@@ -4901,7 +4741,6 @@ const _messagesForwardMessages = (o: any) => {
     | has(o.grouped) << 9
     | has(o.schedule_date) << 10;
   i32(flags);
-  
   obj(o.from_peer);
   vector(i32, o.id);
   vector(i64, o.random_id);
@@ -4961,7 +4800,6 @@ const _updatesGetDifference = (o: any) => {
   const flags = 
       has(o.pts_total_limit)
   i32(flags);
-  
   i32(o.pts);
   flag(i32, o.pts_total_limit);
   i32(o.date);
@@ -4991,7 +4829,6 @@ const _uploadGetFile = (o: any) => {
       has(o.precise)
     | has(o.cdn_supported) << 1
   i32(flags);
-  
   obj(o.location);
   i32(o.offset);
   i32(o.limit);
@@ -5077,7 +4914,6 @@ const _initConnection = (o: any) => {
   const flags = 
       has(o.proxy)
   i32(flags);
-  
   i32(o.api_id);
   str(o.device_model);
   str(o.system_version);
@@ -5166,7 +5002,6 @@ const _messagesGetWebPagePreview = (o: any) => {
   const flags = 
       has(o.entities) << 3;
   i32(flags);
-  
   str(o.message);
   flagVector(obj, o.entities);
 };
@@ -5292,7 +5127,6 @@ const _channelsCreateChannel = (o: any) => {
     | has(o.geo_point) << 2
     | has(o.address) << 2;
   i32(flags);
-  
   str(o.title);
   str(o.about);
   flag(obj, o.geo_point);
@@ -5347,7 +5181,6 @@ const _updatesGetChannelDifference = (o: any) => {
   const flags = 
       has(o.force)
   i32(flags);
-  
   obj(o.channel);
   obj(o.filter);
   i32(o.pts);
@@ -5368,7 +5201,6 @@ const _messagesSearchGlobal = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
-  
   flag(i32, o.folder_id);
   str(o.q);
   i32(o.offset_rate);
@@ -5381,7 +5213,6 @@ const _messagesReorderStickerSets = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
-  
   vector(i64, o.order);
 };
 
@@ -5409,7 +5240,6 @@ const _messagesGetInlineBotResults = (o: any) => {
   const flags = 
       has(o.geo_point)
   i32(flags);
-  
   obj(o.bot);
   obj(o.peer);
   flag(obj, o.geo_point);
@@ -5424,7 +5254,6 @@ const _messagesSetInlineBotResults = (o: any) => {
     | has(o.next_offset) << 2
     | has(o.switch_pm) << 3;
   i32(flags);
-  
   i64(o.query_id);
   vector(obj, o.results);
   i32(o.cache_time);
@@ -5441,7 +5270,6 @@ const _messagesSendInlineBotResult = (o: any) => {
     | has(o.reply_to_msg_id)
     | has(o.schedule_date) << 10;
   i32(flags);
-  
   obj(o.peer);
   flag(i32, o.reply_to_msg_id);
   i64(o.random_id);
@@ -5485,7 +5313,6 @@ const _messagesEditMessage = (o: any) => {
     | has(o.entities) << 3
     | has(o.schedule_date) << 15;
   i32(flags);
-  
   obj(o.peer);
   i32(o.id);
   flag(str, o.message);
@@ -5503,7 +5330,6 @@ const _messagesEditInlineBotMessage = (o: any) => {
     | has(o.reply_markup) << 2
     | has(o.entities) << 3;
   i32(flags);
-  
   obj(o.id);
   flag(str, o.message);
   flag(obj, o.media);
@@ -5516,7 +5342,6 @@ const _messagesGetBotCallbackAnswer = (o: any) => {
       has(o.game) << 1
     | has(o.data);
   i32(flags);
-  
   obj(o.peer);
   i32(o.msg_id);
   flag(bytes, o.data);
@@ -5528,7 +5353,6 @@ const _messagesSetBotCallbackAnswer = (o: any) => {
     | has(o.message)
     | has(o.url) << 2
   i32(flags);
-  
   i64(o.query_id);
   flag(str, o.message);
   flag(str, o.url);
@@ -5546,7 +5370,6 @@ const _contactsGetTopPeers = (o: any) => {
     | has(o.groups) << 10
     | has(o.channels) << 15
   i32(flags);
-  
   i32(o.offset);
   i32(o.limit);
   i32(o.hash);
@@ -5567,7 +5390,6 @@ const _messagesSaveDraft = (o: any) => {
     | has(o.reply_to_msg_id)
     | has(o.entities) << 3;
   i32(flags);
-  
   flag(i32, o.reply_to_msg_id);
   obj(o.peer);
   str(o.message);
@@ -5586,7 +5408,6 @@ const _messagesGetRecentStickers = (o: any) => {
   const flags = 
       has(o.attached)
   i32(flags);
-  
   i32(o.hash);
 };
 
@@ -5594,7 +5415,6 @@ const _messagesSaveRecentSticker = (o: any) => {
   const flags = 
       has(o.attached)
   i32(flags);
-  
   obj(o.id);
   bool(o.unsave);
 };
@@ -5603,14 +5423,12 @@ const _messagesClearRecentStickers = (o: any) => {
   const flags = 
       has(o.attached);
   i32(flags);
-  
 };
 
 const _messagesGetArchivedStickers = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
-  
   i64(o.offset_id);
   i32(o.limit);
 };
@@ -5630,7 +5448,6 @@ const _channelsGetAdminedPublicChannels = (o: any) => {
       has(o.by_location)
     | has(o.check_limit) << 1;
   i32(flags);
-  
 };
 
 const _messagesGetMaskStickers = (o: any) => {
@@ -5650,7 +5467,6 @@ const _messagesSetGameScore = (o: any) => {
       has(o.edit_message)
     | has(o.force) << 1
   i32(flags);
-  
   obj(o.peer);
   i32(o.id);
   obj(o.user_id);
@@ -5662,7 +5478,6 @@ const _messagesSetInlineGameScore = (o: any) => {
       has(o.edit_message)
     | has(o.force) << 1
   i32(flags);
-  
   obj(o.id);
   obj(o.user_id);
   i32(o.score);
@@ -5703,7 +5518,6 @@ const _messagesToggleDialogPin = (o: any) => {
   const flags = 
       has(o.pinned)
   i32(flags);
-  
   obj(o.peer);
 };
 
@@ -5711,7 +5525,6 @@ const _messagesReorderPinnedDialogs = (o: any) => {
   const flags = 
       has(o.force)
   i32(flags);
-  
   i32(o.folder_id);
   vector(obj, o.order);
 };
@@ -5748,7 +5561,6 @@ const _paymentsValidateRequestedInfo = (o: any) => {
   const flags = 
       has(o.save)
   i32(flags);
-  
   i32(o.msg_id);
   obj(o.info);
 };
@@ -5758,7 +5570,6 @@ const _paymentsSendPaymentForm = (o: any) => {
       has(o.requested_info_id)
     | has(o.shipping_option_id) << 1
   i32(flags);
-  
   i32(o.msg_id);
   flag(str, o.requested_info_id);
   flag(str, o.shipping_option_id);
@@ -5775,7 +5586,6 @@ const _paymentsClearSavedInfo = (o: any) => {
       has(o.credentials)
     | has(o.info) << 1;
   i32(flags);
-  
 };
 
 const _messagesSetBotShippingResults = (o: any) => {
@@ -5783,7 +5593,6 @@ const _messagesSetBotShippingResults = (o: any) => {
       has(o.error)
     | has(o.shipping_options) << 1;
   i32(flags);
-  
   i64(o.query_id);
   flag(str, o.error);
   flagVector(obj, o.shipping_options);
@@ -5794,7 +5603,6 @@ const _messagesSetBotPrecheckoutResults = (o: any) => {
       has(o.success) << 1
     | has(o.error);
   i32(flags);
-  
   i64(o.query_id);
   flag(str, o.error);
 };
@@ -5803,7 +5611,6 @@ const _stickersCreateStickerSet = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
-  
   obj(o.user_id);
   str(o.title);
   str(o.short_name);
@@ -5833,7 +5640,6 @@ const _phoneRequestCall = (o: any) => {
   const flags = 
       has(o.video)
   i32(flags);
-  
   obj(o.user_id);
   i32(o.random_id);
   bytes(o.g_a_hash);
@@ -5861,7 +5667,6 @@ const _phoneDiscardCall = (o: any) => {
   const flags = 
       has(o.video)
   i32(flags);
-  
   obj(o.peer);
   i32(o.duration);
   obj(o.reason);
@@ -5872,7 +5677,6 @@ const _phoneSetCallRating = (o: any) => {
   const flags = 
       has(o.user_initiative)
   i32(flags);
-  
   obj(o.peer);
   i32(o.rating);
   str(o.comment);
@@ -5926,7 +5730,6 @@ const _channelsGetAdminLog = (o: any) => {
       has(o.events_filter)
     | has(o.admins) << 1
   i32(flags);
-  
   obj(o.channel);
   str(o.q);
   flag(obj, o.events_filter);
@@ -6007,7 +5810,6 @@ const _messagesSendMultiMedia = (o: any) => {
     | has(o.reply_to_msg_id)
     | has(o.schedule_date) << 10;
   i32(flags);
-  
   obj(o.peer);
   flag(i32, o.reply_to_msg_id);
   vector(obj, o.multi_media);
@@ -6027,7 +5829,6 @@ const _messagesSearchStickerSets = (o: any) => {
   const flags = 
       has(o.exclude_featured)
   i32(flags);
-  
   str(o.q);
   i32(o.hash);
 };
@@ -6111,7 +5912,6 @@ const _accountInitTakeoutSession = (o: any) => {
     | has(o.files) << 5
     | has(o.file_max_size) << 5;
   i32(flags);
-  
   flag(i32, o.file_max_size);
 };
 
@@ -6119,7 +5919,6 @@ const _accountFinishTakeoutSession = (o: any) => {
   const flags = 
       has(o.success);
   i32(flags);
-  
 };
 
 const _invokeWithMessagesRange = (o: any) => {
@@ -6136,7 +5935,6 @@ const _messagesMarkDialogUnread = (o: any) => {
   const flags = 
       has(o.unread)
   i32(flags);
-  
   obj(o.peer);
 };
 
@@ -6161,7 +5959,6 @@ const _messagesUpdatePinnedMessage = (o: any) => {
   const flags = 
       has(o.silent)
   i32(flags);
-  
   obj(o.peer);
   i32(o.id);
 };
@@ -6189,7 +5986,6 @@ const _accountGetNotifyExceptions = (o: any) => {
       has(o.compare_sound) << 1
     | has(o.peer);
   i32(flags);
-  
   flag(obj, o.peer);
 };
 
@@ -6212,7 +6008,6 @@ const _messagesGetStatsURL = (o: any) => {
   const flags = 
       has(o.dark)
   i32(flags);
-  
   obj(o.peer);
   str(o.params);
 };
@@ -6253,7 +6048,6 @@ const _accountSaveAutoDownloadSettings = (o: any) => {
       has(o.low)
     | has(o.high) << 1
   i32(flags);
-  
   obj(o.settings);
 };
 
@@ -6302,7 +6096,6 @@ const _messagesAcceptUrlAuth = (o: any) => {
   const flags = 
       has(o.write_allowed)
   i32(flags);
-  
   obj(o.peer);
   i32(o.msg_id);
   i32(o.button_id);
@@ -6316,7 +6109,6 @@ const _contactsAddContact = (o: any) => {
   const flags = 
       has(o.add_phone_privacy_exception)
   i32(flags);
-  
   obj(o.id);
   str(o.first_name);
   str(o.last_name);
@@ -6372,7 +6164,6 @@ const _accountUploadTheme = (o: any) => {
   const flags = 
       has(o.thumb)
   i32(flags);
-  
   obj(o.file);
   flag(obj, o.thumb);
   str(o.file_name);
@@ -6384,7 +6175,6 @@ const _accountCreateTheme = (o: any) => {
       has(o.document) << 2
     | has(o.settings) << 3;
   i32(flags);
-  
   str(o.slug);
   str(o.title);
   flag(obj, o.document);
@@ -6398,7 +6188,6 @@ const _accountUpdateTheme = (o: any) => {
     | has(o.document) << 2
     | has(o.settings) << 3;
   i32(flags);
-  
   str(o.format);
   obj(o.theme);
   flag(str, o.slug);
@@ -6418,7 +6207,6 @@ const _accountInstallTheme = (o: any) => {
     | has(o.format) << 1
     | has(o.theme) << 1;
   i32(flags);
-  
   flag(str, o.format);
   flag(obj, o.theme);
 };
@@ -6452,7 +6240,6 @@ const _accountSetContentSettings = (o: any) => {
   const flags = 
       has(o.sensitive_enabled);
   i32(flags);
-  
 };
 
 const _accountGetMultiWallPapers = (o: any) => {
@@ -7614,7 +7401,7 @@ function flag(fn: (value: any) => void, value: any) {
 }
 
 function has(value: any) {
-  return +!!value;
+  return Array.isArray(value) ? +!!value.length : +!!value;
 }
 
 function obj(o: any, bare = false) {

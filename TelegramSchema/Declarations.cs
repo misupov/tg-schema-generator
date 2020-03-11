@@ -138,7 +138,7 @@ namespace TelegramSchema
             foreach (var method in methods)
             {
                 var requestType = FixMethodName(method.method);
-                var responseType = types.ContainsKey(UnwrapVector(method.type)) ? FormatType(types, method.type, constructors) : "any";
+                var responseType = types.ContainsKey(UnwrapVector(method.type).type) ? FormatType(types, method.type, constructors) : "any";
                 writer.WriteLine($"'{method.method}': {{ req: {requestType}, res: {responseType} }},");
             }
             writer.Indent--;

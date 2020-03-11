@@ -42,7 +42,6 @@ const _decryptedMessage45 = (o: any) => {
     | has(o.via_bot_name) << 11
     | has(o.reply_to_random_id) << 3;
   i32(flags);
-  
   i64(o.random_id);
   i32(o.ttl);
   str(o.message);
@@ -60,7 +59,6 @@ const _decryptedMessage73 = (o: any) => {
     | has(o.reply_to_random_id) << 3
     | has(o.grouped_id) << 17;
   i32(flags);
-  
   i64(o.random_id);
   i32(o.ttl);
   str(o.message);
@@ -270,7 +268,6 @@ const _documentAttributeVideo23 = (o: any) => {
 const _documentAttributeVideo66 = (o: any) => {
   const flags = 
   i32(flags);
-  
   i32(o.duration);
   i32(o.w);
   i32(o.h);
@@ -292,7 +289,6 @@ const _documentAttributeAudio46 = (o: any) => {
     | has(o.performer) << 1
     | has(o.waveform) << 2;
   i32(flags);
-  
   i32(o.duration);
   flag(str, o.title);
   flag(str, o.performer);
@@ -506,7 +502,6 @@ function f64(value: number) { s.writeDouble(value); }
 function str(value: string) { s.writeString(value); }
 function bytes(value: ArrayBuffer) { s.writeBytes(value); }
 
-function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }
 
 function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
   if (value === undefined || value.length === 0) return;
@@ -518,7 +513,7 @@ function flag(fn: (value: any) => void, value: any) {
 }
 
 function has(value: any) {
-  return +!!value;
+  return Array.isArray(value) ? +!!value.length : +!!value;
 }
 
 function obj(o: any, bare = false) {

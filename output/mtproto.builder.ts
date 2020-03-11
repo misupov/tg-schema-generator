@@ -139,7 +139,7 @@ const _future_salt = (o: any) => {
 const _future_salts = (o: any) => {
   i64(o.req_msg_id);
   i32(o.now);
-  vector(obj, o.salts, 0x949d9dc);
+  vector(_future_salt, o.salts);
 };
 
 const _pong = (o: any) => {
@@ -354,7 +354,6 @@ function i256(value: string) { s.writeInt256(value); }
 function str(value: string) { s.writeString(value); }
 function bytes(value: ArrayBuffer) { s.writeBytes(value); }
 
-function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }
 
 function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
   i32(0x1cb5c415);
@@ -363,19 +362,6 @@ function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
     if (ctorId != undefined) i32(ctorId);
     fn(value[i]);
   }
-}
-
-function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
-  if (value === undefined || value.length === 0) return;
-  vector(fn, value, ctorId);
-}
-
-function flag(fn: (value: any) => void, value: any) {
-  if (has(value)) fn(value);
-}
-
-function has(value: any) {
-  return +!!value;
 }
 
 function obj(o: any, bare = false) {

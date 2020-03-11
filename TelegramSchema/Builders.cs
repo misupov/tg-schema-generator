@@ -88,12 +88,10 @@ namespace TelegramSchema
             if (ops.Contains("str")) writer.WriteLine("function str(value: string) { s.writeString(value); }");
             if (ops.Contains("bytes")) writer.WriteLine("function bytes(value: ArrayBuffer) { s.writeBytes(value); }");
             writer.WriteLine();
-            {
-                writer.WriteLine("function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }");
-            }
+            if (ops.Contains("bool")) writer.WriteLine("function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }");
             writer.WriteLine();
             var vectorConstructor = schema.constructors.FirstOrDefault(c => c.predicate == "vector");
-            if (vectorConstructor != null)
+            if (vectorConstructor != null && ops.Contains("vector"))
             {
                 writer.WriteLine("function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {");
                 writer.Indent++;
@@ -109,25 +107,34 @@ namespace TelegramSchema
                 writer.WriteLine("}");
                 writer.WriteLine();
             }
-            writer.WriteLine("function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {");
-            writer.Indent++;
-            writer.WriteLine("if (value === undefined || value.length === 0) return;");
-            writer.WriteLine("vector(fn, value, ctorId);");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
-            writer.WriteLine("function flag(fn: (value: any) => void, value: any) {");
-            writer.Indent++;
-            writer.WriteLine("if (has(value)) fn(value);");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
-            writer.WriteLine("function has(value: any) {");
-            writer.Indent++;
-            writer.WriteLine("return +!!value;");
-            writer.Indent--;
-            writer.WriteLine("}");
-            writer.WriteLine();
+
+            if (ops.Contains("flagVector"))
+            {
+                writer.WriteLine("function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {");
+                writer.Indent++;
+                writer.WriteLine("if (value === undefined || value.length === 0) return;");
+                writer.WriteLine("vector(fn, value, ctorId);");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.WriteLine();
+            }
+
+            if (ops.Contains("flag"))
+            {
+                writer.WriteLine("function flag(fn: (value: any) => void, value: any) {");
+                writer.Indent++;
+                writer.WriteLine("if (has(value)) fn(value);");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.WriteLine();
+                writer.WriteLine("function has(value: any) {");
+                writer.Indent++;
+                writer.WriteLine("return Array.isArray(value) ? +!!value.length : +!!value;");
+                writer.Indent--;
+                writer.WriteLine("}");
+                writer.WriteLine();
+            }
+
             writer.WriteLine("function obj(o: any, bare = false) {");
             writer.Indent++;
             writer.WriteLine("const descriptor = builderMap[o._];");
@@ -157,12 +164,12 @@ namespace TelegramSchema
 
         private static void WriteEntity(Schema schema, IndentedTextWriter writer, IEntity entity, ISet<string> ops)
         {
-            var hasFlags = HasFlags(entity);
             writer.WriteLine($"const _{FixEntityName(entity)} = (o: any) => {{");
 
             writer.Indent++;
             if (HasFlags(entity))
             {
+                ops.Add("flag");
                 writer.WriteLine("const flags = ");
                 writer.Indent++;
                 var first = true;
@@ -185,7 +192,6 @@ namespace TelegramSchema
 
                 writer.Indent--;
                 writer.WriteLine("i32(flags);");
-                writer.WriteLine();
             }
 
             foreach (var param in entity.@params)
@@ -196,15 +202,16 @@ namespace TelegramSchema
                     continue;
                 }
 
-                var ctor = schema.constructors.FirstOrDefault(c => c.predicate == pType);
-
                 if (vector)
                 {
+                    var ctor = schema.constructors.FirstOrDefault(c => c.predicate == pType);
                     var op = TypeNameToBuilderOp(pType);
                     ops.Add(op);
+                    ops.Add(flag.HasValue ? "flagVector" : "vector");
+                    var b = ctor != null ? $"_{FixEntityName(ctor)}" :  TypeNameToBuilderOp(pType);
                     writer.WriteLine(flag.HasValue
-                        ? $"flagVector({TypeNameToBuilderOp(pType)}, o.{param.name}{(ctor != null ? ", " + ToHex(ctor.id) : "")});"
-                        : $"vector({TypeNameToBuilderOp(pType)}, o.{param.name}{(ctor != null ? ", " + ToHex(ctor.id) : "")});");
+                        ? $"flagVector({b}, o.{param.name});"
+                        : $"vector({b}, o.{param.name});");
                 }
                 else
                 {

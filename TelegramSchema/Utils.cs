@@ -38,10 +38,12 @@ namespace TelegramSchema
             return Regex.IsMatch(type, "[Vv]ector<(.+)>");
         }
 
-        public static string UnwrapVector(string type)
+        public static (string type, bool bare) UnwrapVector(string type)
         {
-            var vectorMatch = Regex.Match(type, "[Vv]ector<(.+)>");
-            return vectorMatch.Success ? vectorMatch.Groups[1].Value : type;
+            var vectorMatch = Regex.Match(type, "([Vv])ector<(.+)>");
+            return vectorMatch.Success
+                ? (type: vectorMatch.Groups[2].Value, bare: vectorMatch.Groups[1].Value == "v")
+                : (type, bare: false);
         }
 
         public static string FixTypeName(string type)
@@ -119,7 +121,7 @@ namespace TelegramSchema
         {
             if (IsVector(type))
             {
-                var vectorType = UnwrapVector(type);
+                var (vectorType, bare) = UnwrapVector(type);
                 if (vectorType.StartsWith('%') || IsType(types, vectorType) || IsPrimitiveType((vectorType)))
                 {
                     return FixTypeName(vectorType) + "[]";

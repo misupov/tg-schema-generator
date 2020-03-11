@@ -28,23 +28,6 @@ export default function parse(stream: ByteStream, fallback?: (stream: ByteStream
   return obj();
 }
 
-const u = undefined;
-function i32() { return s.readInt32(); }
-function i64() { return s.readInt64(); }
-function i128() { return s.readInt128(); }
-function i256() { return s.readInt256(); }
-function f64() { return s.readDouble(); }
-function str() { return s.readString(); }
-function bytes() { return s.readBytes(); }
-
-function vector(t: () => any, bare = false) {
-  if (!bare) { i32(); /* ignoring constructor id. */ }
-  const len = i32();
-  const result = [];
-  for (let i = 0; i < len; ++i) result.push(t());
-  return result;
-}
-
 const _decryptedMessage8: any = () => ({_: 'decryptedMessage', random_id: i64(), random_bytes: bytes(), message: str(), media: obj()});
 const _decryptedMessage17: any = () => ({_: 'decryptedMessage', random_id: i64(), ttl: i32(), message: str(), media: obj()});
 function _decryptedMessage45(): any {
@@ -240,6 +223,21 @@ const parserMap = new Map<number, () => any>([
   [0x88f27fbc, _sendMessageRecordRoundAction66],
   [0xbb718624, _sendMessageUploadRoundAction66],
 ]);
+
+const u = undefined;
+function i32() { return s.readInt32(); }
+function i64() { return s.readInt64(); }
+function f64() { return s.readDouble(); }
+function str() { return s.readString(); }
+function bytes() { return s.readBytes(); }
+
+function vector(t: () => any, bare = false) {
+  if (!bare) { i32(); /* ignoring constructor id. */ }
+  const len = i32();
+  const result = [];
+  for (let i = 0; i < len; ++i) result.push(t());
+  return result;
+}
 
 function obj() {
   const c = i32() >>> 0;

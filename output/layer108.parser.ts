@@ -28,23 +28,6 @@ export default function parse(stream: ByteStream, fallback?: (stream: ByteStream
   return obj();
 }
 
-const u = undefined;
-function i32() { return s.readInt32(); }
-function i64() { return s.readInt64(); }
-function i128() { return s.readInt128(); }
-function i256() { return s.readInt256(); }
-function f64() { return s.readDouble(); }
-function str() { return s.readString(); }
-function bytes() { return s.readBytes(); }
-
-function vector(t: () => any, bare = false) {
-  if (!bare) { i32(); /* ignoring constructor id. */ }
-  const len = i32();
-  const result = [];
-  for (let i = 0; i < len; ++i) result.push(t());
-  return result;
-}
-
 function _boolFalse() { return false; }
 function _boolTrue() { return true; }
 const _true: any = () => ({_: 'true'});
@@ -3410,6 +3393,21 @@ const parserMap = new Map<number, () => any>([
   [0x9c14984a, _themeSettings],
   [0x54b56617, _webPageAttributeTheme],
 ]);
+
+const u = undefined;
+function i32() { return s.readInt32(); }
+function i64() { return s.readInt64(); }
+function f64() { return s.readDouble(); }
+function str() { return s.readString(); }
+function bytes() { return s.readBytes(); }
+
+function vector(t: () => any, bare = false) {
+  if (!bare) { i32(); /* ignoring constructor id. */ }
+  const len = i32();
+  const result = [];
+  for (let i = 0; i < len; ++i) result.push(t());
+  return result;
+}
 
 function obj() {
   const c = i32() >>> 0;
