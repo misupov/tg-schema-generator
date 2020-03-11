@@ -4,7 +4,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: layer108.json                                                                   */
+/* Source: layer108.json (md5: bdf0ea24160d359aa4ab85a8ce6d52f8)                           */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -20,6 +21,12 @@ interface ByteStream {
 
 let s: ByteStream;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
+
+export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
+  s = stream;
+  fallbackBuilder = fallback;
+  return obj(o);
+}
 
 const _error = (o: any) => {
   i32(o.code);
@@ -7374,26 +7381,24 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'account.getMultiWallPapers': [0x65ad71dc, _accountGetMultiWallPapers],
 }
 
-function i32(value: number) { s.writeInt32(value); }
-function i64(value: string) { s.writeInt64(value); }
-function f64(value: number) { s.writeDouble(value); }
-function str(value: string) { s.writeString(value); }
-function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+const i32 = (value: number) => s.writeInt32(value);
+const i64 = (value: string) => s.writeInt64(value);
+const f64 = (value: number) => s.writeDouble(value);
+const str = (value: string) => s.writeString(value);
+const bytes = (value: ArrayBuffer) => s.writeBytes(value);
+const bool = (value: boolean) => i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]);
 
-function bool(value: boolean) { i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]); }
-
-function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+const vector = (fn: (value: any) => void, value: Array<any>) => {
   i32(0x1cb5c415);
   i32(value.length);
   for (let i = 0; i < value.length; i++) {
-    if (ctorId != undefined) i32(ctorId);
     fn(value[i]);
   }
 }
 
-function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+function flagVector(fn: (value: any) => void, value: Array<any>) {
   if (value === undefined || value.length === 0) return;
-  vector(fn, value, ctorId);
+  vector(fn, value);
 }
 
 function flag(fn: (value: any) => void, value: any) {
@@ -7404,20 +7409,15 @@ function has(value: any) {
   return Array.isArray(value) ? +!!value.length : +!!value;
 }
 
-function obj(o: any, bare = false) {
+const obj = (o: any, bare = false) => {
   const descriptor = builderMap[o._];
   if (descriptor) {
     const [id, fn] = descriptor;
     if (!bare) i32(id);
     if (fn) fn(o);
-  } else if (fallbackBuilder) fallbackBuilder(s, o);
-  else {
+  } else if (fallbackBuilder) {
+    fallbackBuilder(s, o);
+  } else {
     console.error('Cannot serialize object', o);
   }
-}
-
-export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
-  s = stream;
-  fallbackBuilder = fallback;
-  return obj(o);
 }

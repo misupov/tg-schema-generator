@@ -4,7 +4,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: layer108.json                                                                   */
+/* Source: layer108.json (md5: bdf0ea24160d359aa4ab85a8ce6d52f8)                           */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -28,21 +29,21 @@ export default function parse(stream: ByteStream, fallback?: (stream: ByteStream
   return obj();
 }
 
-function _boolFalse() { return false; }
-function _boolTrue() { return true; }
-const _true: any = () => ({_: 'true'});
-const _vector: any = () => ({_: 'vector'});
-const _error: any = () => ({_: 'error', code: i32(), text: str()});
-const _null: any = () => ({_: 'null'});
-const _inputPeerEmpty: any = () => ({_: 'inputPeerEmpty'});
-const _inputPeerSelf: any = () => ({_: 'inputPeerSelf'});
-const _inputPeerChat: any = () => ({_: 'inputPeerChat', chat_id: i32()});
-const _inputUserEmpty: any = () => ({_: 'inputUserEmpty'});
-const _inputUserSelf: any = () => ({_: 'inputUserSelf'});
-const _inputPhoneContact: any = () => ({_: 'inputPhoneContact', client_id: i64(), phone: str(), first_name: str(), last_name: str()});
-const _inputFile: any = () => ({_: 'inputFile', id: i64(), parts: i32(), name: str(), md5_checksum: str()});
-const _inputMediaEmpty: any = () => ({_: 'inputMediaEmpty'});
-function _inputMediaUploadedPhoto(): any {
+const _boolFalse = () => false;
+const _boolTrue = () => true;
+const _true = () => true;
+const _vector: any = () => ({ _: 'vector' });
+const _error: any = () => ({ _: 'error', code: i32(), text: str() });
+const _null = () => null;
+const _inputPeerEmpty: any = () => ({ _: 'inputPeerEmpty' });
+const _inputPeerSelf: any = () => ({ _: 'inputPeerSelf' });
+const _inputPeerChat: any = () => ({ _: 'inputPeerChat', chat_id: i32() });
+const _inputUserEmpty: any = () => ({ _: 'inputUserEmpty' });
+const _inputUserSelf: any = () => ({ _: 'inputUserSelf' });
+const _inputPhoneContact: any = () => ({ _: 'inputPhoneContact', client_id: i64(), phone: str(), first_name: str(), last_name: str() });
+const _inputFile: any = () => ({ _: 'inputFile', id: i64(), parts: i32(), name: str(), md5_checksum: str() });
+const _inputMediaEmpty: any = () => ({ _: 'inputMediaEmpty' });
+const _inputMediaUploadedPhoto = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaUploadedPhoto',
@@ -50,45 +51,45 @@ function _inputMediaUploadedPhoto(): any {
     stickers: flags & 0x1 ? vector(obj) : u,
     ttl_seconds: flags & 0x2 ? i32() : u,
   }
-}
-function _inputMediaPhoto(): any {
+};
+const _inputMediaPhoto = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaPhoto',
     id: obj(),
     ttl_seconds: flags & 0x1 ? i32() : u,
   }
-}
-const _inputMediaGeoPoint: any = () => ({_: 'inputMediaGeoPoint', geo_point: obj()});
-const _inputMediaContact: any = () => ({_: 'inputMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str()});
-const _inputChatPhotoEmpty: any = () => ({_: 'inputChatPhotoEmpty'});
-const _inputChatUploadedPhoto: any = () => ({_: 'inputChatUploadedPhoto', file: obj()});
-const _inputChatPhoto: any = () => ({_: 'inputChatPhoto', id: obj()});
-const _inputGeoPointEmpty: any = () => ({_: 'inputGeoPointEmpty'});
-const _inputGeoPoint: any = () => ({_: 'inputGeoPoint', lat: f64(), long: f64()});
-const _inputPhotoEmpty: any = () => ({_: 'inputPhotoEmpty'});
-const _inputPhoto: any = () => ({_: 'inputPhoto', id: i64(), access_hash: i64(), file_reference: bytes()});
-const _inputFileLocation: any = () => ({_: 'inputFileLocation', volume_id: i64(), local_id: i32(), secret: i64(), file_reference: bytes()});
-const _peerUser: any = () => ({_: 'peerUser', user_id: i32()});
-const _peerChat: any = () => ({_: 'peerChat', chat_id: i32()});
-const _storageFileUnknown: any = () => ({_: 'storage.fileUnknown'});
-const _storageFilePartial: any = () => ({_: 'storage.filePartial'});
-const _storageFileJpeg: any = () => ({_: 'storage.fileJpeg'});
-const _storageFileGif: any = () => ({_: 'storage.fileGif'});
-const _storageFilePng: any = () => ({_: 'storage.filePng'});
-const _storageFilePdf: any = () => ({_: 'storage.filePdf'});
-const _storageFileMp3: any = () => ({_: 'storage.fileMp3'});
-const _storageFileMov: any = () => ({_: 'storage.fileMov'});
-const _storageFileMp4: any = () => ({_: 'storage.fileMp4'});
-const _storageFileWebp: any = () => ({_: 'storage.fileWebp'});
-const _userEmpty: any = () => ({_: 'userEmpty', id: i32()});
-const _userProfilePhotoEmpty: any = () => ({_: 'userProfilePhotoEmpty'});
-const _userProfilePhoto: any = () => ({_: 'userProfilePhoto', photo_id: i64(), photo_small: obj(), photo_big: obj(), dc_id: i32()});
-const _userStatusEmpty: any = () => ({_: 'userStatusEmpty'});
-const _userStatusOnline: any = () => ({_: 'userStatusOnline', expires: i32()});
-const _userStatusOffline: any = () => ({_: 'userStatusOffline', was_online: i32()});
-const _chatEmpty: any = () => ({_: 'chatEmpty', id: i32()});
-function _chat(): any {
+};
+const _inputMediaGeoPoint: any = () => ({ _: 'inputMediaGeoPoint', geo_point: obj() });
+const _inputMediaContact: any = () => ({ _: 'inputMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str() });
+const _inputChatPhotoEmpty: any = () => ({ _: 'inputChatPhotoEmpty' });
+const _inputChatUploadedPhoto: any = () => ({ _: 'inputChatUploadedPhoto', file: obj() });
+const _inputChatPhoto: any = () => ({ _: 'inputChatPhoto', id: obj() });
+const _inputGeoPointEmpty: any = () => ({ _: 'inputGeoPointEmpty' });
+const _inputGeoPoint: any = () => ({ _: 'inputGeoPoint', lat: f64(), long: f64() });
+const _inputPhotoEmpty: any = () => ({ _: 'inputPhotoEmpty' });
+const _inputPhoto: any = () => ({ _: 'inputPhoto', id: i64(), access_hash: i64(), file_reference: bytes() });
+const _inputFileLocation: any = () => ({ _: 'inputFileLocation', volume_id: i64(), local_id: i32(), secret: i64(), file_reference: bytes() });
+const _peerUser: any = () => ({ _: 'peerUser', user_id: i32() });
+const _peerChat: any = () => ({ _: 'peerChat', chat_id: i32() });
+const _storageFileUnknown: any = () => ({ _: 'storage.fileUnknown' });
+const _storageFilePartial: any = () => ({ _: 'storage.filePartial' });
+const _storageFileJpeg: any = () => ({ _: 'storage.fileJpeg' });
+const _storageFileGif: any = () => ({ _: 'storage.fileGif' });
+const _storageFilePng: any = () => ({ _: 'storage.filePng' });
+const _storageFilePdf: any = () => ({ _: 'storage.filePdf' });
+const _storageFileMp3: any = () => ({ _: 'storage.fileMp3' });
+const _storageFileMov: any = () => ({ _: 'storage.fileMov' });
+const _storageFileMp4: any = () => ({ _: 'storage.fileMp4' });
+const _storageFileWebp: any = () => ({ _: 'storage.fileWebp' });
+const _userEmpty: any = () => ({ _: 'userEmpty', id: i32() });
+const _userProfilePhotoEmpty: any = () => ({ _: 'userProfilePhotoEmpty' });
+const _userProfilePhoto: any = () => ({ _: 'userProfilePhoto', photo_id: i64(), photo_small: obj(), photo_big: obj(), dc_id: i32() });
+const _userStatusEmpty: any = () => ({ _: 'userStatusEmpty' });
+const _userStatusOnline: any = () => ({ _: 'userStatusOnline', expires: i32() });
+const _userStatusOffline: any = () => ({ _: 'userStatusOffline', was_online: i32() });
+const _chatEmpty: any = () => ({ _: 'chatEmpty', id: i32() });
+const _chat = (): any => {
   const flags = i32();
   return {
     _: 'chat',
@@ -106,9 +107,9 @@ function _chat(): any {
     admin_rights: flags & 0x4000 ? obj() : u,
     default_banned_rights: flags & 0x40000 ? obj() : u,
   }
-}
-const _chatForbidden: any = () => ({_: 'chatForbidden', id: i32(), title: str()});
-function _chatFull(): any {
+};
+const _chatForbidden: any = () => ({ _: 'chatForbidden', id: i32(), title: str() });
+const _chatFull = (): any => {
   const flags = i32();
   return {
     _: 'chatFull',
@@ -124,21 +125,21 @@ function _chatFull(): any {
     pinned_msg_id: flags & 0x40 ? i32() : u,
     folder_id: flags & 0x800 ? i32() : u,
   }
-}
-const _chatParticipant: any = () => ({_: 'chatParticipant', user_id: i32(), inviter_id: i32(), date: i32()});
-function _chatParticipantsForbidden(): any {
+};
+const _chatParticipant: any = () => ({ _: 'chatParticipant', user_id: i32(), inviter_id: i32(), date: i32() });
+const _chatParticipantsForbidden = (): any => {
   const flags = i32();
   return {
     _: 'chatParticipantsForbidden',
     chat_id: i32(),
     self_participant: flags & 0x1 ? obj() : u,
   }
-}
-const _chatParticipants: any = () => ({_: 'chatParticipants', chat_id: i32(), participants: vector(obj), version: i32()});
-const _chatPhotoEmpty: any = () => ({_: 'chatPhotoEmpty'});
-const _chatPhoto: any = () => ({_: 'chatPhoto', photo_small: obj(), photo_big: obj(), dc_id: i32()});
-const _messageEmpty: any = () => ({_: 'messageEmpty', id: i32()});
-function _message(): any {
+};
+const _chatParticipants: any = () => ({ _: 'chatParticipants', chat_id: i32(), participants: vector(obj), version: i32() });
+const _chatPhotoEmpty: any = () => ({ _: 'chatPhotoEmpty' });
+const _chatPhoto: any = () => ({ _: 'chatPhoto', photo_small: obj(), photo_big: obj(), dc_id: i32() });
+const _messageEmpty: any = () => ({ _: 'messageEmpty', id: i32() });
+const _message = (): any => {
   const flags = i32();
   return {
     _: 'message',
@@ -167,8 +168,8 @@ function _message(): any {
     grouped_id: flags & 0x20000 ? i64() : u,
     restriction_reason: flags & 0x400000 ? vector(obj) : u,
   }
-}
-function _messageService(): any {
+};
+const _messageService = (): any => {
   const flags = i32();
   return {
     _: 'messageService',
@@ -185,27 +186,27 @@ function _messageService(): any {
     date: i32(),
     action: obj(),
   }
-}
-const _messageMediaEmpty: any = () => ({_: 'messageMediaEmpty'});
-function _messageMediaPhoto(): any {
+};
+const _messageMediaEmpty: any = () => ({ _: 'messageMediaEmpty' });
+const _messageMediaPhoto = (): any => {
   const flags = i32();
   return {
     _: 'messageMediaPhoto',
     photo: flags & 0x1 ? obj() : u,
     ttl_seconds: flags & 0x4 ? i32() : u,
   }
-}
-const _messageMediaGeo: any = () => ({_: 'messageMediaGeo', geo: obj()});
-const _messageMediaContact: any = () => ({_: 'messageMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str(), user_id: i32()});
-const _messageMediaUnsupported: any = () => ({_: 'messageMediaUnsupported'});
-const _messageActionEmpty: any = () => ({_: 'messageActionEmpty'});
-const _messageActionChatCreate: any = () => ({_: 'messageActionChatCreate', title: str(), users: vector(i32)});
-const _messageActionChatEditTitle: any = () => ({_: 'messageActionChatEditTitle', title: str()});
-const _messageActionChatEditPhoto: any = () => ({_: 'messageActionChatEditPhoto', photo: obj()});
-const _messageActionChatDeletePhoto: any = () => ({_: 'messageActionChatDeletePhoto'});
-const _messageActionChatAddUser: any = () => ({_: 'messageActionChatAddUser', users: vector(i32)});
-const _messageActionChatDeleteUser: any = () => ({_: 'messageActionChatDeleteUser', user_id: i32()});
-function _dialog(): any {
+};
+const _messageMediaGeo: any = () => ({ _: 'messageMediaGeo', geo: obj() });
+const _messageMediaContact: any = () => ({ _: 'messageMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str(), user_id: i32() });
+const _messageMediaUnsupported: any = () => ({ _: 'messageMediaUnsupported' });
+const _messageActionEmpty: any = () => ({ _: 'messageActionEmpty' });
+const _messageActionChatCreate: any = () => ({ _: 'messageActionChatCreate', title: str(), users: vector(i32) });
+const _messageActionChatEditTitle: any = () => ({ _: 'messageActionChatEditTitle', title: str() });
+const _messageActionChatEditPhoto: any = () => ({ _: 'messageActionChatEditPhoto', photo: obj() });
+const _messageActionChatDeletePhoto: any = () => ({ _: 'messageActionChatDeletePhoto' });
+const _messageActionChatAddUser: any = () => ({ _: 'messageActionChatAddUser', users: vector(i32) });
+const _messageActionChatDeleteUser: any = () => ({ _: 'messageActionChatDeleteUser', user_id: i32() });
+const _dialog = (): any => {
   const flags = i32();
   return {
     _: 'dialog',
@@ -222,9 +223,9 @@ function _dialog(): any {
     draft: flags & 0x2 ? obj() : u,
     folder_id: flags & 0x10 ? i32() : u,
   }
-}
-const _photoEmpty: any = () => ({_: 'photoEmpty', id: i64()});
-function _photo(): any {
+};
+const _photoEmpty: any = () => ({ _: 'photoEmpty', id: i64() });
+const _photo = (): any => {
   const flags = i32();
   return {
     _: 'photo',
@@ -236,13 +237,13 @@ function _photo(): any {
     sizes: vector(obj),
     dc_id: i32(),
   }
-}
-const _photoSizeEmpty: any = () => ({_: 'photoSizeEmpty', type: str()});
-const _photoSize: any = () => ({_: 'photoSize', type: str(), location: obj(), w: i32(), h: i32(), size: i32()});
-const _photoCachedSize: any = () => ({_: 'photoCachedSize', type: str(), location: obj(), w: i32(), h: i32(), bytes: bytes()});
-const _geoPointEmpty: any = () => ({_: 'geoPointEmpty'});
-const _geoPoint: any = () => ({_: 'geoPoint', long: f64(), lat: f64(), access_hash: i64()});
-function _authSentCode(): any {
+};
+const _photoSizeEmpty: any = () => ({ _: 'photoSizeEmpty', type: str() });
+const _photoSize: any = () => ({ _: 'photoSize', type: str(), location: obj(), w: i32(), h: i32(), size: i32() });
+const _photoCachedSize: any = () => ({ _: 'photoCachedSize', type: str(), location: obj(), w: i32(), h: i32(), bytes: bytes() });
+const _geoPointEmpty: any = () => ({ _: 'geoPointEmpty' });
+const _geoPoint: any = () => ({ _: 'geoPoint', long: f64(), lat: f64(), access_hash: i64() });
+const _authSentCode = (): any => {
   const flags = i32();
   return {
     _: 'auth.sentCode',
@@ -251,20 +252,20 @@ function _authSentCode(): any {
     next_type: flags & 0x2 ? obj() : u,
     timeout: flags & 0x4 ? i32() : u,
   }
-}
-function _authAuthorization(): any {
+};
+const _authAuthorization = (): any => {
   const flags = i32();
   return {
     _: 'auth.authorization',
     tmp_sessions: flags & 0x1 ? i32() : u,
     user: obj(),
   }
-}
-const _authExportedAuthorization: any = () => ({_: 'auth.exportedAuthorization', id: i32(), bytes: bytes()});
-const _inputNotifyPeer: any = () => ({_: 'inputNotifyPeer', peer: obj()});
-const _inputNotifyUsers: any = () => ({_: 'inputNotifyUsers'});
-const _inputNotifyChats: any = () => ({_: 'inputNotifyChats'});
-function _inputPeerNotifySettings(): any {
+};
+const _authExportedAuthorization: any = () => ({ _: 'auth.exportedAuthorization', id: i32(), bytes: bytes() });
+const _inputNotifyPeer: any = () => ({ _: 'inputNotifyPeer', peer: obj() });
+const _inputNotifyUsers: any = () => ({ _: 'inputNotifyUsers' });
+const _inputNotifyChats: any = () => ({ _: 'inputNotifyChats' });
+const _inputPeerNotifySettings = (): any => {
   const flags = i32();
   return {
     _: 'inputPeerNotifySettings',
@@ -273,8 +274,8 @@ function _inputPeerNotifySettings(): any {
     mute_until: flags & 0x4 ? i32() : u,
     sound: flags & 0x8 ? str() : u,
   }
-}
-function _peerNotifySettings(): any {
+};
+const _peerNotifySettings = (): any => {
   const flags = i32();
   return {
     _: 'peerNotifySettings',
@@ -283,8 +284,8 @@ function _peerNotifySettings(): any {
     mute_until: flags & 0x4 ? i32() : u,
     sound: flags & 0x8 ? str() : u,
   }
-}
-function _peerSettings(): any {
+};
+const _peerSettings = (): any => {
   const flags = i32();
   return {
     _: 'peerSettings',
@@ -295,8 +296,8 @@ function _peerSettings(): any {
     need_contacts_exception: !!(flags & 0x10),
     report_geo: !!(flags & 0x20),
   }
-}
-function _wallPaper(): any {
+};
+const _wallPaper = (): any => {
   const flags = i32();
   return {
     _: 'wallPaper',
@@ -310,13 +311,13 @@ function _wallPaper(): any {
     document: obj(),
     settings: flags & 0x4 ? obj() : u,
   }
-}
-const _inputReportReasonSpam: any = () => ({_: 'inputReportReasonSpam'});
-const _inputReportReasonViolence: any = () => ({_: 'inputReportReasonViolence'});
-const _inputReportReasonPornography: any = () => ({_: 'inputReportReasonPornography'});
-const _inputReportReasonChildAbuse: any = () => ({_: 'inputReportReasonChildAbuse'});
-const _inputReportReasonOther: any = () => ({_: 'inputReportReasonOther', text: str()});
-function _userFull(): any {
+};
+const _inputReportReasonSpam: any = () => ({ _: 'inputReportReasonSpam' });
+const _inputReportReasonViolence: any = () => ({ _: 'inputReportReasonViolence' });
+const _inputReportReasonPornography: any = () => ({ _: 'inputReportReasonPornography' });
+const _inputReportReasonChildAbuse: any = () => ({ _: 'inputReportReasonChildAbuse' });
+const _inputReportReasonOther: any = () => ({ _: 'inputReportReasonOther', text: str() });
+const _userFull = (): any => {
   const flags = i32();
   return {
     _: 'userFull',
@@ -335,20 +336,20 @@ function _userFull(): any {
     common_chats_count: i32(),
     folder_id: flags & 0x800 ? i32() : u,
   }
-}
-const _contact: any = () => ({_: 'contact', user_id: i32(), mutual: obj()});
-const _importedContact: any = () => ({_: 'importedContact', user_id: i32(), client_id: i64()});
-const _contactBlocked: any = () => ({_: 'contactBlocked', user_id: i32(), date: i32()});
-const _contactStatus: any = () => ({_: 'contactStatus', user_id: i32(), status: obj()});
-const _contactsContactsNotModified: any = () => ({_: 'contacts.contactsNotModified'});
-const _contactsContacts: any = () => ({_: 'contacts.contacts', contacts: vector(obj), saved_count: i32(), users: vector(obj)});
-const _contactsImportedContacts: any = () => ({_: 'contacts.importedContacts', imported: vector(obj), popular_invites: vector(obj), retry_contacts: vector(i64), users: vector(obj)});
-const _contactsBlocked: any = () => ({_: 'contacts.blocked', blocked: vector(obj), users: vector(obj)});
-const _contactsBlockedSlice: any = () => ({_: 'contacts.blockedSlice', count: i32(), blocked: vector(obj), users: vector(obj)});
-const _messagesDialogs: any = () => ({_: 'messages.dialogs', dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj)});
-const _messagesDialogsSlice: any = () => ({_: 'messages.dialogsSlice', count: i32(), dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj)});
-const _messagesMessages: any = () => ({_: 'messages.messages', messages: vector(obj), chats: vector(obj), users: vector(obj)});
-function _messagesMessagesSlice(): any {
+};
+const _contact: any = () => ({ _: 'contact', user_id: i32(), mutual: obj() });
+const _importedContact: any = () => ({ _: 'importedContact', user_id: i32(), client_id: i64() });
+const _contactBlocked: any = () => ({ _: 'contactBlocked', user_id: i32(), date: i32() });
+const _contactStatus: any = () => ({ _: 'contactStatus', user_id: i32(), status: obj() });
+const _contactsContactsNotModified: any = () => ({ _: 'contacts.contactsNotModified' });
+const _contactsContacts: any = () => ({ _: 'contacts.contacts', contacts: vector(obj), saved_count: i32(), users: vector(obj) });
+const _contactsImportedContacts: any = () => ({ _: 'contacts.importedContacts', imported: vector(obj), popular_invites: vector(obj), retry_contacts: vector(i64), users: vector(obj) });
+const _contactsBlocked: any = () => ({ _: 'contacts.blocked', blocked: vector(obj), users: vector(obj) });
+const _contactsBlockedSlice: any = () => ({ _: 'contacts.blockedSlice', count: i32(), blocked: vector(obj), users: vector(obj) });
+const _messagesDialogs: any = () => ({ _: 'messages.dialogs', dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj) });
+const _messagesDialogsSlice: any = () => ({ _: 'messages.dialogsSlice', count: i32(), dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj) });
+const _messagesMessages: any = () => ({ _: 'messages.messages', messages: vector(obj), chats: vector(obj), users: vector(obj) });
+const _messagesMessagesSlice = (): any => {
   const flags = i32();
   return {
     _: 'messages.messagesSlice',
@@ -359,32 +360,32 @@ function _messagesMessagesSlice(): any {
     chats: vector(obj),
     users: vector(obj),
   }
-}
-const _messagesChats: any = () => ({_: 'messages.chats', chats: vector(obj)});
-const _messagesChatFull: any = () => ({_: 'messages.chatFull', full_chat: obj(), chats: vector(obj), users: vector(obj)});
-const _messagesAffectedHistory: any = () => ({_: 'messages.affectedHistory', pts: i32(), pts_count: i32(), offset: i32()});
-const _inputMessagesFilterEmpty: any = () => ({_: 'inputMessagesFilterEmpty'});
-const _inputMessagesFilterPhotos: any = () => ({_: 'inputMessagesFilterPhotos'});
-const _inputMessagesFilterVideo: any = () => ({_: 'inputMessagesFilterVideo'});
-const _inputMessagesFilterPhotoVideo: any = () => ({_: 'inputMessagesFilterPhotoVideo'});
-const _inputMessagesFilterDocument: any = () => ({_: 'inputMessagesFilterDocument'});
-const _inputMessagesFilterUrl: any = () => ({_: 'inputMessagesFilterUrl'});
-const _inputMessagesFilterGif: any = () => ({_: 'inputMessagesFilterGif'});
-const _updateNewMessage: any = () => ({_: 'updateNewMessage', message: obj(), pts: i32(), pts_count: i32()});
-const _updateMessageID: any = () => ({_: 'updateMessageID', id: i32(), random_id: i64()});
-const _updateDeleteMessages: any = () => ({_: 'updateDeleteMessages', messages: vector(i32), pts: i32(), pts_count: i32()});
-const _updateUserTyping: any = () => ({_: 'updateUserTyping', user_id: i32(), action: obj()});
-const _updateChatUserTyping: any = () => ({_: 'updateChatUserTyping', chat_id: i32(), user_id: i32(), action: obj()});
-const _updateChatParticipants: any = () => ({_: 'updateChatParticipants', participants: obj()});
-const _updateUserStatus: any = () => ({_: 'updateUserStatus', user_id: i32(), status: obj()});
-const _updateUserName: any = () => ({_: 'updateUserName', user_id: i32(), first_name: str(), last_name: str(), username: str()});
-const _updateUserPhoto: any = () => ({_: 'updateUserPhoto', user_id: i32(), date: i32(), photo: obj(), previous: obj()});
-const _updatesState: any = () => ({_: 'updates.state', pts: i32(), qts: i32(), date: i32(), seq: i32(), unread_count: i32()});
-const _updatesDifferenceEmpty: any = () => ({_: 'updates.differenceEmpty', date: i32(), seq: i32()});
-const _updatesDifference: any = () => ({_: 'updates.difference', new_messages: vector(obj), new_encrypted_messages: vector(obj), other_updates: vector(obj), chats: vector(obj), users: vector(obj), state: obj()});
-const _updatesDifferenceSlice: any = () => ({_: 'updates.differenceSlice', new_messages: vector(obj), new_encrypted_messages: vector(obj), other_updates: vector(obj), chats: vector(obj), users: vector(obj), intermediate_state: obj()});
-const _updatesTooLong: any = () => ({_: 'updatesTooLong'});
-function _updateShortMessage(): any {
+};
+const _messagesChats: any = () => ({ _: 'messages.chats', chats: vector(obj) });
+const _messagesChatFull: any = () => ({ _: 'messages.chatFull', full_chat: obj(), chats: vector(obj), users: vector(obj) });
+const _messagesAffectedHistory: any = () => ({ _: 'messages.affectedHistory', pts: i32(), pts_count: i32(), offset: i32() });
+const _inputMessagesFilterEmpty: any = () => ({ _: 'inputMessagesFilterEmpty' });
+const _inputMessagesFilterPhotos: any = () => ({ _: 'inputMessagesFilterPhotos' });
+const _inputMessagesFilterVideo: any = () => ({ _: 'inputMessagesFilterVideo' });
+const _inputMessagesFilterPhotoVideo: any = () => ({ _: 'inputMessagesFilterPhotoVideo' });
+const _inputMessagesFilterDocument: any = () => ({ _: 'inputMessagesFilterDocument' });
+const _inputMessagesFilterUrl: any = () => ({ _: 'inputMessagesFilterUrl' });
+const _inputMessagesFilterGif: any = () => ({ _: 'inputMessagesFilterGif' });
+const _updateNewMessage: any = () => ({ _: 'updateNewMessage', message: obj(), pts: i32(), pts_count: i32() });
+const _updateMessageID: any = () => ({ _: 'updateMessageID', id: i32(), random_id: i64() });
+const _updateDeleteMessages: any = () => ({ _: 'updateDeleteMessages', messages: vector(i32), pts: i32(), pts_count: i32() });
+const _updateUserTyping: any = () => ({ _: 'updateUserTyping', user_id: i32(), action: obj() });
+const _updateChatUserTyping: any = () => ({ _: 'updateChatUserTyping', chat_id: i32(), user_id: i32(), action: obj() });
+const _updateChatParticipants: any = () => ({ _: 'updateChatParticipants', participants: obj() });
+const _updateUserStatus: any = () => ({ _: 'updateUserStatus', user_id: i32(), status: obj() });
+const _updateUserName: any = () => ({ _: 'updateUserName', user_id: i32(), first_name: str(), last_name: str(), username: str() });
+const _updateUserPhoto: any = () => ({ _: 'updateUserPhoto', user_id: i32(), date: i32(), photo: obj(), previous: obj() });
+const _updatesState: any = () => ({ _: 'updates.state', pts: i32(), qts: i32(), date: i32(), seq: i32(), unread_count: i32() });
+const _updatesDifferenceEmpty: any = () => ({ _: 'updates.differenceEmpty', date: i32(), seq: i32() });
+const _updatesDifference: any = () => ({ _: 'updates.difference', new_messages: vector(obj), new_encrypted_messages: vector(obj), other_updates: vector(obj), chats: vector(obj), users: vector(obj), state: obj() });
+const _updatesDifferenceSlice: any = () => ({ _: 'updates.differenceSlice', new_messages: vector(obj), new_encrypted_messages: vector(obj), other_updates: vector(obj), chats: vector(obj), users: vector(obj), intermediate_state: obj() });
+const _updatesTooLong: any = () => ({ _: 'updatesTooLong' });
+const _updateShortMessage = (): any => {
   const flags = i32();
   return {
     _: 'updateShortMessage',
@@ -403,8 +404,8 @@ function _updateShortMessage(): any {
     reply_to_msg_id: flags & 0x8 ? i32() : u,
     entities: flags & 0x80 ? vector(obj) : u,
   }
-}
-function _updateShortChatMessage(): any {
+};
+const _updateShortChatMessage = (): any => {
   const flags = i32();
   return {
     _: 'updateShortChatMessage',
@@ -424,15 +425,15 @@ function _updateShortChatMessage(): any {
     reply_to_msg_id: flags & 0x8 ? i32() : u,
     entities: flags & 0x80 ? vector(obj) : u,
   }
-}
-const _updateShort: any = () => ({_: 'updateShort', update: obj(), date: i32()});
-const _updatesCombined: any = () => ({_: 'updatesCombined', updates: vector(obj), users: vector(obj), chats: vector(obj), date: i32(), seq_start: i32(), seq: i32()});
-const _updates: any = () => ({_: 'updates', updates: vector(obj), users: vector(obj), chats: vector(obj), date: i32(), seq: i32()});
-const _photosPhotos: any = () => ({_: 'photos.photos', photos: vector(obj), users: vector(obj)});
-const _photosPhotosSlice: any = () => ({_: 'photos.photosSlice', count: i32(), photos: vector(obj), users: vector(obj)});
-const _photosPhoto: any = () => ({_: 'photos.photo', photo: obj(), users: vector(obj)});
-const _uploadFile: any = () => ({_: 'upload.file', type: obj(), mtime: i32(), bytes: bytes()});
-function _dcOption(): any {
+};
+const _updateShort: any = () => ({ _: 'updateShort', update: obj(), date: i32() });
+const _updatesCombined: any = () => ({ _: 'updatesCombined', updates: vector(obj), users: vector(obj), chats: vector(obj), date: i32(), seq_start: i32(), seq: i32() });
+const _updates: any = () => ({ _: 'updates', updates: vector(obj), users: vector(obj), chats: vector(obj), date: i32(), seq: i32() });
+const _photosPhotos: any = () => ({ _: 'photos.photos', photos: vector(obj), users: vector(obj) });
+const _photosPhotosSlice: any = () => ({ _: 'photos.photosSlice', count: i32(), photos: vector(obj), users: vector(obj) });
+const _photosPhoto: any = () => ({ _: 'photos.photo', photo: obj(), users: vector(obj) });
+const _uploadFile: any = () => ({ _: 'upload.file', type: obj(), mtime: i32(), bytes: bytes() });
+const _dcOption = (): any => {
   const flags = i32();
   return {
     _: 'dcOption',
@@ -446,8 +447,8 @@ function _dcOption(): any {
     port: i32(),
     secret: flags & 0x400 ? bytes() : u,
   }
-}
-function _config(): any {
+};
+const _config = (): any => {
   const flags = i32();
   return {
     _: 'config',
@@ -503,9 +504,9 @@ function _config(): any {
     lang_pack_version: flags & 0x4 ? i32() : u,
     base_lang_pack_version: flags & 0x4 ? i32() : u,
   }
-}
-const _nearestDc: any = () => ({_: 'nearestDc', country: str(), this_dc: i32(), nearest_dc: i32()});
-function _helpAppUpdate(): any {
+};
+const _nearestDc: any = () => ({ _: 'nearestDc', country: str(), this_dc: i32(), nearest_dc: i32() });
+const _helpAppUpdate = (): any => {
   const flags = i32();
   return {
     _: 'help.appUpdate',
@@ -517,37 +518,37 @@ function _helpAppUpdate(): any {
     document: flags & 0x2 ? obj() : u,
     url: flags & 0x4 ? str() : u,
   }
-}
-const _helpNoAppUpdate: any = () => ({_: 'help.noAppUpdate'});
-const _helpInviteText: any = () => ({_: 'help.inviteText', message: str()});
-const _updateNewEncryptedMessage: any = () => ({_: 'updateNewEncryptedMessage', message: obj(), qts: i32()});
-const _updateEncryptedChatTyping: any = () => ({_: 'updateEncryptedChatTyping', chat_id: i32()});
-const _updateEncryption: any = () => ({_: 'updateEncryption', chat: obj(), date: i32()});
-const _updateEncryptedMessagesRead: any = () => ({_: 'updateEncryptedMessagesRead', chat_id: i32(), max_date: i32(), date: i32()});
-const _encryptedChatEmpty: any = () => ({_: 'encryptedChatEmpty', id: i32()});
-const _encryptedChatWaiting: any = () => ({_: 'encryptedChatWaiting', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32()});
-const _encryptedChatRequested: any = () => ({_: 'encryptedChatRequested', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32(), g_a: bytes()});
-const _encryptedChat: any = () => ({_: 'encryptedChat', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32(), g_a_or_b: bytes(), key_fingerprint: i64()});
-const _encryptedChatDiscarded: any = () => ({_: 'encryptedChatDiscarded', id: i32()});
-const _inputEncryptedChat: any = () => ({_: 'inputEncryptedChat', chat_id: i32(), access_hash: i64()});
-const _encryptedFileEmpty: any = () => ({_: 'encryptedFileEmpty'});
-const _encryptedFile: any = () => ({_: 'encryptedFile', id: i64(), access_hash: i64(), size: i32(), dc_id: i32(), key_fingerprint: i32()});
-const _inputEncryptedFileEmpty: any = () => ({_: 'inputEncryptedFileEmpty'});
-const _inputEncryptedFileUploaded: any = () => ({_: 'inputEncryptedFileUploaded', id: i64(), parts: i32(), md5_checksum: str(), key_fingerprint: i32()});
-const _inputEncryptedFile: any = () => ({_: 'inputEncryptedFile', id: i64(), access_hash: i64()});
-const _inputEncryptedFileLocation: any = () => ({_: 'inputEncryptedFileLocation', id: i64(), access_hash: i64()});
-const _encryptedMessage: any = () => ({_: 'encryptedMessage', random_id: i64(), chat_id: i32(), date: i32(), bytes: bytes(), file: obj()});
-const _encryptedMessageService: any = () => ({_: 'encryptedMessageService', random_id: i64(), chat_id: i32(), date: i32(), bytes: bytes()});
-const _messagesDhConfigNotModified: any = () => ({_: 'messages.dhConfigNotModified', random: bytes()});
-const _messagesDhConfig: any = () => ({_: 'messages.dhConfig', g: i32(), p: bytes(), version: i32(), random: bytes()});
-const _messagesSentEncryptedMessage: any = () => ({_: 'messages.sentEncryptedMessage', date: i32()});
-const _messagesSentEncryptedFile: any = () => ({_: 'messages.sentEncryptedFile', date: i32(), file: obj()});
-const _inputFileBig: any = () => ({_: 'inputFileBig', id: i64(), parts: i32(), name: str()});
-const _inputEncryptedFileBigUploaded: any = () => ({_: 'inputEncryptedFileBigUploaded', id: i64(), parts: i32(), key_fingerprint: i32()});
-const _updateChatParticipantAdd: any = () => ({_: 'updateChatParticipantAdd', chat_id: i32(), user_id: i32(), inviter_id: i32(), date: i32(), version: i32()});
-const _updateChatParticipantDelete: any = () => ({_: 'updateChatParticipantDelete', chat_id: i32(), user_id: i32(), version: i32()});
-const _updateDcOptions: any = () => ({_: 'updateDcOptions', dc_options: vector(obj)});
-function _inputMediaUploadedDocument(): any {
+};
+const _helpNoAppUpdate: any = () => ({ _: 'help.noAppUpdate' });
+const _helpInviteText: any = () => ({ _: 'help.inviteText', message: str() });
+const _updateNewEncryptedMessage: any = () => ({ _: 'updateNewEncryptedMessage', message: obj(), qts: i32() });
+const _updateEncryptedChatTyping: any = () => ({ _: 'updateEncryptedChatTyping', chat_id: i32() });
+const _updateEncryption: any = () => ({ _: 'updateEncryption', chat: obj(), date: i32() });
+const _updateEncryptedMessagesRead: any = () => ({ _: 'updateEncryptedMessagesRead', chat_id: i32(), max_date: i32(), date: i32() });
+const _encryptedChatEmpty: any = () => ({ _: 'encryptedChatEmpty', id: i32() });
+const _encryptedChatWaiting: any = () => ({ _: 'encryptedChatWaiting', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32() });
+const _encryptedChatRequested: any = () => ({ _: 'encryptedChatRequested', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32(), g_a: bytes() });
+const _encryptedChat: any = () => ({ _: 'encryptedChat', id: i32(), access_hash: i64(), date: i32(), admin_id: i32(), participant_id: i32(), g_a_or_b: bytes(), key_fingerprint: i64() });
+const _encryptedChatDiscarded: any = () => ({ _: 'encryptedChatDiscarded', id: i32() });
+const _inputEncryptedChat: any = () => ({ _: 'inputEncryptedChat', chat_id: i32(), access_hash: i64() });
+const _encryptedFileEmpty: any = () => ({ _: 'encryptedFileEmpty' });
+const _encryptedFile: any = () => ({ _: 'encryptedFile', id: i64(), access_hash: i64(), size: i32(), dc_id: i32(), key_fingerprint: i32() });
+const _inputEncryptedFileEmpty: any = () => ({ _: 'inputEncryptedFileEmpty' });
+const _inputEncryptedFileUploaded: any = () => ({ _: 'inputEncryptedFileUploaded', id: i64(), parts: i32(), md5_checksum: str(), key_fingerprint: i32() });
+const _inputEncryptedFile: any = () => ({ _: 'inputEncryptedFile', id: i64(), access_hash: i64() });
+const _inputEncryptedFileLocation: any = () => ({ _: 'inputEncryptedFileLocation', id: i64(), access_hash: i64() });
+const _encryptedMessage: any = () => ({ _: 'encryptedMessage', random_id: i64(), chat_id: i32(), date: i32(), bytes: bytes(), file: obj() });
+const _encryptedMessageService: any = () => ({ _: 'encryptedMessageService', random_id: i64(), chat_id: i32(), date: i32(), bytes: bytes() });
+const _messagesDhConfigNotModified: any = () => ({ _: 'messages.dhConfigNotModified', random: bytes() });
+const _messagesDhConfig: any = () => ({ _: 'messages.dhConfig', g: i32(), p: bytes(), version: i32(), random: bytes() });
+const _messagesSentEncryptedMessage: any = () => ({ _: 'messages.sentEncryptedMessage', date: i32() });
+const _messagesSentEncryptedFile: any = () => ({ _: 'messages.sentEncryptedFile', date: i32(), file: obj() });
+const _inputFileBig: any = () => ({ _: 'inputFileBig', id: i64(), parts: i32(), name: str() });
+const _inputEncryptedFileBigUploaded: any = () => ({ _: 'inputEncryptedFileBigUploaded', id: i64(), parts: i32(), key_fingerprint: i32() });
+const _updateChatParticipantAdd: any = () => ({ _: 'updateChatParticipantAdd', chat_id: i32(), user_id: i32(), inviter_id: i32(), date: i32(), version: i32() });
+const _updateChatParticipantDelete: any = () => ({ _: 'updateChatParticipantDelete', chat_id: i32(), user_id: i32(), version: i32() });
+const _updateDcOptions: any = () => ({ _: 'updateDcOptions', dc_options: vector(obj) });
+const _inputMediaUploadedDocument = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaUploadedDocument',
@@ -559,28 +560,28 @@ function _inputMediaUploadedDocument(): any {
     stickers: flags & 0x1 ? vector(obj) : u,
     ttl_seconds: flags & 0x2 ? i32() : u,
   }
-}
-function _inputMediaDocument(): any {
+};
+const _inputMediaDocument = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaDocument',
     id: obj(),
     ttl_seconds: flags & 0x1 ? i32() : u,
   }
-}
-function _messageMediaDocument(): any {
+};
+const _messageMediaDocument = (): any => {
   const flags = i32();
   return {
     _: 'messageMediaDocument',
     document: flags & 0x1 ? obj() : u,
     ttl_seconds: flags & 0x4 ? i32() : u,
   }
-}
-const _inputDocumentEmpty: any = () => ({_: 'inputDocumentEmpty'});
-const _inputDocument: any = () => ({_: 'inputDocument', id: i64(), access_hash: i64(), file_reference: bytes()});
-const _inputDocumentFileLocation: any = () => ({_: 'inputDocumentFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str()});
-const _documentEmpty: any = () => ({_: 'documentEmpty', id: i64()});
-function _document(): any {
+};
+const _inputDocumentEmpty: any = () => ({ _: 'inputDocumentEmpty' });
+const _inputDocument: any = () => ({ _: 'inputDocument', id: i64(), access_hash: i64(), file_reference: bytes() });
+const _inputDocumentFileLocation: any = () => ({ _: 'inputDocumentFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str() });
+const _documentEmpty: any = () => ({ _: 'documentEmpty', id: i64() });
+const _document = (): any => {
   const flags = i32();
   return {
     _: 'document',
@@ -594,25 +595,25 @@ function _document(): any {
     dc_id: i32(),
     attributes: vector(obj),
   }
-}
-const _helpSupport: any = () => ({_: 'help.support', phone_number: str(), user: obj()});
-const _notifyPeer: any = () => ({_: 'notifyPeer', peer: obj()});
-const _notifyUsers: any = () => ({_: 'notifyUsers'});
-const _notifyChats: any = () => ({_: 'notifyChats'});
-const _updateUserBlocked: any = () => ({_: 'updateUserBlocked', user_id: i32(), blocked: obj()});
-const _updateNotifySettings: any = () => ({_: 'updateNotifySettings', peer: obj(), notify_settings: obj()});
-const _sendMessageTypingAction: any = () => ({_: 'sendMessageTypingAction'});
-const _sendMessageCancelAction: any = () => ({_: 'sendMessageCancelAction'});
-const _sendMessageRecordVideoAction: any = () => ({_: 'sendMessageRecordVideoAction'});
-const _sendMessageUploadVideoAction: any = () => ({_: 'sendMessageUploadVideoAction', progress: i32()});
-const _sendMessageRecordAudioAction: any = () => ({_: 'sendMessageRecordAudioAction'});
-const _sendMessageUploadAudioAction: any = () => ({_: 'sendMessageUploadAudioAction', progress: i32()});
-const _sendMessageUploadPhotoAction: any = () => ({_: 'sendMessageUploadPhotoAction', progress: i32()});
-const _sendMessageUploadDocumentAction: any = () => ({_: 'sendMessageUploadDocumentAction', progress: i32()});
-const _sendMessageGeoLocationAction: any = () => ({_: 'sendMessageGeoLocationAction'});
-const _sendMessageChooseContactAction: any = () => ({_: 'sendMessageChooseContactAction'});
-const _contactsFound: any = () => ({_: 'contacts.found', my_results: vector(obj), results: vector(obj), chats: vector(obj), users: vector(obj)});
-function _updateServiceNotification(): any {
+};
+const _helpSupport: any = () => ({ _: 'help.support', phone_number: str(), user: obj() });
+const _notifyPeer: any = () => ({ _: 'notifyPeer', peer: obj() });
+const _notifyUsers: any = () => ({ _: 'notifyUsers' });
+const _notifyChats: any = () => ({ _: 'notifyChats' });
+const _updateUserBlocked: any = () => ({ _: 'updateUserBlocked', user_id: i32(), blocked: obj() });
+const _updateNotifySettings: any = () => ({ _: 'updateNotifySettings', peer: obj(), notify_settings: obj() });
+const _sendMessageTypingAction: any = () => ({ _: 'sendMessageTypingAction' });
+const _sendMessageCancelAction: any = () => ({ _: 'sendMessageCancelAction' });
+const _sendMessageRecordVideoAction: any = () => ({ _: 'sendMessageRecordVideoAction' });
+const _sendMessageUploadVideoAction: any = () => ({ _: 'sendMessageUploadVideoAction', progress: i32() });
+const _sendMessageRecordAudioAction: any = () => ({ _: 'sendMessageRecordAudioAction' });
+const _sendMessageUploadAudioAction: any = () => ({ _: 'sendMessageUploadAudioAction', progress: i32() });
+const _sendMessageUploadPhotoAction: any = () => ({ _: 'sendMessageUploadPhotoAction', progress: i32() });
+const _sendMessageUploadDocumentAction: any = () => ({ _: 'sendMessageUploadDocumentAction', progress: i32() });
+const _sendMessageGeoLocationAction: any = () => ({ _: 'sendMessageGeoLocationAction' });
+const _sendMessageChooseContactAction: any = () => ({ _: 'sendMessageChooseContactAction' });
+const _contactsFound: any = () => ({ _: 'contacts.found', my_results: vector(obj), results: vector(obj), chats: vector(obj), users: vector(obj) });
+const _updateServiceNotification = (): any => {
   const flags = i32();
   return {
     _: 'updateServiceNotification',
@@ -623,31 +624,31 @@ function _updateServiceNotification(): any {
     media: obj(),
     entities: vector(obj),
   }
-}
-const _userStatusRecently: any = () => ({_: 'userStatusRecently'});
-const _userStatusLastWeek: any = () => ({_: 'userStatusLastWeek'});
-const _userStatusLastMonth: any = () => ({_: 'userStatusLastMonth'});
-const _updatePrivacy: any = () => ({_: 'updatePrivacy', key: obj(), rules: vector(obj)});
-const _inputPrivacyKeyStatusTimestamp: any = () => ({_: 'inputPrivacyKeyStatusTimestamp'});
-const _privacyKeyStatusTimestamp: any = () => ({_: 'privacyKeyStatusTimestamp'});
-const _inputPrivacyValueAllowContacts: any = () => ({_: 'inputPrivacyValueAllowContacts'});
-const _inputPrivacyValueAllowAll: any = () => ({_: 'inputPrivacyValueAllowAll'});
-const _inputPrivacyValueAllowUsers: any = () => ({_: 'inputPrivacyValueAllowUsers', users: vector(obj)});
-const _inputPrivacyValueDisallowContacts: any = () => ({_: 'inputPrivacyValueDisallowContacts'});
-const _inputPrivacyValueDisallowAll: any = () => ({_: 'inputPrivacyValueDisallowAll'});
-const _inputPrivacyValueDisallowUsers: any = () => ({_: 'inputPrivacyValueDisallowUsers', users: vector(obj)});
-const _privacyValueAllowContacts: any = () => ({_: 'privacyValueAllowContacts'});
-const _privacyValueAllowAll: any = () => ({_: 'privacyValueAllowAll'});
-const _privacyValueAllowUsers: any = () => ({_: 'privacyValueAllowUsers', users: vector(i32)});
-const _privacyValueDisallowContacts: any = () => ({_: 'privacyValueDisallowContacts'});
-const _privacyValueDisallowAll: any = () => ({_: 'privacyValueDisallowAll'});
-const _privacyValueDisallowUsers: any = () => ({_: 'privacyValueDisallowUsers', users: vector(i32)});
-const _accountPrivacyRules: any = () => ({_: 'account.privacyRules', rules: vector(obj), chats: vector(obj), users: vector(obj)});
-const _accountDaysTTL: any = () => ({_: 'accountDaysTTL', days: i32()});
-const _updateUserPhone: any = () => ({_: 'updateUserPhone', user_id: i32(), phone: str()});
-const _documentAttributeImageSize: any = () => ({_: 'documentAttributeImageSize', w: i32(), h: i32()});
-const _documentAttributeAnimated: any = () => ({_: 'documentAttributeAnimated'});
-function _documentAttributeSticker(): any {
+};
+const _userStatusRecently: any = () => ({ _: 'userStatusRecently' });
+const _userStatusLastWeek: any = () => ({ _: 'userStatusLastWeek' });
+const _userStatusLastMonth: any = () => ({ _: 'userStatusLastMonth' });
+const _updatePrivacy: any = () => ({ _: 'updatePrivacy', key: obj(), rules: vector(obj) });
+const _inputPrivacyKeyStatusTimestamp: any = () => ({ _: 'inputPrivacyKeyStatusTimestamp' });
+const _privacyKeyStatusTimestamp: any = () => ({ _: 'privacyKeyStatusTimestamp' });
+const _inputPrivacyValueAllowContacts: any = () => ({ _: 'inputPrivacyValueAllowContacts' });
+const _inputPrivacyValueAllowAll: any = () => ({ _: 'inputPrivacyValueAllowAll' });
+const _inputPrivacyValueAllowUsers: any = () => ({ _: 'inputPrivacyValueAllowUsers', users: vector(obj) });
+const _inputPrivacyValueDisallowContacts: any = () => ({ _: 'inputPrivacyValueDisallowContacts' });
+const _inputPrivacyValueDisallowAll: any = () => ({ _: 'inputPrivacyValueDisallowAll' });
+const _inputPrivacyValueDisallowUsers: any = () => ({ _: 'inputPrivacyValueDisallowUsers', users: vector(obj) });
+const _privacyValueAllowContacts: any = () => ({ _: 'privacyValueAllowContacts' });
+const _privacyValueAllowAll: any = () => ({ _: 'privacyValueAllowAll' });
+const _privacyValueAllowUsers: any = () => ({ _: 'privacyValueAllowUsers', users: vector(i32) });
+const _privacyValueDisallowContacts: any = () => ({ _: 'privacyValueDisallowContacts' });
+const _privacyValueDisallowAll: any = () => ({ _: 'privacyValueDisallowAll' });
+const _privacyValueDisallowUsers: any = () => ({ _: 'privacyValueDisallowUsers', users: vector(i32) });
+const _accountPrivacyRules: any = () => ({ _: 'account.privacyRules', rules: vector(obj), chats: vector(obj), users: vector(obj) });
+const _accountDaysTTL: any = () => ({ _: 'accountDaysTTL', days: i32() });
+const _updateUserPhone: any = () => ({ _: 'updateUserPhone', user_id: i32(), phone: str() });
+const _documentAttributeImageSize: any = () => ({ _: 'documentAttributeImageSize', w: i32(), h: i32() });
+const _documentAttributeAnimated: any = () => ({ _: 'documentAttributeAnimated' });
+const _documentAttributeSticker = (): any => {
   const flags = i32();
   return {
     _: 'documentAttributeSticker',
@@ -656,8 +657,8 @@ function _documentAttributeSticker(): any {
     stickerset: obj(),
     mask_coords: flags & 0x1 ? obj() : u,
   }
-}
-function _documentAttributeVideo(): any {
+};
+const _documentAttributeVideo = (): any => {
   const flags = i32();
   return {
     _: 'documentAttributeVideo',
@@ -667,8 +668,8 @@ function _documentAttributeVideo(): any {
     w: i32(),
     h: i32(),
   }
-}
-function _documentAttributeAudio(): any {
+};
+const _documentAttributeAudio = (): any => {
   const flags = i32();
   return {
     _: 'documentAttributeAudio',
@@ -678,14 +679,14 @@ function _documentAttributeAudio(): any {
     performer: flags & 0x2 ? str() : u,
     waveform: flags & 0x4 ? bytes() : u,
   }
-}
-const _documentAttributeFilename: any = () => ({_: 'documentAttributeFilename', file_name: str()});
-const _messagesStickersNotModified: any = () => ({_: 'messages.stickersNotModified'});
-const _messagesStickers: any = () => ({_: 'messages.stickers', hash: i32(), stickers: vector(obj)});
-const _stickerPack: any = () => ({_: 'stickerPack', emoticon: str(), documents: vector(i64)});
-const _messagesAllStickersNotModified: any = () => ({_: 'messages.allStickersNotModified'});
-const _messagesAllStickers: any = () => ({_: 'messages.allStickers', hash: i32(), sets: vector(obj)});
-function _updateReadHistoryInbox(): any {
+};
+const _documentAttributeFilename: any = () => ({ _: 'documentAttributeFilename', file_name: str() });
+const _messagesStickersNotModified: any = () => ({ _: 'messages.stickersNotModified' });
+const _messagesStickers: any = () => ({ _: 'messages.stickers', hash: i32(), stickers: vector(obj) });
+const _stickerPack: any = () => ({ _: 'stickerPack', emoticon: str(), documents: vector(i64) });
+const _messagesAllStickersNotModified: any = () => ({ _: 'messages.allStickersNotModified' });
+const _messagesAllStickers: any = () => ({ _: 'messages.allStickers', hash: i32(), sets: vector(obj) });
+const _updateReadHistoryInbox = (): any => {
   const flags = i32();
   return {
     _: 'updateReadHistoryInbox',
@@ -696,13 +697,13 @@ function _updateReadHistoryInbox(): any {
     pts: i32(),
     pts_count: i32(),
   }
-}
-const _updateReadHistoryOutbox: any = () => ({_: 'updateReadHistoryOutbox', peer: obj(), max_id: i32(), pts: i32(), pts_count: i32()});
-const _messagesAffectedMessages: any = () => ({_: 'messages.affectedMessages', pts: i32(), pts_count: i32()});
-const _updateWebPage: any = () => ({_: 'updateWebPage', webpage: obj(), pts: i32(), pts_count: i32()});
-const _webPageEmpty: any = () => ({_: 'webPageEmpty', id: i64()});
-const _webPagePending: any = () => ({_: 'webPagePending', id: i64(), date: i32()});
-function _webPage(): any {
+};
+const _updateReadHistoryOutbox: any = () => ({ _: 'updateReadHistoryOutbox', peer: obj(), max_id: i32(), pts: i32(), pts_count: i32() });
+const _messagesAffectedMessages: any = () => ({ _: 'messages.affectedMessages', pts: i32(), pts_count: i32() });
+const _updateWebPage: any = () => ({ _: 'updateWebPage', webpage: obj(), pts: i32(), pts_count: i32() });
+const _webPageEmpty: any = () => ({ _: 'webPageEmpty', id: i64() });
+const _webPagePending: any = () => ({ _: 'webPagePending', id: i64(), date: i32() });
+const _webPage = (): any => {
   const flags = i32();
   return {
     _: 'webPage',
@@ -725,9 +726,9 @@ function _webPage(): any {
     cached_page: flags & 0x400 ? obj() : u,
     attributes: flags & 0x1000 ? vector(obj) : u,
   }
-}
-const _messageMediaWebPage: any = () => ({_: 'messageMediaWebPage', webpage: obj()});
-function _authorization(): any {
+};
+const _messageMediaWebPage: any = () => ({ _: 'messageMediaWebPage', webpage: obj() });
+const _authorization = (): any => {
   const flags = i32();
   return {
     _: 'authorization',
@@ -747,9 +748,9 @@ function _authorization(): any {
     country: str(),
     region: str(),
   }
-}
-const _accountAuthorizations: any = () => ({_: 'account.authorizations', authorizations: vector(obj)});
-function _accountPassword(): any {
+};
+const _accountAuthorizations: any = () => ({ _: 'account.authorizations', authorizations: vector(obj) });
+const _accountPassword = (): any => {
   const flags = i32();
   return {
     _: 'account.password',
@@ -765,16 +766,16 @@ function _accountPassword(): any {
     new_secure_algo: obj(),
     secure_random: bytes(),
   }
-}
-function _accountPasswordSettings(): any {
+};
+const _accountPasswordSettings = (): any => {
   const flags = i32();
   return {
     _: 'account.passwordSettings',
     email: flags & 0x1 ? str() : u,
     secure_settings: flags & 0x2 ? obj() : u,
   }
-}
-function _accountPasswordInputSettings(): any {
+};
+const _accountPasswordInputSettings = (): any => {
   const flags = i32();
   return {
     _: 'account.passwordInputSettings',
@@ -784,15 +785,15 @@ function _accountPasswordInputSettings(): any {
     email: flags & 0x2 ? str() : u,
     new_secure_settings: flags & 0x4 ? obj() : u,
   }
-}
-const _authPasswordRecovery: any = () => ({_: 'auth.passwordRecovery', email_pattern: str()});
-const _inputMediaVenue: any = () => ({_: 'inputMediaVenue', geo_point: obj(), title: str(), address: str(), provider: str(), venue_id: str(), venue_type: str()});
-const _messageMediaVenue: any = () => ({_: 'messageMediaVenue', geo: obj(), title: str(), address: str(), provider: str(), venue_id: str(), venue_type: str()});
-const _receivedNotifyMessage: any = () => ({_: 'receivedNotifyMessage', id: i32(), flags: i32()});
-const _chatInviteEmpty: any = () => ({_: 'chatInviteEmpty'});
-const _chatInviteExported: any = () => ({_: 'chatInviteExported', link: str()});
-const _chatInviteAlready: any = () => ({_: 'chatInviteAlready', chat: obj()});
-function _chatInvite(): any {
+};
+const _authPasswordRecovery: any = () => ({ _: 'auth.passwordRecovery', email_pattern: str() });
+const _inputMediaVenue: any = () => ({ _: 'inputMediaVenue', geo_point: obj(), title: str(), address: str(), provider: str(), venue_id: str(), venue_type: str() });
+const _messageMediaVenue: any = () => ({ _: 'messageMediaVenue', geo: obj(), title: str(), address: str(), provider: str(), venue_id: str(), venue_type: str() });
+const _receivedNotifyMessage: any = () => ({ _: 'receivedNotifyMessage', id: i32(), flags: i32() });
+const _chatInviteEmpty: any = () => ({ _: 'chatInviteEmpty' });
+const _chatInviteExported: any = () => ({ _: 'chatInviteExported', link: str() });
+const _chatInviteAlready: any = () => ({ _: 'chatInviteAlready', chat: obj() });
+const _chatInvite = (): any => {
   const flags = i32();
   return {
     _: 'chatInvite',
@@ -805,13 +806,13 @@ function _chatInvite(): any {
     participants_count: i32(),
     participants: flags & 0x10 ? vector(obj) : u,
   }
-}
-const _messageActionChatJoinedByLink: any = () => ({_: 'messageActionChatJoinedByLink', inviter_id: i32()});
-const _updateReadMessagesContents: any = () => ({_: 'updateReadMessagesContents', messages: vector(i32), pts: i32(), pts_count: i32()});
-const _inputStickerSetEmpty: any = () => ({_: 'inputStickerSetEmpty'});
-const _inputStickerSetID: any = () => ({_: 'inputStickerSetID', id: i64(), access_hash: i64()});
-const _inputStickerSetShortName: any = () => ({_: 'inputStickerSetShortName', short_name: str()});
-function _stickerSet(): any {
+};
+const _messageActionChatJoinedByLink: any = () => ({ _: 'messageActionChatJoinedByLink', inviter_id: i32() });
+const _updateReadMessagesContents: any = () => ({ _: 'updateReadMessagesContents', messages: vector(i32), pts: i32(), pts_count: i32() });
+const _inputStickerSetEmpty: any = () => ({ _: 'inputStickerSetEmpty' });
+const _inputStickerSetID: any = () => ({ _: 'inputStickerSetID', id: i64(), access_hash: i64() });
+const _inputStickerSetShortName: any = () => ({ _: 'inputStickerSetShortName', short_name: str() });
+const _stickerSet = (): any => {
   const flags = i32();
   return {
     _: 'stickerSet',
@@ -829,9 +830,9 @@ function _stickerSet(): any {
     count: i32(),
     hash: i32(),
   }
-}
-const _messagesStickerSet: any = () => ({_: 'messages.stickerSet', set: obj(), packs: vector(obj), documents: vector(obj)});
-function _user(): any {
+};
+const _messagesStickerSet: any = () => ({ _: 'messages.stickerSet', set: obj(), packs: vector(obj), documents: vector(obj) });
+const _user = (): any => {
   const flags = i32();
   return {
     _: 'user',
@@ -861,27 +862,27 @@ function _user(): any {
     bot_inline_placeholder: flags & 0x80000 ? str() : u,
     lang_code: flags & 0x400000 ? str() : u,
   }
-}
-const _botCommand: any = () => ({_: 'botCommand', command: str(), description: str()});
-const _botInfo: any = () => ({_: 'botInfo', user_id: i32(), description: str(), commands: vector(obj)});
-const _keyboardButton: any = () => ({_: 'keyboardButton', text: str()});
-const _keyboardButtonRow: any = () => ({_: 'keyboardButtonRow', buttons: vector(obj)});
-function _replyKeyboardHide(): any {
+};
+const _botCommand: any = () => ({ _: 'botCommand', command: str(), description: str() });
+const _botInfo: any = () => ({ _: 'botInfo', user_id: i32(), description: str(), commands: vector(obj) });
+const _keyboardButton: any = () => ({ _: 'keyboardButton', text: str() });
+const _keyboardButtonRow: any = () => ({ _: 'keyboardButtonRow', buttons: vector(obj) });
+const _replyKeyboardHide = (): any => {
   const flags = i32();
   return {
     _: 'replyKeyboardHide',
     selective: !!(flags & 0x4),
   }
-}
-function _replyKeyboardForceReply(): any {
+};
+const _replyKeyboardForceReply = (): any => {
   const flags = i32();
   return {
     _: 'replyKeyboardForceReply',
     single_use: !!(flags & 0x2),
     selective: !!(flags & 0x4),
   }
-}
-function _replyKeyboardMarkup(): any {
+};
+const _replyKeyboardMarkup = (): any => {
   const flags = i32();
   return {
     _: 'replyKeyboardMarkup',
@@ -890,21 +891,21 @@ function _replyKeyboardMarkup(): any {
     selective: !!(flags & 0x4),
     rows: vector(obj),
   }
-}
-const _inputPeerUser: any = () => ({_: 'inputPeerUser', user_id: i32(), access_hash: i64()});
-const _inputUser: any = () => ({_: 'inputUser', user_id: i32(), access_hash: i64()});
-const _messageEntityUnknown: any = () => ({_: 'messageEntityUnknown', offset: i32(), length: i32()});
-const _messageEntityMention: any = () => ({_: 'messageEntityMention', offset: i32(), length: i32()});
-const _messageEntityHashtag: any = () => ({_: 'messageEntityHashtag', offset: i32(), length: i32()});
-const _messageEntityBotCommand: any = () => ({_: 'messageEntityBotCommand', offset: i32(), length: i32()});
-const _messageEntityUrl: any = () => ({_: 'messageEntityUrl', offset: i32(), length: i32()});
-const _messageEntityEmail: any = () => ({_: 'messageEntityEmail', offset: i32(), length: i32()});
-const _messageEntityBold: any = () => ({_: 'messageEntityBold', offset: i32(), length: i32()});
-const _messageEntityItalic: any = () => ({_: 'messageEntityItalic', offset: i32(), length: i32()});
-const _messageEntityCode: any = () => ({_: 'messageEntityCode', offset: i32(), length: i32()});
-const _messageEntityPre: any = () => ({_: 'messageEntityPre', offset: i32(), length: i32(), language: str()});
-const _messageEntityTextUrl: any = () => ({_: 'messageEntityTextUrl', offset: i32(), length: i32(), url: str()});
-function _updateShortSentMessage(): any {
+};
+const _inputPeerUser: any = () => ({ _: 'inputPeerUser', user_id: i32(), access_hash: i64() });
+const _inputUser: any = () => ({ _: 'inputUser', user_id: i32(), access_hash: i64() });
+const _messageEntityUnknown: any = () => ({ _: 'messageEntityUnknown', offset: i32(), length: i32() });
+const _messageEntityMention: any = () => ({ _: 'messageEntityMention', offset: i32(), length: i32() });
+const _messageEntityHashtag: any = () => ({ _: 'messageEntityHashtag', offset: i32(), length: i32() });
+const _messageEntityBotCommand: any = () => ({ _: 'messageEntityBotCommand', offset: i32(), length: i32() });
+const _messageEntityUrl: any = () => ({ _: 'messageEntityUrl', offset: i32(), length: i32() });
+const _messageEntityEmail: any = () => ({ _: 'messageEntityEmail', offset: i32(), length: i32() });
+const _messageEntityBold: any = () => ({ _: 'messageEntityBold', offset: i32(), length: i32() });
+const _messageEntityItalic: any = () => ({ _: 'messageEntityItalic', offset: i32(), length: i32() });
+const _messageEntityCode: any = () => ({ _: 'messageEntityCode', offset: i32(), length: i32() });
+const _messageEntityPre: any = () => ({ _: 'messageEntityPre', offset: i32(), length: i32(), language: str() });
+const _messageEntityTextUrl: any = () => ({ _: 'messageEntityTextUrl', offset: i32(), length: i32(), url: str() });
+const _updateShortSentMessage = (): any => {
   const flags = i32();
   return {
     _: 'updateShortSentMessage',
@@ -916,12 +917,12 @@ function _updateShortSentMessage(): any {
     media: flags & 0x200 ? obj() : u,
     entities: flags & 0x80 ? vector(obj) : u,
   }
-}
-const _inputChannelEmpty: any = () => ({_: 'inputChannelEmpty'});
-const _inputChannel: any = () => ({_: 'inputChannel', channel_id: i32(), access_hash: i64()});
-const _peerChannel: any = () => ({_: 'peerChannel', channel_id: i32()});
-const _inputPeerChannel: any = () => ({_: 'inputPeerChannel', channel_id: i32(), access_hash: i64()});
-function _channel(): any {
+};
+const _inputChannelEmpty: any = () => ({ _: 'inputChannelEmpty' });
+const _inputChannel: any = () => ({ _: 'inputChannel', channel_id: i32(), access_hash: i64() });
+const _peerChannel: any = () => ({ _: 'peerChannel', channel_id: i32() });
+const _inputPeerChannel: any = () => ({ _: 'inputPeerChannel', channel_id: i32(), access_hash: i64() });
+const _channel = (): any => {
   const flags = i32();
   return {
     _: 'channel',
@@ -950,8 +951,8 @@ function _channel(): any {
     default_banned_rights: flags & 0x40000 ? obj() : u,
     participants_count: flags & 0x20000 ? i32() : u,
   }
-}
-function _channelForbidden(): any {
+};
+const _channelForbidden = (): any => {
   const flags = i32();
   return {
     _: 'channelForbidden',
@@ -962,9 +963,9 @@ function _channelForbidden(): any {
     title: str(),
     until_date: flags & 0x10000 ? i32() : u,
   }
-}
-const _contactsResolvedPeer: any = () => ({_: 'contacts.resolvedPeer', peer: obj(), chats: vector(obj), users: vector(obj)});
-function _channelFull(): any {
+};
+const _contactsResolvedPeer: any = () => ({ _: 'contacts.resolvedPeer', peer: obj(), chats: vector(obj), users: vector(obj) });
+const _channelFull = (): any => {
   const flags = i32();
   return {
     _: 'channelFull',
@@ -1001,9 +1002,9 @@ function _channelFull(): any {
     slowmode_next_send_date: flags & 0x40000 ? i32() : u,
     pts: i32(),
   }
-}
-const _messageRange: any = () => ({_: 'messageRange', min_id: i32(), max_id: i32()});
-function _messagesChannelMessages(): any {
+};
+const _messageRange: any = () => ({ _: 'messageRange', min_id: i32(), max_id: i32() });
+const _messagesChannelMessages = (): any => {
   const flags = i32();
   return {
     _: 'messages.channelMessages',
@@ -1014,19 +1015,19 @@ function _messagesChannelMessages(): any {
     chats: vector(obj),
     users: vector(obj),
   }
-}
-const _messageActionChannelCreate: any = () => ({_: 'messageActionChannelCreate', title: str()});
-function _updateChannelTooLong(): any {
+};
+const _messageActionChannelCreate: any = () => ({ _: 'messageActionChannelCreate', title: str() });
+const _updateChannelTooLong = (): any => {
   const flags = i32();
   return {
     _: 'updateChannelTooLong',
     channel_id: i32(),
     pts: flags & 0x1 ? i32() : u,
   }
-}
-const _updateChannel: any = () => ({_: 'updateChannel', channel_id: i32()});
-const _updateNewChannelMessage: any = () => ({_: 'updateNewChannelMessage', message: obj(), pts: i32(), pts_count: i32()});
-function _updateReadChannelInbox(): any {
+};
+const _updateChannel: any = () => ({ _: 'updateChannel', channel_id: i32() });
+const _updateNewChannelMessage: any = () => ({ _: 'updateNewChannelMessage', message: obj(), pts: i32(), pts_count: i32() });
+const _updateReadChannelInbox = (): any => {
   const flags = i32();
   return {
     _: 'updateReadChannelInbox',
@@ -1036,10 +1037,10 @@ function _updateReadChannelInbox(): any {
     still_unread_count: i32(),
     pts: i32(),
   }
-}
-const _updateDeleteChannelMessages: any = () => ({_: 'updateDeleteChannelMessages', channel_id: i32(), messages: vector(i32), pts: i32(), pts_count: i32()});
-const _updateChannelMessageViews: any = () => ({_: 'updateChannelMessageViews', channel_id: i32(), id: i32(), views: i32()});
-function _updatesChannelDifferenceEmpty(): any {
+};
+const _updateDeleteChannelMessages: any = () => ({ _: 'updateDeleteChannelMessages', channel_id: i32(), messages: vector(i32), pts: i32(), pts_count: i32() });
+const _updateChannelMessageViews: any = () => ({ _: 'updateChannelMessageViews', channel_id: i32(), id: i32(), views: i32() });
+const _updatesChannelDifferenceEmpty = (): any => {
   const flags = i32();
   return {
     _: 'updates.channelDifferenceEmpty',
@@ -1047,8 +1048,8 @@ function _updatesChannelDifferenceEmpty(): any {
     pts: i32(),
     timeout: flags & 0x2 ? i32() : u,
   }
-}
-function _updatesChannelDifferenceTooLong(): any {
+};
+const _updatesChannelDifferenceTooLong = (): any => {
   const flags = i32();
   return {
     _: 'updates.channelDifferenceTooLong',
@@ -1059,8 +1060,8 @@ function _updatesChannelDifferenceTooLong(): any {
     chats: vector(obj),
     users: vector(obj),
   }
-}
-function _updatesChannelDifference(): any {
+};
+const _updatesChannelDifference = (): any => {
   const flags = i32();
   return {
     _: 'updates.channelDifference',
@@ -1072,38 +1073,38 @@ function _updatesChannelDifference(): any {
     chats: vector(obj),
     users: vector(obj),
   }
-}
-const _channelMessagesFilterEmpty: any = () => ({_: 'channelMessagesFilterEmpty'});
-function _channelMessagesFilter(): any {
+};
+const _channelMessagesFilterEmpty: any = () => ({ _: 'channelMessagesFilterEmpty' });
+const _channelMessagesFilter = (): any => {
   const flags = i32();
   return {
     _: 'channelMessagesFilter',
     exclude_new_messages: !!(flags & 0x2),
     ranges: vector(obj),
   }
-}
-const _channelParticipant: any = () => ({_: 'channelParticipant', user_id: i32(), date: i32()});
-const _channelParticipantSelf: any = () => ({_: 'channelParticipantSelf', user_id: i32(), inviter_id: i32(), date: i32()});
-function _channelParticipantCreator(): any {
+};
+const _channelParticipant: any = () => ({ _: 'channelParticipant', user_id: i32(), date: i32() });
+const _channelParticipantSelf: any = () => ({ _: 'channelParticipantSelf', user_id: i32(), inviter_id: i32(), date: i32() });
+const _channelParticipantCreator = (): any => {
   const flags = i32();
   return {
     _: 'channelParticipantCreator',
     user_id: i32(),
     rank: flags & 0x1 ? str() : u,
   }
-}
-const _channelParticipantsRecent: any = () => ({_: 'channelParticipantsRecent'});
-const _channelParticipantsAdmins: any = () => ({_: 'channelParticipantsAdmins'});
-const _channelParticipantsKicked: any = () => ({_: 'channelParticipantsKicked', q: str()});
-const _channelsChannelParticipants: any = () => ({_: 'channels.channelParticipants', count: i32(), participants: vector(obj), users: vector(obj)});
-const _channelsChannelParticipant: any = () => ({_: 'channels.channelParticipant', participant: obj(), users: vector(obj)});
-const _chatParticipantCreator: any = () => ({_: 'chatParticipantCreator', user_id: i32()});
-const _chatParticipantAdmin: any = () => ({_: 'chatParticipantAdmin', user_id: i32(), inviter_id: i32(), date: i32()});
-const _updateChatParticipantAdmin: any = () => ({_: 'updateChatParticipantAdmin', chat_id: i32(), user_id: i32(), is_admin: obj(), version: i32()});
-const _messageActionChatMigrateTo: any = () => ({_: 'messageActionChatMigrateTo', channel_id: i32()});
-const _messageActionChannelMigrateFrom: any = () => ({_: 'messageActionChannelMigrateFrom', title: str(), chat_id: i32()});
-const _channelParticipantsBots: any = () => ({_: 'channelParticipantsBots'});
-function _helpTermsOfService(): any {
+};
+const _channelParticipantsRecent: any = () => ({ _: 'channelParticipantsRecent' });
+const _channelParticipantsAdmins: any = () => ({ _: 'channelParticipantsAdmins' });
+const _channelParticipantsKicked: any = () => ({ _: 'channelParticipantsKicked', q: str() });
+const _channelsChannelParticipants: any = () => ({ _: 'channels.channelParticipants', count: i32(), participants: vector(obj), users: vector(obj) });
+const _channelsChannelParticipant: any = () => ({ _: 'channels.channelParticipant', participant: obj(), users: vector(obj) });
+const _chatParticipantCreator: any = () => ({ _: 'chatParticipantCreator', user_id: i32() });
+const _chatParticipantAdmin: any = () => ({ _: 'chatParticipantAdmin', user_id: i32(), inviter_id: i32(), date: i32() });
+const _updateChatParticipantAdmin: any = () => ({ _: 'updateChatParticipantAdmin', chat_id: i32(), user_id: i32(), is_admin: obj(), version: i32() });
+const _messageActionChatMigrateTo: any = () => ({ _: 'messageActionChatMigrateTo', channel_id: i32() });
+const _messageActionChannelMigrateFrom: any = () => ({ _: 'messageActionChannelMigrateFrom', title: str(), chat_id: i32() });
+const _channelParticipantsBots: any = () => ({ _: 'channelParticipantsBots' });
+const _helpTermsOfService = (): any => {
   const flags = i32();
   return {
     _: 'help.termsOfService',
@@ -1113,25 +1114,25 @@ function _helpTermsOfService(): any {
     entities: vector(obj),
     min_age_confirm: flags & 0x2 ? i32() : u,
   }
-}
-const _updateNewStickerSet: any = () => ({_: 'updateNewStickerSet', stickerset: obj()});
-function _updateStickerSetsOrder(): any {
+};
+const _updateNewStickerSet: any = () => ({ _: 'updateNewStickerSet', stickerset: obj() });
+const _updateStickerSetsOrder = (): any => {
   const flags = i32();
   return {
     _: 'updateStickerSetsOrder',
     masks: !!(flags & 0x1),
     order: vector(i64),
   }
-}
-const _updateStickerSets: any = () => ({_: 'updateStickerSets'});
-const _foundGif: any = () => ({_: 'foundGif', url: str(), thumb_url: str(), content_url: str(), content_type: str(), w: i32(), h: i32()});
-const _foundGifCached: any = () => ({_: 'foundGifCached', url: str(), photo: obj(), document: obj()});
-const _inputMediaGifExternal: any = () => ({_: 'inputMediaGifExternal', url: str(), q: str()});
-const _messagesFoundGifs: any = () => ({_: 'messages.foundGifs', next_offset: i32(), results: vector(obj)});
-const _messagesSavedGifsNotModified: any = () => ({_: 'messages.savedGifsNotModified'});
-const _messagesSavedGifs: any = () => ({_: 'messages.savedGifs', hash: i32(), gifs: vector(obj)});
-const _updateSavedGifs: any = () => ({_: 'updateSavedGifs'});
-function _inputBotInlineMessageMediaAuto(): any {
+};
+const _updateStickerSets: any = () => ({ _: 'updateStickerSets' });
+const _foundGif: any = () => ({ _: 'foundGif', url: str(), thumb_url: str(), content_url: str(), content_type: str(), w: i32(), h: i32() });
+const _foundGifCached: any = () => ({ _: 'foundGifCached', url: str(), photo: obj(), document: obj() });
+const _inputMediaGifExternal: any = () => ({ _: 'inputMediaGifExternal', url: str(), q: str() });
+const _messagesFoundGifs: any = () => ({ _: 'messages.foundGifs', next_offset: i32(), results: vector(obj) });
+const _messagesSavedGifsNotModified: any = () => ({ _: 'messages.savedGifsNotModified' });
+const _messagesSavedGifs: any = () => ({ _: 'messages.savedGifs', hash: i32(), gifs: vector(obj) });
+const _updateSavedGifs: any = () => ({ _: 'updateSavedGifs' });
+const _inputBotInlineMessageMediaAuto = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageMediaAuto',
@@ -1139,8 +1140,8 @@ function _inputBotInlineMessageMediaAuto(): any {
     entities: flags & 0x2 ? vector(obj) : u,
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _inputBotInlineMessageText(): any {
+};
+const _inputBotInlineMessageText = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageText',
@@ -1149,8 +1150,8 @@ function _inputBotInlineMessageText(): any {
     entities: flags & 0x2 ? vector(obj) : u,
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _inputBotInlineResult(): any {
+};
+const _inputBotInlineResult = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineResult',
@@ -1163,8 +1164,8 @@ function _inputBotInlineResult(): any {
     content: flags & 0x20 ? obj() : u,
     send_message: obj(),
   }
-}
-function _botInlineMessageMediaAuto(): any {
+};
+const _botInlineMessageMediaAuto = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMessageMediaAuto',
@@ -1172,8 +1173,8 @@ function _botInlineMessageMediaAuto(): any {
     entities: flags & 0x2 ? vector(obj) : u,
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _botInlineMessageText(): any {
+};
+const _botInlineMessageText = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMessageText',
@@ -1182,8 +1183,8 @@ function _botInlineMessageText(): any {
     entities: flags & 0x2 ? vector(obj) : u,
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _botInlineResult(): any {
+};
+const _botInlineResult = (): any => {
   const flags = i32();
   return {
     _: 'botInlineResult',
@@ -1196,8 +1197,8 @@ function _botInlineResult(): any {
     content: flags & 0x20 ? obj() : u,
     send_message: obj(),
   }
-}
-function _messagesBotResults(): any {
+};
+const _messagesBotResults = (): any => {
   const flags = i32();
   return {
     _: 'messages.botResults',
@@ -1209,8 +1210,8 @@ function _messagesBotResults(): any {
     cache_time: i32(),
     users: vector(obj),
   }
-}
-function _updateBotInlineQuery(): any {
+};
+const _updateBotInlineQuery = (): any => {
   const flags = i32();
   return {
     _: 'updateBotInlineQuery',
@@ -1220,8 +1221,8 @@ function _updateBotInlineQuery(): any {
     geo: flags & 0x1 ? obj() : u,
     offset: str(),
   }
-}
-function _updateBotInlineSend(): any {
+};
+const _updateBotInlineSend = (): any => {
   const flags = i32();
   return {
     _: 'updateBotInlineSend',
@@ -1231,13 +1232,13 @@ function _updateBotInlineSend(): any {
     id: str(),
     msg_id: flags & 0x2 ? obj() : u,
   }
-}
-const _inputMessagesFilterVoice: any = () => ({_: 'inputMessagesFilterVoice'});
-const _inputMessagesFilterMusic: any = () => ({_: 'inputMessagesFilterMusic'});
-const _inputPrivacyKeyChatInvite: any = () => ({_: 'inputPrivacyKeyChatInvite'});
-const _privacyKeyChatInvite: any = () => ({_: 'privacyKeyChatInvite'});
-const _exportedMessageLink: any = () => ({_: 'exportedMessageLink', link: str(), html: str()});
-function _messageFwdHeader(): any {
+};
+const _inputMessagesFilterVoice: any = () => ({ _: 'inputMessagesFilterVoice' });
+const _inputMessagesFilterMusic: any = () => ({ _: 'inputMessagesFilterMusic' });
+const _inputPrivacyKeyChatInvite: any = () => ({ _: 'inputPrivacyKeyChatInvite' });
+const _privacyKeyChatInvite: any = () => ({ _: 'privacyKeyChatInvite' });
+const _exportedMessageLink: any = () => ({ _: 'exportedMessageLink', link: str(), html: str() });
+const _messageFwdHeader = (): any => {
   const flags = i32();
   return {
     _: 'messageFwdHeader',
@@ -1250,22 +1251,22 @@ function _messageFwdHeader(): any {
     saved_from_peer: flags & 0x10 ? obj() : u,
     saved_from_msg_id: flags & 0x10 ? i32() : u,
   }
-}
-const _updateEditChannelMessage: any = () => ({_: 'updateEditChannelMessage', message: obj(), pts: i32(), pts_count: i32()});
-const _updateChannelPinnedMessage: any = () => ({_: 'updateChannelPinnedMessage', channel_id: i32(), id: i32()});
-const _messageActionPinMessage: any = () => ({_: 'messageActionPinMessage'});
-const _authCodeTypeSms: any = () => ({_: 'auth.codeTypeSms'});
-const _authCodeTypeCall: any = () => ({_: 'auth.codeTypeCall'});
-const _authCodeTypeFlashCall: any = () => ({_: 'auth.codeTypeFlashCall'});
-const _authSentCodeTypeApp: any = () => ({_: 'auth.sentCodeTypeApp', length: i32()});
-const _authSentCodeTypeSms: any = () => ({_: 'auth.sentCodeTypeSms', length: i32()});
-const _authSentCodeTypeCall: any = () => ({_: 'auth.sentCodeTypeCall', length: i32()});
-const _authSentCodeTypeFlashCall: any = () => ({_: 'auth.sentCodeTypeFlashCall', pattern: str()});
-const _keyboardButtonUrl: any = () => ({_: 'keyboardButtonUrl', text: str(), url: str()});
-const _keyboardButtonCallback: any = () => ({_: 'keyboardButtonCallback', text: str(), data: bytes()});
-const _keyboardButtonRequestPhone: any = () => ({_: 'keyboardButtonRequestPhone', text: str()});
-const _keyboardButtonRequestGeoLocation: any = () => ({_: 'keyboardButtonRequestGeoLocation', text: str()});
-function _keyboardButtonSwitchInline(): any {
+};
+const _updateEditChannelMessage: any = () => ({ _: 'updateEditChannelMessage', message: obj(), pts: i32(), pts_count: i32() });
+const _updateChannelPinnedMessage: any = () => ({ _: 'updateChannelPinnedMessage', channel_id: i32(), id: i32() });
+const _messageActionPinMessage: any = () => ({ _: 'messageActionPinMessage' });
+const _authCodeTypeSms: any = () => ({ _: 'auth.codeTypeSms' });
+const _authCodeTypeCall: any = () => ({ _: 'auth.codeTypeCall' });
+const _authCodeTypeFlashCall: any = () => ({ _: 'auth.codeTypeFlashCall' });
+const _authSentCodeTypeApp: any = () => ({ _: 'auth.sentCodeTypeApp', length: i32() });
+const _authSentCodeTypeSms: any = () => ({ _: 'auth.sentCodeTypeSms', length: i32() });
+const _authSentCodeTypeCall: any = () => ({ _: 'auth.sentCodeTypeCall', length: i32() });
+const _authSentCodeTypeFlashCall: any = () => ({ _: 'auth.sentCodeTypeFlashCall', pattern: str() });
+const _keyboardButtonUrl: any = () => ({ _: 'keyboardButtonUrl', text: str(), url: str() });
+const _keyboardButtonCallback: any = () => ({ _: 'keyboardButtonCallback', text: str(), data: bytes() });
+const _keyboardButtonRequestPhone: any = () => ({ _: 'keyboardButtonRequestPhone', text: str() });
+const _keyboardButtonRequestGeoLocation: any = () => ({ _: 'keyboardButtonRequestGeoLocation', text: str() });
+const _keyboardButtonSwitchInline = (): any => {
   const flags = i32();
   return {
     _: 'keyboardButtonSwitchInline',
@@ -1273,9 +1274,9 @@ function _keyboardButtonSwitchInline(): any {
     text: str(),
     query: str(),
   }
-}
-const _replyInlineMarkup: any = () => ({_: 'replyInlineMarkup', rows: vector(obj)});
-function _messagesBotCallbackAnswer(): any {
+};
+const _replyInlineMarkup: any = () => ({ _: 'replyInlineMarkup', rows: vector(obj) });
+const _messagesBotCallbackAnswer = (): any => {
   const flags = i32();
   return {
     _: 'messages.botCallbackAnswer',
@@ -1286,8 +1287,8 @@ function _messagesBotCallbackAnswer(): any {
     url: flags & 0x4 ? str() : u,
     cache_time: i32(),
   }
-}
-function _updateBotCallbackQuery(): any {
+};
+const _updateBotCallbackQuery = (): any => {
   const flags = i32();
   return {
     _: 'updateBotCallbackQuery',
@@ -1299,16 +1300,16 @@ function _updateBotCallbackQuery(): any {
     data: flags & 0x1 ? bytes() : u,
     game_short_name: flags & 0x2 ? str() : u,
   }
-}
-function _messagesMessageEditData(): any {
+};
+const _messagesMessageEditData = (): any => {
   const flags = i32();
   return {
     _: 'messages.messageEditData',
     caption: !!(flags & 0x1),
   }
-}
-const _updateEditMessage: any = () => ({_: 'updateEditMessage', message: obj(), pts: i32(), pts_count: i32()});
-function _inputBotInlineMessageMediaGeo(): any {
+};
+const _updateEditMessage: any = () => ({ _: 'updateEditMessage', message: obj(), pts: i32(), pts_count: i32() });
+const _inputBotInlineMessageMediaGeo = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageMediaGeo',
@@ -1316,8 +1317,8 @@ function _inputBotInlineMessageMediaGeo(): any {
     period: i32(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _inputBotInlineMessageMediaVenue(): any {
+};
+const _inputBotInlineMessageMediaVenue = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageMediaVenue',
@@ -1329,8 +1330,8 @@ function _inputBotInlineMessageMediaVenue(): any {
     venue_type: str(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _inputBotInlineMessageMediaContact(): any {
+};
+const _inputBotInlineMessageMediaContact = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageMediaContact',
@@ -1340,8 +1341,8 @@ function _inputBotInlineMessageMediaContact(): any {
     vcard: str(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _botInlineMessageMediaGeo(): any {
+};
+const _botInlineMessageMediaGeo = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMessageMediaGeo',
@@ -1349,8 +1350,8 @@ function _botInlineMessageMediaGeo(): any {
     period: i32(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _botInlineMessageMediaVenue(): any {
+};
+const _botInlineMessageMediaVenue = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMessageMediaVenue',
@@ -1362,8 +1363,8 @@ function _botInlineMessageMediaVenue(): any {
     venue_type: str(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-function _botInlineMessageMediaContact(): any {
+};
+const _botInlineMessageMediaContact = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMessageMediaContact',
@@ -1373,9 +1374,9 @@ function _botInlineMessageMediaContact(): any {
     vcard: str(),
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-const _inputBotInlineResultPhoto: any = () => ({_: 'inputBotInlineResultPhoto', id: str(), type: str(), photo: obj(), send_message: obj()});
-function _inputBotInlineResultDocument(): any {
+};
+const _inputBotInlineResultPhoto: any = () => ({ _: 'inputBotInlineResultPhoto', id: str(), type: str(), photo: obj(), send_message: obj() });
+const _inputBotInlineResultDocument = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineResultDocument',
@@ -1386,8 +1387,8 @@ function _inputBotInlineResultDocument(): any {
     document: obj(),
     send_message: obj(),
   }
-}
-function _botInlineMediaResult(): any {
+};
+const _botInlineMediaResult = (): any => {
   const flags = i32();
   return {
     _: 'botInlineMediaResult',
@@ -1399,9 +1400,9 @@ function _botInlineMediaResult(): any {
     description: flags & 0x8 ? str() : u,
     send_message: obj(),
   }
-}
-const _inputBotInlineMessageID: any = () => ({_: 'inputBotInlineMessageID', dc_id: i32(), id: i64(), access_hash: i64()});
-function _updateInlineBotCallbackQuery(): any {
+};
+const _inputBotInlineMessageID: any = () => ({ _: 'inputBotInlineMessageID', dc_id: i32(), id: i64(), access_hash: i64() });
+const _updateInlineBotCallbackQuery = (): any => {
   const flags = i32();
   return {
     _: 'updateInlineBotCallbackQuery',
@@ -1412,31 +1413,31 @@ function _updateInlineBotCallbackQuery(): any {
     data: flags & 0x1 ? bytes() : u,
     game_short_name: flags & 0x2 ? str() : u,
   }
-}
-const _inlineBotSwitchPM: any = () => ({_: 'inlineBotSwitchPM', text: str(), start_param: str()});
-const _messagesPeerDialogs: any = () => ({_: 'messages.peerDialogs', dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj), state: obj()});
-const _topPeer: any = () => ({_: 'topPeer', peer: obj(), rating: f64()});
-const _topPeerCategoryBotsPM: any = () => ({_: 'topPeerCategoryBotsPM'});
-const _topPeerCategoryBotsInline: any = () => ({_: 'topPeerCategoryBotsInline'});
-const _topPeerCategoryCorrespondents: any = () => ({_: 'topPeerCategoryCorrespondents'});
-const _topPeerCategoryGroups: any = () => ({_: 'topPeerCategoryGroups'});
-const _topPeerCategoryChannels: any = () => ({_: 'topPeerCategoryChannels'});
-const _topPeerCategoryPeers: any = () => ({_: 'topPeerCategoryPeers', category: obj(), count: i32(), peers: vector(obj)});
-const _contactsTopPeersNotModified: any = () => ({_: 'contacts.topPeersNotModified'});
-const _contactsTopPeers: any = () => ({_: 'contacts.topPeers', categories: vector(obj), chats: vector(obj), users: vector(obj)});
-const _messageEntityMentionName: any = () => ({_: 'messageEntityMentionName', offset: i32(), length: i32(), user_id: i32()});
-const _inputMessageEntityMentionName: any = () => ({_: 'inputMessageEntityMentionName', offset: i32(), length: i32(), user_id: obj()});
-const _inputMessagesFilterChatPhotos: any = () => ({_: 'inputMessagesFilterChatPhotos'});
-const _updateReadChannelOutbox: any = () => ({_: 'updateReadChannelOutbox', channel_id: i32(), max_id: i32()});
-const _updateDraftMessage: any = () => ({_: 'updateDraftMessage', peer: obj(), draft: obj()});
-function _draftMessageEmpty(): any {
+};
+const _inlineBotSwitchPM: any = () => ({ _: 'inlineBotSwitchPM', text: str(), start_param: str() });
+const _messagesPeerDialogs: any = () => ({ _: 'messages.peerDialogs', dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj), state: obj() });
+const _topPeer: any = () => ({ _: 'topPeer', peer: obj(), rating: f64() });
+const _topPeerCategoryBotsPM: any = () => ({ _: 'topPeerCategoryBotsPM' });
+const _topPeerCategoryBotsInline: any = () => ({ _: 'topPeerCategoryBotsInline' });
+const _topPeerCategoryCorrespondents: any = () => ({ _: 'topPeerCategoryCorrespondents' });
+const _topPeerCategoryGroups: any = () => ({ _: 'topPeerCategoryGroups' });
+const _topPeerCategoryChannels: any = () => ({ _: 'topPeerCategoryChannels' });
+const _topPeerCategoryPeers: any = () => ({ _: 'topPeerCategoryPeers', category: obj(), count: i32(), peers: vector(obj) });
+const _contactsTopPeersNotModified: any = () => ({ _: 'contacts.topPeersNotModified' });
+const _contactsTopPeers: any = () => ({ _: 'contacts.topPeers', categories: vector(obj), chats: vector(obj), users: vector(obj) });
+const _messageEntityMentionName: any = () => ({ _: 'messageEntityMentionName', offset: i32(), length: i32(), user_id: i32() });
+const _inputMessageEntityMentionName: any = () => ({ _: 'inputMessageEntityMentionName', offset: i32(), length: i32(), user_id: obj() });
+const _inputMessagesFilterChatPhotos: any = () => ({ _: 'inputMessagesFilterChatPhotos' });
+const _updateReadChannelOutbox: any = () => ({ _: 'updateReadChannelOutbox', channel_id: i32(), max_id: i32() });
+const _updateDraftMessage: any = () => ({ _: 'updateDraftMessage', peer: obj(), draft: obj() });
+const _draftMessageEmpty = (): any => {
   const flags = i32();
   return {
     _: 'draftMessageEmpty',
     date: flags & 0x1 ? i32() : u,
   }
-}
-function _draftMessage(): any {
+};
+const _draftMessage = (): any => {
   const flags = i32();
   return {
     _: 'draftMessage',
@@ -1446,42 +1447,42 @@ function _draftMessage(): any {
     entities: flags & 0x8 ? vector(obj) : u,
     date: i32(),
   }
-}
-const _messageActionHistoryClear: any = () => ({_: 'messageActionHistoryClear'});
-const _messagesFeaturedStickersNotModified: any = () => ({_: 'messages.featuredStickersNotModified'});
-const _messagesFeaturedStickers: any = () => ({_: 'messages.featuredStickers', hash: i32(), sets: vector(obj), unread: vector(i64)});
-const _updateReadFeaturedStickers: any = () => ({_: 'updateReadFeaturedStickers'});
-const _messagesRecentStickersNotModified: any = () => ({_: 'messages.recentStickersNotModified'});
-const _messagesRecentStickers: any = () => ({_: 'messages.recentStickers', hash: i32(), packs: vector(obj), stickers: vector(obj), dates: vector(i32)});
-const _updateRecentStickers: any = () => ({_: 'updateRecentStickers'});
-const _messagesArchivedStickers: any = () => ({_: 'messages.archivedStickers', count: i32(), sets: vector(obj)});
-const _messagesStickerSetInstallResultSuccess: any = () => ({_: 'messages.stickerSetInstallResultSuccess'});
-const _messagesStickerSetInstallResultArchive: any = () => ({_: 'messages.stickerSetInstallResultArchive', sets: vector(obj)});
-const _stickerSetCovered: any = () => ({_: 'stickerSetCovered', set: obj(), cover: obj()});
-const _updateConfig: any = () => ({_: 'updateConfig'});
-const _updatePtsChanged: any = () => ({_: 'updatePtsChanged'});
-function _inputMediaPhotoExternal(): any {
+};
+const _messageActionHistoryClear: any = () => ({ _: 'messageActionHistoryClear' });
+const _messagesFeaturedStickersNotModified: any = () => ({ _: 'messages.featuredStickersNotModified' });
+const _messagesFeaturedStickers: any = () => ({ _: 'messages.featuredStickers', hash: i32(), sets: vector(obj), unread: vector(i64) });
+const _updateReadFeaturedStickers: any = () => ({ _: 'updateReadFeaturedStickers' });
+const _messagesRecentStickersNotModified: any = () => ({ _: 'messages.recentStickersNotModified' });
+const _messagesRecentStickers: any = () => ({ _: 'messages.recentStickers', hash: i32(), packs: vector(obj), stickers: vector(obj), dates: vector(i32) });
+const _updateRecentStickers: any = () => ({ _: 'updateRecentStickers' });
+const _messagesArchivedStickers: any = () => ({ _: 'messages.archivedStickers', count: i32(), sets: vector(obj) });
+const _messagesStickerSetInstallResultSuccess: any = () => ({ _: 'messages.stickerSetInstallResultSuccess' });
+const _messagesStickerSetInstallResultArchive: any = () => ({ _: 'messages.stickerSetInstallResultArchive', sets: vector(obj) });
+const _stickerSetCovered: any = () => ({ _: 'stickerSetCovered', set: obj(), cover: obj() });
+const _updateConfig: any = () => ({ _: 'updateConfig' });
+const _updatePtsChanged: any = () => ({ _: 'updatePtsChanged' });
+const _inputMediaPhotoExternal = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaPhotoExternal',
     url: str(),
     ttl_seconds: flags & 0x1 ? i32() : u,
   }
-}
-function _inputMediaDocumentExternal(): any {
+};
+const _inputMediaDocumentExternal = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaDocumentExternal',
     url: str(),
     ttl_seconds: flags & 0x1 ? i32() : u,
   }
-}
-const _stickerSetMultiCovered: any = () => ({_: 'stickerSetMultiCovered', set: obj(), covers: vector(obj)});
-const _maskCoords: any = () => ({_: 'maskCoords', n: i32(), x: f64(), y: f64(), zoom: f64()});
-const _documentAttributeHasStickers: any = () => ({_: 'documentAttributeHasStickers'});
-const _inputStickeredMediaPhoto: any = () => ({_: 'inputStickeredMediaPhoto', id: obj()});
-const _inputStickeredMediaDocument: any = () => ({_: 'inputStickeredMediaDocument', id: obj()});
-function _game(): any {
+};
+const _stickerSetMultiCovered: any = () => ({ _: 'stickerSetMultiCovered', set: obj(), covers: vector(obj) });
+const _maskCoords: any = () => ({ _: 'maskCoords', n: i32(), x: f64(), y: f64(), zoom: f64() });
+const _documentAttributeHasStickers: any = () => ({ _: 'documentAttributeHasStickers' });
+const _inputStickeredMediaPhoto: any = () => ({ _: 'inputStickeredMediaPhoto', id: obj() });
+const _inputStickeredMediaDocument: any = () => ({ _: 'inputStickeredMediaDocument', id: obj() });
+const _game = (): any => {
   const flags = i32();
   return {
     _: 'game',
@@ -1493,51 +1494,51 @@ function _game(): any {
     photo: obj(),
     document: flags & 0x1 ? obj() : u,
   }
-}
-const _inputBotInlineResultGame: any = () => ({_: 'inputBotInlineResultGame', id: str(), short_name: str(), send_message: obj()});
-function _inputBotInlineMessageGame(): any {
+};
+const _inputBotInlineResultGame: any = () => ({ _: 'inputBotInlineResultGame', id: str(), short_name: str(), send_message: obj() });
+const _inputBotInlineMessageGame = (): any => {
   const flags = i32();
   return {
     _: 'inputBotInlineMessageGame',
     reply_markup: flags & 0x4 ? obj() : u,
   }
-}
-const _messageMediaGame: any = () => ({_: 'messageMediaGame', game: obj()});
-const _inputMediaGame: any = () => ({_: 'inputMediaGame', id: obj()});
-const _inputGameID: any = () => ({_: 'inputGameID', id: i64(), access_hash: i64()});
-const _inputGameShortName: any = () => ({_: 'inputGameShortName', bot_id: obj(), short_name: str()});
-const _keyboardButtonGame: any = () => ({_: 'keyboardButtonGame', text: str()});
-const _messageActionGameScore: any = () => ({_: 'messageActionGameScore', game_id: i64(), score: i32()});
-const _highScore: any = () => ({_: 'highScore', pos: i32(), user_id: i32(), score: i32()});
-const _messagesHighScores: any = () => ({_: 'messages.highScores', scores: vector(obj), users: vector(obj)});
-const _updatesDifferenceTooLong: any = () => ({_: 'updates.differenceTooLong', pts: i32()});
-const _updateChannelWebPage: any = () => ({_: 'updateChannelWebPage', channel_id: i32(), webpage: obj(), pts: i32(), pts_count: i32()});
-const _messagesChatsSlice: any = () => ({_: 'messages.chatsSlice', count: i32(), chats: vector(obj)});
-const _textEmpty: any = () => ({_: 'textEmpty'});
-const _textPlain: any = () => ({_: 'textPlain', text: str()});
-const _textBold: any = () => ({_: 'textBold', text: obj()});
-const _textItalic: any = () => ({_: 'textItalic', text: obj()});
-const _textUnderline: any = () => ({_: 'textUnderline', text: obj()});
-const _textStrike: any = () => ({_: 'textStrike', text: obj()});
-const _textFixed: any = () => ({_: 'textFixed', text: obj()});
-const _textUrl: any = () => ({_: 'textUrl', text: obj(), url: str(), webpage_id: i64()});
-const _textEmail: any = () => ({_: 'textEmail', text: obj(), email: str()});
-const _textConcat: any = () => ({_: 'textConcat', texts: vector(obj)});
-const _pageBlockUnsupported: any = () => ({_: 'pageBlockUnsupported'});
-const _pageBlockTitle: any = () => ({_: 'pageBlockTitle', text: obj()});
-const _pageBlockSubtitle: any = () => ({_: 'pageBlockSubtitle', text: obj()});
-const _pageBlockAuthorDate: any = () => ({_: 'pageBlockAuthorDate', author: obj(), published_date: i32()});
-const _pageBlockHeader: any = () => ({_: 'pageBlockHeader', text: obj()});
-const _pageBlockSubheader: any = () => ({_: 'pageBlockSubheader', text: obj()});
-const _pageBlockParagraph: any = () => ({_: 'pageBlockParagraph', text: obj()});
-const _pageBlockPreformatted: any = () => ({_: 'pageBlockPreformatted', text: obj(), language: str()});
-const _pageBlockFooter: any = () => ({_: 'pageBlockFooter', text: obj()});
-const _pageBlockDivider: any = () => ({_: 'pageBlockDivider'});
-const _pageBlockAnchor: any = () => ({_: 'pageBlockAnchor', name: str()});
-const _pageBlockList: any = () => ({_: 'pageBlockList', items: vector(obj)});
-const _pageBlockBlockquote: any = () => ({_: 'pageBlockBlockquote', text: obj(), caption: obj()});
-const _pageBlockPullquote: any = () => ({_: 'pageBlockPullquote', text: obj(), caption: obj()});
-function _pageBlockPhoto(): any {
+};
+const _messageMediaGame: any = () => ({ _: 'messageMediaGame', game: obj() });
+const _inputMediaGame: any = () => ({ _: 'inputMediaGame', id: obj() });
+const _inputGameID: any = () => ({ _: 'inputGameID', id: i64(), access_hash: i64() });
+const _inputGameShortName: any = () => ({ _: 'inputGameShortName', bot_id: obj(), short_name: str() });
+const _keyboardButtonGame: any = () => ({ _: 'keyboardButtonGame', text: str() });
+const _messageActionGameScore: any = () => ({ _: 'messageActionGameScore', game_id: i64(), score: i32() });
+const _highScore: any = () => ({ _: 'highScore', pos: i32(), user_id: i32(), score: i32() });
+const _messagesHighScores: any = () => ({ _: 'messages.highScores', scores: vector(obj), users: vector(obj) });
+const _updatesDifferenceTooLong: any = () => ({ _: 'updates.differenceTooLong', pts: i32() });
+const _updateChannelWebPage: any = () => ({ _: 'updateChannelWebPage', channel_id: i32(), webpage: obj(), pts: i32(), pts_count: i32() });
+const _messagesChatsSlice: any = () => ({ _: 'messages.chatsSlice', count: i32(), chats: vector(obj) });
+const _textEmpty: any = () => ({ _: 'textEmpty' });
+const _textPlain: any = () => ({ _: 'textPlain', text: str() });
+const _textBold: any = () => ({ _: 'textBold', text: obj() });
+const _textItalic: any = () => ({ _: 'textItalic', text: obj() });
+const _textUnderline: any = () => ({ _: 'textUnderline', text: obj() });
+const _textStrike: any = () => ({ _: 'textStrike', text: obj() });
+const _textFixed: any = () => ({ _: 'textFixed', text: obj() });
+const _textUrl: any = () => ({ _: 'textUrl', text: obj(), url: str(), webpage_id: i64() });
+const _textEmail: any = () => ({ _: 'textEmail', text: obj(), email: str() });
+const _textConcat: any = () => ({ _: 'textConcat', texts: vector(obj) });
+const _pageBlockUnsupported: any = () => ({ _: 'pageBlockUnsupported' });
+const _pageBlockTitle: any = () => ({ _: 'pageBlockTitle', text: obj() });
+const _pageBlockSubtitle: any = () => ({ _: 'pageBlockSubtitle', text: obj() });
+const _pageBlockAuthorDate: any = () => ({ _: 'pageBlockAuthorDate', author: obj(), published_date: i32() });
+const _pageBlockHeader: any = () => ({ _: 'pageBlockHeader', text: obj() });
+const _pageBlockSubheader: any = () => ({ _: 'pageBlockSubheader', text: obj() });
+const _pageBlockParagraph: any = () => ({ _: 'pageBlockParagraph', text: obj() });
+const _pageBlockPreformatted: any = () => ({ _: 'pageBlockPreformatted', text: obj(), language: str() });
+const _pageBlockFooter: any = () => ({ _: 'pageBlockFooter', text: obj() });
+const _pageBlockDivider: any = () => ({ _: 'pageBlockDivider' });
+const _pageBlockAnchor: any = () => ({ _: 'pageBlockAnchor', name: str() });
+const _pageBlockList: any = () => ({ _: 'pageBlockList', items: vector(obj) });
+const _pageBlockBlockquote: any = () => ({ _: 'pageBlockBlockquote', text: obj(), caption: obj() });
+const _pageBlockPullquote: any = () => ({ _: 'pageBlockPullquote', text: obj(), caption: obj() });
+const _pageBlockPhoto = (): any => {
   const flags = i32();
   return {
     _: 'pageBlockPhoto',
@@ -1546,8 +1547,8 @@ function _pageBlockPhoto(): any {
     url: flags & 0x1 ? str() : u,
     webpage_id: flags & 0x1 ? i64() : u,
   }
-}
-function _pageBlockVideo(): any {
+};
+const _pageBlockVideo = (): any => {
   const flags = i32();
   return {
     _: 'pageBlockVideo',
@@ -1556,9 +1557,9 @@ function _pageBlockVideo(): any {
     video_id: i64(),
     caption: obj(),
   }
-}
-const _pageBlockCover: any = () => ({_: 'pageBlockCover', cover: obj()});
-function _pageBlockEmbed(): any {
+};
+const _pageBlockCover: any = () => ({ _: 'pageBlockCover', cover: obj() });
+const _pageBlockEmbed = (): any => {
   const flags = i32();
   return {
     _: 'pageBlockEmbed',
@@ -1571,19 +1572,19 @@ function _pageBlockEmbed(): any {
     h: flags & 0x20 ? i32() : u,
     caption: obj(),
   }
-}
-const _pageBlockEmbedPost: any = () => ({_: 'pageBlockEmbedPost', url: str(), webpage_id: i64(), author_photo_id: i64(), author: str(), date: i32(), blocks: vector(obj), caption: obj()});
-const _pageBlockCollage: any = () => ({_: 'pageBlockCollage', items: vector(obj), caption: obj()});
-const _pageBlockSlideshow: any = () => ({_: 'pageBlockSlideshow', items: vector(obj), caption: obj()});
-const _webPageNotModified: any = () => ({_: 'webPageNotModified'});
-const _inputPrivacyKeyPhoneCall: any = () => ({_: 'inputPrivacyKeyPhoneCall'});
-const _privacyKeyPhoneCall: any = () => ({_: 'privacyKeyPhoneCall'});
-const _sendMessageGamePlayAction: any = () => ({_: 'sendMessageGamePlayAction'});
-const _phoneCallDiscardReasonMissed: any = () => ({_: 'phoneCallDiscardReasonMissed'});
-const _phoneCallDiscardReasonDisconnect: any = () => ({_: 'phoneCallDiscardReasonDisconnect'});
-const _phoneCallDiscardReasonHangup: any = () => ({_: 'phoneCallDiscardReasonHangup'});
-const _phoneCallDiscardReasonBusy: any = () => ({_: 'phoneCallDiscardReasonBusy'});
-function _updateDialogPinned(): any {
+};
+const _pageBlockEmbedPost: any = () => ({ _: 'pageBlockEmbedPost', url: str(), webpage_id: i64(), author_photo_id: i64(), author: str(), date: i32(), blocks: vector(obj), caption: obj() });
+const _pageBlockCollage: any = () => ({ _: 'pageBlockCollage', items: vector(obj), caption: obj() });
+const _pageBlockSlideshow: any = () => ({ _: 'pageBlockSlideshow', items: vector(obj), caption: obj() });
+const _webPageNotModified: any = () => ({ _: 'webPageNotModified' });
+const _inputPrivacyKeyPhoneCall: any = () => ({ _: 'inputPrivacyKeyPhoneCall' });
+const _privacyKeyPhoneCall: any = () => ({ _: 'privacyKeyPhoneCall' });
+const _sendMessageGamePlayAction: any = () => ({ _: 'sendMessageGamePlayAction' });
+const _phoneCallDiscardReasonMissed: any = () => ({ _: 'phoneCallDiscardReasonMissed' });
+const _phoneCallDiscardReasonDisconnect: any = () => ({ _: 'phoneCallDiscardReasonDisconnect' });
+const _phoneCallDiscardReasonHangup: any = () => ({ _: 'phoneCallDiscardReasonHangup' });
+const _phoneCallDiscardReasonBusy: any = () => ({ _: 'phoneCallDiscardReasonBusy' });
+const _updateDialogPinned = (): any => {
   const flags = i32();
   return {
     _: 'updateDialogPinned',
@@ -1591,20 +1592,20 @@ function _updateDialogPinned(): any {
     folder_id: flags & 0x2 ? i32() : u,
     peer: obj(),
   }
-}
-function _updatePinnedDialogs(): any {
+};
+const _updatePinnedDialogs = (): any => {
   const flags = i32();
   return {
     _: 'updatePinnedDialogs',
     folder_id: flags & 0x2 ? i32() : u,
     order: flags & 0x1 ? vector(obj) : u,
   }
-}
-const _dataJSON: any = () => ({_: 'dataJSON', data: str()});
-const _updateBotWebhookJSON: any = () => ({_: 'updateBotWebhookJSON', data: obj()});
-const _updateBotWebhookJSONQuery: any = () => ({_: 'updateBotWebhookJSONQuery', query_id: i64(), data: obj(), timeout: i32()});
-const _labeledPrice: any = () => ({_: 'labeledPrice', label: str(), amount: i64()});
-function _invoice(): any {
+};
+const _dataJSON: any = () => ({ _: 'dataJSON', data: str() });
+const _updateBotWebhookJSON: any = () => ({ _: 'updateBotWebhookJSON', data: obj() });
+const _updateBotWebhookJSONQuery: any = () => ({ _: 'updateBotWebhookJSONQuery', query_id: i64(), data: obj(), timeout: i32() });
+const _labeledPrice: any = () => ({ _: 'labeledPrice', label: str(), amount: i64() });
+const _invoice = (): any => {
   const flags = i32();
   return {
     _: 'invoice',
@@ -1619,8 +1620,8 @@ function _invoice(): any {
     currency: str(),
     prices: vector(obj),
   }
-}
-function _inputMediaInvoice(): any {
+};
+const _inputMediaInvoice = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaInvoice',
@@ -1633,9 +1634,9 @@ function _inputMediaInvoice(): any {
     provider_data: obj(),
     start_param: str(),
   }
-}
-const _paymentCharge: any = () => ({_: 'paymentCharge', id: str(), provider_charge_id: str()});
-function _messageActionPaymentSentMe(): any {
+};
+const _paymentCharge: any = () => ({ _: 'paymentCharge', id: str(), provider_charge_id: str() });
+const _messageActionPaymentSentMe = (): any => {
   const flags = i32();
   return {
     _: 'messageActionPaymentSentMe',
@@ -1646,8 +1647,8 @@ function _messageActionPaymentSentMe(): any {
     shipping_option_id: flags & 0x2 ? str() : u,
     charge: obj(),
   }
-}
-function _messageMediaInvoice(): any {
+};
+const _messageMediaInvoice = (): any => {
   const flags = i32();
   return {
     _: 'messageMediaInvoice',
@@ -1661,9 +1662,9 @@ function _messageMediaInvoice(): any {
     total_amount: i64(),
     start_param: str(),
   }
-}
-const _postAddress: any = () => ({_: 'postAddress', street_line1: str(), street_line2: str(), city: str(), state: str(), country_iso2: str(), post_code: str()});
-function _paymentRequestedInfo(): any {
+};
+const _postAddress: any = () => ({ _: 'postAddress', street_line1: str(), street_line2: str(), city: str(), state: str(), country_iso2: str(), post_code: str() });
+const _paymentRequestedInfo = (): any => {
   const flags = i32();
   return {
     _: 'paymentRequestedInfo',
@@ -1672,15 +1673,15 @@ function _paymentRequestedInfo(): any {
     email: flags & 0x4 ? str() : u,
     shipping_address: flags & 0x8 ? obj() : u,
   }
-}
-const _keyboardButtonBuy: any = () => ({_: 'keyboardButtonBuy', text: str()});
-const _messageActionPaymentSent: any = () => ({_: 'messageActionPaymentSent', currency: str(), total_amount: i64()});
-const _paymentSavedCredentialsCard: any = () => ({_: 'paymentSavedCredentialsCard', id: str(), title: str()});
-const _webDocument: any = () => ({_: 'webDocument', url: str(), access_hash: i64(), size: i32(), mime_type: str(), attributes: vector(obj)});
-const _inputWebDocument: any = () => ({_: 'inputWebDocument', url: str(), size: i32(), mime_type: str(), attributes: vector(obj)});
-const _inputWebFileLocation: any = () => ({_: 'inputWebFileLocation', url: str(), access_hash: i64()});
-const _uploadWebFile: any = () => ({_: 'upload.webFile', size: i32(), mime_type: str(), file_type: obj(), mtime: i32(), bytes: bytes()});
-function _paymentsPaymentForm(): any {
+};
+const _keyboardButtonBuy: any = () => ({ _: 'keyboardButtonBuy', text: str() });
+const _messageActionPaymentSent: any = () => ({ _: 'messageActionPaymentSent', currency: str(), total_amount: i64() });
+const _paymentSavedCredentialsCard: any = () => ({ _: 'paymentSavedCredentialsCard', id: str(), title: str() });
+const _webDocument: any = () => ({ _: 'webDocument', url: str(), access_hash: i64(), size: i32(), mime_type: str(), attributes: vector(obj) });
+const _inputWebDocument: any = () => ({ _: 'inputWebDocument', url: str(), size: i32(), mime_type: str(), attributes: vector(obj) });
+const _inputWebFileLocation: any = () => ({ _: 'inputWebFileLocation', url: str(), access_hash: i64() });
+const _uploadWebFile: any = () => ({ _: 'upload.webFile', size: i32(), mime_type: str(), file_type: obj(), mtime: i32(), bytes: bytes() });
+const _paymentsPaymentForm = (): any => {
   const flags = i32();
   return {
     _: 'payments.paymentForm',
@@ -1696,17 +1697,17 @@ function _paymentsPaymentForm(): any {
     saved_credentials: flags & 0x2 ? obj() : u,
     users: vector(obj),
   }
-}
-function _paymentsValidatedRequestedInfo(): any {
+};
+const _paymentsValidatedRequestedInfo = (): any => {
   const flags = i32();
   return {
     _: 'payments.validatedRequestedInfo',
     id: flags & 0x1 ? str() : u,
     shipping_options: flags & 0x2 ? vector(obj) : u,
   }
-}
-const _paymentsPaymentResult: any = () => ({_: 'payments.paymentResult', updates: obj()});
-function _paymentsPaymentReceipt(): any {
+};
+const _paymentsPaymentResult: any = () => ({ _: 'payments.paymentResult', updates: obj() });
+const _paymentsPaymentReceipt = (): any => {
   const flags = i32();
   return {
     _: 'payments.paymentReceipt',
@@ -1721,28 +1722,28 @@ function _paymentsPaymentReceipt(): any {
     credentials_title: str(),
     users: vector(obj),
   }
-}
-function _paymentsSavedInfo(): any {
+};
+const _paymentsSavedInfo = (): any => {
   const flags = i32();
   return {
     _: 'payments.savedInfo',
     has_saved_credentials: !!(flags & 0x2),
     saved_info: flags & 0x1 ? obj() : u,
   }
-}
-const _inputPaymentCredentialsSaved: any = () => ({_: 'inputPaymentCredentialsSaved', id: str(), tmp_password: bytes()});
-function _inputPaymentCredentials(): any {
+};
+const _inputPaymentCredentialsSaved: any = () => ({ _: 'inputPaymentCredentialsSaved', id: str(), tmp_password: bytes() });
+const _inputPaymentCredentials = (): any => {
   const flags = i32();
   return {
     _: 'inputPaymentCredentials',
     save: !!(flags & 0x1),
     data: obj(),
   }
-}
-const _accountTmpPassword: any = () => ({_: 'account.tmpPassword', tmp_password: bytes(), valid_until: i32()});
-const _shippingOption: any = () => ({_: 'shippingOption', id: str(), title: str(), prices: vector(obj)});
-const _updateBotShippingQuery: any = () => ({_: 'updateBotShippingQuery', query_id: i64(), user_id: i32(), payload: bytes(), shipping_address: obj()});
-function _updateBotPrecheckoutQuery(): any {
+};
+const _accountTmpPassword: any = () => ({ _: 'account.tmpPassword', tmp_password: bytes(), valid_until: i32() });
+const _shippingOption: any = () => ({ _: 'shippingOption', id: str(), title: str(), prices: vector(obj) });
+const _updateBotShippingQuery: any = () => ({ _: 'updateBotShippingQuery', query_id: i64(), user_id: i32(), payload: bytes(), shipping_address: obj() });
+const _updateBotPrecheckoutQuery = (): any => {
   const flags = i32();
   return {
     _: 'updateBotPrecheckoutQuery',
@@ -1754,8 +1755,8 @@ function _updateBotPrecheckoutQuery(): any {
     currency: str(),
     total_amount: i64(),
   }
-}
-function _inputStickerSetItem(): any {
+};
+const _inputStickerSetItem = (): any => {
   const flags = i32();
   return {
     _: 'inputStickerSetItem',
@@ -1763,11 +1764,11 @@ function _inputStickerSetItem(): any {
     emoji: str(),
     mask_coords: flags & 0x1 ? obj() : u,
   }
-}
-const _updatePhoneCall: any = () => ({_: 'updatePhoneCall', phone_call: obj()});
-const _inputPhoneCall: any = () => ({_: 'inputPhoneCall', id: i64(), access_hash: i64()});
-const _phoneCallEmpty: any = () => ({_: 'phoneCallEmpty', id: i64()});
-function _phoneCallWaiting(): any {
+};
+const _updatePhoneCall: any = () => ({ _: 'updatePhoneCall', phone_call: obj() });
+const _inputPhoneCall: any = () => ({ _: 'inputPhoneCall', id: i64(), access_hash: i64() });
+const _phoneCallEmpty: any = () => ({ _: 'phoneCallEmpty', id: i64() });
+const _phoneCallWaiting = (): any => {
   const flags = i32();
   return {
     _: 'phoneCallWaiting',
@@ -1780,8 +1781,8 @@ function _phoneCallWaiting(): any {
     protocol: obj(),
     receive_date: flags & 0x1 ? i32() : u,
   }
-}
-function _phoneCallRequested(): any {
+};
+const _phoneCallRequested = (): any => {
   const flags = i32();
   return {
     _: 'phoneCallRequested',
@@ -1794,8 +1795,8 @@ function _phoneCallRequested(): any {
     g_a_hash: bytes(),
     protocol: obj(),
   }
-}
-function _phoneCallAccepted(): any {
+};
+const _phoneCallAccepted = (): any => {
   const flags = i32();
   return {
     _: 'phoneCallAccepted',
@@ -1808,8 +1809,8 @@ function _phoneCallAccepted(): any {
     g_b: bytes(),
     protocol: obj(),
   }
-}
-function _phoneCall(): any {
+};
+const _phoneCall = (): any => {
   const flags = i32();
   return {
     _: 'phoneCall',
@@ -1825,8 +1826,8 @@ function _phoneCall(): any {
     connections: vector(obj),
     start_date: i32(),
   }
-}
-function _phoneCallDiscarded(): any {
+};
+const _phoneCallDiscarded = (): any => {
   const flags = i32();
   return {
     _: 'phoneCallDiscarded',
@@ -1837,9 +1838,9 @@ function _phoneCallDiscarded(): any {
     reason: flags & 0x1 ? obj() : u,
     duration: flags & 0x2 ? i32() : u,
   }
-}
-const _phoneConnection: any = () => ({_: 'phoneConnection', id: i64(), ip: str(), ipv6: str(), port: i32(), peer_tag: bytes()});
-function _phoneCallProtocol(): any {
+};
+const _phoneConnection: any = () => ({ _: 'phoneConnection', id: i64(), ip: str(), ipv6: str(), port: i32(), peer_tag: bytes() });
+const _phoneCallProtocol = (): any => {
   const flags = i32();
   return {
     _: 'phoneCallProtocol',
@@ -1848,16 +1849,16 @@ function _phoneCallProtocol(): any {
     min_layer: i32(),
     max_layer: i32(),
   }
-}
-const _phonePhoneCall: any = () => ({_: 'phone.phoneCall', phone_call: obj(), users: vector(obj)});
-function _inputMessagesFilterPhoneCalls(): any {
+};
+const _phonePhoneCall: any = () => ({ _: 'phone.phoneCall', phone_call: obj(), users: vector(obj) });
+const _inputMessagesFilterPhoneCalls = (): any => {
   const flags = i32();
   return {
     _: 'inputMessagesFilterPhoneCalls',
     missed: !!(flags & 0x1),
   }
-}
-function _messageActionPhoneCall(): any {
+};
+const _messageActionPhoneCall = (): any => {
   const flags = i32();
   return {
     _: 'messageActionPhoneCall',
@@ -1866,19 +1867,19 @@ function _messageActionPhoneCall(): any {
     reason: flags & 0x1 ? obj() : u,
     duration: flags & 0x2 ? i32() : u,
   }
-}
-const _inputMessagesFilterRoundVoice: any = () => ({_: 'inputMessagesFilterRoundVoice'});
-const _inputMessagesFilterRoundVideo: any = () => ({_: 'inputMessagesFilterRoundVideo'});
-const _sendMessageRecordRoundAction: any = () => ({_: 'sendMessageRecordRoundAction'});
-const _sendMessageUploadRoundAction: any = () => ({_: 'sendMessageUploadRoundAction', progress: i32()});
-const _uploadFileCdnRedirect: any = () => ({_: 'upload.fileCdnRedirect', dc_id: i32(), file_token: bytes(), encryption_key: bytes(), encryption_iv: bytes(), file_hashes: vector(obj)});
-const _uploadCdnFileReuploadNeeded: any = () => ({_: 'upload.cdnFileReuploadNeeded', request_token: bytes()});
-const _uploadCdnFile: any = () => ({_: 'upload.cdnFile', bytes: bytes()});
-const _cdnPublicKey: any = () => ({_: 'cdnPublicKey', dc_id: i32(), public_key: str()});
-const _cdnConfig: any = () => ({_: 'cdnConfig', public_keys: vector(obj)});
-const _pageBlockChannel: any = () => ({_: 'pageBlockChannel', channel: obj()});
-const _langPackString: any = () => ({_: 'langPackString', key: str(), value: str()});
-function _langPackStringPluralized(): any {
+};
+const _inputMessagesFilterRoundVoice: any = () => ({ _: 'inputMessagesFilterRoundVoice' });
+const _inputMessagesFilterRoundVideo: any = () => ({ _: 'inputMessagesFilterRoundVideo' });
+const _sendMessageRecordRoundAction: any = () => ({ _: 'sendMessageRecordRoundAction' });
+const _sendMessageUploadRoundAction: any = () => ({ _: 'sendMessageUploadRoundAction', progress: i32() });
+const _uploadFileCdnRedirect: any = () => ({ _: 'upload.fileCdnRedirect', dc_id: i32(), file_token: bytes(), encryption_key: bytes(), encryption_iv: bytes(), file_hashes: vector(obj) });
+const _uploadCdnFileReuploadNeeded: any = () => ({ _: 'upload.cdnFileReuploadNeeded', request_token: bytes() });
+const _uploadCdnFile: any = () => ({ _: 'upload.cdnFile', bytes: bytes() });
+const _cdnPublicKey: any = () => ({ _: 'cdnPublicKey', dc_id: i32(), public_key: str() });
+const _cdnConfig: any = () => ({ _: 'cdnConfig', public_keys: vector(obj) });
+const _pageBlockChannel: any = () => ({ _: 'pageBlockChannel', channel: obj() });
+const _langPackString: any = () => ({ _: 'langPackString', key: str(), value: str() });
+const _langPackStringPluralized = (): any => {
   const flags = i32();
   return {
     _: 'langPackStringPluralized',
@@ -1890,10 +1891,10 @@ function _langPackStringPluralized(): any {
     many_value: flags & 0x10 ? str() : u,
     other_value: str(),
   }
-}
-const _langPackStringDeleted: any = () => ({_: 'langPackStringDeleted', key: str()});
-const _langPackDifference: any = () => ({_: 'langPackDifference', lang_code: str(), from_version: i32(), version: i32(), strings: vector(obj)});
-function _langPackLanguage(): any {
+};
+const _langPackStringDeleted: any = () => ({ _: 'langPackStringDeleted', key: str() });
+const _langPackDifference: any = () => ({ _: 'langPackDifference', lang_code: str(), from_version: i32(), version: i32(), strings: vector(obj) });
+const _langPackLanguage = (): any => {
   const flags = i32();
   return {
     _: 'langPackLanguage',
@@ -1909,10 +1910,10 @@ function _langPackLanguage(): any {
     translated_count: i32(),
     translations_url: str(),
   }
-}
-const _updateLangPackTooLong: any = () => ({_: 'updateLangPackTooLong', lang_code: str()});
-const _updateLangPack: any = () => ({_: 'updateLangPack', difference: obj()});
-function _channelParticipantAdmin(): any {
+};
+const _updateLangPackTooLong: any = () => ({ _: 'updateLangPackTooLong', lang_code: str() });
+const _updateLangPack: any = () => ({ _: 'updateLangPack', difference: obj() });
+const _channelParticipantAdmin = (): any => {
   const flags = i32();
   return {
     _: 'channelParticipantAdmin',
@@ -1925,8 +1926,8 @@ function _channelParticipantAdmin(): any {
     admin_rights: obj(),
     rank: flags & 0x4 ? str() : u,
   }
-}
-function _channelParticipantBanned(): any {
+};
+const _channelParticipantBanned = (): any => {
   const flags = i32();
   return {
     _: 'channelParticipantBanned',
@@ -1936,26 +1937,26 @@ function _channelParticipantBanned(): any {
     date: i32(),
     banned_rights: obj(),
   }
-}
-const _channelParticipantsBanned: any = () => ({_: 'channelParticipantsBanned', q: str()});
-const _channelParticipantsSearch: any = () => ({_: 'channelParticipantsSearch', q: str()});
-const _channelAdminLogEventActionChangeTitle: any = () => ({_: 'channelAdminLogEventActionChangeTitle', prev_value: str(), new_value: str()});
-const _channelAdminLogEventActionChangeAbout: any = () => ({_: 'channelAdminLogEventActionChangeAbout', prev_value: str(), new_value: str()});
-const _channelAdminLogEventActionChangeUsername: any = () => ({_: 'channelAdminLogEventActionChangeUsername', prev_value: str(), new_value: str()});
-const _channelAdminLogEventActionChangePhoto: any = () => ({_: 'channelAdminLogEventActionChangePhoto', prev_photo: obj(), new_photo: obj()});
-const _channelAdminLogEventActionToggleInvites: any = () => ({_: 'channelAdminLogEventActionToggleInvites', new_value: obj()});
-const _channelAdminLogEventActionToggleSignatures: any = () => ({_: 'channelAdminLogEventActionToggleSignatures', new_value: obj()});
-const _channelAdminLogEventActionUpdatePinned: any = () => ({_: 'channelAdminLogEventActionUpdatePinned', message: obj()});
-const _channelAdminLogEventActionEditMessage: any = () => ({_: 'channelAdminLogEventActionEditMessage', prev_message: obj(), new_message: obj()});
-const _channelAdminLogEventActionDeleteMessage: any = () => ({_: 'channelAdminLogEventActionDeleteMessage', message: obj()});
-const _channelAdminLogEventActionParticipantJoin: any = () => ({_: 'channelAdminLogEventActionParticipantJoin'});
-const _channelAdminLogEventActionParticipantLeave: any = () => ({_: 'channelAdminLogEventActionParticipantLeave'});
-const _channelAdminLogEventActionParticipantInvite: any = () => ({_: 'channelAdminLogEventActionParticipantInvite', participant: obj()});
-const _channelAdminLogEventActionParticipantToggleBan: any = () => ({_: 'channelAdminLogEventActionParticipantToggleBan', prev_participant: obj(), new_participant: obj()});
-const _channelAdminLogEventActionParticipantToggleAdmin: any = () => ({_: 'channelAdminLogEventActionParticipantToggleAdmin', prev_participant: obj(), new_participant: obj()});
-const _channelAdminLogEvent: any = () => ({_: 'channelAdminLogEvent', id: i64(), date: i32(), user_id: i32(), action: obj()});
-const _channelsAdminLogResults: any = () => ({_: 'channels.adminLogResults', events: vector(obj), chats: vector(obj), users: vector(obj)});
-function _channelAdminLogEventsFilter(): any {
+};
+const _channelParticipantsBanned: any = () => ({ _: 'channelParticipantsBanned', q: str() });
+const _channelParticipantsSearch: any = () => ({ _: 'channelParticipantsSearch', q: str() });
+const _channelAdminLogEventActionChangeTitle: any = () => ({ _: 'channelAdminLogEventActionChangeTitle', prev_value: str(), new_value: str() });
+const _channelAdminLogEventActionChangeAbout: any = () => ({ _: 'channelAdminLogEventActionChangeAbout', prev_value: str(), new_value: str() });
+const _channelAdminLogEventActionChangeUsername: any = () => ({ _: 'channelAdminLogEventActionChangeUsername', prev_value: str(), new_value: str() });
+const _channelAdminLogEventActionChangePhoto: any = () => ({ _: 'channelAdminLogEventActionChangePhoto', prev_photo: obj(), new_photo: obj() });
+const _channelAdminLogEventActionToggleInvites: any = () => ({ _: 'channelAdminLogEventActionToggleInvites', new_value: obj() });
+const _channelAdminLogEventActionToggleSignatures: any = () => ({ _: 'channelAdminLogEventActionToggleSignatures', new_value: obj() });
+const _channelAdminLogEventActionUpdatePinned: any = () => ({ _: 'channelAdminLogEventActionUpdatePinned', message: obj() });
+const _channelAdminLogEventActionEditMessage: any = () => ({ _: 'channelAdminLogEventActionEditMessage', prev_message: obj(), new_message: obj() });
+const _channelAdminLogEventActionDeleteMessage: any = () => ({ _: 'channelAdminLogEventActionDeleteMessage', message: obj() });
+const _channelAdminLogEventActionParticipantJoin: any = () => ({ _: 'channelAdminLogEventActionParticipantJoin' });
+const _channelAdminLogEventActionParticipantLeave: any = () => ({ _: 'channelAdminLogEventActionParticipantLeave' });
+const _channelAdminLogEventActionParticipantInvite: any = () => ({ _: 'channelAdminLogEventActionParticipantInvite', participant: obj() });
+const _channelAdminLogEventActionParticipantToggleBan: any = () => ({ _: 'channelAdminLogEventActionParticipantToggleBan', prev_participant: obj(), new_participant: obj() });
+const _channelAdminLogEventActionParticipantToggleAdmin: any = () => ({ _: 'channelAdminLogEventActionParticipantToggleAdmin', prev_participant: obj(), new_participant: obj() });
+const _channelAdminLogEvent: any = () => ({ _: 'channelAdminLogEvent', id: i64(), date: i32(), user_id: i32(), action: obj() });
+const _channelsAdminLogResults: any = () => ({ _: 'channels.adminLogResults', events: vector(obj), chats: vector(obj), users: vector(obj) });
+const _channelAdminLogEventsFilter = (): any => {
   const flags = i32();
   return {
     _: 'channelAdminLogEventsFilter',
@@ -1974,26 +1975,26 @@ function _channelAdminLogEventsFilter(): any {
     edit: !!(flags & 0x1000),
     delete: !!(flags & 0x2000),
   }
-}
-const _topPeerCategoryPhoneCalls: any = () => ({_: 'topPeerCategoryPhoneCalls'});
-const _pageBlockAudio: any = () => ({_: 'pageBlockAudio', audio_id: i64(), caption: obj()});
-const _popularContact: any = () => ({_: 'popularContact', client_id: i64(), importers: i32()});
-const _messageActionScreenshotTaken: any = () => ({_: 'messageActionScreenshotTaken'});
-const _messagesFavedStickersNotModified: any = () => ({_: 'messages.favedStickersNotModified'});
-const _messagesFavedStickers: any = () => ({_: 'messages.favedStickers', hash: i32(), packs: vector(obj), stickers: vector(obj)});
-const _updateFavedStickers: any = () => ({_: 'updateFavedStickers'});
-const _updateChannelReadMessagesContents: any = () => ({_: 'updateChannelReadMessagesContents', channel_id: i32(), messages: vector(i32)});
-const _inputMessagesFilterMyMentions: any = () => ({_: 'inputMessagesFilterMyMentions'});
-const _updateContactsReset: any = () => ({_: 'updateContactsReset'});
-const _channelAdminLogEventActionChangeStickerSet: any = () => ({_: 'channelAdminLogEventActionChangeStickerSet', prev_stickerset: obj(), new_stickerset: obj()});
-const _messageActionCustomAction: any = () => ({_: 'messageActionCustomAction', message: str()});
-const _inputPaymentCredentialsApplePay: any = () => ({_: 'inputPaymentCredentialsApplePay', payment_data: obj()});
-const _inputPaymentCredentialsAndroidPay: any = () => ({_: 'inputPaymentCredentialsAndroidPay', payment_token: obj(), google_transaction_id: str()});
-const _inputMessagesFilterGeo: any = () => ({_: 'inputMessagesFilterGeo'});
-const _inputMessagesFilterContacts: any = () => ({_: 'inputMessagesFilterContacts'});
-const _updateChannelAvailableMessages: any = () => ({_: 'updateChannelAvailableMessages', channel_id: i32(), available_min_id: i32()});
-const _channelAdminLogEventActionTogglePreHistoryHidden: any = () => ({_: 'channelAdminLogEventActionTogglePreHistoryHidden', new_value: obj()});
-function _inputMediaGeoLive(): any {
+};
+const _topPeerCategoryPhoneCalls: any = () => ({ _: 'topPeerCategoryPhoneCalls' });
+const _pageBlockAudio: any = () => ({ _: 'pageBlockAudio', audio_id: i64(), caption: obj() });
+const _popularContact: any = () => ({ _: 'popularContact', client_id: i64(), importers: i32() });
+const _messageActionScreenshotTaken: any = () => ({ _: 'messageActionScreenshotTaken' });
+const _messagesFavedStickersNotModified: any = () => ({ _: 'messages.favedStickersNotModified' });
+const _messagesFavedStickers: any = () => ({ _: 'messages.favedStickers', hash: i32(), packs: vector(obj), stickers: vector(obj) });
+const _updateFavedStickers: any = () => ({ _: 'updateFavedStickers' });
+const _updateChannelReadMessagesContents: any = () => ({ _: 'updateChannelReadMessagesContents', channel_id: i32(), messages: vector(i32) });
+const _inputMessagesFilterMyMentions: any = () => ({ _: 'inputMessagesFilterMyMentions' });
+const _updateContactsReset: any = () => ({ _: 'updateContactsReset' });
+const _channelAdminLogEventActionChangeStickerSet: any = () => ({ _: 'channelAdminLogEventActionChangeStickerSet', prev_stickerset: obj(), new_stickerset: obj() });
+const _messageActionCustomAction: any = () => ({ _: 'messageActionCustomAction', message: str() });
+const _inputPaymentCredentialsApplePay: any = () => ({ _: 'inputPaymentCredentialsApplePay', payment_data: obj() });
+const _inputPaymentCredentialsAndroidPay: any = () => ({ _: 'inputPaymentCredentialsAndroidPay', payment_token: obj(), google_transaction_id: str() });
+const _inputMessagesFilterGeo: any = () => ({ _: 'inputMessagesFilterGeo' });
+const _inputMessagesFilterContacts: any = () => ({ _: 'inputMessagesFilterContacts' });
+const _updateChannelAvailableMessages: any = () => ({ _: 'updateChannelAvailableMessages', channel_id: i32(), available_min_id: i32() });
+const _channelAdminLogEventActionTogglePreHistoryHidden: any = () => ({ _: 'channelAdminLogEventActionTogglePreHistoryHidden', new_value: obj() });
+const _inputMediaGeoLive = (): any => {
   const flags = i32();
   return {
     _: 'inputMediaGeoLive',
@@ -2001,17 +2002,17 @@ function _inputMediaGeoLive(): any {
     geo_point: obj(),
     period: flags & 0x2 ? i32() : u,
   }
-}
-const _messageMediaGeoLive: any = () => ({_: 'messageMediaGeoLive', geo: obj(), period: i32()});
-const _recentMeUrlUnknown: any = () => ({_: 'recentMeUrlUnknown', url: str()});
-const _recentMeUrlUser: any = () => ({_: 'recentMeUrlUser', url: str(), user_id: i32()});
-const _recentMeUrlChat: any = () => ({_: 'recentMeUrlChat', url: str(), chat_id: i32()});
-const _recentMeUrlChatInvite: any = () => ({_: 'recentMeUrlChatInvite', url: str(), chat_invite: obj()});
-const _recentMeUrlStickerSet: any = () => ({_: 'recentMeUrlStickerSet', url: str(), set: obj()});
-const _helpRecentMeUrls: any = () => ({_: 'help.recentMeUrls', urls: vector(obj), chats: vector(obj), users: vector(obj)});
-const _channelsChannelParticipantsNotModified: any = () => ({_: 'channels.channelParticipantsNotModified'});
-const _messagesMessagesNotModified: any = () => ({_: 'messages.messagesNotModified', count: i32()});
-function _inputSingleMedia(): any {
+};
+const _messageMediaGeoLive: any = () => ({ _: 'messageMediaGeoLive', geo: obj(), period: i32() });
+const _recentMeUrlUnknown: any = () => ({ _: 'recentMeUrlUnknown', url: str() });
+const _recentMeUrlUser: any = () => ({ _: 'recentMeUrlUser', url: str(), user_id: i32() });
+const _recentMeUrlChat: any = () => ({ _: 'recentMeUrlChat', url: str(), chat_id: i32() });
+const _recentMeUrlChatInvite: any = () => ({ _: 'recentMeUrlChatInvite', url: str(), chat_invite: obj() });
+const _recentMeUrlStickerSet: any = () => ({ _: 'recentMeUrlStickerSet', url: str(), set: obj() });
+const _helpRecentMeUrls: any = () => ({ _: 'help.recentMeUrls', urls: vector(obj), chats: vector(obj), users: vector(obj) });
+const _channelsChannelParticipantsNotModified: any = () => ({ _: 'channels.channelParticipantsNotModified' });
+const _messagesMessagesNotModified: any = () => ({ _: 'messages.messagesNotModified', count: i32() });
+const _inputSingleMedia = (): any => {
   const flags = i32();
   return {
     _: 'inputSingleMedia',
@@ -2020,48 +2021,48 @@ function _inputSingleMedia(): any {
     message: str(),
     entities: flags & 0x1 ? vector(obj) : u,
   }
-}
-const _webAuthorization: any = () => ({_: 'webAuthorization', hash: i64(), bot_id: i32(), domain: str(), browser: str(), platform: str(), date_created: i32(), date_active: i32(), ip: str(), region: str()});
-const _accountWebAuthorizations: any = () => ({_: 'account.webAuthorizations', authorizations: vector(obj), users: vector(obj)});
-const _inputMessageID: any = () => ({_: 'inputMessageID', id: i32()});
-const _inputMessageReplyTo: any = () => ({_: 'inputMessageReplyTo', id: i32()});
-const _inputMessagePinned: any = () => ({_: 'inputMessagePinned'});
-const _messageEntityPhone: any = () => ({_: 'messageEntityPhone', offset: i32(), length: i32()});
-const _messageEntityCashtag: any = () => ({_: 'messageEntityCashtag', offset: i32(), length: i32()});
-const _messageActionBotAllowed: any = () => ({_: 'messageActionBotAllowed', domain: str()});
-const _inputDialogPeer: any = () => ({_: 'inputDialogPeer', peer: obj()});
-const _dialogPeer: any = () => ({_: 'dialogPeer', peer: obj()});
-const _messagesFoundStickerSetsNotModified: any = () => ({_: 'messages.foundStickerSetsNotModified'});
-const _messagesFoundStickerSets: any = () => ({_: 'messages.foundStickerSets', hash: i32(), sets: vector(obj)});
-const _fileHash: any = () => ({_: 'fileHash', offset: i32(), limit: i32(), hash: bytes()});
-const _webDocumentNoProxy: any = () => ({_: 'webDocumentNoProxy', url: str(), size: i32(), mime_type: str(), attributes: vector(obj)});
-const _inputClientProxy: any = () => ({_: 'inputClientProxy', address: str(), port: i32()});
-const _helpProxyDataEmpty: any = () => ({_: 'help.proxyDataEmpty', expires: i32()});
-const _helpProxyDataPromo: any = () => ({_: 'help.proxyDataPromo', expires: i32(), peer: obj(), chats: vector(obj), users: vector(obj)});
-const _helpTermsOfServiceUpdateEmpty: any = () => ({_: 'help.termsOfServiceUpdateEmpty', expires: i32()});
-const _helpTermsOfServiceUpdate: any = () => ({_: 'help.termsOfServiceUpdate', expires: i32(), terms_of_service: obj()});
-const _inputSecureFileUploaded: any = () => ({_: 'inputSecureFileUploaded', id: i64(), parts: i32(), md5_checksum: str(), file_hash: bytes(), secret: bytes()});
-const _inputSecureFile: any = () => ({_: 'inputSecureFile', id: i64(), access_hash: i64()});
-const _inputSecureFileLocation: any = () => ({_: 'inputSecureFileLocation', id: i64(), access_hash: i64()});
-const _secureFileEmpty: any = () => ({_: 'secureFileEmpty'});
-const _secureFile: any = () => ({_: 'secureFile', id: i64(), access_hash: i64(), size: i32(), dc_id: i32(), date: i32(), file_hash: bytes(), secret: bytes()});
-const _secureData: any = () => ({_: 'secureData', data: bytes(), data_hash: bytes(), secret: bytes()});
-const _securePlainPhone: any = () => ({_: 'securePlainPhone', phone: str()});
-const _securePlainEmail: any = () => ({_: 'securePlainEmail', email: str()});
-const _secureValueTypePersonalDetails: any = () => ({_: 'secureValueTypePersonalDetails'});
-const _secureValueTypePassport: any = () => ({_: 'secureValueTypePassport'});
-const _secureValueTypeDriverLicense: any = () => ({_: 'secureValueTypeDriverLicense'});
-const _secureValueTypeIdentityCard: any = () => ({_: 'secureValueTypeIdentityCard'});
-const _secureValueTypeInternalPassport: any = () => ({_: 'secureValueTypeInternalPassport'});
-const _secureValueTypeAddress: any = () => ({_: 'secureValueTypeAddress'});
-const _secureValueTypeUtilityBill: any = () => ({_: 'secureValueTypeUtilityBill'});
-const _secureValueTypeBankStatement: any = () => ({_: 'secureValueTypeBankStatement'});
-const _secureValueTypeRentalAgreement: any = () => ({_: 'secureValueTypeRentalAgreement'});
-const _secureValueTypePassportRegistration: any = () => ({_: 'secureValueTypePassportRegistration'});
-const _secureValueTypeTemporaryRegistration: any = () => ({_: 'secureValueTypeTemporaryRegistration'});
-const _secureValueTypePhone: any = () => ({_: 'secureValueTypePhone'});
-const _secureValueTypeEmail: any = () => ({_: 'secureValueTypeEmail'});
-function _secureValue(): any {
+};
+const _webAuthorization: any = () => ({ _: 'webAuthorization', hash: i64(), bot_id: i32(), domain: str(), browser: str(), platform: str(), date_created: i32(), date_active: i32(), ip: str(), region: str() });
+const _accountWebAuthorizations: any = () => ({ _: 'account.webAuthorizations', authorizations: vector(obj), users: vector(obj) });
+const _inputMessageID: any = () => ({ _: 'inputMessageID', id: i32() });
+const _inputMessageReplyTo: any = () => ({ _: 'inputMessageReplyTo', id: i32() });
+const _inputMessagePinned: any = () => ({ _: 'inputMessagePinned' });
+const _messageEntityPhone: any = () => ({ _: 'messageEntityPhone', offset: i32(), length: i32() });
+const _messageEntityCashtag: any = () => ({ _: 'messageEntityCashtag', offset: i32(), length: i32() });
+const _messageActionBotAllowed: any = () => ({ _: 'messageActionBotAllowed', domain: str() });
+const _inputDialogPeer: any = () => ({ _: 'inputDialogPeer', peer: obj() });
+const _dialogPeer: any = () => ({ _: 'dialogPeer', peer: obj() });
+const _messagesFoundStickerSetsNotModified: any = () => ({ _: 'messages.foundStickerSetsNotModified' });
+const _messagesFoundStickerSets: any = () => ({ _: 'messages.foundStickerSets', hash: i32(), sets: vector(obj) });
+const _fileHash: any = () => ({ _: 'fileHash', offset: i32(), limit: i32(), hash: bytes() });
+const _webDocumentNoProxy: any = () => ({ _: 'webDocumentNoProxy', url: str(), size: i32(), mime_type: str(), attributes: vector(obj) });
+const _inputClientProxy: any = () => ({ _: 'inputClientProxy', address: str(), port: i32() });
+const _helpProxyDataEmpty: any = () => ({ _: 'help.proxyDataEmpty', expires: i32() });
+const _helpProxyDataPromo: any = () => ({ _: 'help.proxyDataPromo', expires: i32(), peer: obj(), chats: vector(obj), users: vector(obj) });
+const _helpTermsOfServiceUpdateEmpty: any = () => ({ _: 'help.termsOfServiceUpdateEmpty', expires: i32() });
+const _helpTermsOfServiceUpdate: any = () => ({ _: 'help.termsOfServiceUpdate', expires: i32(), terms_of_service: obj() });
+const _inputSecureFileUploaded: any = () => ({ _: 'inputSecureFileUploaded', id: i64(), parts: i32(), md5_checksum: str(), file_hash: bytes(), secret: bytes() });
+const _inputSecureFile: any = () => ({ _: 'inputSecureFile', id: i64(), access_hash: i64() });
+const _inputSecureFileLocation: any = () => ({ _: 'inputSecureFileLocation', id: i64(), access_hash: i64() });
+const _secureFileEmpty: any = () => ({ _: 'secureFileEmpty' });
+const _secureFile: any = () => ({ _: 'secureFile', id: i64(), access_hash: i64(), size: i32(), dc_id: i32(), date: i32(), file_hash: bytes(), secret: bytes() });
+const _secureData: any = () => ({ _: 'secureData', data: bytes(), data_hash: bytes(), secret: bytes() });
+const _securePlainPhone: any = () => ({ _: 'securePlainPhone', phone: str() });
+const _securePlainEmail: any = () => ({ _: 'securePlainEmail', email: str() });
+const _secureValueTypePersonalDetails: any = () => ({ _: 'secureValueTypePersonalDetails' });
+const _secureValueTypePassport: any = () => ({ _: 'secureValueTypePassport' });
+const _secureValueTypeDriverLicense: any = () => ({ _: 'secureValueTypeDriverLicense' });
+const _secureValueTypeIdentityCard: any = () => ({ _: 'secureValueTypeIdentityCard' });
+const _secureValueTypeInternalPassport: any = () => ({ _: 'secureValueTypeInternalPassport' });
+const _secureValueTypeAddress: any = () => ({ _: 'secureValueTypeAddress' });
+const _secureValueTypeUtilityBill: any = () => ({ _: 'secureValueTypeUtilityBill' });
+const _secureValueTypeBankStatement: any = () => ({ _: 'secureValueTypeBankStatement' });
+const _secureValueTypeRentalAgreement: any = () => ({ _: 'secureValueTypeRentalAgreement' });
+const _secureValueTypePassportRegistration: any = () => ({ _: 'secureValueTypePassportRegistration' });
+const _secureValueTypeTemporaryRegistration: any = () => ({ _: 'secureValueTypeTemporaryRegistration' });
+const _secureValueTypePhone: any = () => ({ _: 'secureValueTypePhone' });
+const _secureValueTypeEmail: any = () => ({ _: 'secureValueTypeEmail' });
+const _secureValue = (): any => {
   const flags = i32();
   return {
     _: 'secureValue',
@@ -2075,8 +2076,8 @@ function _secureValue(): any {
     plain_data: flags & 0x20 ? obj() : u,
     hash: bytes(),
   }
-}
-function _inputSecureValue(): any {
+};
+const _inputSecureValue = (): any => {
   const flags = i32();
   return {
     _: 'inputSecureValue',
@@ -2089,16 +2090,16 @@ function _inputSecureValue(): any {
     files: flags & 0x10 ? vector(obj) : u,
     plain_data: flags & 0x20 ? obj() : u,
   }
-}
-const _secureValueHash: any = () => ({_: 'secureValueHash', type: obj(), hash: bytes()});
-const _secureValueErrorData: any = () => ({_: 'secureValueErrorData', type: obj(), data_hash: bytes(), field: str(), text: str()});
-const _secureValueErrorFrontSide: any = () => ({_: 'secureValueErrorFrontSide', type: obj(), file_hash: bytes(), text: str()});
-const _secureValueErrorReverseSide: any = () => ({_: 'secureValueErrorReverseSide', type: obj(), file_hash: bytes(), text: str()});
-const _secureValueErrorSelfie: any = () => ({_: 'secureValueErrorSelfie', type: obj(), file_hash: bytes(), text: str()});
-const _secureValueErrorFile: any = () => ({_: 'secureValueErrorFile', type: obj(), file_hash: bytes(), text: str()});
-const _secureValueErrorFiles: any = () => ({_: 'secureValueErrorFiles', type: obj(), file_hash: vector(bytes), text: str()});
-const _secureCredentialsEncrypted: any = () => ({_: 'secureCredentialsEncrypted', data: bytes(), hash: bytes(), secret: bytes()});
-function _accountAuthorizationForm(): any {
+};
+const _secureValueHash: any = () => ({ _: 'secureValueHash', type: obj(), hash: bytes() });
+const _secureValueErrorData: any = () => ({ _: 'secureValueErrorData', type: obj(), data_hash: bytes(), field: str(), text: str() });
+const _secureValueErrorFrontSide: any = () => ({ _: 'secureValueErrorFrontSide', type: obj(), file_hash: bytes(), text: str() });
+const _secureValueErrorReverseSide: any = () => ({ _: 'secureValueErrorReverseSide', type: obj(), file_hash: bytes(), text: str() });
+const _secureValueErrorSelfie: any = () => ({ _: 'secureValueErrorSelfie', type: obj(), file_hash: bytes(), text: str() });
+const _secureValueErrorFile: any = () => ({ _: 'secureValueErrorFile', type: obj(), file_hash: bytes(), text: str() });
+const _secureValueErrorFiles: any = () => ({ _: 'secureValueErrorFiles', type: obj(), file_hash: vector(bytes), text: str() });
+const _secureCredentialsEncrypted: any = () => ({ _: 'secureCredentialsEncrypted', data: bytes(), hash: bytes(), secret: bytes() });
+const _accountAuthorizationForm = (): any => {
   const flags = i32();
   return {
     _: 'account.authorizationForm',
@@ -2108,12 +2109,12 @@ function _accountAuthorizationForm(): any {
     users: vector(obj),
     privacy_policy_url: flags & 0x1 ? str() : u,
   }
-}
-const _accountSentEmailCode: any = () => ({_: 'account.sentEmailCode', email_pattern: str(), length: i32()});
-const _messageActionSecureValuesSentMe: any = () => ({_: 'messageActionSecureValuesSentMe', values: vector(obj), credentials: obj()});
-const _messageActionSecureValuesSent: any = () => ({_: 'messageActionSecureValuesSent', types: vector(obj)});
-const _helpDeepLinkInfoEmpty: any = () => ({_: 'help.deepLinkInfoEmpty'});
-function _helpDeepLinkInfo(): any {
+};
+const _accountSentEmailCode: any = () => ({ _: 'account.sentEmailCode', email_pattern: str(), length: i32() });
+const _messageActionSecureValuesSentMe: any = () => ({ _: 'messageActionSecureValuesSentMe', values: vector(obj), credentials: obj() });
+const _messageActionSecureValuesSent: any = () => ({ _: 'messageActionSecureValuesSent', types: vector(obj) });
+const _helpDeepLinkInfoEmpty: any = () => ({ _: 'help.deepLinkInfoEmpty' });
+const _helpDeepLinkInfo = (): any => {
   const flags = i32();
   return {
     _: 'help.deepLinkInfo',
@@ -2121,34 +2122,34 @@ function _helpDeepLinkInfo(): any {
     message: str(),
     entities: flags & 0x2 ? vector(obj) : u,
   }
-}
-const _savedPhoneContact: any = () => ({_: 'savedPhoneContact', phone: str(), first_name: str(), last_name: str(), date: i32()});
-const _accountTakeout: any = () => ({_: 'account.takeout', id: i64()});
-const _inputTakeoutFileLocation: any = () => ({_: 'inputTakeoutFileLocation'});
-function _updateDialogUnreadMark(): any {
+};
+const _savedPhoneContact: any = () => ({ _: 'savedPhoneContact', phone: str(), first_name: str(), last_name: str(), date: i32() });
+const _accountTakeout: any = () => ({ _: 'account.takeout', id: i64() });
+const _inputTakeoutFileLocation: any = () => ({ _: 'inputTakeoutFileLocation' });
+const _updateDialogUnreadMark = (): any => {
   const flags = i32();
   return {
     _: 'updateDialogUnreadMark',
     unread: !!(flags & 0x1),
     peer: obj(),
   }
-}
-const _messagesDialogsNotModified: any = () => ({_: 'messages.dialogsNotModified', count: i32()});
-const _inputWebFileGeoPointLocation: any = () => ({_: 'inputWebFileGeoPointLocation', geo_point: obj(), access_hash: i64(), w: i32(), h: i32(), zoom: i32(), scale: i32()});
-const _contactsTopPeersDisabled: any = () => ({_: 'contacts.topPeersDisabled'});
-const _inputReportReasonCopyright: any = () => ({_: 'inputReportReasonCopyright'});
-const _passwordKdfAlgoUnknown: any = () => ({_: 'passwordKdfAlgoUnknown'});
-const _securePasswordKdfAlgoUnknown: any = () => ({_: 'securePasswordKdfAlgoUnknown'});
-const _securePasswordKdfAlgoPBKDF2HMACSHA512iter100000: any = () => ({_: 'securePasswordKdfAlgoPBKDF2HMACSHA512iter100000', salt: bytes()});
-const _securePasswordKdfAlgoSHA512: any = () => ({_: 'securePasswordKdfAlgoSHA512', salt: bytes()});
-const _secureSecretSettings: any = () => ({_: 'secureSecretSettings', secure_algo: obj(), secure_secret: bytes(), secure_secret_id: i64()});
-const _passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow: any = () => ({_: 'passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow', salt1: bytes(), salt2: bytes(), g: i32(), p: bytes()});
-const _inputCheckPasswordEmpty: any = () => ({_: 'inputCheckPasswordEmpty'});
-const _inputCheckPasswordSRP: any = () => ({_: 'inputCheckPasswordSRP', srp_id: i64(), A: bytes(), M1: bytes()});
-const _secureValueError: any = () => ({_: 'secureValueError', type: obj(), hash: bytes(), text: str()});
-const _secureValueErrorTranslationFile: any = () => ({_: 'secureValueErrorTranslationFile', type: obj(), file_hash: bytes(), text: str()});
-const _secureValueErrorTranslationFiles: any = () => ({_: 'secureValueErrorTranslationFiles', type: obj(), file_hash: vector(bytes), text: str()});
-function _secureRequiredType(): any {
+};
+const _messagesDialogsNotModified: any = () => ({ _: 'messages.dialogsNotModified', count: i32() });
+const _inputWebFileGeoPointLocation: any = () => ({ _: 'inputWebFileGeoPointLocation', geo_point: obj(), access_hash: i64(), w: i32(), h: i32(), zoom: i32(), scale: i32() });
+const _contactsTopPeersDisabled: any = () => ({ _: 'contacts.topPeersDisabled' });
+const _inputReportReasonCopyright: any = () => ({ _: 'inputReportReasonCopyright' });
+const _passwordKdfAlgoUnknown: any = () => ({ _: 'passwordKdfAlgoUnknown' });
+const _securePasswordKdfAlgoUnknown: any = () => ({ _: 'securePasswordKdfAlgoUnknown' });
+const _securePasswordKdfAlgoPBKDF2HMACSHA512iter100000: any = () => ({ _: 'securePasswordKdfAlgoPBKDF2HMACSHA512iter100000', salt: bytes() });
+const _securePasswordKdfAlgoSHA512: any = () => ({ _: 'securePasswordKdfAlgoSHA512', salt: bytes() });
+const _secureSecretSettings: any = () => ({ _: 'secureSecretSettings', secure_algo: obj(), secure_secret: bytes(), secure_secret_id: i64() });
+const _passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow: any = () => ({ _: 'passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow', salt1: bytes(), salt2: bytes(), g: i32(), p: bytes() });
+const _inputCheckPasswordEmpty: any = () => ({ _: 'inputCheckPasswordEmpty' });
+const _inputCheckPasswordSRP: any = () => ({ _: 'inputCheckPasswordSRP', srp_id: i64(), A: bytes(), M1: bytes() });
+const _secureValueError: any = () => ({ _: 'secureValueError', type: obj(), hash: bytes(), text: str() });
+const _secureValueErrorTranslationFile: any = () => ({ _: 'secureValueErrorTranslationFile', type: obj(), file_hash: bytes(), text: str() });
+const _secureValueErrorTranslationFiles: any = () => ({ _: 'secureValueErrorTranslationFiles', type: obj(), file_hash: vector(bytes), text: str() });
+const _secureRequiredType = (): any => {
   const flags = i32();
   return {
     _: 'secureRequiredType',
@@ -2157,29 +2158,29 @@ function _secureRequiredType(): any {
     translation_required: !!(flags & 0x4),
     type: obj(),
   }
-}
-const _secureRequiredTypeOneOf: any = () => ({_: 'secureRequiredTypeOneOf', types: vector(obj)});
-const _helpPassportConfigNotModified: any = () => ({_: 'help.passportConfigNotModified'});
-const _helpPassportConfig: any = () => ({_: 'help.passportConfig', hash: i32(), countries_langs: obj()});
-const _inputAppEvent: any = () => ({_: 'inputAppEvent', time: f64(), type: str(), peer: i64(), data: obj()});
-const _jsonObjectValue: any = () => ({_: 'jsonObjectValue', key: str(), value: obj()});
-const _jsonNull: any = () => ({_: 'jsonNull'});
-const _jsonBool: any = () => ({_: 'jsonBool', value: obj()});
-const _jsonNumber: any = () => ({_: 'jsonNumber', value: f64()});
-const _jsonString: any = () => ({_: 'jsonString', value: str()});
-const _jsonArray: any = () => ({_: 'jsonArray', value: vector(obj)});
-const _jsonObject: any = () => ({_: 'jsonObject', value: vector(obj)});
-const _updateUserPinnedMessage: any = () => ({_: 'updateUserPinnedMessage', user_id: i32(), id: i32()});
-const _updateChatPinnedMessage: any = () => ({_: 'updateChatPinnedMessage', chat_id: i32(), id: i32(), version: i32()});
-const _inputNotifyBroadcasts: any = () => ({_: 'inputNotifyBroadcasts'});
-const _notifyBroadcasts: any = () => ({_: 'notifyBroadcasts'});
-const _textSubscript: any = () => ({_: 'textSubscript', text: obj()});
-const _textSuperscript: any = () => ({_: 'textSuperscript', text: obj()});
-const _textMarked: any = () => ({_: 'textMarked', text: obj()});
-const _textPhone: any = () => ({_: 'textPhone', text: obj(), phone: str()});
-const _textImage: any = () => ({_: 'textImage', document_id: i64(), w: i32(), h: i32()});
-const _pageBlockKicker: any = () => ({_: 'pageBlockKicker', text: obj()});
-function _pageTableCell(): any {
+};
+const _secureRequiredTypeOneOf: any = () => ({ _: 'secureRequiredTypeOneOf', types: vector(obj) });
+const _helpPassportConfigNotModified: any = () => ({ _: 'help.passportConfigNotModified' });
+const _helpPassportConfig: any = () => ({ _: 'help.passportConfig', hash: i32(), countries_langs: obj() });
+const _inputAppEvent: any = () => ({ _: 'inputAppEvent', time: f64(), type: str(), peer: i64(), data: obj() });
+const _jsonObjectValue: any = () => ({ _: 'jsonObjectValue', key: str(), value: obj() });
+const _jsonNull: any = () => ({ _: 'jsonNull' });
+const _jsonBool: any = () => ({ _: 'jsonBool', value: obj() });
+const _jsonNumber: any = () => ({ _: 'jsonNumber', value: f64() });
+const _jsonString: any = () => ({ _: 'jsonString', value: str() });
+const _jsonArray: any = () => ({ _: 'jsonArray', value: vector(obj) });
+const _jsonObject: any = () => ({ _: 'jsonObject', value: vector(obj) });
+const _updateUserPinnedMessage: any = () => ({ _: 'updateUserPinnedMessage', user_id: i32(), id: i32() });
+const _updateChatPinnedMessage: any = () => ({ _: 'updateChatPinnedMessage', chat_id: i32(), id: i32(), version: i32() });
+const _inputNotifyBroadcasts: any = () => ({ _: 'inputNotifyBroadcasts' });
+const _notifyBroadcasts: any = () => ({ _: 'notifyBroadcasts' });
+const _textSubscript: any = () => ({ _: 'textSubscript', text: obj() });
+const _textSuperscript: any = () => ({ _: 'textSuperscript', text: obj() });
+const _textMarked: any = () => ({ _: 'textMarked', text: obj() });
+const _textPhone: any = () => ({ _: 'textPhone', text: obj(), phone: str() });
+const _textImage: any = () => ({ _: 'textImage', document_id: i64(), w: i32(), h: i32() });
+const _pageBlockKicker: any = () => ({ _: 'pageBlockKicker', text: obj() });
+const _pageTableCell = (): any => {
   const flags = i32();
   return {
     _: 'pageTableCell',
@@ -2192,9 +2193,9 @@ function _pageTableCell(): any {
     colspan: flags & 0x2 ? i32() : u,
     rowspan: flags & 0x4 ? i32() : u,
   }
-}
-const _pageTableRow: any = () => ({_: 'pageTableRow', cells: vector(obj)});
-function _pageBlockTable(): any {
+};
+const _pageTableRow: any = () => ({ _: 'pageTableRow', cells: vector(obj) });
+const _pageBlockTable = (): any => {
   const flags = i32();
   return {
     _: 'pageBlockTable',
@@ -2203,14 +2204,14 @@ function _pageBlockTable(): any {
     title: obj(),
     rows: vector(obj),
   }
-}
-const _pageCaption: any = () => ({_: 'pageCaption', text: obj(), credit: obj()});
-const _pageListItemText: any = () => ({_: 'pageListItemText', text: obj()});
-const _pageListItemBlocks: any = () => ({_: 'pageListItemBlocks', blocks: vector(obj)});
-const _pageListOrderedItemText: any = () => ({_: 'pageListOrderedItemText', num: str(), text: obj()});
-const _pageListOrderedItemBlocks: any = () => ({_: 'pageListOrderedItemBlocks', num: str(), blocks: vector(obj)});
-const _pageBlockOrderedList: any = () => ({_: 'pageBlockOrderedList', items: vector(obj)});
-function _pageBlockDetails(): any {
+};
+const _pageCaption: any = () => ({ _: 'pageCaption', text: obj(), credit: obj() });
+const _pageListItemText: any = () => ({ _: 'pageListItemText', text: obj() });
+const _pageListItemBlocks: any = () => ({ _: 'pageListItemBlocks', blocks: vector(obj) });
+const _pageListOrderedItemText: any = () => ({ _: 'pageListOrderedItemText', num: str(), text: obj() });
+const _pageListOrderedItemBlocks: any = () => ({ _: 'pageListOrderedItemBlocks', num: str(), blocks: vector(obj) });
+const _pageBlockOrderedList: any = () => ({ _: 'pageBlockOrderedList', items: vector(obj) });
+const _pageBlockDetails = (): any => {
   const flags = i32();
   return {
     _: 'pageBlockDetails',
@@ -2218,8 +2219,8 @@ function _pageBlockDetails(): any {
     blocks: vector(obj),
     title: obj(),
   }
-}
-function _pageRelatedArticle(): any {
+};
+const _pageRelatedArticle = (): any => {
   const flags = i32();
   return {
     _: 'pageRelatedArticle',
@@ -2231,10 +2232,10 @@ function _pageRelatedArticle(): any {
     author: flags & 0x8 ? str() : u,
     published_date: flags & 0x10 ? i32() : u,
   }
-}
-const _pageBlockRelatedArticles: any = () => ({_: 'pageBlockRelatedArticles', title: obj(), articles: vector(obj)});
-const _pageBlockMap: any = () => ({_: 'pageBlockMap', geo: obj(), zoom: i32(), w: i32(), h: i32(), caption: obj()});
-function _page(): any {
+};
+const _pageBlockRelatedArticles: any = () => ({ _: 'pageBlockRelatedArticles', title: obj(), articles: vector(obj) });
+const _pageBlockMap: any = () => ({ _: 'pageBlockMap', geo: obj(), zoom: i32(), w: i32(), h: i32(), caption: obj() });
+const _page = (): any => {
   const flags = i32();
   return {
     _: 'page',
@@ -2246,15 +2247,15 @@ function _page(): any {
     photos: vector(obj),
     documents: vector(obj),
   }
-}
-const _inputPrivacyKeyPhoneP2P: any = () => ({_: 'inputPrivacyKeyPhoneP2P'});
-const _privacyKeyPhoneP2P: any = () => ({_: 'privacyKeyPhoneP2P'});
-const _textAnchor: any = () => ({_: 'textAnchor', text: obj(), name: str()});
-const _helpSupportName: any = () => ({_: 'help.supportName', name: str()});
-const _helpUserInfoEmpty: any = () => ({_: 'help.userInfoEmpty'});
-const _helpUserInfo: any = () => ({_: 'help.userInfo', message: str(), entities: vector(obj), author: str(), date: i32()});
-const _messageActionContactSignUp: any = () => ({_: 'messageActionContactSignUp'});
-function _updateMessagePoll(): any {
+};
+const _inputPrivacyKeyPhoneP2P: any = () => ({ _: 'inputPrivacyKeyPhoneP2P' });
+const _privacyKeyPhoneP2P: any = () => ({ _: 'privacyKeyPhoneP2P' });
+const _textAnchor: any = () => ({ _: 'textAnchor', text: obj(), name: str() });
+const _helpSupportName: any = () => ({ _: 'help.supportName', name: str() });
+const _helpUserInfoEmpty: any = () => ({ _: 'help.userInfoEmpty' });
+const _helpUserInfo: any = () => ({ _: 'help.userInfo', message: str(), entities: vector(obj), author: str(), date: i32() });
+const _messageActionContactSignUp: any = () => ({ _: 'messageActionContactSignUp' });
+const _updateMessagePoll = (): any => {
   const flags = i32();
   return {
     _: 'updateMessagePoll',
@@ -2262,9 +2263,9 @@ function _updateMessagePoll(): any {
     poll: flags & 0x1 ? obj() : u,
     results: obj(),
   }
-}
-const _pollAnswer: any = () => ({_: 'pollAnswer', text: str(), option: bytes()});
-function _poll(): any {
+};
+const _pollAnswer: any = () => ({ _: 'pollAnswer', text: str(), option: bytes() });
+const _poll = (): any => {
   const flags = i32();
   return {
     _: 'poll',
@@ -2276,8 +2277,8 @@ function _poll(): any {
     question: str(),
     answers: vector(obj),
   }
-}
-function _pollAnswerVoters(): any {
+};
+const _pollAnswerVoters = (): any => {
   const flags = i32();
   return {
     _: 'pollAnswerVoters',
@@ -2286,8 +2287,8 @@ function _pollAnswerVoters(): any {
     option: bytes(),
     voters: i32(),
   }
-}
-function _pollResults(): any {
+};
+const _pollResults = (): any => {
   const flags = i32();
   return {
     _: 'pollResults',
@@ -2295,13 +2296,13 @@ function _pollResults(): any {
     results: flags & 0x2 ? vector(obj) : u,
     total_voters: flags & 0x4 ? i32() : u,
   }
-}
-const _inputMediaPoll: any = () => ({_: 'inputMediaPoll', poll: obj()});
-const _messageMediaPoll: any = () => ({_: 'messageMediaPoll', poll: obj(), results: obj()});
-const _chatOnlines: any = () => ({_: 'chatOnlines', onlines: i32()});
-const _statsURL: any = () => ({_: 'statsURL', url: str()});
-const _photoStrippedSize: any = () => ({_: 'photoStrippedSize', type: str(), bytes: bytes()});
-function _chatAdminRights(): any {
+};
+const _inputMediaPoll: any = () => ({ _: 'inputMediaPoll', poll: obj() });
+const _messageMediaPoll: any = () => ({ _: 'messageMediaPoll', poll: obj(), results: obj() });
+const _chatOnlines: any = () => ({ _: 'chatOnlines', onlines: i32() });
+const _statsURL: any = () => ({ _: 'statsURL', url: str() });
+const _photoStrippedSize: any = () => ({ _: 'photoStrippedSize', type: str(), bytes: bytes() });
+const _chatAdminRights = (): any => {
   const flags = i32();
   return {
     _: 'chatAdminRights',
@@ -2314,8 +2315,8 @@ function _chatAdminRights(): any {
     pin_messages: !!(flags & 0x80),
     add_admins: !!(flags & 0x200),
   }
-}
-function _chatBannedRights(): any {
+};
+const _chatBannedRights = (): any => {
   const flags = i32();
   return {
     _: 'chatBannedRights',
@@ -2333,16 +2334,16 @@ function _chatBannedRights(): any {
     pin_messages: !!(flags & 0x20000),
     until_date: i32(),
   }
-}
-const _updateChatDefaultBannedRights: any = () => ({_: 'updateChatDefaultBannedRights', peer: obj(), default_banned_rights: obj(), version: i32()});
-const _inputWallPaper: any = () => ({_: 'inputWallPaper', id: i64(), access_hash: i64()});
-const _inputWallPaperSlug: any = () => ({_: 'inputWallPaperSlug', slug: str()});
-const _channelParticipantsContacts: any = () => ({_: 'channelParticipantsContacts', q: str()});
-const _channelAdminLogEventActionDefaultBannedRights: any = () => ({_: 'channelAdminLogEventActionDefaultBannedRights', prev_banned_rights: obj(), new_banned_rights: obj()});
-const _channelAdminLogEventActionStopPoll: any = () => ({_: 'channelAdminLogEventActionStopPoll', message: obj()});
-const _accountWallPapersNotModified: any = () => ({_: 'account.wallPapersNotModified'});
-const _accountWallPapers: any = () => ({_: 'account.wallPapers', hash: i32(), wallpapers: vector(obj)});
-function _codeSettings(): any {
+};
+const _updateChatDefaultBannedRights: any = () => ({ _: 'updateChatDefaultBannedRights', peer: obj(), default_banned_rights: obj(), version: i32() });
+const _inputWallPaper: any = () => ({ _: 'inputWallPaper', id: i64(), access_hash: i64() });
+const _inputWallPaperSlug: any = () => ({ _: 'inputWallPaperSlug', slug: str() });
+const _channelParticipantsContacts: any = () => ({ _: 'channelParticipantsContacts', q: str() });
+const _channelAdminLogEventActionDefaultBannedRights: any = () => ({ _: 'channelAdminLogEventActionDefaultBannedRights', prev_banned_rights: obj(), new_banned_rights: obj() });
+const _channelAdminLogEventActionStopPoll: any = () => ({ _: 'channelAdminLogEventActionStopPoll', message: obj() });
+const _accountWallPapersNotModified: any = () => ({ _: 'account.wallPapersNotModified' });
+const _accountWallPapers: any = () => ({ _: 'account.wallPapers', hash: i32(), wallpapers: vector(obj) });
+const _codeSettings = (): any => {
   const flags = i32();
   return {
     _: 'codeSettings',
@@ -2350,8 +2351,8 @@ function _codeSettings(): any {
     current_number: !!(flags & 0x2),
     allow_app_hash: !!(flags & 0x10),
   }
-}
-function _wallPaperSettings(): any {
+};
+const _wallPaperSettings = (): any => {
   const flags = i32();
   return {
     _: 'wallPaperSettings',
@@ -2362,8 +2363,8 @@ function _wallPaperSettings(): any {
     intensity: flags & 0x8 ? i32() : u,
     rotation: flags & 0x10 ? i32() : u,
   }
-}
-function _autoDownloadSettings(): any {
+};
+const _autoDownloadSettings = (): any => {
   const flags = i32();
   return {
     _: 'autoDownloadSettings',
@@ -2376,21 +2377,21 @@ function _autoDownloadSettings(): any {
     file_size_max: i32(),
     video_upload_maxbitrate: i32(),
   }
-}
-const _accountAutoDownloadSettings: any = () => ({_: 'account.autoDownloadSettings', low: obj(), medium: obj(), high: obj()});
-const _emojiKeyword: any = () => ({_: 'emojiKeyword', keyword: str(), emoticons: vector(str)});
-const _emojiKeywordDeleted: any = () => ({_: 'emojiKeywordDeleted', keyword: str(), emoticons: vector(str)});
-const _emojiKeywordsDifference: any = () => ({_: 'emojiKeywordsDifference', lang_code: str(), from_version: i32(), version: i32(), keywords: vector(obj)});
-const _emojiURL: any = () => ({_: 'emojiURL', url: str()});
-const _emojiLanguage: any = () => ({_: 'emojiLanguage', lang_code: str()});
-const _inputPrivacyKeyForwards: any = () => ({_: 'inputPrivacyKeyForwards'});
-const _privacyKeyForwards: any = () => ({_: 'privacyKeyForwards'});
-const _inputPrivacyKeyProfilePhoto: any = () => ({_: 'inputPrivacyKeyProfilePhoto'});
-const _privacyKeyProfilePhoto: any = () => ({_: 'privacyKeyProfilePhoto'});
-const _fileLocationToBeDeprecated: any = () => ({_: 'fileLocationToBeDeprecated', volume_id: i64(), local_id: i32()});
-const _inputPhotoFileLocation: any = () => ({_: 'inputPhotoFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str()});
-const _inputPhotoLegacyFileLocation: any = () => ({_: 'inputPhotoLegacyFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), volume_id: i64(), local_id: i32(), secret: i64()});
-function _inputPeerPhotoFileLocation(): any {
+};
+const _accountAutoDownloadSettings: any = () => ({ _: 'account.autoDownloadSettings', low: obj(), medium: obj(), high: obj() });
+const _emojiKeyword: any = () => ({ _: 'emojiKeyword', keyword: str(), emoticons: vector(str) });
+const _emojiKeywordDeleted: any = () => ({ _: 'emojiKeywordDeleted', keyword: str(), emoticons: vector(str) });
+const _emojiKeywordsDifference: any = () => ({ _: 'emojiKeywordsDifference', lang_code: str(), from_version: i32(), version: i32(), keywords: vector(obj) });
+const _emojiURL: any = () => ({ _: 'emojiURL', url: str() });
+const _emojiLanguage: any = () => ({ _: 'emojiLanguage', lang_code: str() });
+const _inputPrivacyKeyForwards: any = () => ({ _: 'inputPrivacyKeyForwards' });
+const _privacyKeyForwards: any = () => ({ _: 'privacyKeyForwards' });
+const _inputPrivacyKeyProfilePhoto: any = () => ({ _: 'inputPrivacyKeyProfilePhoto' });
+const _privacyKeyProfilePhoto: any = () => ({ _: 'privacyKeyProfilePhoto' });
+const _fileLocationToBeDeprecated: any = () => ({ _: 'fileLocationToBeDeprecated', volume_id: i64(), local_id: i32() });
+const _inputPhotoFileLocation: any = () => ({ _: 'inputPhotoFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str() });
+const _inputPhotoLegacyFileLocation: any = () => ({ _: 'inputPhotoLegacyFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), volume_id: i64(), local_id: i32(), secret: i64() });
+const _inputPeerPhotoFileLocation = (): any => {
   const flags = i32();
   return {
     _: 'inputPeerPhotoFileLocation',
@@ -2399,9 +2400,9 @@ function _inputPeerPhotoFileLocation(): any {
     volume_id: i64(),
     local_id: i32(),
   }
-}
-const _inputStickerSetThumb: any = () => ({_: 'inputStickerSetThumb', stickerset: obj(), volume_id: i64(), local_id: i32()});
-function _folder(): any {
+};
+const _inputStickerSetThumb: any = () => ({ _: 'inputStickerSetThumb', stickerset: obj(), volume_id: i64(), local_id: i32() });
+const _folder = (): any => {
   const flags = i32();
   return {
     _: 'folder',
@@ -2412,8 +2413,8 @@ function _folder(): any {
     title: str(),
     photo: flags & 0x8 ? obj() : u,
   }
-}
-function _dialogFolder(): any {
+};
+const _dialogFolder = (): any => {
   const flags = i32();
   return {
     _: 'dialogFolder',
@@ -2426,22 +2427,22 @@ function _dialogFolder(): any {
     unread_muted_messages_count: i32(),
     unread_unmuted_messages_count: i32(),
   }
-}
-const _inputDialogPeerFolder: any = () => ({_: 'inputDialogPeerFolder', folder_id: i32()});
-const _dialogPeerFolder: any = () => ({_: 'dialogPeerFolder', folder_id: i32()});
-const _inputFolderPeer: any = () => ({_: 'inputFolderPeer', peer: obj(), folder_id: i32()});
-const _folderPeer: any = () => ({_: 'folderPeer', peer: obj(), folder_id: i32()});
-const _updateFolderPeers: any = () => ({_: 'updateFolderPeers', folder_peers: vector(obj), pts: i32(), pts_count: i32()});
-const _inputUserFromMessage: any = () => ({_: 'inputUserFromMessage', peer: obj(), msg_id: i32(), user_id: i32()});
-const _inputChannelFromMessage: any = () => ({_: 'inputChannelFromMessage', peer: obj(), msg_id: i32(), channel_id: i32()});
-const _inputPeerUserFromMessage: any = () => ({_: 'inputPeerUserFromMessage', peer: obj(), msg_id: i32(), user_id: i32()});
-const _inputPeerChannelFromMessage: any = () => ({_: 'inputPeerChannelFromMessage', peer: obj(), msg_id: i32(), channel_id: i32()});
-const _inputPrivacyKeyPhoneNumber: any = () => ({_: 'inputPrivacyKeyPhoneNumber'});
-const _privacyKeyPhoneNumber: any = () => ({_: 'privacyKeyPhoneNumber'});
-const _topPeerCategoryForwardUsers: any = () => ({_: 'topPeerCategoryForwardUsers'});
-const _topPeerCategoryForwardChats: any = () => ({_: 'topPeerCategoryForwardChats'});
-const _channelAdminLogEventActionChangeLinkedChat: any = () => ({_: 'channelAdminLogEventActionChangeLinkedChat', prev_value: i32(), new_value: i32()});
-function _messagesSearchCounter(): any {
+};
+const _inputDialogPeerFolder: any = () => ({ _: 'inputDialogPeerFolder', folder_id: i32() });
+const _dialogPeerFolder: any = () => ({ _: 'dialogPeerFolder', folder_id: i32() });
+const _inputFolderPeer: any = () => ({ _: 'inputFolderPeer', peer: obj(), folder_id: i32() });
+const _folderPeer: any = () => ({ _: 'folderPeer', peer: obj(), folder_id: i32() });
+const _updateFolderPeers: any = () => ({ _: 'updateFolderPeers', folder_peers: vector(obj), pts: i32(), pts_count: i32() });
+const _inputUserFromMessage: any = () => ({ _: 'inputUserFromMessage', peer: obj(), msg_id: i32(), user_id: i32() });
+const _inputChannelFromMessage: any = () => ({ _: 'inputChannelFromMessage', peer: obj(), msg_id: i32(), channel_id: i32() });
+const _inputPeerUserFromMessage: any = () => ({ _: 'inputPeerUserFromMessage', peer: obj(), msg_id: i32(), user_id: i32() });
+const _inputPeerChannelFromMessage: any = () => ({ _: 'inputPeerChannelFromMessage', peer: obj(), msg_id: i32(), channel_id: i32() });
+const _inputPrivacyKeyPhoneNumber: any = () => ({ _: 'inputPrivacyKeyPhoneNumber' });
+const _privacyKeyPhoneNumber: any = () => ({ _: 'privacyKeyPhoneNumber' });
+const _topPeerCategoryForwardUsers: any = () => ({ _: 'topPeerCategoryForwardUsers' });
+const _topPeerCategoryForwardChats: any = () => ({ _: 'topPeerCategoryForwardChats' });
+const _channelAdminLogEventActionChangeLinkedChat: any = () => ({ _: 'channelAdminLogEventActionChangeLinkedChat', prev_value: i32(), new_value: i32() });
+const _messagesSearchCounter = (): any => {
   const flags = i32();
   return {
     _: 'messages.searchCounter',
@@ -2449,8 +2450,8 @@ function _messagesSearchCounter(): any {
     filter: obj(),
     count: i32(),
   }
-}
-function _keyboardButtonUrlAuth(): any {
+};
+const _keyboardButtonUrlAuth = (): any => {
   const flags = i32();
   return {
     _: 'keyboardButtonUrlAuth',
@@ -2459,8 +2460,8 @@ function _keyboardButtonUrlAuth(): any {
     url: str(),
     button_id: i32(),
   }
-}
-function _inputKeyboardButtonUrlAuth(): any {
+};
+const _inputKeyboardButtonUrlAuth = (): any => {
   const flags = i32();
   return {
     _: 'inputKeyboardButtonUrlAuth',
@@ -2470,8 +2471,8 @@ function _inputKeyboardButtonUrlAuth(): any {
     url: str(),
     bot: obj(),
   }
-}
-function _urlAuthResultRequest(): any {
+};
+const _urlAuthResultRequest = (): any => {
   const flags = i32();
   return {
     _: 'urlAuthResultRequest',
@@ -2479,39 +2480,39 @@ function _urlAuthResultRequest(): any {
     bot: obj(),
     domain: str(),
   }
-}
-const _urlAuthResultAccepted: any = () => ({_: 'urlAuthResultAccepted', url: str()});
-const _urlAuthResultDefault: any = () => ({_: 'urlAuthResultDefault'});
-const _inputPrivacyValueAllowChatParticipants: any = () => ({_: 'inputPrivacyValueAllowChatParticipants', chats: vector(i32)});
-const _inputPrivacyValueDisallowChatParticipants: any = () => ({_: 'inputPrivacyValueDisallowChatParticipants', chats: vector(i32)});
-const _privacyValueAllowChatParticipants: any = () => ({_: 'privacyValueAllowChatParticipants', chats: vector(i32)});
-const _privacyValueDisallowChatParticipants: any = () => ({_: 'privacyValueDisallowChatParticipants', chats: vector(i32)});
-const _messageEntityUnderline: any = () => ({_: 'messageEntityUnderline', offset: i32(), length: i32()});
-const _messageEntityStrike: any = () => ({_: 'messageEntityStrike', offset: i32(), length: i32()});
-const _messageEntityBlockquote: any = () => ({_: 'messageEntityBlockquote', offset: i32(), length: i32()});
-const _updatePeerSettings: any = () => ({_: 'updatePeerSettings', peer: obj(), settings: obj()});
-const _channelLocationEmpty: any = () => ({_: 'channelLocationEmpty'});
-const _channelLocation: any = () => ({_: 'channelLocation', geo_point: obj(), address: str()});
-const _peerLocated: any = () => ({_: 'peerLocated', peer: obj(), expires: i32(), distance: i32()});
-const _updatePeerLocated: any = () => ({_: 'updatePeerLocated', peers: vector(obj)});
-const _channelAdminLogEventActionChangeLocation: any = () => ({_: 'channelAdminLogEventActionChangeLocation', prev_value: obj(), new_value: obj()});
-const _inputReportReasonGeoIrrelevant: any = () => ({_: 'inputReportReasonGeoIrrelevant'});
-const _channelAdminLogEventActionToggleSlowMode: any = () => ({_: 'channelAdminLogEventActionToggleSlowMode', prev_value: i32(), new_value: i32()});
-function _authAuthorizationSignUpRequired(): any {
+};
+const _urlAuthResultAccepted: any = () => ({ _: 'urlAuthResultAccepted', url: str() });
+const _urlAuthResultDefault: any = () => ({ _: 'urlAuthResultDefault' });
+const _inputPrivacyValueAllowChatParticipants: any = () => ({ _: 'inputPrivacyValueAllowChatParticipants', chats: vector(i32) });
+const _inputPrivacyValueDisallowChatParticipants: any = () => ({ _: 'inputPrivacyValueDisallowChatParticipants', chats: vector(i32) });
+const _privacyValueAllowChatParticipants: any = () => ({ _: 'privacyValueAllowChatParticipants', chats: vector(i32) });
+const _privacyValueDisallowChatParticipants: any = () => ({ _: 'privacyValueDisallowChatParticipants', chats: vector(i32) });
+const _messageEntityUnderline: any = () => ({ _: 'messageEntityUnderline', offset: i32(), length: i32() });
+const _messageEntityStrike: any = () => ({ _: 'messageEntityStrike', offset: i32(), length: i32() });
+const _messageEntityBlockquote: any = () => ({ _: 'messageEntityBlockquote', offset: i32(), length: i32() });
+const _updatePeerSettings: any = () => ({ _: 'updatePeerSettings', peer: obj(), settings: obj() });
+const _channelLocationEmpty: any = () => ({ _: 'channelLocationEmpty' });
+const _channelLocation: any = () => ({ _: 'channelLocation', geo_point: obj(), address: str() });
+const _peerLocated: any = () => ({ _: 'peerLocated', peer: obj(), expires: i32(), distance: i32() });
+const _updatePeerLocated: any = () => ({ _: 'updatePeerLocated', peers: vector(obj) });
+const _channelAdminLogEventActionChangeLocation: any = () => ({ _: 'channelAdminLogEventActionChangeLocation', prev_value: obj(), new_value: obj() });
+const _inputReportReasonGeoIrrelevant: any = () => ({ _: 'inputReportReasonGeoIrrelevant' });
+const _channelAdminLogEventActionToggleSlowMode: any = () => ({ _: 'channelAdminLogEventActionToggleSlowMode', prev_value: i32(), new_value: i32() });
+const _authAuthorizationSignUpRequired = (): any => {
   const flags = i32();
   return {
     _: 'auth.authorizationSignUpRequired',
     terms_of_service: flags & 0x1 ? obj() : u,
   }
-}
-const _paymentsPaymentVerificationNeeded: any = () => ({_: 'payments.paymentVerificationNeeded', url: str()});
-const _inputStickerSetAnimatedEmoji: any = () => ({_: 'inputStickerSetAnimatedEmoji'});
-const _updateNewScheduledMessage: any = () => ({_: 'updateNewScheduledMessage', message: obj()});
-const _updateDeleteScheduledMessages: any = () => ({_: 'updateDeleteScheduledMessages', peer: obj(), messages: vector(i32)});
-const _restrictionReason: any = () => ({_: 'restrictionReason', platform: str(), reason: str(), text: str()});
-const _inputTheme: any = () => ({_: 'inputTheme', id: i64(), access_hash: i64()});
-const _inputThemeSlug: any = () => ({_: 'inputThemeSlug', slug: str()});
-function _theme(): any {
+};
+const _paymentsPaymentVerificationNeeded: any = () => ({ _: 'payments.paymentVerificationNeeded', url: str() });
+const _inputStickerSetAnimatedEmoji: any = () => ({ _: 'inputStickerSetAnimatedEmoji' });
+const _updateNewScheduledMessage: any = () => ({ _: 'updateNewScheduledMessage', message: obj() });
+const _updateDeleteScheduledMessages: any = () => ({ _: 'updateDeleteScheduledMessages', peer: obj(), messages: vector(i32) });
+const _restrictionReason: any = () => ({ _: 'restrictionReason', platform: str(), reason: str(), text: str() });
+const _inputTheme: any = () => ({ _: 'inputTheme', id: i64(), access_hash: i64() });
+const _inputThemeSlug: any = () => ({ _: 'inputThemeSlug', slug: str() });
+const _theme = (): any => {
   const flags = i32();
   return {
     _: 'theme',
@@ -2525,33 +2526,33 @@ function _theme(): any {
     settings: flags & 0x8 ? obj() : u,
     installs_count: i32(),
   }
-}
-const _accountThemesNotModified: any = () => ({_: 'account.themesNotModified'});
-const _accountThemes: any = () => ({_: 'account.themes', hash: i32(), themes: vector(obj)});
-const _updateTheme: any = () => ({_: 'updateTheme', theme: obj()});
-const _inputPrivacyKeyAddedByPhone: any = () => ({_: 'inputPrivacyKeyAddedByPhone'});
-const _privacyKeyAddedByPhone: any = () => ({_: 'privacyKeyAddedByPhone'});
-const _updateGeoLiveViewed: any = () => ({_: 'updateGeoLiveViewed', peer: obj(), msg_id: i32()});
-const _updateLoginToken: any = () => ({_: 'updateLoginToken'});
-const _authLoginToken: any = () => ({_: 'auth.loginToken', expires: i32(), token: bytes()});
-const _authLoginTokenMigrateTo: any = () => ({_: 'auth.loginTokenMigrateTo', dc_id: i32(), token: bytes()});
-const _authLoginTokenSuccess: any = () => ({_: 'auth.loginTokenSuccess', authorization: obj()});
-function _accountContentSettings(): any {
+};
+const _accountThemesNotModified: any = () => ({ _: 'account.themesNotModified' });
+const _accountThemes: any = () => ({ _: 'account.themes', hash: i32(), themes: vector(obj) });
+const _updateTheme: any = () => ({ _: 'updateTheme', theme: obj() });
+const _inputPrivacyKeyAddedByPhone: any = () => ({ _: 'inputPrivacyKeyAddedByPhone' });
+const _privacyKeyAddedByPhone: any = () => ({ _: 'privacyKeyAddedByPhone' });
+const _updateGeoLiveViewed: any = () => ({ _: 'updateGeoLiveViewed', peer: obj(), msg_id: i32() });
+const _updateLoginToken: any = () => ({ _: 'updateLoginToken' });
+const _authLoginToken: any = () => ({ _: 'auth.loginToken', expires: i32(), token: bytes() });
+const _authLoginTokenMigrateTo: any = () => ({ _: 'auth.loginTokenMigrateTo', dc_id: i32(), token: bytes() });
+const _authLoginTokenSuccess: any = () => ({ _: 'auth.loginTokenSuccess', authorization: obj() });
+const _accountContentSettings = (): any => {
   const flags = i32();
   return {
     _: 'account.contentSettings',
     sensitive_enabled: !!(flags & 0x1),
     sensitive_can_change: !!(flags & 0x2),
   }
-}
-const _messagesInactiveChats: any = () => ({_: 'messages.inactiveChats', dates: vector(i32), chats: vector(obj), users: vector(obj)});
-const _baseThemeClassic: any = () => ({_: 'baseThemeClassic'});
-const _baseThemeDay: any = () => ({_: 'baseThemeDay'});
-const _baseThemeNight: any = () => ({_: 'baseThemeNight'});
-const _baseThemeTinted: any = () => ({_: 'baseThemeTinted'});
-const _baseThemeArctic: any = () => ({_: 'baseThemeArctic'});
-const _inputWallPaperNoFile: any = () => ({_: 'inputWallPaperNoFile'});
-function _wallPaperNoFile(): any {
+};
+const _messagesInactiveChats: any = () => ({ _: 'messages.inactiveChats', dates: vector(i32), chats: vector(obj), users: vector(obj) });
+const _baseThemeClassic: any = () => ({ _: 'baseThemeClassic' });
+const _baseThemeDay: any = () => ({ _: 'baseThemeDay' });
+const _baseThemeNight: any = () => ({ _: 'baseThemeNight' });
+const _baseThemeTinted: any = () => ({ _: 'baseThemeTinted' });
+const _baseThemeArctic: any = () => ({ _: 'baseThemeArctic' });
+const _inputWallPaperNoFile: any = () => ({ _: 'inputWallPaperNoFile' });
+const _wallPaperNoFile = (): any => {
   const flags = i32();
   return {
     _: 'wallPaperNoFile',
@@ -2559,8 +2560,8 @@ function _wallPaperNoFile(): any {
     dark: !!(flags & 0x10),
     settings: flags & 0x4 ? obj() : u,
   }
-}
-function _inputThemeSettings(): any {
+};
+const _inputThemeSettings = (): any => {
   const flags = i32();
   return {
     _: 'inputThemeSettings',
@@ -2571,8 +2572,8 @@ function _inputThemeSettings(): any {
     wallpaper: flags & 0x2 ? obj() : u,
     wallpaper_settings: flags & 0x2 ? obj() : u,
   }
-}
-function _themeSettings(): any {
+};
+const _themeSettings = (): any => {
   const flags = i32();
   return {
     _: 'themeSettings',
@@ -2582,15 +2583,15 @@ function _themeSettings(): any {
     message_bottom_color: flags & 0x1 ? i32() : u,
     wallpaper: flags & 0x2 ? obj() : u,
   }
-}
-function _webPageAttributeTheme(): any {
+};
+const _webPageAttributeTheme = (): any => {
   const flags = i32();
   return {
     _: 'webPageAttributeTheme',
     documents: flags & 0x1 ? vector(obj) : u,
     settings: flags & 0x2 ? obj() : u,
   }
-}
+};
 
 const parserMap = new Map<number, () => any>([
   [0xbc799737, _boolFalse],
@@ -3395,11 +3396,11 @@ const parserMap = new Map<number, () => any>([
 ]);
 
 const u = undefined;
-function i32() { return s.readInt32(); }
-function i64() { return s.readInt64(); }
-function f64() { return s.readDouble(); }
-function str() { return s.readString(); }
-function bytes() { return s.readBytes(); }
+const i32 = () => s.readInt32();
+const i64 = () => s.readInt64();
+const f64 = () => s.readDouble();
+const str = () => s.readString();
+const bytes = () => s.readBytes();
 
 function vector(t: () => any, bare = false) {
   if (!bare) { i32(); /* ignoring constructor id. */ }

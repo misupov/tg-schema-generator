@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 
 namespace TelegramSchema
 {
@@ -8,6 +10,7 @@ namespace TelegramSchema
     {
         private static void Main(string[] args)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             const string outputFolder = "../../../../output";
             GenerateTs(outputFolder, "layer105", true);
             GenerateTs(outputFolder, "layer108", true);

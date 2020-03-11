@@ -8,7 +8,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: layer105.json                                                                   */
+/* Source: layer105.json (md5: 15f299b996d718182fbb8b20f18b8ddd)                           */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -19,7 +20,7 @@
  */
 export type Error =
   | Error.error
-;
+  ;
 
 export namespace Error {
   export type error = {
@@ -40,7 +41,7 @@ export type InputPeer =
   | InputPeer.inputPeerChannel
   | InputPeer.inputPeerUserFromMessage
   | InputPeer.inputPeerChannelFromMessage
-;
+  ;
 
 export namespace InputPeer {
   export type inputPeerEmpty = {
@@ -85,7 +86,7 @@ export type InputUser =
   | InputUser.inputUserSelf
   | InputUser.inputUser
   | InputUser.inputUserFromMessage
-;
+  ;
 
 export namespace InputUser {
   export type inputUserEmpty = {
@@ -112,7 +113,7 @@ export namespace InputUser {
  */
 export type InputContact =
   | InputContact.inputPhoneContact
-;
+  ;
 
 export namespace InputContact {
   export type inputPhoneContact = {
@@ -130,7 +131,7 @@ export namespace InputContact {
 export type InputFile =
   | InputFile.inputFile
   | InputFile.inputFileBig
-;
+  ;
 
 export namespace InputFile {
   export type inputFile = {
@@ -167,7 +168,7 @@ export type InputMedia =
   | InputMedia.inputMediaInvoice
   | InputMedia.inputMediaGeoLive
   | InputMedia.inputMediaPoll
-;
+  ;
 
 export namespace InputMedia {
   export type inputMediaEmpty = {
@@ -268,7 +269,7 @@ export type InputChatPhoto =
   | InputChatPhoto.inputChatPhotoEmpty
   | InputChatPhoto.inputChatUploadedPhoto
   | InputChatPhoto.inputChatPhoto
-;
+  ;
 
 export namespace InputChatPhoto {
   export type inputChatPhotoEmpty = {
@@ -290,7 +291,7 @@ export namespace InputChatPhoto {
 export type InputGeoPoint =
   | InputGeoPoint.inputGeoPointEmpty
   | InputGeoPoint.inputGeoPoint
-;
+  ;
 
 export namespace InputGeoPoint {
   export type inputGeoPointEmpty = {
@@ -309,7 +310,7 @@ export namespace InputGeoPoint {
 export type InputPhoto =
   | InputPhoto.inputPhotoEmpty
   | InputPhoto.inputPhoto
-;
+  ;
 
 export namespace InputPhoto {
   export type inputPhotoEmpty = {
@@ -335,7 +336,7 @@ export type InputFileLocation =
   | InputFileLocation.inputPhotoFileLocation
   | InputFileLocation.inputPeerPhotoFileLocation
   | InputFileLocation.inputStickerSetThumb
-;
+  ;
 
 export namespace InputFileLocation {
   export type inputFileLocation = {
@@ -394,7 +395,7 @@ export type Peer =
   | Peer.peerUser
   | Peer.peerChat
   | Peer.peerChannel
-;
+  ;
 
 export namespace Peer {
   export type peerUser = {
@@ -425,7 +426,7 @@ export type StorageFileType =
   | StorageFileType.storageFileMov
   | StorageFileType.storageFileMp4
   | StorageFileType.storageFileWebp
-;
+  ;
 
 export namespace StorageFileType {
   export type storageFileUnknown = {
@@ -466,7 +467,7 @@ export namespace StorageFileType {
 export type User =
   | User.userEmpty
   | User.user
-;
+  ;
 
 export namespace User {
   export type userEmpty = {
@@ -509,7 +510,7 @@ export namespace User {
 export type UserProfilePhoto =
   | UserProfilePhoto.userProfilePhotoEmpty
   | UserProfilePhoto.userProfilePhoto
-;
+  ;
 
 export namespace UserProfilePhoto {
   export type userProfilePhotoEmpty = {
@@ -534,7 +535,7 @@ export type UserStatus =
   | UserStatus.userStatusRecently
   | UserStatus.userStatusLastWeek
   | UserStatus.userStatusLastMonth
-;
+  ;
 
 export namespace UserStatus {
   export type userStatusEmpty = {
@@ -568,7 +569,7 @@ export type Chat =
   | Chat.chatForbidden
   | Chat.channel
   | Chat.channelForbidden
-;
+  ;
 
 export namespace Chat {
   export type chatEmpty = {
@@ -640,7 +641,7 @@ export namespace Chat {
 export type ChatFull =
   | ChatFull.chatFull
   | ChatFull.channelFull
-;
+  ;
 
 export namespace ChatFull {
   export type chatFull = {
@@ -701,7 +702,7 @@ export type ChatParticipant =
   | ChatParticipant.chatParticipant
   | ChatParticipant.chatParticipantCreator
   | ChatParticipant.chatParticipantAdmin
-;
+  ;
 
 export namespace ChatParticipant {
   export type chatParticipant = {
@@ -728,7 +729,7 @@ export namespace ChatParticipant {
 export type ChatParticipants =
   | ChatParticipants.chatParticipantsForbidden
   | ChatParticipants.chatParticipants
-;
+  ;
 
 export namespace ChatParticipants {
   export type chatParticipantsForbidden = {
@@ -750,7 +751,7 @@ export namespace ChatParticipants {
 export type ChatPhoto =
   | ChatPhoto.chatPhotoEmpty
   | ChatPhoto.chatPhoto
-;
+  ;
 
 export namespace ChatPhoto {
   export type chatPhotoEmpty = {
@@ -771,7 +772,7 @@ export type Message =
   | Message.messageEmpty
   | Message.message
   | Message.messageService
-;
+  ;
 
 export namespace Message {
   export type messageEmpty = {
@@ -838,7 +839,7 @@ export type MessageMedia =
   | MessageMedia.messageMediaInvoice
   | MessageMedia.messageMediaGeoLive
   | MessageMedia.messageMediaPoll
-;
+  ;
 
 export namespace MessageMedia {
   export type messageMediaEmpty = {
@@ -937,7 +938,7 @@ export type MessageAction =
   | MessageAction.messageActionSecureValuesSentMe
   | MessageAction.messageActionSecureValuesSent
   | MessageAction.messageActionContactSignUp
-;
+  ;
 
 export namespace MessageAction {
   export type messageActionEmpty = {
@@ -1047,7 +1048,7 @@ export namespace MessageAction {
 export type Dialog =
   | Dialog.dialog
   | Dialog.dialogFolder
-;
+  ;
 
 export namespace Dialog {
   export type dialog = {
@@ -1084,7 +1085,7 @@ export namespace Dialog {
 export type Photo =
   | Photo.photoEmpty
   | Photo.photo
-;
+  ;
 
 export namespace Photo {
   export type photoEmpty = {
@@ -1111,7 +1112,7 @@ export type PhotoSize =
   | PhotoSize.photoSize
   | PhotoSize.photoCachedSize
   | PhotoSize.photoStrippedSize
-;
+  ;
 
 export namespace PhotoSize {
   export type photoSizeEmpty = {
@@ -1147,7 +1148,7 @@ export namespace PhotoSize {
 export type GeoPoint =
   | GeoPoint.geoPointEmpty
   | GeoPoint.geoPoint
-;
+  ;
 
 export namespace GeoPoint {
   export type geoPointEmpty = {
@@ -1166,7 +1167,7 @@ export namespace GeoPoint {
  */
 export type AuthSentCode =
   | AuthSentCode.authSentCode
-;
+  ;
 
 export namespace AuthSentCode {
   export type authSentCode = {
@@ -1184,7 +1185,7 @@ export namespace AuthSentCode {
 export type AuthAuthorization =
   | AuthAuthorization.authAuthorization
   | AuthAuthorization.authAuthorizationSignUpRequired
-;
+  ;
 
 export namespace AuthAuthorization {
   export type authAuthorization = {
@@ -1203,7 +1204,7 @@ export namespace AuthAuthorization {
  */
 export type AuthExportedAuthorization =
   | AuthExportedAuthorization.authExportedAuthorization
-;
+  ;
 
 export namespace AuthExportedAuthorization {
   export type authExportedAuthorization = {
@@ -1221,7 +1222,7 @@ export type InputNotifyPeer =
   | InputNotifyPeer.inputNotifyUsers
   | InputNotifyPeer.inputNotifyChats
   | InputNotifyPeer.inputNotifyBroadcasts
-;
+  ;
 
 export namespace InputNotifyPeer {
   export type inputNotifyPeer = {
@@ -1244,7 +1245,7 @@ export namespace InputNotifyPeer {
  */
 export type InputPeerNotifySettings =
   | InputPeerNotifySettings.inputPeerNotifySettings
-;
+  ;
 
 export namespace InputPeerNotifySettings {
   export type inputPeerNotifySettings = {
@@ -1261,7 +1262,7 @@ export namespace InputPeerNotifySettings {
  */
 export type PeerNotifySettings =
   | PeerNotifySettings.peerNotifySettings
-;
+  ;
 
 export namespace PeerNotifySettings {
   export type peerNotifySettings = {
@@ -1278,7 +1279,7 @@ export namespace PeerNotifySettings {
  */
 export type PeerSettings =
   | PeerSettings.peerSettings
-;
+  ;
 
 export namespace PeerSettings {
   export type peerSettings = {
@@ -1297,7 +1298,7 @@ export namespace PeerSettings {
  */
 export type WallPaper =
   | WallPaper.wallPaper
-;
+  ;
 
 export namespace WallPaper {
   export type wallPaper = {
@@ -1325,7 +1326,7 @@ export type ReportReason =
   | ReportReason.inputReportReasonOther
   | ReportReason.inputReportReasonCopyright
   | ReportReason.inputReportReasonGeoIrrelevant
-;
+  ;
 
 export namespace ReportReason {
   export type inputReportReasonSpam = {
@@ -1357,7 +1358,7 @@ export namespace ReportReason {
  */
 export type UserFull =
   | UserFull.userFull
-;
+  ;
 
 export namespace UserFull {
   export type userFull = {
@@ -1384,7 +1385,7 @@ export namespace UserFull {
  */
 export type Contact =
   | Contact.contact
-;
+  ;
 
 export namespace Contact {
   export type contact = {
@@ -1399,7 +1400,7 @@ export namespace Contact {
  */
 export type ImportedContact =
   | ImportedContact.importedContact
-;
+  ;
 
 export namespace ImportedContact {
   export type importedContact = {
@@ -1414,7 +1415,7 @@ export namespace ImportedContact {
  */
 export type ContactBlocked =
   | ContactBlocked.contactBlocked
-;
+  ;
 
 export namespace ContactBlocked {
   export type contactBlocked = {
@@ -1429,7 +1430,7 @@ export namespace ContactBlocked {
  */
 export type ContactStatus =
   | ContactStatus.contactStatus
-;
+  ;
 
 export namespace ContactStatus {
   export type contactStatus = {
@@ -1445,7 +1446,7 @@ export namespace ContactStatus {
 export type ContactsContacts =
   | ContactsContacts.contactsContactsNotModified
   | ContactsContacts.contactsContacts
-;
+  ;
 
 export namespace ContactsContacts {
   export type contactsContactsNotModified = {
@@ -1464,7 +1465,7 @@ export namespace ContactsContacts {
  */
 export type ContactsImportedContacts =
   | ContactsImportedContacts.contactsImportedContacts
-;
+  ;
 
 export namespace ContactsImportedContacts {
   export type contactsImportedContacts = {
@@ -1482,7 +1483,7 @@ export namespace ContactsImportedContacts {
 export type ContactsBlocked =
   | ContactsBlocked.contactsBlocked
   | ContactsBlocked.contactsBlockedSlice
-;
+  ;
 
 export namespace ContactsBlocked {
   export type contactsBlocked = {
@@ -1505,7 +1506,7 @@ export type MessagesDialogs =
   | MessagesDialogs.messagesDialogs
   | MessagesDialogs.messagesDialogsSlice
   | MessagesDialogs.messagesDialogsNotModified
-;
+  ;
 
 export namespace MessagesDialogs {
   export type messagesDialogs = {
@@ -1537,7 +1538,7 @@ export type MessagesMessages =
   | MessagesMessages.messagesMessagesSlice
   | MessagesMessages.messagesChannelMessages
   | MessagesMessages.messagesMessagesNotModified
-;
+  ;
 
 export namespace MessagesMessages {
   export type messagesMessages = {
@@ -1576,7 +1577,7 @@ export namespace MessagesMessages {
 export type MessagesChats =
   | MessagesChats.messagesChats
   | MessagesChats.messagesChatsSlice
-;
+  ;
 
 export namespace MessagesChats {
   export type messagesChats = {
@@ -1595,7 +1596,7 @@ export namespace MessagesChats {
  */
 export type MessagesChatFull =
   | MessagesChatFull.messagesChatFull
-;
+  ;
 
 export namespace MessagesChatFull {
   export type messagesChatFull = {
@@ -1611,7 +1612,7 @@ export namespace MessagesChatFull {
  */
 export type MessagesAffectedHistory =
   | MessagesAffectedHistory.messagesAffectedHistory
-;
+  ;
 
 export namespace MessagesAffectedHistory {
   export type messagesAffectedHistory = {
@@ -1642,7 +1643,7 @@ export type MessagesFilter =
   | MessagesFilter.inputMessagesFilterMyMentions
   | MessagesFilter.inputMessagesFilterGeo
   | MessagesFilter.inputMessagesFilterContacts
-;
+  ;
 
 export namespace MessagesFilter {
   export type inputMessagesFilterEmpty = {
@@ -1774,7 +1775,7 @@ export type Update =
   | Update.updateNewScheduledMessage
   | Update.updateDeleteScheduledMessages
   | Update.updateTheme
-;
+  ;
 
 export namespace Update {
   export type updateNewMessage = {
@@ -2191,7 +2192,7 @@ export namespace Update {
  */
 export type UpdatesState =
   | UpdatesState.updatesState
-;
+  ;
 
 export namespace UpdatesState {
   export type updatesState = {
@@ -2212,7 +2213,7 @@ export type UpdatesDifference =
   | UpdatesDifference.updatesDifference
   | UpdatesDifference.updatesDifferenceSlice
   | UpdatesDifference.updatesDifferenceTooLong
-;
+  ;
 
 export namespace UpdatesDifference {
   export type updatesDifferenceEmpty = {
@@ -2255,7 +2256,7 @@ export type Updates =
   | Updates.updatesCombined
   | Updates.updates
   | Updates.updateShortSentMessage
-;
+  ;
 
 export namespace Updates {
   export type updatesTooLong = {
@@ -2336,7 +2337,7 @@ export namespace Updates {
 export type PhotosPhotos =
   | PhotosPhotos.photosPhotos
   | PhotosPhotos.photosPhotosSlice
-;
+  ;
 
 export namespace PhotosPhotos {
   export type photosPhotos = {
@@ -2357,7 +2358,7 @@ export namespace PhotosPhotos {
  */
 export type PhotosPhoto =
   | PhotosPhoto.photosPhoto
-;
+  ;
 
 export namespace PhotosPhoto {
   export type photosPhoto = {
@@ -2373,7 +2374,7 @@ export namespace PhotosPhoto {
 export type UploadFile =
   | UploadFile.uploadFile
   | UploadFile.uploadFileCdnRedirect
-;
+  ;
 
 export namespace UploadFile {
   export type uploadFile = {
@@ -2397,7 +2398,7 @@ export namespace UploadFile {
  */
 export type DcOption =
   | DcOption.dcOption
-;
+  ;
 
 export namespace DcOption {
   export type dcOption = {
@@ -2419,7 +2420,7 @@ export namespace DcOption {
  */
 export type Config =
   | Config.config
-;
+  ;
 
 export namespace Config {
   export type config = {
@@ -2483,7 +2484,7 @@ export namespace Config {
  */
 export type NearestDc =
   | NearestDc.nearestDc
-;
+  ;
 
 export namespace NearestDc {
   export type nearestDc = {
@@ -2500,7 +2501,7 @@ export namespace NearestDc {
 export type HelpAppUpdate =
   | HelpAppUpdate.helpAppUpdate
   | HelpAppUpdate.helpNoAppUpdate
-;
+  ;
 
 export namespace HelpAppUpdate {
   export type helpAppUpdate = {
@@ -2523,7 +2524,7 @@ export namespace HelpAppUpdate {
  */
 export type HelpInviteText =
   | HelpInviteText.helpInviteText
-;
+  ;
 
 export namespace HelpInviteText {
   export type helpInviteText = {
@@ -2541,7 +2542,7 @@ export type EncryptedChat =
   | EncryptedChat.encryptedChatRequested
   | EncryptedChat.encryptedChat
   | EncryptedChat.encryptedChatDiscarded
-;
+  ;
 
 export namespace EncryptedChat {
   export type encryptedChatEmpty = {
@@ -2586,7 +2587,7 @@ export namespace EncryptedChat {
  */
 export type InputEncryptedChat =
   | InputEncryptedChat.inputEncryptedChat
-;
+  ;
 
 export namespace InputEncryptedChat {
   export type inputEncryptedChat = {
@@ -2602,7 +2603,7 @@ export namespace InputEncryptedChat {
 export type EncryptedFile =
   | EncryptedFile.encryptedFileEmpty
   | EncryptedFile.encryptedFile
-;
+  ;
 
 export namespace EncryptedFile {
   export type encryptedFileEmpty = {
@@ -2626,7 +2627,7 @@ export type InputEncryptedFile =
   | InputEncryptedFile.inputEncryptedFileUploaded
   | InputEncryptedFile.inputEncryptedFile
   | InputEncryptedFile.inputEncryptedFileBigUploaded
-;
+  ;
 
 export namespace InputEncryptedFile {
   export type inputEncryptedFileEmpty = {
@@ -2658,7 +2659,7 @@ export namespace InputEncryptedFile {
 export type EncryptedMessage =
   | EncryptedMessage.encryptedMessage
   | EncryptedMessage.encryptedMessageService
-;
+  ;
 
 export namespace EncryptedMessage {
   export type encryptedMessage = {
@@ -2684,7 +2685,7 @@ export namespace EncryptedMessage {
 export type MessagesDhConfig =
   | MessagesDhConfig.messagesDhConfigNotModified
   | MessagesDhConfig.messagesDhConfig
-;
+  ;
 
 export namespace MessagesDhConfig {
   export type messagesDhConfigNotModified = {
@@ -2706,7 +2707,7 @@ export namespace MessagesDhConfig {
 export type MessagesSentEncryptedMessage =
   | MessagesSentEncryptedMessage.messagesSentEncryptedMessage
   | MessagesSentEncryptedMessage.messagesSentEncryptedFile
-;
+  ;
 
 export namespace MessagesSentEncryptedMessage {
   export type messagesSentEncryptedMessage = {
@@ -2726,7 +2727,7 @@ export namespace MessagesSentEncryptedMessage {
 export type InputDocument =
   | InputDocument.inputDocumentEmpty
   | InputDocument.inputDocument
-;
+  ;
 
 export namespace InputDocument {
   export type inputDocumentEmpty = {
@@ -2746,7 +2747,7 @@ export namespace InputDocument {
 export type Document =
   | Document.documentEmpty
   | Document.document
-;
+  ;
 
 export namespace Document {
   export type documentEmpty = {
@@ -2772,7 +2773,7 @@ export namespace Document {
  */
 export type HelpSupport =
   | HelpSupport.helpSupport
-;
+  ;
 
 export namespace HelpSupport {
   export type helpSupport = {
@@ -2790,7 +2791,7 @@ export type NotifyPeer =
   | NotifyPeer.notifyUsers
   | NotifyPeer.notifyChats
   | NotifyPeer.notifyBroadcasts
-;
+  ;
 
 export namespace NotifyPeer {
   export type notifyPeer = {
@@ -2825,7 +2826,7 @@ export type SendMessageAction =
   | SendMessageAction.sendMessageGamePlayAction
   | SendMessageAction.sendMessageRecordRoundAction
   | SendMessageAction.sendMessageUploadRoundAction
-;
+  ;
 
 export namespace SendMessageAction {
   export type sendMessageTypingAction = {
@@ -2879,7 +2880,7 @@ export namespace SendMessageAction {
  */
 export type ContactsFound =
   | ContactsFound.contactsFound
-;
+  ;
 
 export namespace ContactsFound {
   export type contactsFound = {
@@ -2903,7 +2904,7 @@ export type InputPrivacyKey =
   | InputPrivacyKey.inputPrivacyKeyProfilePhoto
   | InputPrivacyKey.inputPrivacyKeyPhoneNumber
   | InputPrivacyKey.inputPrivacyKeyAddedByPhone
-;
+  ;
 
 export namespace InputPrivacyKey {
   export type inputPrivacyKeyStatusTimestamp = {
@@ -2944,7 +2945,7 @@ export type PrivacyKey =
   | PrivacyKey.privacyKeyProfilePhoto
   | PrivacyKey.privacyKeyPhoneNumber
   | PrivacyKey.privacyKeyAddedByPhone
-;
+  ;
 
 export namespace PrivacyKey {
   export type privacyKeyStatusTimestamp = {
@@ -2985,7 +2986,7 @@ export type InputPrivacyRule =
   | InputPrivacyRule.inputPrivacyValueDisallowUsers
   | InputPrivacyRule.inputPrivacyValueAllowChatParticipants
   | InputPrivacyRule.inputPrivacyValueDisallowChatParticipants
-;
+  ;
 
 export namespace InputPrivacyRule {
   export type inputPrivacyValueAllowContacts = {
@@ -3030,7 +3031,7 @@ export type PrivacyRule =
   | PrivacyRule.privacyValueDisallowUsers
   | PrivacyRule.privacyValueAllowChatParticipants
   | PrivacyRule.privacyValueDisallowChatParticipants
-;
+  ;
 
 export namespace PrivacyRule {
   export type privacyValueAllowContacts = {
@@ -3068,7 +3069,7 @@ export namespace PrivacyRule {
  */
 export type AccountPrivacyRules =
   | AccountPrivacyRules.accountPrivacyRules
-;
+  ;
 
 export namespace AccountPrivacyRules {
   export type accountPrivacyRules = {
@@ -3084,7 +3085,7 @@ export namespace AccountPrivacyRules {
  */
 export type AccountDaysTTL =
   | AccountDaysTTL.accountDaysTTL
-;
+  ;
 
 export namespace AccountDaysTTL {
   export type accountDaysTTL = {
@@ -3104,7 +3105,7 @@ export type DocumentAttribute =
   | DocumentAttribute.documentAttributeAudio
   | DocumentAttribute.documentAttributeFilename
   | DocumentAttribute.documentAttributeHasStickers
-;
+  ;
 
 export namespace DocumentAttribute {
   export type documentAttributeImageSize = {
@@ -3153,7 +3154,7 @@ export namespace DocumentAttribute {
 export type MessagesStickers =
   | MessagesStickers.messagesStickersNotModified
   | MessagesStickers.messagesStickers
-;
+  ;
 
 export namespace MessagesStickers {
   export type messagesStickersNotModified = {
@@ -3171,7 +3172,7 @@ export namespace MessagesStickers {
  */
 export type StickerPack =
   | StickerPack.stickerPack
-;
+  ;
 
 export namespace StickerPack {
   export type stickerPack = {
@@ -3187,7 +3188,7 @@ export namespace StickerPack {
 export type MessagesAllStickers =
   | MessagesAllStickers.messagesAllStickersNotModified
   | MessagesAllStickers.messagesAllStickers
-;
+  ;
 
 export namespace MessagesAllStickers {
   export type messagesAllStickersNotModified = {
@@ -3205,7 +3206,7 @@ export namespace MessagesAllStickers {
  */
 export type MessagesAffectedMessages =
   | MessagesAffectedMessages.messagesAffectedMessages
-;
+  ;
 
 export namespace MessagesAffectedMessages {
   export type messagesAffectedMessages = {
@@ -3223,7 +3224,7 @@ export type WebPage =
   | WebPage.webPagePending
   | WebPage.webPage
   | WebPage.webPageNotModified
-;
+  ;
 
 export namespace WebPage {
   export type webPageEmpty = {
@@ -3266,7 +3267,7 @@ export namespace WebPage {
  */
 export type Authorization =
   | Authorization.authorization
-;
+  ;
 
 export namespace Authorization {
   export type authorization = {
@@ -3294,7 +3295,7 @@ export namespace Authorization {
  */
 export type AccountAuthorizations =
   | AccountAuthorizations.accountAuthorizations
-;
+  ;
 
 export namespace AccountAuthorizations {
   export type accountAuthorizations = {
@@ -3308,7 +3309,7 @@ export namespace AccountAuthorizations {
  */
 export type AccountPassword =
   | AccountPassword.accountPassword
-;
+  ;
 
 export namespace AccountPassword {
   export type accountPassword = {
@@ -3332,7 +3333,7 @@ export namespace AccountPassword {
  */
 export type AccountPasswordSettings =
   | AccountPasswordSettings.accountPasswordSettings
-;
+  ;
 
 export namespace AccountPasswordSettings {
   export type accountPasswordSettings = {
@@ -3347,7 +3348,7 @@ export namespace AccountPasswordSettings {
  */
 export type AccountPasswordInputSettings =
   | AccountPasswordInputSettings.accountPasswordInputSettings
-;
+  ;
 
 export namespace AccountPasswordInputSettings {
   export type accountPasswordInputSettings = {
@@ -3365,7 +3366,7 @@ export namespace AccountPasswordInputSettings {
  */
 export type AuthPasswordRecovery =
   | AuthPasswordRecovery.authPasswordRecovery
-;
+  ;
 
 export namespace AuthPasswordRecovery {
   export type authPasswordRecovery = {
@@ -3379,7 +3380,7 @@ export namespace AuthPasswordRecovery {
  */
 export type ReceivedNotifyMessage =
   | ReceivedNotifyMessage.receivedNotifyMessage
-;
+  ;
 
 export namespace ReceivedNotifyMessage {
   export type receivedNotifyMessage = {
@@ -3394,7 +3395,7 @@ export namespace ReceivedNotifyMessage {
 export type ExportedChatInvite =
   | ExportedChatInvite.chatInviteEmpty
   | ExportedChatInvite.chatInviteExported
-;
+  ;
 
 export namespace ExportedChatInvite {
   export type chatInviteEmpty = {
@@ -3412,7 +3413,7 @@ export namespace ExportedChatInvite {
 export type ChatInvite =
   | ChatInvite.chatInviteAlready
   | ChatInvite.chatInvite
-;
+  ;
 
 export namespace ChatInvite {
   export type chatInviteAlready = {
@@ -3440,7 +3441,7 @@ export type InputStickerSet =
   | InputStickerSet.inputStickerSetID
   | InputStickerSet.inputStickerSetShortName
   | InputStickerSet.inputStickerSetAnimatedEmoji
-;
+  ;
 
 export namespace InputStickerSet {
   export type inputStickerSetEmpty = {
@@ -3465,7 +3466,7 @@ export namespace InputStickerSet {
  */
 export type StickerSet =
   | StickerSet.stickerSet
-;
+  ;
 
 export namespace StickerSet {
   export type stickerSet = {
@@ -3491,7 +3492,7 @@ export namespace StickerSet {
  */
 export type MessagesStickerSet =
   | MessagesStickerSet.messagesStickerSet
-;
+  ;
 
 export namespace MessagesStickerSet {
   export type messagesStickerSet = {
@@ -3507,7 +3508,7 @@ export namespace MessagesStickerSet {
  */
 export type BotCommand =
   | BotCommand.botCommand
-;
+  ;
 
 export namespace BotCommand {
   export type botCommand = {
@@ -3522,7 +3523,7 @@ export namespace BotCommand {
  */
 export type BotInfo =
   | BotInfo.botInfo
-;
+  ;
 
 export namespace BotInfo {
   export type botInfo = {
@@ -3547,7 +3548,7 @@ export type KeyboardButton =
   | KeyboardButton.keyboardButtonBuy
   | KeyboardButton.keyboardButtonUrlAuth
   | KeyboardButton.inputKeyboardButtonUrlAuth
-;
+  ;
 
 export namespace KeyboardButton {
   export type keyboardButton = {
@@ -3608,7 +3609,7 @@ export namespace KeyboardButton {
  */
 export type KeyboardButtonRow =
   | KeyboardButtonRow.keyboardButtonRow
-;
+  ;
 
 export namespace KeyboardButtonRow {
   export type keyboardButtonRow = {
@@ -3625,7 +3626,7 @@ export type ReplyMarkup =
   | ReplyMarkup.replyKeyboardForceReply
   | ReplyMarkup.replyKeyboardMarkup
   | ReplyMarkup.replyInlineMarkup
-;
+  ;
 
 export namespace ReplyMarkup {
   export type replyKeyboardHide = {
@@ -3672,7 +3673,7 @@ export type MessageEntity =
   | MessageEntity.messageEntityUnderline
   | MessageEntity.messageEntityStrike
   | MessageEntity.messageEntityBlockquote
-;
+  ;
 
 export namespace MessageEntity {
   export type messageEntityUnknown = {
@@ -3778,7 +3779,7 @@ export type InputChannel =
   | InputChannel.inputChannelEmpty
   | InputChannel.inputChannel
   | InputChannel.inputChannelFromMessage
-;
+  ;
 
 export namespace InputChannel {
   export type inputChannelEmpty = {
@@ -3802,7 +3803,7 @@ export namespace InputChannel {
  */
 export type ContactsResolvedPeer =
   | ContactsResolvedPeer.contactsResolvedPeer
-;
+  ;
 
 export namespace ContactsResolvedPeer {
   export type contactsResolvedPeer = {
@@ -3818,7 +3819,7 @@ export namespace ContactsResolvedPeer {
  */
 export type MessageRange =
   | MessageRange.messageRange
-;
+  ;
 
 export namespace MessageRange {
   export type messageRange = {
@@ -3835,7 +3836,7 @@ export type UpdatesChannelDifference =
   | UpdatesChannelDifference.updatesChannelDifferenceEmpty
   | UpdatesChannelDifference.updatesChannelDifferenceTooLong
   | UpdatesChannelDifference.updatesChannelDifference
-;
+  ;
 
 export namespace UpdatesChannelDifference {
   export type updatesChannelDifferenceEmpty = {
@@ -3871,7 +3872,7 @@ export namespace UpdatesChannelDifference {
 export type ChannelMessagesFilter =
   | ChannelMessagesFilter.channelMessagesFilterEmpty
   | ChannelMessagesFilter.channelMessagesFilter
-;
+  ;
 
 export namespace ChannelMessagesFilter {
   export type channelMessagesFilterEmpty = {
@@ -3893,7 +3894,7 @@ export type ChannelParticipant =
   | ChannelParticipant.channelParticipantCreator
   | ChannelParticipant.channelParticipantAdmin
   | ChannelParticipant.channelParticipantBanned
-;
+  ;
 
 export namespace ChannelParticipant {
   export type channelParticipant = {
@@ -3944,7 +3945,7 @@ export type ChannelParticipantsFilter =
   | ChannelParticipantsFilter.channelParticipantsBanned
   | ChannelParticipantsFilter.channelParticipantsSearch
   | ChannelParticipantsFilter.channelParticipantsContacts
-;
+  ;
 
 export namespace ChannelParticipantsFilter {
   export type channelParticipantsRecent = {
@@ -3980,7 +3981,7 @@ export namespace ChannelParticipantsFilter {
 export type ChannelsChannelParticipants =
   | ChannelsChannelParticipants.channelsChannelParticipants
   | ChannelsChannelParticipants.channelsChannelParticipantsNotModified
-;
+  ;
 
 export namespace ChannelsChannelParticipants {
   export type channelsChannelParticipants = {
@@ -3999,7 +4000,7 @@ export namespace ChannelsChannelParticipants {
  */
 export type ChannelsChannelParticipant =
   | ChannelsChannelParticipant.channelsChannelParticipant
-;
+  ;
 
 export namespace ChannelsChannelParticipant {
   export type channelsChannelParticipant = {
@@ -4014,7 +4015,7 @@ export namespace ChannelsChannelParticipant {
  */
 export type HelpTermsOfService =
   | HelpTermsOfService.helpTermsOfService
-;
+  ;
 
 export namespace HelpTermsOfService {
   export type helpTermsOfService = {
@@ -4033,7 +4034,7 @@ export namespace HelpTermsOfService {
 export type FoundGif =
   | FoundGif.foundGif
   | FoundGif.foundGifCached
-;
+  ;
 
 export namespace FoundGif {
   export type foundGif = {
@@ -4058,7 +4059,7 @@ export namespace FoundGif {
  */
 export type MessagesFoundGifs =
   | MessagesFoundGifs.messagesFoundGifs
-;
+  ;
 
 export namespace MessagesFoundGifs {
   export type messagesFoundGifs = {
@@ -4074,7 +4075,7 @@ export namespace MessagesFoundGifs {
 export type MessagesSavedGifs =
   | MessagesSavedGifs.messagesSavedGifsNotModified
   | MessagesSavedGifs.messagesSavedGifs
-;
+  ;
 
 export namespace MessagesSavedGifs {
   export type messagesSavedGifsNotModified = {
@@ -4097,7 +4098,7 @@ export type InputBotInlineMessage =
   | InputBotInlineMessage.inputBotInlineMessageMediaVenue
   | InputBotInlineMessage.inputBotInlineMessageMediaContact
   | InputBotInlineMessage.inputBotInlineMessageGame
-;
+  ;
 
 export namespace InputBotInlineMessage {
   export type inputBotInlineMessageMediaAuto = {
@@ -4151,7 +4152,7 @@ export type InputBotInlineResult =
   | InputBotInlineResult.inputBotInlineResultPhoto
   | InputBotInlineResult.inputBotInlineResultDocument
   | InputBotInlineResult.inputBotInlineResultGame
-;
+  ;
 
 export namespace InputBotInlineResult {
   export type inputBotInlineResult = {
@@ -4198,7 +4199,7 @@ export type BotInlineMessage =
   | BotInlineMessage.botInlineMessageMediaGeo
   | BotInlineMessage.botInlineMessageMediaVenue
   | BotInlineMessage.botInlineMessageMediaContact
-;
+  ;
 
 export namespace BotInlineMessage {
   export type botInlineMessageMediaAuto = {
@@ -4246,7 +4247,7 @@ export namespace BotInlineMessage {
 export type BotInlineResult =
   | BotInlineResult.botInlineResult
   | BotInlineResult.botInlineMediaResult
-;
+  ;
 
 export namespace BotInlineResult {
   export type botInlineResult = {
@@ -4277,7 +4278,7 @@ export namespace BotInlineResult {
  */
 export type MessagesBotResults =
   | MessagesBotResults.messagesBotResults
-;
+  ;
 
 export namespace MessagesBotResults {
   export type messagesBotResults = {
@@ -4297,7 +4298,7 @@ export namespace MessagesBotResults {
  */
 export type ExportedMessageLink =
   | ExportedMessageLink.exportedMessageLink
-;
+  ;
 
 export namespace ExportedMessageLink {
   export type exportedMessageLink = {
@@ -4312,7 +4313,7 @@ export namespace ExportedMessageLink {
  */
 export type MessageFwdHeader =
   | MessageFwdHeader.messageFwdHeader
-;
+  ;
 
 export namespace MessageFwdHeader {
   export type messageFwdHeader = {
@@ -4335,7 +4336,7 @@ export type AuthCodeType =
   | AuthCodeType.authCodeTypeSms
   | AuthCodeType.authCodeTypeCall
   | AuthCodeType.authCodeTypeFlashCall
-;
+  ;
 
 export namespace AuthCodeType {
   export type authCodeTypeSms = {
@@ -4357,7 +4358,7 @@ export type AuthSentCodeType =
   | AuthSentCodeType.authSentCodeTypeSms
   | AuthSentCodeType.authSentCodeTypeCall
   | AuthSentCodeType.authSentCodeTypeFlashCall
-;
+  ;
 
 export namespace AuthSentCodeType {
   export type authSentCodeTypeApp = {
@@ -4383,7 +4384,7 @@ export namespace AuthSentCodeType {
  */
 export type MessagesBotCallbackAnswer =
   | MessagesBotCallbackAnswer.messagesBotCallbackAnswer
-;
+  ;
 
 export namespace MessagesBotCallbackAnswer {
   export type messagesBotCallbackAnswer = {
@@ -4402,7 +4403,7 @@ export namespace MessagesBotCallbackAnswer {
  */
 export type MessagesMessageEditData =
   | MessagesMessageEditData.messagesMessageEditData
-;
+  ;
 
 export namespace MessagesMessageEditData {
   export type messagesMessageEditData = {
@@ -4416,7 +4417,7 @@ export namespace MessagesMessageEditData {
  */
 export type InputBotInlineMessageID =
   | InputBotInlineMessageID.inputBotInlineMessageID
-;
+  ;
 
 export namespace InputBotInlineMessageID {
   export type inputBotInlineMessageID = {
@@ -4432,7 +4433,7 @@ export namespace InputBotInlineMessageID {
  */
 export type InlineBotSwitchPM =
   | InlineBotSwitchPM.inlineBotSwitchPM
-;
+  ;
 
 export namespace InlineBotSwitchPM {
   export type inlineBotSwitchPM = {
@@ -4447,7 +4448,7 @@ export namespace InlineBotSwitchPM {
  */
 export type MessagesPeerDialogs =
   | MessagesPeerDialogs.messagesPeerDialogs
-;
+  ;
 
 export namespace MessagesPeerDialogs {
   export type messagesPeerDialogs = {
@@ -4465,7 +4466,7 @@ export namespace MessagesPeerDialogs {
  */
 export type TopPeer =
   | TopPeer.topPeer
-;
+  ;
 
 export namespace TopPeer {
   export type topPeer = {
@@ -4487,7 +4488,7 @@ export type TopPeerCategory =
   | TopPeerCategory.topPeerCategoryPhoneCalls
   | TopPeerCategory.topPeerCategoryForwardUsers
   | TopPeerCategory.topPeerCategoryForwardChats
-;
+  ;
 
 export namespace TopPeerCategory {
   export type topPeerCategoryBotsPM = {
@@ -4521,7 +4522,7 @@ export namespace TopPeerCategory {
  */
 export type TopPeerCategoryPeers =
   | TopPeerCategoryPeers.topPeerCategoryPeers
-;
+  ;
 
 export namespace TopPeerCategoryPeers {
   export type topPeerCategoryPeers = {
@@ -4539,7 +4540,7 @@ export type ContactsTopPeers =
   | ContactsTopPeers.contactsTopPeersNotModified
   | ContactsTopPeers.contactsTopPeers
   | ContactsTopPeers.contactsTopPeersDisabled
-;
+  ;
 
 export namespace ContactsTopPeers {
   export type contactsTopPeersNotModified = {
@@ -4562,7 +4563,7 @@ export namespace ContactsTopPeers {
 export type DraftMessage =
   | DraftMessage.draftMessageEmpty
   | DraftMessage.draftMessage
-;
+  ;
 
 export namespace DraftMessage {
   export type draftMessageEmpty = {
@@ -4585,7 +4586,7 @@ export namespace DraftMessage {
 export type MessagesFeaturedStickers =
   | MessagesFeaturedStickers.messagesFeaturedStickersNotModified
   | MessagesFeaturedStickers.messagesFeaturedStickers
-;
+  ;
 
 export namespace MessagesFeaturedStickers {
   export type messagesFeaturedStickersNotModified = {
@@ -4605,7 +4606,7 @@ export namespace MessagesFeaturedStickers {
 export type MessagesRecentStickers =
   | MessagesRecentStickers.messagesRecentStickersNotModified
   | MessagesRecentStickers.messagesRecentStickers
-;
+  ;
 
 export namespace MessagesRecentStickers {
   export type messagesRecentStickersNotModified = {
@@ -4625,7 +4626,7 @@ export namespace MessagesRecentStickers {
  */
 export type MessagesArchivedStickers =
   | MessagesArchivedStickers.messagesArchivedStickers
-;
+  ;
 
 export namespace MessagesArchivedStickers {
   export type messagesArchivedStickers = {
@@ -4641,7 +4642,7 @@ export namespace MessagesArchivedStickers {
 export type MessagesStickerSetInstallResult =
   | MessagesStickerSetInstallResult.messagesStickerSetInstallResultSuccess
   | MessagesStickerSetInstallResult.messagesStickerSetInstallResultArchive
-;
+  ;
 
 export namespace MessagesStickerSetInstallResult {
   export type messagesStickerSetInstallResultSuccess = {
@@ -4659,7 +4660,7 @@ export namespace MessagesStickerSetInstallResult {
 export type StickerSetCovered =
   | StickerSetCovered.stickerSetCovered
   | StickerSetCovered.stickerSetMultiCovered
-;
+  ;
 
 export namespace StickerSetCovered {
   export type stickerSetCovered = {
@@ -4679,7 +4680,7 @@ export namespace StickerSetCovered {
  */
 export type MaskCoords =
   | MaskCoords.maskCoords
-;
+  ;
 
 export namespace MaskCoords {
   export type maskCoords = {
@@ -4697,7 +4698,7 @@ export namespace MaskCoords {
 export type InputStickeredMedia =
   | InputStickeredMedia.inputStickeredMediaPhoto
   | InputStickeredMedia.inputStickeredMediaDocument
-;
+  ;
 
 export namespace InputStickeredMedia {
   export type inputStickeredMediaPhoto = {
@@ -4715,7 +4716,7 @@ export namespace InputStickeredMedia {
  */
 export type Game =
   | Game.game
-;
+  ;
 
 export namespace Game {
   export type game = {
@@ -4736,7 +4737,7 @@ export namespace Game {
 export type InputGame =
   | InputGame.inputGameID
   | InputGame.inputGameShortName
-;
+  ;
 
 export namespace InputGame {
   export type inputGameID = {
@@ -4756,7 +4757,7 @@ export namespace InputGame {
  */
 export type HighScore =
   | HighScore.highScore
-;
+  ;
 
 export namespace HighScore {
   export type highScore = {
@@ -4772,7 +4773,7 @@ export namespace HighScore {
  */
 export type MessagesHighScores =
   | MessagesHighScores.messagesHighScores
-;
+  ;
 
 export namespace MessagesHighScores {
   export type messagesHighScores = {
@@ -4802,7 +4803,7 @@ export type RichText =
   | RichText.textPhone
   | RichText.textImage
   | RichText.textAnchor
-;
+  ;
 
 export namespace RichText {
   export type textEmpty = {
@@ -4910,7 +4911,7 @@ export type PageBlock =
   | PageBlock.pageBlockDetails
   | PageBlock.pageBlockRelatedArticles
   | PageBlock.pageBlockMap
-;
+  ;
 
 export namespace PageBlock {
   export type pageBlockUnsupported = {
@@ -5073,7 +5074,7 @@ export type PhoneCallDiscardReason =
   | PhoneCallDiscardReason.phoneCallDiscardReasonDisconnect
   | PhoneCallDiscardReason.phoneCallDiscardReasonHangup
   | PhoneCallDiscardReason.phoneCallDiscardReasonBusy
-;
+  ;
 
 export namespace PhoneCallDiscardReason {
   export type phoneCallDiscardReasonMissed = {
@@ -5095,7 +5096,7 @@ export namespace PhoneCallDiscardReason {
  */
 export type DataJSON =
   | DataJSON.dataJSON
-;
+  ;
 
 export namespace DataJSON {
   export type dataJSON = {
@@ -5109,7 +5110,7 @@ export namespace DataJSON {
  */
 export type LabeledPrice =
   | LabeledPrice.labeledPrice
-;
+  ;
 
 export namespace LabeledPrice {
   export type labeledPrice = {
@@ -5124,7 +5125,7 @@ export namespace LabeledPrice {
  */
 export type Invoice =
   | Invoice.invoice
-;
+  ;
 
 export namespace Invoice {
   export type invoice = {
@@ -5147,7 +5148,7 @@ export namespace Invoice {
  */
 export type PaymentCharge =
   | PaymentCharge.paymentCharge
-;
+  ;
 
 export namespace PaymentCharge {
   export type paymentCharge = {
@@ -5162,7 +5163,7 @@ export namespace PaymentCharge {
  */
 export type PostAddress =
   | PostAddress.postAddress
-;
+  ;
 
 export namespace PostAddress {
   export type postAddress = {
@@ -5181,7 +5182,7 @@ export namespace PostAddress {
  */
 export type PaymentRequestedInfo =
   | PaymentRequestedInfo.paymentRequestedInfo
-;
+  ;
 
 export namespace PaymentRequestedInfo {
   export type paymentRequestedInfo = {
@@ -5198,7 +5199,7 @@ export namespace PaymentRequestedInfo {
  */
 export type PaymentSavedCredentials =
   | PaymentSavedCredentials.paymentSavedCredentialsCard
-;
+  ;
 
 export namespace PaymentSavedCredentials {
   export type paymentSavedCredentialsCard = {
@@ -5214,7 +5215,7 @@ export namespace PaymentSavedCredentials {
 export type WebDocument =
   | WebDocument.webDocument
   | WebDocument.webDocumentNoProxy
-;
+  ;
 
 export namespace WebDocument {
   export type webDocument = {
@@ -5239,7 +5240,7 @@ export namespace WebDocument {
  */
 export type InputWebDocument =
   | InputWebDocument.inputWebDocument
-;
+  ;
 
 export namespace InputWebDocument {
   export type inputWebDocument = {
@@ -5257,7 +5258,7 @@ export namespace InputWebDocument {
 export type InputWebFileLocation =
   | InputWebFileLocation.inputWebFileLocation
   | InputWebFileLocation.inputWebFileGeoPointLocation
-;
+  ;
 
 export namespace InputWebFileLocation {
   export type inputWebFileLocation = {
@@ -5281,7 +5282,7 @@ export namespace InputWebFileLocation {
  */
 export type UploadWebFile =
   | UploadWebFile.uploadWebFile
-;
+  ;
 
 export namespace UploadWebFile {
   export type uploadWebFile = {
@@ -5299,7 +5300,7 @@ export namespace UploadWebFile {
  */
 export type PaymentsPaymentForm =
   | PaymentsPaymentForm.paymentsPaymentForm
-;
+  ;
 
 export namespace PaymentsPaymentForm {
   export type paymentsPaymentForm = {
@@ -5323,7 +5324,7 @@ export namespace PaymentsPaymentForm {
  */
 export type PaymentsValidatedRequestedInfo =
   | PaymentsValidatedRequestedInfo.paymentsValidatedRequestedInfo
-;
+  ;
 
 export namespace PaymentsValidatedRequestedInfo {
   export type paymentsValidatedRequestedInfo = {
@@ -5339,7 +5340,7 @@ export namespace PaymentsValidatedRequestedInfo {
 export type PaymentsPaymentResult =
   | PaymentsPaymentResult.paymentsPaymentResult
   | PaymentsPaymentResult.paymentsPaymentVerificationNeeded
-;
+  ;
 
 export namespace PaymentsPaymentResult {
   export type paymentsPaymentResult = {
@@ -5357,7 +5358,7 @@ export namespace PaymentsPaymentResult {
  */
 export type PaymentsPaymentReceipt =
   | PaymentsPaymentReceipt.paymentsPaymentReceipt
-;
+  ;
 
 export namespace PaymentsPaymentReceipt {
   export type paymentsPaymentReceipt = {
@@ -5380,7 +5381,7 @@ export namespace PaymentsPaymentReceipt {
  */
 export type PaymentsSavedInfo =
   | PaymentsSavedInfo.paymentsSavedInfo
-;
+  ;
 
 export namespace PaymentsSavedInfo {
   export type paymentsSavedInfo = {
@@ -5398,7 +5399,7 @@ export type InputPaymentCredentials =
   | InputPaymentCredentials.inputPaymentCredentials
   | InputPaymentCredentials.inputPaymentCredentialsApplePay
   | InputPaymentCredentials.inputPaymentCredentialsAndroidPay
-;
+  ;
 
 export namespace InputPaymentCredentials {
   export type inputPaymentCredentialsSaved = {
@@ -5427,7 +5428,7 @@ export namespace InputPaymentCredentials {
  */
 export type AccountTmpPassword =
   | AccountTmpPassword.accountTmpPassword
-;
+  ;
 
 export namespace AccountTmpPassword {
   export type accountTmpPassword = {
@@ -5442,7 +5443,7 @@ export namespace AccountTmpPassword {
  */
 export type ShippingOption =
   | ShippingOption.shippingOption
-;
+  ;
 
 export namespace ShippingOption {
   export type shippingOption = {
@@ -5458,7 +5459,7 @@ export namespace ShippingOption {
  */
 export type InputStickerSetItem =
   | InputStickerSetItem.inputStickerSetItem
-;
+  ;
 
 export namespace InputStickerSetItem {
   export type inputStickerSetItem = {
@@ -5474,7 +5475,7 @@ export namespace InputStickerSetItem {
  */
 export type InputPhoneCall =
   | InputPhoneCall.inputPhoneCall
-;
+  ;
 
 export namespace InputPhoneCall {
   export type inputPhoneCall = {
@@ -5494,7 +5495,7 @@ export type PhoneCall =
   | PhoneCall.phoneCallAccepted
   | PhoneCall.phoneCall
   | PhoneCall.phoneCallDiscarded
-;
+  ;
 
 export namespace PhoneCall {
   export type phoneCallEmpty = {
@@ -5564,7 +5565,7 @@ export namespace PhoneCall {
  */
 export type PhoneConnection =
   | PhoneConnection.phoneConnection
-;
+  ;
 
 export namespace PhoneConnection {
   export type phoneConnection = {
@@ -5582,7 +5583,7 @@ export namespace PhoneConnection {
  */
 export type PhoneCallProtocol =
   | PhoneCallProtocol.phoneCallProtocol
-;
+  ;
 
 export namespace PhoneCallProtocol {
   export type phoneCallProtocol = {
@@ -5599,7 +5600,7 @@ export namespace PhoneCallProtocol {
  */
 export type PhonePhoneCall =
   | PhonePhoneCall.phonePhoneCall
-;
+  ;
 
 export namespace PhonePhoneCall {
   export type phonePhoneCall = {
@@ -5615,7 +5616,7 @@ export namespace PhonePhoneCall {
 export type UploadCdnFile =
   | UploadCdnFile.uploadCdnFileReuploadNeeded
   | UploadCdnFile.uploadCdnFile
-;
+  ;
 
 export namespace UploadCdnFile {
   export type uploadCdnFileReuploadNeeded = {
@@ -5633,7 +5634,7 @@ export namespace UploadCdnFile {
  */
 export type CdnPublicKey =
   | CdnPublicKey.cdnPublicKey
-;
+  ;
 
 export namespace CdnPublicKey {
   export type cdnPublicKey = {
@@ -5648,7 +5649,7 @@ export namespace CdnPublicKey {
  */
 export type CdnConfig =
   | CdnConfig.cdnConfig
-;
+  ;
 
 export namespace CdnConfig {
   export type cdnConfig = {
@@ -5664,7 +5665,7 @@ export type LangPackString =
   | LangPackString.langPackString
   | LangPackString.langPackStringPluralized
   | LangPackString.langPackStringDeleted
-;
+  ;
 
 export namespace LangPackString {
   export type langPackString = {
@@ -5693,7 +5694,7 @@ export namespace LangPackString {
  */
 export type LangPackDifference =
   | LangPackDifference.langPackDifference
-;
+  ;
 
 export namespace LangPackDifference {
   export type langPackDifference = {
@@ -5710,7 +5711,7 @@ export namespace LangPackDifference {
  */
 export type LangPackLanguage =
   | LangPackLanguage.langPackLanguage
-;
+  ;
 
 export namespace LangPackLanguage {
   export type langPackLanguage = {
@@ -5754,7 +5755,7 @@ export type ChannelAdminLogEventAction =
   | ChannelAdminLogEventAction.channelAdminLogEventActionChangeLinkedChat
   | ChannelAdminLogEventAction.channelAdminLogEventActionChangeLocation
   | ChannelAdminLogEventAction.channelAdminLogEventActionToggleSlowMode
-;
+  ;
 
 export namespace ChannelAdminLogEventAction {
   export type channelAdminLogEventActionChangeTitle = {
@@ -5858,7 +5859,7 @@ export namespace ChannelAdminLogEventAction {
  */
 export type ChannelAdminLogEvent =
   | ChannelAdminLogEvent.channelAdminLogEvent
-;
+  ;
 
 export namespace ChannelAdminLogEvent {
   export type channelAdminLogEvent = {
@@ -5875,7 +5876,7 @@ export namespace ChannelAdminLogEvent {
  */
 export type ChannelsAdminLogResults =
   | ChannelsAdminLogResults.channelsAdminLogResults
-;
+  ;
 
 export namespace ChannelsAdminLogResults {
   export type channelsAdminLogResults = {
@@ -5891,7 +5892,7 @@ export namespace ChannelsAdminLogResults {
  */
 export type ChannelAdminLogEventsFilter =
   | ChannelAdminLogEventsFilter.channelAdminLogEventsFilter
-;
+  ;
 
 export namespace ChannelAdminLogEventsFilter {
   export type channelAdminLogEventsFilter = {
@@ -5918,7 +5919,7 @@ export namespace ChannelAdminLogEventsFilter {
  */
 export type PopularContact =
   | PopularContact.popularContact
-;
+  ;
 
 export namespace PopularContact {
   export type popularContact = {
@@ -5934,7 +5935,7 @@ export namespace PopularContact {
 export type MessagesFavedStickers =
   | MessagesFavedStickers.messagesFavedStickersNotModified
   | MessagesFavedStickers.messagesFavedStickers
-;
+  ;
 
 export namespace MessagesFavedStickers {
   export type messagesFavedStickersNotModified = {
@@ -5957,7 +5958,7 @@ export type RecentMeUrl =
   | RecentMeUrl.recentMeUrlChat
   | RecentMeUrl.recentMeUrlChatInvite
   | RecentMeUrl.recentMeUrlStickerSet
-;
+  ;
 
 export namespace RecentMeUrl {
   export type recentMeUrlUnknown = {
@@ -5991,7 +5992,7 @@ export namespace RecentMeUrl {
  */
 export type HelpRecentMeUrls =
   | HelpRecentMeUrls.helpRecentMeUrls
-;
+  ;
 
 export namespace HelpRecentMeUrls {
   export type helpRecentMeUrls = {
@@ -6007,7 +6008,7 @@ export namespace HelpRecentMeUrls {
  */
 export type InputSingleMedia =
   | InputSingleMedia.inputSingleMedia
-;
+  ;
 
 export namespace InputSingleMedia {
   export type inputSingleMedia = {
@@ -6024,7 +6025,7 @@ export namespace InputSingleMedia {
  */
 export type WebAuthorization =
   | WebAuthorization.webAuthorization
-;
+  ;
 
 export namespace WebAuthorization {
   export type webAuthorization = {
@@ -6046,7 +6047,7 @@ export namespace WebAuthorization {
  */
 export type AccountWebAuthorizations =
   | AccountWebAuthorizations.accountWebAuthorizations
-;
+  ;
 
 export namespace AccountWebAuthorizations {
   export type accountWebAuthorizations = {
@@ -6063,7 +6064,7 @@ export type InputMessage =
   | InputMessage.inputMessageID
   | InputMessage.inputMessageReplyTo
   | InputMessage.inputMessagePinned
-;
+  ;
 
 export namespace InputMessage {
   export type inputMessageID = {
@@ -6085,7 +6086,7 @@ export namespace InputMessage {
 export type InputDialogPeer =
   | InputDialogPeer.inputDialogPeer
   | InputDialogPeer.inputDialogPeerFolder
-;
+  ;
 
 export namespace InputDialogPeer {
   export type inputDialogPeer = {
@@ -6104,7 +6105,7 @@ export namespace InputDialogPeer {
 export type DialogPeer =
   | DialogPeer.dialogPeer
   | DialogPeer.dialogPeerFolder
-;
+  ;
 
 export namespace DialogPeer {
   export type dialogPeer = {
@@ -6123,7 +6124,7 @@ export namespace DialogPeer {
 export type MessagesFoundStickerSets =
   | MessagesFoundStickerSets.messagesFoundStickerSetsNotModified
   | MessagesFoundStickerSets.messagesFoundStickerSets
-;
+  ;
 
 export namespace MessagesFoundStickerSets {
   export type messagesFoundStickerSetsNotModified = {
@@ -6141,7 +6142,7 @@ export namespace MessagesFoundStickerSets {
  */
 export type FileHash =
   | FileHash.fileHash
-;
+  ;
 
 export namespace FileHash {
   export type fileHash = {
@@ -6157,7 +6158,7 @@ export namespace FileHash {
  */
 export type InputClientProxy =
   | InputClientProxy.inputClientProxy
-;
+  ;
 
 export namespace InputClientProxy {
   export type inputClientProxy = {
@@ -6173,7 +6174,7 @@ export namespace InputClientProxy {
 export type HelpProxyData =
   | HelpProxyData.helpProxyDataEmpty
   | HelpProxyData.helpProxyDataPromo
-;
+  ;
 
 export namespace HelpProxyData {
   export type helpProxyDataEmpty = {
@@ -6195,7 +6196,7 @@ export namespace HelpProxyData {
 export type HelpTermsOfServiceUpdate =
   | HelpTermsOfServiceUpdate.helpTermsOfServiceUpdateEmpty
   | HelpTermsOfServiceUpdate.helpTermsOfServiceUpdate
-;
+  ;
 
 export namespace HelpTermsOfServiceUpdate {
   export type helpTermsOfServiceUpdateEmpty = {
@@ -6215,7 +6216,7 @@ export namespace HelpTermsOfServiceUpdate {
 export type InputSecureFile =
   | InputSecureFile.inputSecureFileUploaded
   | InputSecureFile.inputSecureFile
-;
+  ;
 
 export namespace InputSecureFile {
   export type inputSecureFileUploaded = {
@@ -6239,7 +6240,7 @@ export namespace InputSecureFile {
 export type SecureFile =
   | SecureFile.secureFileEmpty
   | SecureFile.secureFile
-;
+  ;
 
 export namespace SecureFile {
   export type secureFileEmpty = {
@@ -6262,7 +6263,7 @@ export namespace SecureFile {
  */
 export type SecureData =
   | SecureData.secureData
-;
+  ;
 
 export namespace SecureData {
   export type secureData = {
@@ -6279,7 +6280,7 @@ export namespace SecureData {
 export type SecurePlainData =
   | SecurePlainData.securePlainPhone
   | SecurePlainData.securePlainEmail
-;
+  ;
 
 export namespace SecurePlainData {
   export type securePlainPhone = {
@@ -6309,7 +6310,7 @@ export type SecureValueType =
   | SecureValueType.secureValueTypeTemporaryRegistration
   | SecureValueType.secureValueTypePhone
   | SecureValueType.secureValueTypeEmail
-;
+  ;
 
 export namespace SecureValueType {
   export type secureValueTypePersonalDetails = {
@@ -6358,7 +6359,7 @@ export namespace SecureValueType {
  */
 export type SecureValue =
   | SecureValue.secureValue
-;
+  ;
 
 export namespace SecureValue {
   export type secureValue = {
@@ -6380,7 +6381,7 @@ export namespace SecureValue {
  */
 export type InputSecureValue =
   | InputSecureValue.inputSecureValue
-;
+  ;
 
 export namespace InputSecureValue {
   export type inputSecureValue = {
@@ -6401,7 +6402,7 @@ export namespace InputSecureValue {
  */
 export type SecureValueHash =
   | SecureValueHash.secureValueHash
-;
+  ;
 
 export namespace SecureValueHash {
   export type secureValueHash = {
@@ -6424,7 +6425,7 @@ export type SecureValueError =
   | SecureValueError.secureValueError
   | SecureValueError.secureValueErrorTranslationFile
   | SecureValueError.secureValueErrorTranslationFiles
-;
+  ;
 
 export namespace SecureValueError {
   export type secureValueErrorData = {
@@ -6489,7 +6490,7 @@ export namespace SecureValueError {
  */
 export type SecureCredentialsEncrypted =
   | SecureCredentialsEncrypted.secureCredentialsEncrypted
-;
+  ;
 
 export namespace SecureCredentialsEncrypted {
   export type secureCredentialsEncrypted = {
@@ -6505,7 +6506,7 @@ export namespace SecureCredentialsEncrypted {
  */
 export type AccountAuthorizationForm =
   | AccountAuthorizationForm.accountAuthorizationForm
-;
+  ;
 
 export namespace AccountAuthorizationForm {
   export type accountAuthorizationForm = {
@@ -6523,7 +6524,7 @@ export namespace AccountAuthorizationForm {
  */
 export type AccountSentEmailCode =
   | AccountSentEmailCode.accountSentEmailCode
-;
+  ;
 
 export namespace AccountSentEmailCode {
   export type accountSentEmailCode = {
@@ -6539,7 +6540,7 @@ export namespace AccountSentEmailCode {
 export type HelpDeepLinkInfo =
   | HelpDeepLinkInfo.helpDeepLinkInfoEmpty
   | HelpDeepLinkInfo.helpDeepLinkInfo
-;
+  ;
 
 export namespace HelpDeepLinkInfo {
   export type helpDeepLinkInfoEmpty = {
@@ -6558,7 +6559,7 @@ export namespace HelpDeepLinkInfo {
  */
 export type SavedContact =
   | SavedContact.savedPhoneContact
-;
+  ;
 
 export namespace SavedContact {
   export type savedPhoneContact = {
@@ -6575,7 +6576,7 @@ export namespace SavedContact {
  */
 export type AccountTakeout =
   | AccountTakeout.accountTakeout
-;
+  ;
 
 export namespace AccountTakeout {
   export type accountTakeout = {
@@ -6590,7 +6591,7 @@ export namespace AccountTakeout {
 export type PasswordKdfAlgo =
   | PasswordKdfAlgo.passwordKdfAlgoUnknown
   | PasswordKdfAlgo.passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow
-;
+  ;
 
 export namespace PasswordKdfAlgo {
   export type passwordKdfAlgoUnknown = {
@@ -6612,7 +6613,7 @@ export type SecurePasswordKdfAlgo =
   | SecurePasswordKdfAlgo.securePasswordKdfAlgoUnknown
   | SecurePasswordKdfAlgo.securePasswordKdfAlgoPBKDF2HMACSHA512iter100000
   | SecurePasswordKdfAlgo.securePasswordKdfAlgoSHA512
-;
+  ;
 
 export namespace SecurePasswordKdfAlgo {
   export type securePasswordKdfAlgoUnknown = {
@@ -6633,7 +6634,7 @@ export namespace SecurePasswordKdfAlgo {
  */
 export type SecureSecretSettings =
   | SecureSecretSettings.secureSecretSettings
-;
+  ;
 
 export namespace SecureSecretSettings {
   export type secureSecretSettings = {
@@ -6650,7 +6651,7 @@ export namespace SecureSecretSettings {
 export type InputCheckPasswordSRP =
   | InputCheckPasswordSRP.inputCheckPasswordEmpty
   | InputCheckPasswordSRP.inputCheckPasswordSRP
-;
+  ;
 
 export namespace InputCheckPasswordSRP {
   export type inputCheckPasswordEmpty = {
@@ -6670,7 +6671,7 @@ export namespace InputCheckPasswordSRP {
 export type SecureRequiredType =
   | SecureRequiredType.secureRequiredType
   | SecureRequiredType.secureRequiredTypeOneOf
-;
+  ;
 
 export namespace SecureRequiredType {
   export type secureRequiredType = {
@@ -6692,7 +6693,7 @@ export namespace SecureRequiredType {
 export type HelpPassportConfig =
   | HelpPassportConfig.helpPassportConfigNotModified
   | HelpPassportConfig.helpPassportConfig
-;
+  ;
 
 export namespace HelpPassportConfig {
   export type helpPassportConfigNotModified = {
@@ -6710,7 +6711,7 @@ export namespace HelpPassportConfig {
  */
 export type InputAppEvent =
   | InputAppEvent.inputAppEvent
-;
+  ;
 
 export namespace InputAppEvent {
   export type inputAppEvent = {
@@ -6727,7 +6728,7 @@ export namespace InputAppEvent {
  */
 export type JSONObjectValue =
   | JSONObjectValue.jsonObjectValue
-;
+  ;
 
 export namespace JSONObjectValue {
   export type jsonObjectValue = {
@@ -6747,7 +6748,7 @@ export type JSONValue =
   | JSONValue.jsonString
   | JSONValue.jsonArray
   | JSONValue.jsonObject
-;
+  ;
 
 export namespace JSONValue {
   export type jsonNull = {
@@ -6780,7 +6781,7 @@ export namespace JSONValue {
  */
 export type PageTableCell =
   | PageTableCell.pageTableCell
-;
+  ;
 
 export namespace PageTableCell {
   export type pageTableCell = {
@@ -6801,7 +6802,7 @@ export namespace PageTableCell {
  */
 export type PageTableRow =
   | PageTableRow.pageTableRow
-;
+  ;
 
 export namespace PageTableRow {
   export type pageTableRow = {
@@ -6815,7 +6816,7 @@ export namespace PageTableRow {
  */
 export type PageCaption =
   | PageCaption.pageCaption
-;
+  ;
 
 export namespace PageCaption {
   export type pageCaption = {
@@ -6831,7 +6832,7 @@ export namespace PageCaption {
 export type PageListItem =
   | PageListItem.pageListItemText
   | PageListItem.pageListItemBlocks
-;
+  ;
 
 export namespace PageListItem {
   export type pageListItemText = {
@@ -6850,7 +6851,7 @@ export namespace PageListItem {
 export type PageListOrderedItem =
   | PageListOrderedItem.pageListOrderedItemText
   | PageListOrderedItem.pageListOrderedItemBlocks
-;
+  ;
 
 export namespace PageListOrderedItem {
   export type pageListOrderedItemText = {
@@ -6870,7 +6871,7 @@ export namespace PageListOrderedItem {
  */
 export type PageRelatedArticle =
   | PageRelatedArticle.pageRelatedArticle
-;
+  ;
 
 export namespace PageRelatedArticle {
   export type pageRelatedArticle = {
@@ -6890,7 +6891,7 @@ export namespace PageRelatedArticle {
  */
 export type Page =
   | Page.page
-;
+  ;
 
 export namespace Page {
   export type page = {
@@ -6910,7 +6911,7 @@ export namespace Page {
  */
 export type HelpSupportName =
   | HelpSupportName.helpSupportName
-;
+  ;
 
 export namespace HelpSupportName {
   export type helpSupportName = {
@@ -6925,7 +6926,7 @@ export namespace HelpSupportName {
 export type HelpUserInfo =
   | HelpUserInfo.helpUserInfoEmpty
   | HelpUserInfo.helpUserInfo
-;
+  ;
 
 export namespace HelpUserInfo {
   export type helpUserInfoEmpty = {
@@ -6945,7 +6946,7 @@ export namespace HelpUserInfo {
  */
 export type PollAnswer =
   | PollAnswer.pollAnswer
-;
+  ;
 
 export namespace PollAnswer {
   export type pollAnswer = {
@@ -6960,7 +6961,7 @@ export namespace PollAnswer {
  */
 export type Poll =
   | Poll.poll
-;
+  ;
 
 export namespace Poll {
   export type poll = {
@@ -6977,7 +6978,7 @@ export namespace Poll {
  */
 export type PollAnswerVoters =
   | PollAnswerVoters.pollAnswerVoters
-;
+  ;
 
 export namespace PollAnswerVoters {
   export type pollAnswerVoters = {
@@ -6993,7 +6994,7 @@ export namespace PollAnswerVoters {
  */
 export type PollResults =
   | PollResults.pollResults
-;
+  ;
 
 export namespace PollResults {
   export type pollResults = {
@@ -7009,7 +7010,7 @@ export namespace PollResults {
  */
 export type ChatOnlines =
   | ChatOnlines.chatOnlines
-;
+  ;
 
 export namespace ChatOnlines {
   export type chatOnlines = {
@@ -7023,7 +7024,7 @@ export namespace ChatOnlines {
  */
 export type StatsURL =
   | StatsURL.statsURL
-;
+  ;
 
 export namespace StatsURL {
   export type statsURL = {
@@ -7037,7 +7038,7 @@ export namespace StatsURL {
  */
 export type ChatAdminRights =
   | ChatAdminRights.chatAdminRights
-;
+  ;
 
 export namespace ChatAdminRights {
   export type chatAdminRights = {
@@ -7058,7 +7059,7 @@ export namespace ChatAdminRights {
  */
 export type ChatBannedRights =
   | ChatBannedRights.chatBannedRights
-;
+  ;
 
 export namespace ChatBannedRights {
   export type chatBannedRights = {
@@ -7085,7 +7086,7 @@ export namespace ChatBannedRights {
 export type InputWallPaper =
   | InputWallPaper.inputWallPaper
   | InputWallPaper.inputWallPaperSlug
-;
+  ;
 
 export namespace InputWallPaper {
   export type inputWallPaper = {
@@ -7105,7 +7106,7 @@ export namespace InputWallPaper {
 export type AccountWallPapers =
   | AccountWallPapers.accountWallPapersNotModified
   | AccountWallPapers.accountWallPapers
-;
+  ;
 
 export namespace AccountWallPapers {
   export type accountWallPapersNotModified = {
@@ -7123,7 +7124,7 @@ export namespace AccountWallPapers {
  */
 export type CodeSettings =
   | CodeSettings.codeSettings
-;
+  ;
 
 export namespace CodeSettings {
   export type codeSettings = {
@@ -7139,7 +7140,7 @@ export namespace CodeSettings {
  */
 export type WallPaperSettings =
   | WallPaperSettings.wallPaperSettings
-;
+  ;
 
 export namespace WallPaperSettings {
   export type wallPaperSettings = {
@@ -7156,7 +7157,7 @@ export namespace WallPaperSettings {
  */
 export type AutoDownloadSettings =
   | AutoDownloadSettings.autoDownloadSettings
-;
+  ;
 
 export namespace AutoDownloadSettings {
   export type autoDownloadSettings = {
@@ -7176,7 +7177,7 @@ export namespace AutoDownloadSettings {
  */
 export type AccountAutoDownloadSettings =
   | AccountAutoDownloadSettings.accountAutoDownloadSettings
-;
+  ;
 
 export namespace AccountAutoDownloadSettings {
   export type accountAutoDownloadSettings = {
@@ -7193,7 +7194,7 @@ export namespace AccountAutoDownloadSettings {
 export type EmojiKeyword =
   | EmojiKeyword.emojiKeyword
   | EmojiKeyword.emojiKeywordDeleted
-;
+  ;
 
 export namespace EmojiKeyword {
   export type emojiKeyword = {
@@ -7213,7 +7214,7 @@ export namespace EmojiKeyword {
  */
 export type EmojiKeywordsDifference =
   | EmojiKeywordsDifference.emojiKeywordsDifference
-;
+  ;
 
 export namespace EmojiKeywordsDifference {
   export type emojiKeywordsDifference = {
@@ -7230,7 +7231,7 @@ export namespace EmojiKeywordsDifference {
  */
 export type EmojiURL =
   | EmojiURL.emojiURL
-;
+  ;
 
 export namespace EmojiURL {
   export type emojiURL = {
@@ -7244,7 +7245,7 @@ export namespace EmojiURL {
  */
 export type EmojiLanguage =
   | EmojiLanguage.emojiLanguage
-;
+  ;
 
 export namespace EmojiLanguage {
   export type emojiLanguage = {
@@ -7258,7 +7259,7 @@ export namespace EmojiLanguage {
  */
 export type FileLocation =
   | FileLocation.fileLocationToBeDeprecated
-;
+  ;
 
 export namespace FileLocation {
   export type fileLocationToBeDeprecated = {
@@ -7273,7 +7274,7 @@ export namespace FileLocation {
  */
 export type Folder =
   | Folder.folder
-;
+  ;
 
 export namespace Folder {
   export type folder = {
@@ -7292,7 +7293,7 @@ export namespace Folder {
  */
 export type InputFolderPeer =
   | InputFolderPeer.inputFolderPeer
-;
+  ;
 
 export namespace InputFolderPeer {
   export type inputFolderPeer = {
@@ -7307,7 +7308,7 @@ export namespace InputFolderPeer {
  */
 export type FolderPeer =
   | FolderPeer.folderPeer
-;
+  ;
 
 export namespace FolderPeer {
   export type folderPeer = {
@@ -7322,7 +7323,7 @@ export namespace FolderPeer {
  */
 export type MessagesSearchCounter =
   | MessagesSearchCounter.messagesSearchCounter
-;
+  ;
 
 export namespace MessagesSearchCounter {
   export type messagesSearchCounter = {
@@ -7340,7 +7341,7 @@ export type UrlAuthResult =
   | UrlAuthResult.urlAuthResultRequest
   | UrlAuthResult.urlAuthResultAccepted
   | UrlAuthResult.urlAuthResultDefault
-;
+  ;
 
 export namespace UrlAuthResult {
   export type urlAuthResultRequest = {
@@ -7364,7 +7365,7 @@ export namespace UrlAuthResult {
 export type ChannelLocation =
   | ChannelLocation.channelLocationEmpty
   | ChannelLocation.channelLocation
-;
+  ;
 
 export namespace ChannelLocation {
   export type channelLocationEmpty = {
@@ -7382,7 +7383,7 @@ export namespace ChannelLocation {
  */
 export type PeerLocated =
   | PeerLocated.peerLocated
-;
+  ;
 
 export namespace PeerLocated {
   export type peerLocated = {
@@ -7398,7 +7399,7 @@ export namespace PeerLocated {
  */
 export type RestrictionReason =
   | RestrictionReason.restrictionReason
-;
+  ;
 
 export namespace RestrictionReason {
   export type restrictionReason = {
@@ -7415,7 +7416,7 @@ export namespace RestrictionReason {
 export type InputTheme =
   | InputTheme.inputTheme
   | InputTheme.inputThemeSlug
-;
+  ;
 
 export namespace InputTheme {
   export type inputTheme = {
@@ -7435,7 +7436,7 @@ export namespace InputTheme {
 export type Theme =
   | Theme.themeDocumentNotModified
   | Theme.theme
-;
+  ;
 
 export namespace Theme {
   export type themeDocumentNotModified = {
@@ -7460,7 +7461,7 @@ export namespace Theme {
 export type AccountThemes =
   | AccountThemes.accountThemesNotModified
   | AccountThemes.accountThemes
-;
+  ;
 
 export namespace AccountThemes {
   export type accountThemesNotModified = {
@@ -10330,4 +10331,3 @@ export interface UpdateDeclMap {
   'chatForbidden': Chat.chatForbidden;
   'channel': Chat.channel;
   'channelForbidden': Chat.channelForbidden;
-}

@@ -8,7 +8,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: mtproto.json                                                                    */
+/* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -16,7 +17,7 @@
 
 export type ResPQ =
   | ResPQ.resPQ
-;
+  ;
 
 export namespace ResPQ {
   export type resPQ = {
@@ -32,7 +33,7 @@ export type P_Q_inner_data =
   | P_Q_inner_data.p_q_inner_data
   | P_Q_inner_data.p_q_inner_data_dc
   | P_Q_inner_data.p_q_inner_data_temp
-;
+  ;
 
 export namespace P_Q_inner_data {
   export type p_q_inner_data = {
@@ -68,7 +69,7 @@ export namespace P_Q_inner_data {
 
 export type P_Q_inner_d =
   | P_Q_inner_d.p_q_inner_data_temp_dc
-;
+  ;
 
 export namespace P_Q_inner_d {
   export type p_q_inner_data_temp_dc = {
@@ -87,7 +88,7 @@ export namespace P_Q_inner_d {
 export type Server_DH_Params =
   | Server_DH_Params.server_DH_params_fail
   | Server_DH_Params.server_DH_params_ok
-;
+  ;
 
 export namespace Server_DH_Params {
   export type server_DH_params_fail = {
@@ -106,7 +107,7 @@ export namespace Server_DH_Params {
 
 export type Server_DH_inner_data =
   | Server_DH_inner_data.server_DH_inner_data
-;
+  ;
 
 export namespace Server_DH_inner_data {
   export type server_DH_inner_data = {
@@ -122,7 +123,7 @@ export namespace Server_DH_inner_data {
 
 export type Client_DH_Inner_Data =
   | Client_DH_Inner_Data.client_DH_inner_data
-;
+  ;
 
 export namespace Client_DH_Inner_Data {
   export type client_DH_inner_data = {
@@ -138,7 +139,7 @@ export type Set_client_DH_params_answer =
   | Set_client_DH_params_answer.dh_gen_ok
   | Set_client_DH_params_answer.dh_gen_retry
   | Set_client_DH_params_answer.dh_gen_fail
-;
+  ;
 
 export namespace Set_client_DH_params_answer {
   export type dh_gen_ok = {
@@ -163,7 +164,7 @@ export namespace Set_client_DH_params_answer {
 
 export type RpcResult =
   | RpcResult.rpc_result
-;
+  ;
 
 export namespace RpcResult {
   export type rpc_result = {
@@ -175,7 +176,7 @@ export namespace RpcResult {
 
 export type RpcError =
   | RpcError.rpc_error
-;
+  ;
 
 export namespace RpcError {
   export type rpc_error = {
@@ -189,7 +190,7 @@ export type RpcDropAnswer =
   | RpcDropAnswer.rpc_answer_unknown
   | RpcDropAnswer.rpc_answer_dropped_running
   | RpcDropAnswer.rpc_answer_dropped
-;
+  ;
 
 export namespace RpcDropAnswer {
   export type rpc_answer_unknown = {
@@ -208,7 +209,7 @@ export namespace RpcDropAnswer {
 
 export type FutureSalt =
   | FutureSalt.future_salt
-;
+  ;
 
 export namespace FutureSalt {
   export type future_salt = {
@@ -221,7 +222,7 @@ export namespace FutureSalt {
 
 export type FutureSalts =
   | FutureSalts.future_salts
-;
+  ;
 
 export namespace FutureSalts {
   export type future_salts = {
@@ -234,7 +235,7 @@ export namespace FutureSalts {
 
 export type Pong =
   | Pong.pong
-;
+  ;
 
 export namespace Pong {
   export type pong = {
@@ -246,7 +247,7 @@ export namespace Pong {
 
 export type NewSession =
   | NewSession.new_session_created
-;
+  ;
 
 export namespace NewSession {
   export type new_session_created = {
@@ -259,7 +260,7 @@ export namespace NewSession {
 
 export type MessageContainer =
   | MessageContainer.msg_container
-;
+  ;
 
 export namespace MessageContainer {
   export type msg_container = {
@@ -270,7 +271,7 @@ export namespace MessageContainer {
 
 export type Message =
   | Message.message
-;
+  ;
 
 export namespace Message {
   export type message = {
@@ -284,7 +285,7 @@ export namespace Message {
 
 export type MessageCopy =
   | MessageCopy.msg_copy
-;
+  ;
 
 export namespace MessageCopy {
   export type msg_copy = {
@@ -295,7 +296,7 @@ export namespace MessageCopy {
 
 export type Object =
   | Object.gzip_packed
-;
+  ;
 
 export namespace Object {
   export type gzip_packed = {
@@ -306,7 +307,7 @@ export namespace Object {
 
 export type MsgsAck =
   | MsgsAck.msgs_ack
-;
+  ;
 
 export namespace MsgsAck {
   export type msgs_ack = {
@@ -318,7 +319,7 @@ export namespace MsgsAck {
 export type BadMsgNotification =
   | BadMsgNotification.bad_msg_notification
   | BadMsgNotification.bad_server_salt
-;
+  ;
 
 export namespace BadMsgNotification {
   export type bad_msg_notification = {
@@ -339,7 +340,7 @@ export namespace BadMsgNotification {
 export type MsgResendReq =
   | MsgResendReq.msg_resend_req
   | MsgResendReq.msg_resend_ans_req
-;
+  ;
 
 export namespace MsgResendReq {
   export type msg_resend_req = {
@@ -354,7 +355,7 @@ export namespace MsgResendReq {
 
 export type MsgsStateReq =
   | MsgsStateReq.msgs_state_req
-;
+  ;
 
 export namespace MsgsStateReq {
   export type msgs_state_req = {
@@ -365,7 +366,7 @@ export namespace MsgsStateReq {
 
 export type MsgsStateInfo =
   | MsgsStateInfo.msgs_state_info
-;
+  ;
 
 export namespace MsgsStateInfo {
   export type msgs_state_info = {
@@ -377,7 +378,7 @@ export namespace MsgsStateInfo {
 
 export type MsgsAllInfo =
   | MsgsAllInfo.msgs_all_info
-;
+  ;
 
 export namespace MsgsAllInfo {
   export type msgs_all_info = {
@@ -390,7 +391,7 @@ export namespace MsgsAllInfo {
 export type MsgDetailedInfo =
   | MsgDetailedInfo.msg_detailed_info
   | MsgDetailedInfo.msg_new_detailed_info
-;
+  ;
 
 export namespace MsgDetailedInfo {
   export type msg_detailed_info = {
@@ -410,7 +411,7 @@ export namespace MsgDetailedInfo {
 
 export type BindAuthKeyInner =
   | BindAuthKeyInner.bind_auth_key_inner
-;
+  ;
 
 export namespace BindAuthKeyInner {
   export type bind_auth_key_inner = {
@@ -427,7 +428,7 @@ export type DestroyAuthKeyRes =
   | DestroyAuthKeyRes.destroy_auth_key_ok
   | DestroyAuthKeyRes.destroy_auth_key_none
   | DestroyAuthKeyRes.destroy_auth_key_fail
-;
+  ;
 
 export namespace DestroyAuthKeyRes {
   export type destroy_auth_key_ok = {
@@ -444,7 +445,7 @@ export namespace DestroyAuthKeyRes {
 export type DestroySessionRes =
   | DestroySessionRes.destroy_session_ok
   | DestroySessionRes.destroy_session_none
-;
+  ;
 
 export namespace DestroySessionRes {
   export type destroy_session_ok = {

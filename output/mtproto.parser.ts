@@ -4,7 +4,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: mtproto.json                                                                    */
+/* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -28,48 +29,48 @@ export default function parse(stream: ByteStream, fallback?: (stream: ByteStream
   return obj();
 }
 
-const _vector: any = () => ({_: 'vector'});
-const _resPQ: any = () => ({_: 'resPQ', nonce: i128(), server_nonce: i128(), pq: bytes(), server_public_key_fingerprints: vector(i64)});
-const _p_q_inner_data: any = () => ({_: 'p_q_inner_data', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256()});
-const _p_q_inner_data_dc: any = () => ({_: 'p_q_inner_data_dc', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), dc: i32()});
-const _p_q_inner_data_temp: any = () => ({_: 'p_q_inner_data_temp', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), expires_in: i32()});
-const _p_q_inner_data_temp_dc: any = () => ({_: 'p_q_inner_data_temp_dc', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), dc: i32(), expires_in: i32()});
-const _server_DH_params_fail: any = () => ({_: 'server_DH_params_fail', nonce: i128(), server_nonce: i128(), new_nonce_hash: i128()});
-const _server_DH_params_ok: any = () => ({_: 'server_DH_params_ok', nonce: i128(), server_nonce: i128(), encrypted_answer: bytes()});
-const _server_DH_inner_data: any = () => ({_: 'server_DH_inner_data', nonce: i128(), server_nonce: i128(), g: i32(), dh_prime: bytes(), g_a: bytes(), server_time: i32()});
-const _client_DH_inner_data: any = () => ({_: 'client_DH_inner_data', nonce: i128(), server_nonce: i128(), retry_id: i64(), g_b: bytes()});
-const _dh_gen_ok: any = () => ({_: 'dh_gen_ok', nonce: i128(), server_nonce: i128(), new_nonce_hash1: i128()});
-const _dh_gen_retry: any = () => ({_: 'dh_gen_retry', nonce: i128(), server_nonce: i128(), new_nonce_hash2: i128()});
-const _dh_gen_fail: any = () => ({_: 'dh_gen_fail', nonce: i128(), server_nonce: i128(), new_nonce_hash3: i128()});
-const _rpc_result: any = () => ({_: 'rpc_result', req_msg_id: i64(), result: obj()});
-const _rpc_error: any = () => ({_: 'rpc_error', error_code: i32(), error_message: str()});
-const _rpc_answer_unknown: any = () => ({_: 'rpc_answer_unknown'});
-const _rpc_answer_dropped_running: any = () => ({_: 'rpc_answer_dropped_running'});
-const _rpc_answer_dropped: any = () => ({_: 'rpc_answer_dropped', msg_id: i64(), seq_no: i32(), bytes: i32()});
-const _future_salt: any = () => ({_: 'future_salt', valid_since: i32(), valid_until: i32(), salt: i64()});
-const _future_salts: any = () => ({_: 'future_salts', req_msg_id: i64(), now: i32(), salts: vector(_future_salt, true)});
-const _pong: any = () => ({_: 'pong', msg_id: i64(), ping_id: i64()});
-const _new_session_created: any = () => ({_: 'new_session_created', first_msg_id: i64(), unique_id: i64(), server_salt: i64()});
-const _msg_container: any = () => ({_: 'msg_container', messages: vector(_message, true)});
-const _message: any = () => ({_: 'message', msg_id: i64(), seqno: i32(), bytes: i32(), body: obj()});
-const _msg_copy: any = () => ({_: 'msg_copy', orig_message: obj()});
-const _gzip_packed: any = () => ({_: 'gzip_packed', packed_data: bytes()});
-const _msgs_ack: any = () => ({_: 'msgs_ack', msg_ids: vector(i64)});
-const _bad_msg_notification: any = () => ({_: 'bad_msg_notification', bad_msg_id: i64(), bad_msg_seqno: i32(), error_code: i32()});
-const _bad_server_salt: any = () => ({_: 'bad_server_salt', bad_msg_id: i64(), bad_msg_seqno: i32(), error_code: i32(), new_server_salt: i64()});
-const _msg_resend_req: any = () => ({_: 'msg_resend_req', msg_ids: vector(i64)});
-const _msg_resend_ans_req: any = () => ({_: 'msg_resend_ans_req', msg_ids: vector(i64)});
-const _msgs_state_req: any = () => ({_: 'msgs_state_req', msg_ids: vector(i64)});
-const _msgs_state_info: any = () => ({_: 'msgs_state_info', req_msg_id: i64(), info: bytes()});
-const _msgs_all_info: any = () => ({_: 'msgs_all_info', msg_ids: vector(i64), info: bytes()});
-const _msg_detailed_info: any = () => ({_: 'msg_detailed_info', msg_id: i64(), answer_msg_id: i64(), bytes: i32(), status: i32()});
-const _msg_new_detailed_info: any = () => ({_: 'msg_new_detailed_info', answer_msg_id: i64(), bytes: i32(), status: i32()});
-const _bind_auth_key_inner: any = () => ({_: 'bind_auth_key_inner', nonce: i64(), temp_auth_key_id: i64(), perm_auth_key_id: i64(), temp_session_id: i64(), expires_at: i32()});
-const _destroy_auth_key_ok: any = () => ({_: 'destroy_auth_key_ok'});
-const _destroy_auth_key_none: any = () => ({_: 'destroy_auth_key_none'});
-const _destroy_auth_key_fail: any = () => ({_: 'destroy_auth_key_fail'});
-const _destroy_session_ok: any = () => ({_: 'destroy_session_ok', session_id: i64()});
-const _destroy_session_none: any = () => ({_: 'destroy_session_none', session_id: i64()});
+const _vector: any = () => ({ _: 'vector' });
+const _resPQ: any = () => ({ _: 'resPQ', nonce: i128(), server_nonce: i128(), pq: bytes(), server_public_key_fingerprints: vector(i64) });
+const _p_q_inner_data: any = () => ({ _: 'p_q_inner_data', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256() });
+const _p_q_inner_data_dc: any = () => ({ _: 'p_q_inner_data_dc', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), dc: i32() });
+const _p_q_inner_data_temp: any = () => ({ _: 'p_q_inner_data_temp', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), expires_in: i32() });
+const _p_q_inner_data_temp_dc: any = () => ({ _: 'p_q_inner_data_temp_dc', pq: bytes(), p: bytes(), q: bytes(), nonce: i128(), server_nonce: i128(), new_nonce: i256(), dc: i32(), expires_in: i32() });
+const _server_DH_params_fail: any = () => ({ _: 'server_DH_params_fail', nonce: i128(), server_nonce: i128(), new_nonce_hash: i128() });
+const _server_DH_params_ok: any = () => ({ _: 'server_DH_params_ok', nonce: i128(), server_nonce: i128(), encrypted_answer: bytes() });
+const _server_DH_inner_data: any = () => ({ _: 'server_DH_inner_data', nonce: i128(), server_nonce: i128(), g: i32(), dh_prime: bytes(), g_a: bytes(), server_time: i32() });
+const _client_DH_inner_data: any = () => ({ _: 'client_DH_inner_data', nonce: i128(), server_nonce: i128(), retry_id: i64(), g_b: bytes() });
+const _dh_gen_ok: any = () => ({ _: 'dh_gen_ok', nonce: i128(), server_nonce: i128(), new_nonce_hash1: i128() });
+const _dh_gen_retry: any = () => ({ _: 'dh_gen_retry', nonce: i128(), server_nonce: i128(), new_nonce_hash2: i128() });
+const _dh_gen_fail: any = () => ({ _: 'dh_gen_fail', nonce: i128(), server_nonce: i128(), new_nonce_hash3: i128() });
+const _rpc_result: any = () => ({ _: 'rpc_result', req_msg_id: i64(), result: obj() });
+const _rpc_error: any = () => ({ _: 'rpc_error', error_code: i32(), error_message: str() });
+const _rpc_answer_unknown: any = () => ({ _: 'rpc_answer_unknown' });
+const _rpc_answer_dropped_running: any = () => ({ _: 'rpc_answer_dropped_running' });
+const _rpc_answer_dropped: any = () => ({ _: 'rpc_answer_dropped', msg_id: i64(), seq_no: i32(), bytes: i32() });
+const _future_salt: any = () => ({ _: 'future_salt', valid_since: i32(), valid_until: i32(), salt: i64() });
+const _future_salts: any = () => ({ _: 'future_salts', req_msg_id: i64(), now: i32(), salts: vector(_future_salt, true) });
+const _pong: any = () => ({ _: 'pong', msg_id: i64(), ping_id: i64() });
+const _new_session_created: any = () => ({ _: 'new_session_created', first_msg_id: i64(), unique_id: i64(), server_salt: i64() });
+const _msg_container: any = () => ({ _: 'msg_container', messages: vector(_message, true) });
+const _message: any = () => ({ _: 'message', msg_id: i64(), seqno: i32(), bytes: i32(), body: obj() });
+const _msg_copy: any = () => ({ _: 'msg_copy', orig_message: obj() });
+const _gzip_packed: any = () => ({ _: 'gzip_packed', packed_data: bytes() });
+const _msgs_ack: any = () => ({ _: 'msgs_ack', msg_ids: vector(i64) });
+const _bad_msg_notification: any = () => ({ _: 'bad_msg_notification', bad_msg_id: i64(), bad_msg_seqno: i32(), error_code: i32() });
+const _bad_server_salt: any = () => ({ _: 'bad_server_salt', bad_msg_id: i64(), bad_msg_seqno: i32(), error_code: i32(), new_server_salt: i64() });
+const _msg_resend_req: any = () => ({ _: 'msg_resend_req', msg_ids: vector(i64) });
+const _msg_resend_ans_req: any = () => ({ _: 'msg_resend_ans_req', msg_ids: vector(i64) });
+const _msgs_state_req: any = () => ({ _: 'msgs_state_req', msg_ids: vector(i64) });
+const _msgs_state_info: any = () => ({ _: 'msgs_state_info', req_msg_id: i64(), info: bytes() });
+const _msgs_all_info: any = () => ({ _: 'msgs_all_info', msg_ids: vector(i64), info: bytes() });
+const _msg_detailed_info: any = () => ({ _: 'msg_detailed_info', msg_id: i64(), answer_msg_id: i64(), bytes: i32(), status: i32() });
+const _msg_new_detailed_info: any = () => ({ _: 'msg_new_detailed_info', answer_msg_id: i64(), bytes: i32(), status: i32() });
+const _bind_auth_key_inner: any = () => ({ _: 'bind_auth_key_inner', nonce: i64(), temp_auth_key_id: i64(), perm_auth_key_id: i64(), temp_session_id: i64(), expires_at: i32() });
+const _destroy_auth_key_ok: any = () => ({ _: 'destroy_auth_key_ok' });
+const _destroy_auth_key_none: any = () => ({ _: 'destroy_auth_key_none' });
+const _destroy_auth_key_fail: any = () => ({ _: 'destroy_auth_key_fail' });
+const _destroy_session_ok: any = () => ({ _: 'destroy_session_ok', session_id: i64() });
+const _destroy_session_none: any = () => ({ _: 'destroy_session_none', session_id: i64() });
 
 const parserMap = new Map<number, () => any>([
   [0x1cb5c415, _vector],
@@ -116,12 +117,12 @@ const parserMap = new Map<number, () => any>([
   [0x62d350c9, _destroy_session_none],
 ]);
 
-function i32() { return s.readInt32(); }
-function i64() { return s.readInt64(); }
-function i128() { return s.readInt128(); }
-function i256() { return s.readInt256(); }
-function str() { return s.readString(); }
-function bytes() { return s.readBytes(); }
+const i32 = () => s.readInt32();
+const i64 = () => s.readInt64();
+const i128 = () => s.readInt128();
+const i256 = () => s.readInt256();
+const str = () => s.readString();
+const bytes = () => s.readBytes();
 
 function vector(t: () => any, bare = false) {
   if (!bare) { i32(); /* ignoring constructor id. */ }

@@ -8,7 +8,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: end-to-end.json                                                                 */
+/* Source: end-to-end.json (md5: 8996a33c4b128078a454aaa749900956)                         */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -21,7 +22,7 @@ export type DecryptedMessage =
   | DecryptedMessage.decryptedMessage73
   | DecryptedMessage.decryptedMessageService8
   | DecryptedMessage.decryptedMessageService17
-;
+  ;
 
 export namespace DecryptedMessage {
   export type decryptedMessage8 = {
@@ -94,7 +95,7 @@ export type DecryptedMessageMedia =
   | DecryptedMessageMedia.decryptedMessageMediaExternalDocument23
   | DecryptedMessageMedia.decryptedMessageMediaVenue45
   | DecryptedMessageMedia.decryptedMessageMediaWebPage45
-;
+  ;
 
 export namespace DecryptedMessageMedia {
   export type decryptedMessageMediaEmpty8 = {
@@ -267,7 +268,7 @@ export type DecryptedMessageAction =
   | DecryptedMessageAction.decryptedMessageActionAbortKey20
   | DecryptedMessageAction.decryptedMessageActionCommitKey20
   | DecryptedMessageAction.decryptedMessageActionNoop20
-;
+  ;
 
 export namespace DecryptedMessageAction {
   export type decryptedMessageActionSetMessageTTL8 = {
@@ -342,7 +343,7 @@ export namespace DecryptedMessageAction {
 
 export type DecryptedMessageLayer =
   | DecryptedMessageLayer.decryptedMessageLayer17
-;
+  ;
 
 export namespace DecryptedMessageLayer {
   export type decryptedMessageLayer17 = {
@@ -369,7 +370,7 @@ export type SendMessageAction =
   | SendMessageAction.sendMessageChooseContactAction17
   | SendMessageAction.sendMessageRecordRoundAction66
   | SendMessageAction.sendMessageUploadRoundAction66
-;
+  ;
 
 export namespace SendMessageAction {
   export type sendMessageTypingAction17 = {
@@ -433,7 +434,7 @@ export type DocumentAttribute =
   | DocumentAttribute.documentAttributeAudio45
   | DocumentAttribute.documentAttributeAudio46
   | DocumentAttribute.documentAttributeFilename23
-;
+  ;
 
 export namespace DocumentAttribute {
   export type documentAttributeImageSize23 = {
@@ -501,7 +502,7 @@ export type PhotoSize =
   | PhotoSize.photoSizeEmpty23
   | PhotoSize.photoSize23
   | PhotoSize.photoCachedSize23
-;
+  ;
 
 export namespace PhotoSize {
   export type photoSizeEmpty23 = {
@@ -532,7 +533,7 @@ export namespace PhotoSize {
 export type FileLocation =
   | FileLocation.fileLocationUnavailable23
   | FileLocation.fileLocation23
-;
+  ;
 
 export namespace FileLocation {
   export type fileLocationUnavailable23 = {
@@ -564,7 +565,7 @@ export type MessageEntity =
   | MessageEntity.messageEntityCode45
   | MessageEntity.messageEntityPre45
   | MessageEntity.messageEntityTextUrl45
-;
+  ;
 
 export namespace MessageEntity {
   export type messageEntityUnknown45 = {
@@ -640,7 +641,7 @@ export namespace MessageEntity {
 export type InputStickerSet =
   | InputStickerSet.inputStickerSetShortName45
   | InputStickerSet.inputStickerSetEmpty45
-;
+  ;
 
 export namespace InputStickerSet {
   export type inputStickerSetShortName45 = {

@@ -4,7 +4,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: end-to-end.json                                                                 */
+/* Source: end-to-end.json (md5: 8996a33c4b128078a454aaa749900956)                         */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -19,7 +20,15 @@ interface ByteStream {
 }
 
 let s: ByteStream;
+let l = 0;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
+
+export default function build(stream: ByteStream, o: any, layer: number, fallback?: (stream: ByteStream, o: any) => void) {
+  s = stream;
+  fallbackBuilder = fallback;
+  l = layer;
+  return obj(o);
+}
 
 const _decryptedMessage8 = (o: any) => {
   i64(o.random_id);
@@ -267,6 +276,7 @@ const _documentAttributeVideo23 = (o: any) => {
 
 const _documentAttributeVideo66 = (o: any) => {
   const flags = 
+    0;
   i32(flags);
   i32(o.duration);
   i32(o.w);
@@ -418,30 +428,29 @@ const _decryptedMessageMediaWebPage45 = (o: any) => {
 };
 
 
-const builderMap: Record<string, [number, ((o: any) => void)?]> = {
+const builderMap8: Record<string, [number, ((o: any) => void)?]> = {
   'decryptedMessage': [0x1f814f1f, _decryptedMessage8],
-  'decryptedMessage': [0x204d3878, _decryptedMessage17],
-  'decryptedMessage': [0x36b091de, _decryptedMessage45],
-  'decryptedMessage': [0x91cc4674, _decryptedMessage73],
   'decryptedMessageService': [0xaa48327d, _decryptedMessageService8],
-  'decryptedMessageService': [0x73164160, _decryptedMessageService17],
   'decryptedMessageMediaEmpty': [0x89f5c4a],
   'decryptedMessageMediaPhoto': [0x32798a8c, _decryptedMessageMediaPhoto8],
-  'decryptedMessageMediaPhoto': [0xf1fa8d78, _decryptedMessageMediaPhoto45],
   'decryptedMessageMediaVideo': [0x4cee6ef3, _decryptedMessageMediaVideo8],
-  'decryptedMessageMediaVideo': [0x524a415d, _decryptedMessageMediaVideo17],
-  'decryptedMessageMediaVideo': [0x970c8c0e, _decryptedMessageMediaVideo45],
   'decryptedMessageMediaGeoPoint': [0x35480a59, _decryptedMessageMediaGeoPoint8],
   'decryptedMessageMediaContact': [0x588a0a97, _decryptedMessageMediaContact8],
   'decryptedMessageActionSetMessageTTL': [0xa1733aec, _decryptedMessageActionSetMessageTTL8],
   'decryptedMessageMediaDocument': [0xb095434b, _decryptedMessageMediaDocument8],
-  'decryptedMessageMediaDocument': [0x7afe8ae2, _decryptedMessageMediaDocument45],
   'decryptedMessageMediaAudio': [0x6080758f, _decryptedMessageMediaAudio8],
-  'decryptedMessageMediaAudio': [0x57e0a9cb, _decryptedMessageMediaAudio17],
   'decryptedMessageActionReadMessages': [0xc4f40be, _decryptedMessageActionReadMessages8],
   'decryptedMessageActionDeleteMessages': [0x65614304, _decryptedMessageActionDeleteMessages8],
   'decryptedMessageActionScreenshotMessages': [0x8ac1f475, _decryptedMessageActionScreenshotMessages8],
   'decryptedMessageActionFlushHistory': [0x6719e45c],
+}
+
+const builderMap17: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap8,
+  'decryptedMessage': [0x204d3878, _decryptedMessage17],
+  'decryptedMessageService': [0x73164160, _decryptedMessageService17],
+  'decryptedMessageMediaVideo': [0x524a415d, _decryptedMessageMediaVideo17],
+  'decryptedMessageMediaAudio': [0x57e0a9cb, _decryptedMessageMediaAudio17],
   'decryptedMessageLayer': [0x1be31789, _decryptedMessageLayer17],
   'sendMessageTypingAction': [0x16bf744e],
   'sendMessageCancelAction': [0xfd5ec8f5],
@@ -456,20 +465,24 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'decryptedMessageActionResend': [0x511110b0, _decryptedMessageActionResend17],
   'decryptedMessageActionNotifyLayer': [0xf3048883, _decryptedMessageActionNotifyLayer17],
   'decryptedMessageActionTyping': [0xccb27641, _decryptedMessageActionTyping17],
+}
+
+const builderMap20: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap17,
   'decryptedMessageActionRequestKey': [0xf3c9611b, _decryptedMessageActionRequestKey20],
   'decryptedMessageActionAcceptKey': [0x6fe1735b, _decryptedMessageActionAcceptKey20],
   'decryptedMessageActionAbortKey': [0xdd05ec6b, _decryptedMessageActionAbortKey20],
   'decryptedMessageActionCommitKey': [0xec2e0b9b, _decryptedMessageActionCommitKey20],
   'decryptedMessageActionNoop': [0xa82fdd63],
+}
+
+const builderMap23: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap20,
   'documentAttributeImageSize': [0x6c37c15c, _documentAttributeImageSize23],
   'documentAttributeAnimated': [0x11b58939],
   'documentAttributeSticker': [0xfb0a5727],
-  'documentAttributeSticker': [0x3a556302, _documentAttributeSticker45],
   'documentAttributeVideo': [0x5910cccb, _documentAttributeVideo23],
-  'documentAttributeVideo': [0xef02ce6, _documentAttributeVideo66],
   'documentAttributeAudio': [0x51448e5, _documentAttributeAudio23],
-  'documentAttributeAudio': [0xded218e0, _documentAttributeAudio45],
-  'documentAttributeAudio': [0x9852f9c6, _documentAttributeAudio46],
   'documentAttributeFilename': [0x15590068, _documentAttributeFilename23],
   'photoSizeEmpty': [0xe17e23c, _photoSizeEmpty23],
   'photoSize': [0x77bfb61b, _photoSize23],
@@ -477,6 +490,16 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'fileLocationUnavailable': [0x7c596b46, _fileLocationUnavailable23],
   'fileLocation': [0x53d69076, _fileLocation23],
   'decryptedMessageMediaExternalDocument': [0xfa95b0dd, _decryptedMessageMediaExternalDocument23],
+}
+
+const builderMap45: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap23,
+  'decryptedMessage': [0x36b091de, _decryptedMessage45],
+  'decryptedMessageMediaPhoto': [0xf1fa8d78, _decryptedMessageMediaPhoto45],
+  'decryptedMessageMediaVideo': [0x970c8c0e, _decryptedMessageMediaVideo45],
+  'decryptedMessageMediaDocument': [0x7afe8ae2, _decryptedMessageMediaDocument45],
+  'documentAttributeSticker': [0x3a556302, _documentAttributeSticker45],
+  'documentAttributeAudio': [0xded218e0, _documentAttributeAudio45],
   'messageEntityUnknown': [0xbb92ba95, _messageEntityUnknown45],
   'messageEntityMention': [0xfa04579d, _messageEntityMention45],
   'messageEntityHashtag': [0x6f635b0d, _messageEntityHashtag45],
@@ -492,20 +515,45 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'inputStickerSetEmpty': [0xffb62b95],
   'decryptedMessageMediaVenue': [0x8a0df56f, _decryptedMessageMediaVenue45],
   'decryptedMessageMediaWebPage': [0xe50511d8, _decryptedMessageMediaWebPage45],
+}
+
+const builderMap46: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap45,
+  'documentAttributeAudio': [0x9852f9c6, _documentAttributeAudio46],
+}
+
+const builderMap66: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap46,
+  'documentAttributeVideo': [0xef02ce6, _documentAttributeVideo66],
   'sendMessageRecordRoundAction': [0x88f27fbc],
   'sendMessageUploadRoundAction': [0xbb718624],
 }
 
-function i32(value: number) { s.writeInt32(value); }
-function i64(value: string) { s.writeInt64(value); }
-function f64(value: number) { s.writeDouble(value); }
-function str(value: string) { s.writeString(value); }
-function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+const builderMap73: Record<string, [number, ((o: any) => void)?]> = {
+  ...builderMap66,
+  'decryptedMessage': [0x91cc4674, _decryptedMessage73],
+}
 
+const builderMaps = new Map<number, Record<string, [number, ((o: any) => void)?]>>([
+  [8, builderMap8],
+  [17, builderMap17],
+  [45, builderMap45],
+  [73, builderMap73],
+  [20, builderMap20],
+  [23, builderMap23],
+  [66, builderMap66],
+  [46, builderMap46],
+]);
 
-function flagVector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+const i32 = (value: number) => s.writeInt32(value);
+const i64 = (value: string) => s.writeInt64(value);
+const f64 = (value: number) => s.writeDouble(value);
+const str = (value: string) => s.writeString(value);
+const bytes = (value: ArrayBuffer) => s.writeBytes(value);
+
+function flagVector(fn: (value: any) => void, value: Array<any>) {
   if (value === undefined || value.length === 0) return;
-  vector(fn, value, ctorId);
+  vector(fn, value);
 }
 
 function flag(fn: (value: any) => void, value: any) {
@@ -516,20 +564,15 @@ function has(value: any) {
   return Array.isArray(value) ? +!!value.length : +!!value;
 }
 
-function obj(o: any, bare = false) {
-  const descriptor = builderMap[o._];
+const obj = (o: any, bare = false) => {
+  const descriptor = builderMaps.get(l)[o._];
   if (descriptor) {
     const [id, fn] = descriptor;
     if (!bare) i32(id);
     if (fn) fn(o);
-  } else if (fallbackBuilder) fallbackBuilder(s, o);
-  else {
+  } else if (fallbackBuilder) {
+    fallbackBuilder(s, o);
+  } else {
     console.error('Cannot serialize object', o);
   }
-}
-
-export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
-  s = stream;
-  fallbackBuilder = fallback;
-  return obj(o);
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static TelegramSchema.Utils;
+using static TelegramSchema.Indentation;
 
 namespace TelegramSchema
 {
@@ -24,16 +25,7 @@ namespace TelegramSchema
             writer.WriteLine("/* eslint-disable semi-style */");
             writer.WriteLine("/* eslint-disable spaced-comment */");
             writer.WriteLine();
-            writer.WriteLine("/*******************************************************************************************/");
-            writer.WriteLine("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */");
-            writer.WriteLine("/*                                                                                         */");
-            writer.WriteLine("/* Do not make changes to this file unless you know what you are doing -- modify           */");
-            writer.WriteLine("/* the tool instead.                                                                       */");
-            writer.WriteLine("/*                                                                                         */");
-            writer.WriteLine("/* Source: " + $"{schemaName}.json".PadRight(80, ' ') + "*/");
-            writer.WriteLine("/*                                                                                         */");
-            writer.WriteLine("/*******************************************************************************************/");
-            writer.WriteLine();
+            GeneratedFileNotice.Write(writer, schemaName);
 
             WriteConstructors(writer, genRefs, typeOrder, types, schema.constructors);
             WriteMethods(writer, schema.methods, schema.constructors, types);
@@ -65,32 +57,41 @@ namespace TelegramSchema
                 {
                     writer.Write("{}");
                 }
-                foreach (var constructor in types[type])
+
+                using (Indent(writer))
                 {
-                    writer.WriteLine($"  | {typeName}.{FixEntityName(constructor)}");
+                    foreach (var constructor in types[type])
+                    {
+                        writer.WriteLine($"| {typeName}.{FixEntityName(constructor)}");
+                    }
+
+                    writer.WriteLine(";");
                 }
 
-                writer.WriteLine(";");
                 writer.WriteLine();
 
                 writer.WriteLine($"export namespace {typeName} {{");
                 foreach (var constructor in types[type])
                 {
-                    writer.Indent++;
-                    writer.WriteLine($"export type {FixEntityName(constructor)} = {{");
-                    writer.Indent++;
-                    writer.WriteLine($"_: '{constructor.predicate}',");
-                    if (constructor.layer > 0)
+                    using (Indent(writer))
                     {
-                        writer.WriteLine($"_layer: {constructor.layer},");
+                        writer.WriteLine($"export type {FixEntityName(constructor)} = {{");
+                        using (Indent(writer))
+                        {
+                            writer.WriteLine($"_: '{constructor.predicate}',");
+                            if (constructor.layer > 0)
+                            {
+                                writer.WriteLine($"_layer: {constructor.layer},");
+                            }
+
+                            foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
+                            {
+                                writer.WriteLine($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(types, parameter.type, constructors)},");
+                            }
+                        }
+
+                        writer.WriteLine("};");
                     }
-                    foreach (var parameter in constructor.@params.Where(p => p.name != "flags"))
-                    {
-                        writer.WriteLine($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(types, parameter.type, constructors)},");
-                    }
-                    writer.Indent--;
-                    writer.WriteLine("};");
-                    writer.Indent--;
                 }
 
                 writer.WriteLine("}");
@@ -98,18 +99,19 @@ namespace TelegramSchema
             }
             
             writer.WriteLine("export interface ConstructorDeclMap {");
-            writer.Indent++;
-            
-            foreach (var group in constructors.GroupBy(c => c.predicate))
+            using (Indent(writer))
             {
-                var first = group.First();
-                if (!IsPrimitiveType(first.type))
+                foreach (var group in constructors.GroupBy(c => c.predicate))
                 {
-                    var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixEntityName(c)}").ToArray();
-                    writer.WriteLine($"'{first.predicate}': {string.Join(" | ", decls)},");
+                    var first = group.First();
+                    if (!IsPrimitiveType(first.type))
+                    {
+                        var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixEntityName(c)}").ToArray();
+                        writer.WriteLine($"'{first.predicate}': {string.Join(" | ", decls)},");
+                    }
                 }
             }
-            writer.Indent--;
+
             writer.WriteLine("}");
             writer.WriteLine();
         }
@@ -123,38 +125,44 @@ namespace TelegramSchema
             {
                 var methodName = FixMethodName(method.method);
                 writer.WriteLine($"export type {methodName} = {{");
-                writer.Indent++;
-                foreach (var parameter in method.@params.Where(p => p.name != "flags"))
+                using (Indent(writer))
                 {
-                    writer.WriteLine($"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(types, parameter.type, constructors)},");
+                    foreach (var parameter in method.@params.Where(p => p.name != "flags"))
+                    {
+                        writer.WriteLine(
+                            $"{parameter.name}{(IsOptional(parameter.type) ? "?" : "")}: {FormatType(types, parameter.type, constructors)},");
+                    }
                 }
-                writer.Indent--;
                 writer.WriteLine("};");
                 writer.WriteLine();
             }
 
             writer.WriteLine("export interface MethodDeclMap {");
-            writer.Indent++;
-            foreach (var method in methods)
+            using (Indent(writer))
             {
-                var requestType = FixMethodName(method.method);
-                var responseType = types.ContainsKey(UnwrapVector(method.type).type) ? FormatType(types, method.type, constructors) : "any";
-                writer.WriteLine($"'{method.method}': {{ req: {requestType}, res: {responseType} }},");
+                foreach (var method in methods)
+                {
+                    var requestType = FixMethodName(method.method);
+                    var responseType = types.ContainsKey(UnwrapVector(method.type).type)
+                        ? FormatType(types, method.type, constructors)
+                        : "any";
+                    writer.WriteLine($"'{method.method}': {{ req: {requestType}, res: {responseType} }},");
+                }
             }
-            writer.Indent--;
             writer.WriteLine("}");
 
             if (types.ContainsKey("Update"))
             {
                 writer.WriteLine();
                 writer.WriteLine("export interface UpdateDeclMap {");
-                writer.Indent++;
-                WriteUpdateDeclarations(writer, "Update", types);
-                WriteUpdateDeclarations(writer, "Updates", types);
-                WriteUpdateDeclarations(writer, "User", types);
-                WriteUpdateDeclarations(writer, "Chat", types);
-                writer.Indent--;
-                writer.WriteLine("}");
+                using (Indent(writer))
+                {
+                    WriteUpdateDeclarations(writer, "Update", types);
+                    WriteUpdateDeclarations(writer, "Updates", types);
+                    WriteUpdateDeclarations(writer, "User", types);
+                    WriteUpdateDeclarations(writer, "Chat", types);
+                    writer.Indent--;
+                }
             }
         }
 

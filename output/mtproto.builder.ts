@@ -4,7 +4,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: mtproto.json                                                                    */
+/* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
+/* Time: Wednesday, 11 March 2020 21:35:32 (UTC)                                           */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -20,6 +21,12 @@ interface ByteStream {
 
 let s: ByteStream;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
+
+export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
+  s = stream;
+  fallbackBuilder = fallback;
+  return obj(o);
+}
 
 const _resPQ = (o: any) => {
   i128(o.nonce);
@@ -347,37 +354,30 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'destroy_session': [0xe7512126, _destroy_session],
 }
 
-function i32(value: number) { s.writeInt32(value); }
-function i64(value: string) { s.writeInt64(value); }
-function i128(value: string) { s.writeInt128(value); }
-function i256(value: string) { s.writeInt256(value); }
-function str(value: string) { s.writeString(value); }
-function bytes(value: ArrayBuffer) { s.writeBytes(value); }
+const i32 = (value: number) => s.writeInt32(value);
+const i64 = (value: string) => s.writeInt64(value);
+const i128 = (value: string) => s.writeInt128(value);
+const i256 = (value: string) => s.writeInt256(value);
+const str = (value: string) => s.writeString(value);
+const bytes = (value: ArrayBuffer) => s.writeBytes(value);
 
-
-function vector(fn: (value: any) => void, value: Array<any>, ctorId?: number) {
+const vector = (fn: (value: any) => void, value: Array<any>) => {
   i32(0x1cb5c415);
   i32(value.length);
   for (let i = 0; i < value.length; i++) {
-    if (ctorId != undefined) i32(ctorId);
     fn(value[i]);
   }
 }
 
-function obj(o: any, bare = false) {
+const obj = (o: any, bare = false) => {
   const descriptor = builderMap[o._];
   if (descriptor) {
     const [id, fn] = descriptor;
     if (!bare) i32(id);
     if (fn) fn(o);
-  } else if (fallbackBuilder) fallbackBuilder(s, o);
-  else {
+  } else if (fallbackBuilder) {
+    fallbackBuilder(s, o);
+  } else {
     console.error('Cannot serialize object', o);
   }
-}
-
-export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
-  s = stream;
-  fallbackBuilder = fallback;
-  return obj(o);
 }
