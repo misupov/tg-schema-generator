@@ -54,6 +54,7 @@ namespace TelegramSchema
             writer.Indent--;
             writer.WriteLine("}");
             writer.WriteLine();
+            writer.WriteLine("const u = undefined;");
             writer.WriteLine("function i32() { return s.readInt32(); }");
             writer.WriteLine("function i64() { return s.readInt64(); }");
             writer.WriteLine("function i128() { return s.readInt128(); }");
@@ -93,20 +94,20 @@ namespace TelegramSchema
                 }
             }
             writer.WriteLine("");
-            writer.WriteLine("const parserMap: Record<number, () => any> = {");
+            writer.WriteLine("const parserMap = new Map<number, () => any>([");
             writer.Indent++;
             foreach (var constructor in schema.constructors)
             {
                 var constructorId = int.Parse(constructor.id);
-                writer.WriteLine($"0x{constructorId:x}: _{FixEntityName(constructor)},");
+                writer.WriteLine($"[0x{constructorId:x}, _{FixEntityName(constructor)}],");
             }
             writer.Indent--;
-            writer.WriteLine("};");
+            writer.WriteLine("]);");
             writer.WriteLine("");
             writer.WriteLine("function obj() {");
             writer.Indent++;
             writer.WriteLine("const c = i32() >>> 0;");
-            writer.WriteLine("const f = parserMap[c];");
+            writer.WriteLine("const f = parserMap.get(c);");
             writer.WriteLine("if (f) {");
             writer.Indent++;
             writer.WriteLine("return f();");
@@ -128,18 +129,18 @@ namespace TelegramSchema
 
         private static void WriteParserConstructorLambda(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.Write($"function _{FixEntityName(constructor)}() {{ return {{");
+            writer.Write($"const _{FixEntityName(constructor)}: any = () => ({{");
             writer.Write($"_: '{constructor.predicate}'");
             foreach (var param in constructor.@params)
             {
                 writer.Write($", {param.name}: {FormatAccessor(types, param.type)}");
             }
-            writer.WriteLine("}; }");
+            writer.WriteLine("});");
         }
 
         private static void WriteParserConstructor(IndentedTextWriter writer, IReadOnlyDictionary<string, HashSet<Constructor>> types, Constructor constructor)
         {
-            writer.WriteLine($"function _{FixEntityName(constructor)}() {{");
+            writer.WriteLine($"function _{FixEntityName(constructor)}(): any {{");
             writer.Indent++;
             if (HasFlags(constructor))
             {
@@ -148,7 +149,7 @@ namespace TelegramSchema
 
             writer.WriteLine("return {");
             writer.Indent++;
-            writer.WriteLine("_: '" + constructor.predicate + "' as const,");
+            writer.WriteLine("_: '" + constructor.predicate + "',");
             foreach (var param in constructor.@params)
             {
                 if (param.type != "#")
@@ -175,7 +176,7 @@ namespace TelegramSchema
             {
                 case "true": return bit >= 0 ? ("!!(flags & 0x" + Convert.ToString(1 << bit, 16) + ")") : FormatAccessorMandatory(types, paramType); 
                 default: return bit >= 0 
-                    ? ("flags & 0x" + Convert.ToString(1 << bit, 16) + " ? " + FormatAccessorMandatory(types, paramType) + " : undefined")
+                    ? ("flags & 0x" + Convert.ToString(1 << bit, 16) + " ? " + FormatAccessorMandatory(types, paramType) + " : u")
                     : FormatAccessorMandatory(types, paramType); 
             }
         }

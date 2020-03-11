@@ -157,7 +157,9 @@ namespace TelegramSchema
 
         private static void WriteEntity(Schema schema, IndentedTextWriter writer, IEntity entity, ISet<string> ops)
         {
-            writer.WriteLine($"function _{FixEntityName(entity)}(o: any) {{");
+            var hasFlags = HasFlags(entity);
+            writer.WriteLine($"const _{FixEntityName(entity)} = (o: any) => {{");
+
             writer.Indent++;
             if (HasFlags(entity))
             {
@@ -213,7 +215,7 @@ namespace TelegramSchema
             }
 
             writer.Indent--;
-            writer.WriteLine("}");
+            writer.WriteLine("};");
             writer.WriteLine();
         }
 

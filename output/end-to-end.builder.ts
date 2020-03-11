@@ -21,21 +21,21 @@ interface ByteStream {
 let s: ByteStream;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
 
-function _decryptedMessage8(o: any) {
+const _decryptedMessage8 = (o: any) => {
   i64(o.random_id);
   bytes(o.random_bytes);
   str(o.message);
   obj(o.media);
-}
+};
 
-function _decryptedMessage17(o: any) {
+const _decryptedMessage17 = (o: any) => {
   i64(o.random_id);
   i32(o.ttl);
   str(o.message);
   obj(o.media);
-}
+};
 
-function _decryptedMessage45(o: any) {
+const _decryptedMessage45 = (o: any) => {
   const flags = 
       has(o.media) << 9
     | has(o.entities) << 7
@@ -50,9 +50,9 @@ function _decryptedMessage45(o: any) {
   flagVector(obj, o.entities);
   flag(str, o.via_bot_name);
   flag(i64, o.reply_to_random_id);
-}
+};
 
-function _decryptedMessage73(o: any) {
+const _decryptedMessage73 = (o: any) => {
   const flags = 
       has(o.media) << 9
     | has(o.entities) << 7
@@ -69,20 +69,20 @@ function _decryptedMessage73(o: any) {
   flag(str, o.via_bot_name);
   flag(i64, o.reply_to_random_id);
   flag(i64, o.grouped_id);
-}
+};
 
-function _decryptedMessageService8(o: any) {
+const _decryptedMessageService8 = (o: any) => {
   i64(o.random_id);
   bytes(o.random_bytes);
   obj(o.action);
-}
+};
 
-function _decryptedMessageService17(o: any) {
+const _decryptedMessageService17 = (o: any) => {
   i64(o.random_id);
   obj(o.action);
-}
+};
 
-function _decryptedMessageMediaPhoto8(o: any) {
+const _decryptedMessageMediaPhoto8 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -91,9 +91,9 @@ function _decryptedMessageMediaPhoto8(o: any) {
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageMediaPhoto45(o: any) {
+const _decryptedMessageMediaPhoto45 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -103,9 +103,9 @@ function _decryptedMessageMediaPhoto45(o: any) {
   bytes(o.key);
   bytes(o.iv);
   str(o.caption);
-}
+};
 
-function _decryptedMessageMediaVideo8(o: any) {
+const _decryptedMessageMediaVideo8 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -115,9 +115,9 @@ function _decryptedMessageMediaVideo8(o: any) {
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageMediaVideo17(o: any) {
+const _decryptedMessageMediaVideo17 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -128,9 +128,9 @@ function _decryptedMessageMediaVideo17(o: any) {
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageMediaVideo45(o: any) {
+const _decryptedMessageMediaVideo45 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -142,25 +142,25 @@ function _decryptedMessageMediaVideo45(o: any) {
   bytes(o.key);
   bytes(o.iv);
   str(o.caption);
-}
+};
 
-function _decryptedMessageMediaGeoPoint8(o: any) {
+const _decryptedMessageMediaGeoPoint8 = (o: any) => {
   f64(o.lat);
   f64(o.long);
-}
+};
 
-function _decryptedMessageMediaContact8(o: any) {
+const _decryptedMessageMediaContact8 = (o: any) => {
   str(o.phone_number);
   str(o.first_name);
   str(o.last_name);
   i32(o.user_id);
-}
+};
 
-function _decryptedMessageActionSetMessageTTL8(o: any) {
+const _decryptedMessageActionSetMessageTTL8 = (o: any) => {
   i32(o.ttl_seconds);
-}
+};
 
-function _decryptedMessageMediaDocument8(o: any) {
+const _decryptedMessageMediaDocument8 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -169,9 +169,9 @@ function _decryptedMessageMediaDocument8(o: any) {
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageMediaDocument45(o: any) {
+const _decryptedMessageMediaDocument45 = (o: any) => {
   bytes(o.thumb);
   i32(o.thumb_w);
   i32(o.thumb_h);
@@ -181,112 +181,112 @@ function _decryptedMessageMediaDocument45(o: any) {
   bytes(o.iv);
   vector(obj, o.attributes);
   str(o.caption);
-}
+};
 
-function _decryptedMessageMediaAudio8(o: any) {
+const _decryptedMessageMediaAudio8 = (o: any) => {
   i32(o.duration);
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageMediaAudio17(o: any) {
+const _decryptedMessageMediaAudio17 = (o: any) => {
   i32(o.duration);
   str(o.mime_type);
   i32(o.size);
   bytes(o.key);
   bytes(o.iv);
-}
+};
 
-function _decryptedMessageActionReadMessages8(o: any) {
+const _decryptedMessageActionReadMessages8 = (o: any) => {
   vector(i64, o.random_ids);
-}
+};
 
-function _decryptedMessageActionDeleteMessages8(o: any) {
+const _decryptedMessageActionDeleteMessages8 = (o: any) => {
   vector(i64, o.random_ids);
-}
+};
 
-function _decryptedMessageActionScreenshotMessages8(o: any) {
+const _decryptedMessageActionScreenshotMessages8 = (o: any) => {
   vector(i64, o.random_ids);
-}
+};
 
-function _decryptedMessageLayer17(o: any) {
+const _decryptedMessageLayer17 = (o: any) => {
   bytes(o.random_bytes);
   i32(o.layer);
   i32(o.in_seq_no);
   i32(o.out_seq_no);
   obj(o.message);
-}
+};
 
-function _decryptedMessageActionResend17(o: any) {
+const _decryptedMessageActionResend17 = (o: any) => {
   i32(o.start_seq_no);
   i32(o.end_seq_no);
-}
+};
 
-function _decryptedMessageActionNotifyLayer17(o: any) {
+const _decryptedMessageActionNotifyLayer17 = (o: any) => {
   i32(o.layer);
-}
+};
 
-function _decryptedMessageActionTyping17(o: any) {
+const _decryptedMessageActionTyping17 = (o: any) => {
   obj(o.action);
-}
+};
 
-function _decryptedMessageActionRequestKey20(o: any) {
+const _decryptedMessageActionRequestKey20 = (o: any) => {
   i64(o.exchange_id);
   bytes(o.g_a);
-}
+};
 
-function _decryptedMessageActionAcceptKey20(o: any) {
+const _decryptedMessageActionAcceptKey20 = (o: any) => {
   i64(o.exchange_id);
   bytes(o.g_b);
   i64(o.key_fingerprint);
-}
+};
 
-function _decryptedMessageActionAbortKey20(o: any) {
+const _decryptedMessageActionAbortKey20 = (o: any) => {
   i64(o.exchange_id);
-}
+};
 
-function _decryptedMessageActionCommitKey20(o: any) {
+const _decryptedMessageActionCommitKey20 = (o: any) => {
   i64(o.exchange_id);
   i64(o.key_fingerprint);
-}
+};
 
-function _documentAttributeImageSize23(o: any) {
+const _documentAttributeImageSize23 = (o: any) => {
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _documentAttributeSticker45(o: any) {
+const _documentAttributeSticker45 = (o: any) => {
   str(o.alt);
   obj(o.stickerset);
-}
+};
 
-function _documentAttributeVideo23(o: any) {
+const _documentAttributeVideo23 = (o: any) => {
   i32(o.duration);
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _documentAttributeVideo66(o: any) {
+const _documentAttributeVideo66 = (o: any) => {
   const flags = 
   i32(flags);
   
   i32(o.duration);
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _documentAttributeAudio23(o: any) {
+const _documentAttributeAudio23 = (o: any) => {
   i32(o.duration);
-}
+};
 
-function _documentAttributeAudio45(o: any) {
+const _documentAttributeAudio45 = (o: any) => {
   i32(o.duration);
   str(o.title);
   str(o.performer);
-}
+};
 
-function _documentAttributeAudio46(o: any) {
+const _documentAttributeAudio46 = (o: any) => {
   const flags = 
       has(o.title)
     | has(o.performer) << 1
@@ -297,46 +297,46 @@ function _documentAttributeAudio46(o: any) {
   flag(str, o.title);
   flag(str, o.performer);
   flag(bytes, o.waveform);
-}
+};
 
-function _documentAttributeFilename23(o: any) {
+const _documentAttributeFilename23 = (o: any) => {
   str(o.file_name);
-}
+};
 
-function _photoSizeEmpty23(o: any) {
+const _photoSizeEmpty23 = (o: any) => {
   str(o.type);
-}
+};
 
-function _photoSize23(o: any) {
+const _photoSize23 = (o: any) => {
   str(o.type);
   obj(o.location);
   i32(o.w);
   i32(o.h);
   i32(o.size);
-}
+};
 
-function _photoCachedSize23(o: any) {
+const _photoCachedSize23 = (o: any) => {
   str(o.type);
   obj(o.location);
   i32(o.w);
   i32(o.h);
   bytes(o.bytes);
-}
+};
 
-function _fileLocationUnavailable23(o: any) {
+const _fileLocationUnavailable23 = (o: any) => {
   i64(o.volume_id);
   i32(o.local_id);
   i64(o.secret);
-}
+};
 
-function _fileLocation23(o: any) {
+const _fileLocation23 = (o: any) => {
   i32(o.dc_id);
   i64(o.volume_id);
   i32(o.local_id);
   i64(o.secret);
-}
+};
 
-function _decryptedMessageMediaExternalDocument23(o: any) {
+const _decryptedMessageMediaExternalDocument23 = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -345,81 +345,81 @@ function _decryptedMessageMediaExternalDocument23(o: any) {
   obj(o.thumb);
   i32(o.dc_id);
   vector(obj, o.attributes);
-}
+};
 
-function _messageEntityUnknown45(o: any) {
+const _messageEntityUnknown45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityMention45(o: any) {
+const _messageEntityMention45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityHashtag45(o: any) {
+const _messageEntityHashtag45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityBotCommand45(o: any) {
+const _messageEntityBotCommand45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityUrl45(o: any) {
+const _messageEntityUrl45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityEmail45(o: any) {
+const _messageEntityEmail45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityBold45(o: any) {
+const _messageEntityBold45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityItalic45(o: any) {
+const _messageEntityItalic45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityCode45(o: any) {
+const _messageEntityCode45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityPre45(o: any) {
+const _messageEntityPre45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
   str(o.language);
-}
+};
 
-function _messageEntityTextUrl45(o: any) {
+const _messageEntityTextUrl45 = (o: any) => {
   i32(o.offset);
   i32(o.length);
   str(o.url);
-}
+};
 
-function _inputStickerSetShortName45(o: any) {
+const _inputStickerSetShortName45 = (o: any) => {
   str(o.short_name);
-}
+};
 
-function _decryptedMessageMediaVenue45(o: any) {
+const _decryptedMessageMediaVenue45 = (o: any) => {
   f64(o.lat);
   f64(o.long);
   str(o.title);
   str(o.address);
   str(o.provider);
   str(o.venue_id);
-}
+};
 
-function _decryptedMessageMediaWebPage45(o: any) {
+const _decryptedMessageMediaWebPage45 = (o: any) => {
   str(o.url);
-}
+};
 
 
 const builderMap: Record<string, [number, ((o: any) => void)?]> = {

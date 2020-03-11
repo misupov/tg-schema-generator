@@ -21,43 +21,23 @@ interface ByteStream {
 let s: ByteStream;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
 
-function _resPQ(o: any) {
+const _resPQ = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.pq);
   vector(i64, o.server_public_key_fingerprints);
-}
+};
 
-function _p_q_inner_data(o: any) {
+const _p_q_inner_data = (o: any) => {
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
   i128(o.nonce);
   i128(o.server_nonce);
   i256(o.new_nonce);
-}
+};
 
-function _p_q_inner_data_dc(o: any) {
-  bytes(o.pq);
-  bytes(o.p);
-  bytes(o.q);
-  i128(o.nonce);
-  i128(o.server_nonce);
-  i256(o.new_nonce);
-  i32(o.dc);
-}
-
-function _p_q_inner_data_temp(o: any) {
-  bytes(o.pq);
-  bytes(o.p);
-  bytes(o.q);
-  i128(o.nonce);
-  i128(o.server_nonce);
-  i256(o.new_nonce);
-  i32(o.expires_in);
-}
-
-function _p_q_inner_data_temp_dc(o: any) {
+const _p_q_inner_data_dc = (o: any) => {
   bytes(o.pq);
   bytes(o.p);
   bytes(o.q);
@@ -65,230 +45,250 @@ function _p_q_inner_data_temp_dc(o: any) {
   i128(o.server_nonce);
   i256(o.new_nonce);
   i32(o.dc);
-  i32(o.expires_in);
-}
+};
 
-function _server_DH_params_fail(o: any) {
+const _p_q_inner_data_temp = (o: any) => {
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
+  i32(o.expires_in);
+};
+
+const _p_q_inner_data_temp_dc = (o: any) => {
+  bytes(o.pq);
+  bytes(o.p);
+  bytes(o.q);
+  i128(o.nonce);
+  i128(o.server_nonce);
+  i256(o.new_nonce);
+  i32(o.dc);
+  i32(o.expires_in);
+};
+
+const _server_DH_params_fail = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash);
-}
+};
 
-function _server_DH_params_ok(o: any) {
+const _server_DH_params_ok = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.encrypted_answer);
-}
+};
 
-function _server_DH_inner_data(o: any) {
+const _server_DH_inner_data = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i32(o.g);
   bytes(o.dh_prime);
   bytes(o.g_a);
   i32(o.server_time);
-}
+};
 
-function _client_DH_inner_data(o: any) {
+const _client_DH_inner_data = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i64(o.retry_id);
   bytes(o.g_b);
-}
+};
 
-function _dh_gen_ok(o: any) {
+const _dh_gen_ok = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash1);
-}
+};
 
-function _dh_gen_retry(o: any) {
+const _dh_gen_retry = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash2);
-}
+};
 
-function _dh_gen_fail(o: any) {
+const _dh_gen_fail = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   i128(o.new_nonce_hash3);
-}
+};
 
-function _rpc_result(o: any) {
+const _rpc_result = (o: any) => {
   i64(o.req_msg_id);
   obj(o.result);
-}
+};
 
-function _rpc_error(o: any) {
+const _rpc_error = (o: any) => {
   i32(o.error_code);
   str(o.error_message);
-}
+};
 
-function _rpc_answer_dropped(o: any) {
+const _rpc_answer_dropped = (o: any) => {
   i64(o.msg_id);
   i32(o.seq_no);
   i32(o.bytes);
-}
+};
 
-function _future_salt(o: any) {
+const _future_salt = (o: any) => {
   i32(o.valid_since);
   i32(o.valid_until);
   i64(o.salt);
-}
+};
 
-function _future_salts(o: any) {
+const _future_salts = (o: any) => {
   i64(o.req_msg_id);
   i32(o.now);
   vector(obj, o.salts, 0x949d9dc);
-}
+};
 
-function _pong(o: any) {
+const _pong = (o: any) => {
   i64(o.msg_id);
   i64(o.ping_id);
-}
+};
 
-function _new_session_created(o: any) {
+const _new_session_created = (o: any) => {
   i64(o.first_msg_id);
   i64(o.unique_id);
   i64(o.server_salt);
-}
+};
 
-function _msg_container(o: any) {
+const _msg_container = (o: any) => {
   vector(obj, o.messages);
-}
+};
 
-function _message(o: any) {
+const _message = (o: any) => {
   i64(o.msg_id);
   i32(o.seqno);
   i32(o.bytes);
   obj(o.body);
-}
+};
 
-function _msg_copy(o: any) {
+const _msg_copy = (o: any) => {
   obj(o.orig_message);
-}
+};
 
-function _gzip_packed(o: any) {
+const _gzip_packed = (o: any) => {
   bytes(o.packed_data);
-}
+};
 
-function _msgs_ack(o: any) {
+const _msgs_ack = (o: any) => {
   vector(i64, o.msg_ids);
-}
+};
 
-function _bad_msg_notification(o: any) {
+const _bad_msg_notification = (o: any) => {
   i64(o.bad_msg_id);
   i32(o.bad_msg_seqno);
   i32(o.error_code);
-}
+};
 
-function _bad_server_salt(o: any) {
+const _bad_server_salt = (o: any) => {
   i64(o.bad_msg_id);
   i32(o.bad_msg_seqno);
   i32(o.error_code);
   i64(o.new_server_salt);
-}
+};
 
-function _msg_resend_req(o: any) {
+const _msg_resend_req = (o: any) => {
   vector(i64, o.msg_ids);
-}
+};
 
-function _msg_resend_ans_req(o: any) {
+const _msg_resend_ans_req = (o: any) => {
   vector(i64, o.msg_ids);
-}
+};
 
-function _msgs_state_req(o: any) {
+const _msgs_state_req = (o: any) => {
   vector(i64, o.msg_ids);
-}
+};
 
-function _msgs_state_info(o: any) {
+const _msgs_state_info = (o: any) => {
   i64(o.req_msg_id);
   bytes(o.info);
-}
+};
 
-function _msgs_all_info(o: any) {
+const _msgs_all_info = (o: any) => {
   vector(i64, o.msg_ids);
   bytes(o.info);
-}
+};
 
-function _msg_detailed_info(o: any) {
+const _msg_detailed_info = (o: any) => {
   i64(o.msg_id);
   i64(o.answer_msg_id);
   i32(o.bytes);
   i32(o.status);
-}
+};
 
-function _msg_new_detailed_info(o: any) {
+const _msg_new_detailed_info = (o: any) => {
   i64(o.answer_msg_id);
   i32(o.bytes);
   i32(o.status);
-}
+};
 
-function _bind_auth_key_inner(o: any) {
+const _bind_auth_key_inner = (o: any) => {
   i64(o.nonce);
   i64(o.temp_auth_key_id);
   i64(o.perm_auth_key_id);
   i64(o.temp_session_id);
   i32(o.expires_at);
-}
+};
 
-function _destroy_session_ok(o: any) {
+const _destroy_session_ok = (o: any) => {
   i64(o.session_id);
-}
+};
 
-function _destroy_session_none(o: any) {
+const _destroy_session_none = (o: any) => {
   i64(o.session_id);
-}
+};
 
-function _req_pq(o: any) {
+const _req_pq = (o: any) => {
   i128(o.nonce);
-}
+};
 
-function _req_pq_multi(o: any) {
+const _req_pq_multi = (o: any) => {
   i128(o.nonce);
-}
+};
 
-function _req_DH_params(o: any) {
+const _req_DH_params = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.p);
   bytes(o.q);
   i64(o.public_key_fingerprint);
   bytes(o.encrypted_data);
-}
+};
 
-function _set_client_DH_params(o: any) {
+const _set_client_DH_params = (o: any) => {
   i128(o.nonce);
   i128(o.server_nonce);
   bytes(o.encrypted_data);
-}
+};
 
-function _rpc_drop_answer(o: any) {
+const _rpc_drop_answer = (o: any) => {
   i64(o.req_msg_id);
-}
+};
 
-function _get_future_salts(o: any) {
+const _get_future_salts = (o: any) => {
   i32(o.num);
-}
+};
 
-function _ping(o: any) {
+const _ping = (o: any) => {
   i64(o.ping_id);
-}
+};
 
-function _ping_delay_disconnect(o: any) {
+const _ping_delay_disconnect = (o: any) => {
   i64(o.ping_id);
   i32(o.disconnect_delay);
-}
+};
 
-function _http_wait(o: any) {
+const _http_wait = (o: any) => {
   i32(o.max_delay);
   i32(o.wait_after);
   i32(o.max_wait);
-}
+};
 
-function _destroy_session(o: any) {
+const _destroy_session = (o: any) => {
   i64(o.session_id);
-}
+};
 
 
 const builderMap: Record<string, [number, ((o: any) => void)?]> = {

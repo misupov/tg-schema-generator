@@ -21,30 +21,30 @@ interface ByteStream {
 let s: ByteStream;
 let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
 
-function _error(o: any) {
+const _error = (o: any) => {
   i32(o.code);
   str(o.text);
-}
+};
 
-function _inputPeerChat(o: any) {
+const _inputPeerChat = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _inputPhoneContact(o: any) {
+const _inputPhoneContact = (o: any) => {
   i64(o.client_id);
   str(o.phone);
   str(o.first_name);
   str(o.last_name);
-}
+};
 
-function _inputFile(o: any) {
+const _inputFile = (o: any) => {
   i64(o.id);
   i32(o.parts);
   str(o.name);
   str(o.md5_checksum);
-}
+};
 
-function _inputMediaUploadedPhoto(o: any) {
+const _inputMediaUploadedPhoto = (o: any) => {
   const flags = 
       has(o.stickers)
     | has(o.ttl_seconds) << 1;
@@ -53,86 +53,86 @@ function _inputMediaUploadedPhoto(o: any) {
   obj(o.file);
   flagVector(obj, o.stickers);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _inputMediaPhoto(o: any) {
+const _inputMediaPhoto = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
   
   obj(o.id);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _inputMediaGeoPoint(o: any) {
+const _inputMediaGeoPoint = (o: any) => {
   obj(o.geo_point);
-}
+};
 
-function _inputMediaContact(o: any) {
+const _inputMediaContact = (o: any) => {
   str(o.phone_number);
   str(o.first_name);
   str(o.last_name);
   str(o.vcard);
-}
+};
 
-function _inputChatUploadedPhoto(o: any) {
+const _inputChatUploadedPhoto = (o: any) => {
   obj(o.file);
-}
+};
 
-function _inputChatPhoto(o: any) {
+const _inputChatPhoto = (o: any) => {
   obj(o.id);
-}
+};
 
-function _inputGeoPoint(o: any) {
+const _inputGeoPoint = (o: any) => {
   f64(o.lat);
   f64(o.long);
-}
+};
 
-function _inputPhoto(o: any) {
+const _inputPhoto = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
-}
+};
 
-function _inputFileLocation(o: any) {
+const _inputFileLocation = (o: any) => {
   i64(o.volume_id);
   i32(o.local_id);
   i64(o.secret);
   bytes(o.file_reference);
-}
+};
 
-function _peerUser(o: any) {
+const _peerUser = (o: any) => {
   i32(o.user_id);
-}
+};
 
-function _peerChat(o: any) {
+const _peerChat = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _userEmpty(o: any) {
+const _userEmpty = (o: any) => {
   i32(o.id);
-}
+};
 
-function _userProfilePhoto(o: any) {
+const _userProfilePhoto = (o: any) => {
   i64(o.photo_id);
   obj(o.photo_small);
   obj(o.photo_big);
   i32(o.dc_id);
-}
+};
 
-function _userStatusOnline(o: any) {
+const _userStatusOnline = (o: any) => {
   i32(o.expires);
-}
+};
 
-function _userStatusOffline(o: any) {
+const _userStatusOffline = (o: any) => {
   i32(o.was_online);
-}
+};
 
-function _chatEmpty(o: any) {
+const _chatEmpty = (o: any) => {
   i32(o.id);
-}
+};
 
-function _chat(o: any) {
+const _chat = (o: any) => {
   const flags = 
       has(o.creator)
     | has(o.kicked) << 1
@@ -152,14 +152,14 @@ function _chat(o: any) {
   flag(obj, o.migrated_to);
   flag(obj, o.admin_rights);
   flag(obj, o.default_banned_rights);
-}
+};
 
-function _chatForbidden(o: any) {
+const _chatForbidden = (o: any) => {
   i32(o.id);
   str(o.title);
-}
+};
 
-function _chatFull(o: any) {
+const _chatFull = (o: any) => {
   const flags = 
       has(o.can_set_username) << 7
     | has(o.has_scheduled) << 8
@@ -178,40 +178,40 @@ function _chatFull(o: any) {
   flagVector(obj, o.bot_info);
   flag(i32, o.pinned_msg_id);
   flag(i32, o.folder_id);
-}
+};
 
-function _chatParticipant(o: any) {
+const _chatParticipant = (o: any) => {
   i32(o.user_id);
   i32(o.inviter_id);
   i32(o.date);
-}
+};
 
-function _chatParticipantsForbidden(o: any) {
+const _chatParticipantsForbidden = (o: any) => {
   const flags = 
       has(o.self_participant);
   i32(flags);
   
   i32(o.chat_id);
   flag(obj, o.self_participant);
-}
+};
 
-function _chatParticipants(o: any) {
+const _chatParticipants = (o: any) => {
   i32(o.chat_id);
   vector(obj, o.participants);
   i32(o.version);
-}
+};
 
-function _chatPhoto(o: any) {
+const _chatPhoto = (o: any) => {
   obj(o.photo_small);
   obj(o.photo_big);
   i32(o.dc_id);
-}
+};
 
-function _messageEmpty(o: any) {
+const _messageEmpty = (o: any) => {
   i32(o.id);
-}
+};
 
-function _message(o: any) {
+const _message = (o: any) => {
   const flags = 
       has(o.out) << 1
     | has(o.mentioned) << 4
@@ -251,9 +251,9 @@ function _message(o: any) {
   flag(str, o.post_author);
   flag(i64, o.grouped_id);
   flagVector(obj, o.restriction_reason);
-}
+};
 
-function _messageService(o: any) {
+const _messageService = (o: any) => {
   const flags = 
       has(o.out) << 1
     | has(o.mentioned) << 4
@@ -271,9 +271,9 @@ function _messageService(o: any) {
   flag(i32, o.reply_to_msg_id);
   i32(o.date);
   obj(o.action);
-}
+};
 
-function _messageMediaPhoto(o: any) {
+const _messageMediaPhoto = (o: any) => {
   const flags = 
       has(o.photo)
     | has(o.ttl_seconds) << 2;
@@ -281,42 +281,42 @@ function _messageMediaPhoto(o: any) {
   
   flag(obj, o.photo);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _messageMediaGeo(o: any) {
+const _messageMediaGeo = (o: any) => {
   obj(o.geo);
-}
+};
 
-function _messageMediaContact(o: any) {
+const _messageMediaContact = (o: any) => {
   str(o.phone_number);
   str(o.first_name);
   str(o.last_name);
   str(o.vcard);
   i32(o.user_id);
-}
+};
 
-function _messageActionChatCreate(o: any) {
+const _messageActionChatCreate = (o: any) => {
   str(o.title);
   vector(i32, o.users);
-}
+};
 
-function _messageActionChatEditTitle(o: any) {
+const _messageActionChatEditTitle = (o: any) => {
   str(o.title);
-}
+};
 
-function _messageActionChatEditPhoto(o: any) {
+const _messageActionChatEditPhoto = (o: any) => {
   obj(o.photo);
-}
+};
 
-function _messageActionChatAddUser(o: any) {
+const _messageActionChatAddUser = (o: any) => {
   vector(i32, o.users);
-}
+};
 
-function _messageActionChatDeleteUser(o: any) {
+const _messageActionChatDeleteUser = (o: any) => {
   i32(o.user_id);
-}
+};
 
-function _dialog(o: any) {
+const _dialog = (o: any) => {
   const flags = 
       has(o.pinned) << 2
     | has(o.unread_mark) << 3
@@ -335,13 +335,13 @@ function _dialog(o: any) {
   flag(i32, o.pts);
   flag(obj, o.draft);
   flag(i32, o.folder_id);
-}
+};
 
-function _photoEmpty(o: any) {
+const _photoEmpty = (o: any) => {
   i64(o.id);
-}
+};
 
-function _photo(o: any) {
+const _photo = (o: any) => {
   const flags = 
       has(o.has_stickers)
   i32(flags);
@@ -352,35 +352,35 @@ function _photo(o: any) {
   i32(o.date);
   vector(obj, o.sizes);
   i32(o.dc_id);
-}
+};
 
-function _photoSizeEmpty(o: any) {
+const _photoSizeEmpty = (o: any) => {
   str(o.type);
-}
+};
 
-function _photoSize(o: any) {
+const _photoSize = (o: any) => {
   str(o.type);
   obj(o.location);
   i32(o.w);
   i32(o.h);
   i32(o.size);
-}
+};
 
-function _photoCachedSize(o: any) {
+const _photoCachedSize = (o: any) => {
   str(o.type);
   obj(o.location);
   i32(o.w);
   i32(o.h);
   bytes(o.bytes);
-}
+};
 
-function _geoPoint(o: any) {
+const _geoPoint = (o: any) => {
   f64(o.long);
   f64(o.lat);
   i64(o.access_hash);
-}
+};
 
-function _authSentCode(o: any) {
+const _authSentCode = (o: any) => {
   const flags = 
       has(o.next_type) << 1
     | has(o.timeout) << 2;
@@ -390,27 +390,27 @@ function _authSentCode(o: any) {
   str(o.phone_code_hash);
   flag(obj, o.next_type);
   flag(i32, o.timeout);
-}
+};
 
-function _authAuthorization(o: any) {
+const _authAuthorization = (o: any) => {
   const flags = 
       has(o.tmp_sessions)
   i32(flags);
   
   flag(i32, o.tmp_sessions);
   obj(o.user);
-}
+};
 
-function _authExportedAuthorization(o: any) {
+const _authExportedAuthorization = (o: any) => {
   i32(o.id);
   bytes(o.bytes);
-}
+};
 
-function _inputNotifyPeer(o: any) {
+const _inputNotifyPeer = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _inputPeerNotifySettings(o: any) {
+const _inputPeerNotifySettings = (o: any) => {
   const flags = 
       has(o.show_previews)
     | has(o.silent) << 1
@@ -422,9 +422,9 @@ function _inputPeerNotifySettings(o: any) {
   flag(bool, o.silent);
   flag(i32, o.mute_until);
   flag(str, o.sound);
-}
+};
 
-function _peerNotifySettings(o: any) {
+const _peerNotifySettings = (o: any) => {
   const flags = 
       has(o.show_previews)
     | has(o.silent) << 1
@@ -436,9 +436,9 @@ function _peerNotifySettings(o: any) {
   flag(bool, o.silent);
   flag(i32, o.mute_until);
   flag(str, o.sound);
-}
+};
 
-function _peerSettings(o: any) {
+const _peerSettings = (o: any) => {
   const flags = 
       has(o.report_spam)
     | has(o.add_contact) << 1
@@ -448,9 +448,9 @@ function _peerSettings(o: any) {
     | has(o.report_geo) << 5;
   i32(flags);
   
-}
+};
 
-function _wallPaper(o: any) {
+const _wallPaper = (o: any) => {
   const flags = 
       has(o.creator)
     | has(o.default) << 1
@@ -464,13 +464,13 @@ function _wallPaper(o: any) {
   str(o.slug);
   obj(o.document);
   flag(obj, o.settings);
-}
+};
 
-function _inputReportReasonOther(o: any) {
+const _inputReportReasonOther = (o: any) => {
   str(o.text);
-}
+};
 
-function _userFull(o: any) {
+const _userFull = (o: any) => {
   const flags = 
       has(o.blocked)
     | has(o.phone_calls_available) << 4
@@ -493,74 +493,74 @@ function _userFull(o: any) {
   flag(i32, o.pinned_msg_id);
   i32(o.common_chats_count);
   flag(i32, o.folder_id);
-}
+};
 
-function _contact(o: any) {
+const _contact = (o: any) => {
   i32(o.user_id);
   bool(o.mutual);
-}
+};
 
-function _importedContact(o: any) {
+const _importedContact = (o: any) => {
   i32(o.user_id);
   i64(o.client_id);
-}
+};
 
-function _contactBlocked(o: any) {
+const _contactBlocked = (o: any) => {
   i32(o.user_id);
   i32(o.date);
-}
+};
 
-function _contactStatus(o: any) {
+const _contactStatus = (o: any) => {
   i32(o.user_id);
   obj(o.status);
-}
+};
 
-function _contactsContacts(o: any) {
+const _contactsContacts = (o: any) => {
   vector(obj, o.contacts);
   i32(o.saved_count);
   vector(obj, o.users);
-}
+};
 
-function _contactsImportedContacts(o: any) {
+const _contactsImportedContacts = (o: any) => {
   vector(obj, o.imported);
   vector(obj, o.popular_invites);
   vector(i64, o.retry_contacts);
   vector(obj, o.users);
-}
+};
 
-function _contactsBlocked(o: any) {
+const _contactsBlocked = (o: any) => {
   vector(obj, o.blocked);
   vector(obj, o.users);
-}
+};
 
-function _contactsBlockedSlice(o: any) {
+const _contactsBlockedSlice = (o: any) => {
   i32(o.count);
   vector(obj, o.blocked);
   vector(obj, o.users);
-}
+};
 
-function _messagesDialogs(o: any) {
+const _messagesDialogs = (o: any) => {
   vector(obj, o.dialogs);
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesDialogsSlice(o: any) {
+const _messagesDialogsSlice = (o: any) => {
   i32(o.count);
   vector(obj, o.dialogs);
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesMessages(o: any) {
+const _messagesMessages = (o: any) => {
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesMessagesSlice(o: any) {
+const _messagesMessagesSlice = (o: any) => {
   const flags = 
       has(o.inexact) << 1
     | has(o.next_rate)
@@ -571,107 +571,107 @@ function _messagesMessagesSlice(o: any) {
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesChats(o: any) {
+const _messagesChats = (o: any) => {
   vector(obj, o.chats);
-}
+};
 
-function _messagesChatFull(o: any) {
+const _messagesChatFull = (o: any) => {
   obj(o.full_chat);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesAffectedHistory(o: any) {
+const _messagesAffectedHistory = (o: any) => {
   i32(o.pts);
   i32(o.pts_count);
   i32(o.offset);
-}
+};
 
-function _updateNewMessage(o: any) {
+const _updateNewMessage = (o: any) => {
   obj(o.message);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateMessageID(o: any) {
+const _updateMessageID = (o: any) => {
   i32(o.id);
   i64(o.random_id);
-}
+};
 
-function _updateDeleteMessages(o: any) {
+const _updateDeleteMessages = (o: any) => {
   vector(i32, o.messages);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateUserTyping(o: any) {
+const _updateUserTyping = (o: any) => {
   i32(o.user_id);
   obj(o.action);
-}
+};
 
-function _updateChatUserTyping(o: any) {
+const _updateChatUserTyping = (o: any) => {
   i32(o.chat_id);
   i32(o.user_id);
   obj(o.action);
-}
+};
 
-function _updateChatParticipants(o: any) {
+const _updateChatParticipants = (o: any) => {
   obj(o.participants);
-}
+};
 
-function _updateUserStatus(o: any) {
+const _updateUserStatus = (o: any) => {
   i32(o.user_id);
   obj(o.status);
-}
+};
 
-function _updateUserName(o: any) {
+const _updateUserName = (o: any) => {
   i32(o.user_id);
   str(o.first_name);
   str(o.last_name);
   str(o.username);
-}
+};
 
-function _updateUserPhoto(o: any) {
+const _updateUserPhoto = (o: any) => {
   i32(o.user_id);
   i32(o.date);
   obj(o.photo);
   bool(o.previous);
-}
+};
 
-function _updatesState(o: any) {
+const _updatesState = (o: any) => {
   i32(o.pts);
   i32(o.qts);
   i32(o.date);
   i32(o.seq);
   i32(o.unread_count);
-}
+};
 
-function _updatesDifferenceEmpty(o: any) {
+const _updatesDifferenceEmpty = (o: any) => {
   i32(o.date);
   i32(o.seq);
-}
+};
 
-function _updatesDifference(o: any) {
+const _updatesDifference = (o: any) => {
   vector(obj, o.new_messages);
   vector(obj, o.new_encrypted_messages);
   vector(obj, o.other_updates);
   vector(obj, o.chats);
   vector(obj, o.users);
   obj(o.state);
-}
+};
 
-function _updatesDifferenceSlice(o: any) {
+const _updatesDifferenceSlice = (o: any) => {
   vector(obj, o.new_messages);
   vector(obj, o.new_encrypted_messages);
   vector(obj, o.other_updates);
   vector(obj, o.chats);
   vector(obj, o.users);
   obj(o.intermediate_state);
-}
+};
 
-function _updateShortMessage(o: any) {
+const _updateShortMessage = (o: any) => {
   const flags = 
       has(o.out) << 1
     | has(o.mentioned) << 4
@@ -693,9 +693,9 @@ function _updateShortMessage(o: any) {
   flag(i32, o.via_bot_id);
   flag(i32, o.reply_to_msg_id);
   flagVector(obj, o.entities);
-}
+};
 
-function _updateShortChatMessage(o: any) {
+const _updateShortChatMessage = (o: any) => {
   const flags = 
       has(o.out) << 1
     | has(o.mentioned) << 4
@@ -718,53 +718,53 @@ function _updateShortChatMessage(o: any) {
   flag(i32, o.via_bot_id);
   flag(i32, o.reply_to_msg_id);
   flagVector(obj, o.entities);
-}
+};
 
-function _updateShort(o: any) {
+const _updateShort = (o: any) => {
   obj(o.update);
   i32(o.date);
-}
+};
 
-function _updatesCombined(o: any) {
+const _updatesCombined = (o: any) => {
   vector(obj, o.updates);
   vector(obj, o.users);
   vector(obj, o.chats);
   i32(o.date);
   i32(o.seq_start);
   i32(o.seq);
-}
+};
 
-function _updates(o: any) {
+const _updates = (o: any) => {
   vector(obj, o.updates);
   vector(obj, o.users);
   vector(obj, o.chats);
   i32(o.date);
   i32(o.seq);
-}
+};
 
-function _photosPhotos(o: any) {
+const _photosPhotos = (o: any) => {
   vector(obj, o.photos);
   vector(obj, o.users);
-}
+};
 
-function _photosPhotosSlice(o: any) {
+const _photosPhotosSlice = (o: any) => {
   i32(o.count);
   vector(obj, o.photos);
   vector(obj, o.users);
-}
+};
 
-function _photosPhoto(o: any) {
+const _photosPhoto = (o: any) => {
   obj(o.photo);
   vector(obj, o.users);
-}
+};
 
-function _uploadFile(o: any) {
+const _uploadFile = (o: any) => {
   obj(o.type);
   i32(o.mtime);
   bytes(o.bytes);
-}
+};
 
-function _dcOption(o: any) {
+const _dcOption = (o: any) => {
   const flags = 
       has(o.ipv6)
     | has(o.media_only) << 1
@@ -778,9 +778,9 @@ function _dcOption(o: any) {
   str(o.ip_address);
   i32(o.port);
   flag(bytes, o.secret);
-}
+};
 
-function _config(o: any) {
+const _config = (o: any) => {
   const flags = 
       has(o.phonecalls_enabled) << 1
     | has(o.default_p2p_contacts) << 3
@@ -844,15 +844,15 @@ function _config(o: any) {
   flag(str, o.suggested_lang_code);
   flag(i32, o.lang_pack_version);
   flag(i32, o.base_lang_pack_version);
-}
+};
 
-function _nearestDc(o: any) {
+const _nearestDc = (o: any) => {
   str(o.country);
   i32(o.this_dc);
   i32(o.nearest_dc);
-}
+};
 
-function _helpAppUpdate(o: any) {
+const _helpAppUpdate = (o: any) => {
   const flags = 
       has(o.can_not_skip)
     | has(o.document) << 1
@@ -865,54 +865,54 @@ function _helpAppUpdate(o: any) {
   vector(obj, o.entities);
   flag(obj, o.document);
   flag(str, o.url);
-}
+};
 
-function _helpInviteText(o: any) {
+const _helpInviteText = (o: any) => {
   str(o.message);
-}
+};
 
-function _updateNewEncryptedMessage(o: any) {
+const _updateNewEncryptedMessage = (o: any) => {
   obj(o.message);
   i32(o.qts);
-}
+};
 
-function _updateEncryptedChatTyping(o: any) {
+const _updateEncryptedChatTyping = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _updateEncryption(o: any) {
+const _updateEncryption = (o: any) => {
   obj(o.chat);
   i32(o.date);
-}
+};
 
-function _updateEncryptedMessagesRead(o: any) {
+const _updateEncryptedMessagesRead = (o: any) => {
   i32(o.chat_id);
   i32(o.max_date);
   i32(o.date);
-}
+};
 
-function _encryptedChatEmpty(o: any) {
+const _encryptedChatEmpty = (o: any) => {
   i32(o.id);
-}
+};
 
-function _encryptedChatWaiting(o: any) {
+const _encryptedChatWaiting = (o: any) => {
   i32(o.id);
   i64(o.access_hash);
   i32(o.date);
   i32(o.admin_id);
   i32(o.participant_id);
-}
+};
 
-function _encryptedChatRequested(o: any) {
+const _encryptedChatRequested = (o: any) => {
   i32(o.id);
   i64(o.access_hash);
   i32(o.date);
   i32(o.admin_id);
   i32(o.participant_id);
   bytes(o.g_a);
-}
+};
 
-function _encryptedChat(o: any) {
+const _encryptedChat = (o: any) => {
   i32(o.id);
   i64(o.access_hash);
   i32(o.date);
@@ -920,108 +920,108 @@ function _encryptedChat(o: any) {
   i32(o.participant_id);
   bytes(o.g_a_or_b);
   i64(o.key_fingerprint);
-}
+};
 
-function _encryptedChatDiscarded(o: any) {
+const _encryptedChatDiscarded = (o: any) => {
   i32(o.id);
-}
+};
 
-function _inputEncryptedChat(o: any) {
+const _inputEncryptedChat = (o: any) => {
   i32(o.chat_id);
   i64(o.access_hash);
-}
+};
 
-function _encryptedFile(o: any) {
+const _encryptedFile = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   i32(o.size);
   i32(o.dc_id);
   i32(o.key_fingerprint);
-}
+};
 
-function _inputEncryptedFileUploaded(o: any) {
+const _inputEncryptedFileUploaded = (o: any) => {
   i64(o.id);
   i32(o.parts);
   str(o.md5_checksum);
   i32(o.key_fingerprint);
-}
+};
 
-function _inputEncryptedFile(o: any) {
+const _inputEncryptedFile = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputEncryptedFileLocation(o: any) {
+const _inputEncryptedFileLocation = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _encryptedMessage(o: any) {
+const _encryptedMessage = (o: any) => {
   i64(o.random_id);
   i32(o.chat_id);
   i32(o.date);
   bytes(o.bytes);
   obj(o.file);
-}
+};
 
-function _encryptedMessageService(o: any) {
+const _encryptedMessageService = (o: any) => {
   i64(o.random_id);
   i32(o.chat_id);
   i32(o.date);
   bytes(o.bytes);
-}
+};
 
-function _messagesDhConfigNotModified(o: any) {
+const _messagesDhConfigNotModified = (o: any) => {
   bytes(o.random);
-}
+};
 
-function _messagesDhConfig(o: any) {
+const _messagesDhConfig = (o: any) => {
   i32(o.g);
   bytes(o.p);
   i32(o.version);
   bytes(o.random);
-}
+};
 
-function _messagesSentEncryptedMessage(o: any) {
+const _messagesSentEncryptedMessage = (o: any) => {
   i32(o.date);
-}
+};
 
-function _messagesSentEncryptedFile(o: any) {
+const _messagesSentEncryptedFile = (o: any) => {
   i32(o.date);
   obj(o.file);
-}
+};
 
-function _inputFileBig(o: any) {
+const _inputFileBig = (o: any) => {
   i64(o.id);
   i32(o.parts);
   str(o.name);
-}
+};
 
-function _inputEncryptedFileBigUploaded(o: any) {
+const _inputEncryptedFileBigUploaded = (o: any) => {
   i64(o.id);
   i32(o.parts);
   i32(o.key_fingerprint);
-}
+};
 
-function _updateChatParticipantAdd(o: any) {
+const _updateChatParticipantAdd = (o: any) => {
   i32(o.chat_id);
   i32(o.user_id);
   i32(o.inviter_id);
   i32(o.date);
   i32(o.version);
-}
+};
 
-function _updateChatParticipantDelete(o: any) {
+const _updateChatParticipantDelete = (o: any) => {
   i32(o.chat_id);
   i32(o.user_id);
   i32(o.version);
-}
+};
 
-function _updateDcOptions(o: any) {
+const _updateDcOptions = (o: any) => {
   vector(obj, o.dc_options);
-}
+};
 
-function _inputMediaUploadedDocument(o: any) {
+const _inputMediaUploadedDocument = (o: any) => {
   const flags = 
       has(o.nosound_video) << 3
     | has(o.thumb) << 2
@@ -1035,18 +1035,18 @@ function _inputMediaUploadedDocument(o: any) {
   vector(obj, o.attributes);
   flagVector(obj, o.stickers);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _inputMediaDocument(o: any) {
+const _inputMediaDocument = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
   
   obj(o.id);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _messageMediaDocument(o: any) {
+const _messageMediaDocument = (o: any) => {
   const flags = 
       has(o.document)
     | has(o.ttl_seconds) << 2;
@@ -1054,26 +1054,26 @@ function _messageMediaDocument(o: any) {
   
   flag(obj, o.document);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _inputDocument(o: any) {
+const _inputDocument = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
-}
+};
 
-function _inputDocumentFileLocation(o: any) {
+const _inputDocumentFileLocation = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
   str(o.thumb_size);
-}
+};
 
-function _documentEmpty(o: any) {
+const _documentEmpty = (o: any) => {
   i64(o.id);
-}
+};
 
-function _document(o: any) {
+const _document = (o: any) => {
   const flags = 
       has(o.thumbs)
   i32(flags);
@@ -1087,51 +1087,51 @@ function _document(o: any) {
   flagVector(obj, o.thumbs);
   i32(o.dc_id);
   vector(obj, o.attributes);
-}
+};
 
-function _helpSupport(o: any) {
+const _helpSupport = (o: any) => {
   str(o.phone_number);
   obj(o.user);
-}
+};
 
-function _notifyPeer(o: any) {
+const _notifyPeer = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _updateUserBlocked(o: any) {
+const _updateUserBlocked = (o: any) => {
   i32(o.user_id);
   bool(o.blocked);
-}
+};
 
-function _updateNotifySettings(o: any) {
+const _updateNotifySettings = (o: any) => {
   obj(o.peer);
   obj(o.notify_settings);
-}
+};
 
-function _sendMessageUploadVideoAction(o: any) {
+const _sendMessageUploadVideoAction = (o: any) => {
   i32(o.progress);
-}
+};
 
-function _sendMessageUploadAudioAction(o: any) {
+const _sendMessageUploadAudioAction = (o: any) => {
   i32(o.progress);
-}
+};
 
-function _sendMessageUploadPhotoAction(o: any) {
+const _sendMessageUploadPhotoAction = (o: any) => {
   i32(o.progress);
-}
+};
 
-function _sendMessageUploadDocumentAction(o: any) {
+const _sendMessageUploadDocumentAction = (o: any) => {
   i32(o.progress);
-}
+};
 
-function _contactsFound(o: any) {
+const _contactsFound = (o: any) => {
   vector(obj, o.my_results);
   vector(obj, o.results);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _updateServiceNotification(o: any) {
+const _updateServiceNotification = (o: any) => {
   const flags = 
       has(o.popup)
     | has(o.inbox_date) << 1
@@ -1142,50 +1142,50 @@ function _updateServiceNotification(o: any) {
   str(o.message);
   obj(o.media);
   vector(obj, o.entities);
-}
+};
 
-function _updatePrivacy(o: any) {
+const _updatePrivacy = (o: any) => {
   obj(o.key);
   vector(obj, o.rules);
-}
+};
 
-function _inputPrivacyValueAllowUsers(o: any) {
+const _inputPrivacyValueAllowUsers = (o: any) => {
   vector(obj, o.users);
-}
+};
 
-function _inputPrivacyValueDisallowUsers(o: any) {
+const _inputPrivacyValueDisallowUsers = (o: any) => {
   vector(obj, o.users);
-}
+};
 
-function _privacyValueAllowUsers(o: any) {
+const _privacyValueAllowUsers = (o: any) => {
   vector(i32, o.users);
-}
+};
 
-function _privacyValueDisallowUsers(o: any) {
+const _privacyValueDisallowUsers = (o: any) => {
   vector(i32, o.users);
-}
+};
 
-function _accountPrivacyRules(o: any) {
+const _accountPrivacyRules = (o: any) => {
   vector(obj, o.rules);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _accountDaysTTL(o: any) {
+const _accountDaysTTL = (o: any) => {
   i32(o.days);
-}
+};
 
-function _updateUserPhone(o: any) {
+const _updateUserPhone = (o: any) => {
   i32(o.user_id);
   str(o.phone);
-}
+};
 
-function _documentAttributeImageSize(o: any) {
+const _documentAttributeImageSize = (o: any) => {
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _documentAttributeSticker(o: any) {
+const _documentAttributeSticker = (o: any) => {
   const flags = 
       has(o.mask) << 1
     | has(o.mask_coords);
@@ -1194,9 +1194,9 @@ function _documentAttributeSticker(o: any) {
   str(o.alt);
   obj(o.stickerset);
   flag(obj, o.mask_coords);
-}
+};
 
-function _documentAttributeVideo(o: any) {
+const _documentAttributeVideo = (o: any) => {
   const flags = 
       has(o.round_message)
     | has(o.supports_streaming) << 1
@@ -1205,9 +1205,9 @@ function _documentAttributeVideo(o: any) {
   i32(o.duration);
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _documentAttributeAudio(o: any) {
+const _documentAttributeAudio = (o: any) => {
   const flags = 
       has(o.voice) << 10
     | has(o.title)
@@ -1219,28 +1219,28 @@ function _documentAttributeAudio(o: any) {
   flag(str, o.title);
   flag(str, o.performer);
   flag(bytes, o.waveform);
-}
+};
 
-function _documentAttributeFilename(o: any) {
+const _documentAttributeFilename = (o: any) => {
   str(o.file_name);
-}
+};
 
-function _messagesStickers(o: any) {
+const _messagesStickers = (o: any) => {
   i32(o.hash);
   vector(obj, o.stickers);
-}
+};
 
-function _stickerPack(o: any) {
+const _stickerPack = (o: any) => {
   str(o.emoticon);
   vector(i64, o.documents);
-}
+};
 
-function _messagesAllStickers(o: any) {
+const _messagesAllStickers = (o: any) => {
   i32(o.hash);
   vector(obj, o.sets);
-}
+};
 
-function _updateReadHistoryInbox(o: any) {
+const _updateReadHistoryInbox = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
@@ -1251,36 +1251,36 @@ function _updateReadHistoryInbox(o: any) {
   i32(o.still_unread_count);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateReadHistoryOutbox(o: any) {
+const _updateReadHistoryOutbox = (o: any) => {
   obj(o.peer);
   i32(o.max_id);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _messagesAffectedMessages(o: any) {
+const _messagesAffectedMessages = (o: any) => {
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateWebPage(o: any) {
+const _updateWebPage = (o: any) => {
   obj(o.webpage);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _webPageEmpty(o: any) {
+const _webPageEmpty = (o: any) => {
   i64(o.id);
-}
+};
 
-function _webPagePending(o: any) {
+const _webPagePending = (o: any) => {
   i64(o.id);
   i32(o.date);
-}
+};
 
-function _webPage(o: any) {
+const _webPage = (o: any) => {
   const flags = 
       has(o.type)
     | has(o.site_name) << 1
@@ -1316,13 +1316,13 @@ function _webPage(o: any) {
   flag(obj, o.document);
   flagVector(obj, o.documents);
   flag(obj, o.cached_page);
-}
+};
 
-function _messageMediaWebPage(o: any) {
+const _messageMediaWebPage = (o: any) => {
   obj(o.webpage);
-}
+};
 
-function _authorization(o: any) {
+const _authorization = (o: any) => {
   const flags = 
       has(o.current)
     | has(o.official_app) << 1
@@ -1341,13 +1341,13 @@ function _authorization(o: any) {
   str(o.ip);
   str(o.country);
   str(o.region);
-}
+};
 
-function _accountAuthorizations(o: any) {
+const _accountAuthorizations = (o: any) => {
   vector(obj, o.authorizations);
-}
+};
 
-function _accountPassword(o: any) {
+const _accountPassword = (o: any) => {
   const flags = 
       has(o.has_recovery)
     | has(o.has_secure_values) << 1
@@ -1367,9 +1367,9 @@ function _accountPassword(o: any) {
   obj(o.new_algo);
   obj(o.new_secure_algo);
   bytes(o.secure_random);
-}
+};
 
-function _accountPasswordSettings(o: any) {
+const _accountPasswordSettings = (o: any) => {
   const flags = 
       has(o.email)
     | has(o.secure_settings) << 1;
@@ -1377,9 +1377,9 @@ function _accountPasswordSettings(o: any) {
   
   flag(str, o.email);
   flag(obj, o.secure_settings);
-}
+};
 
-function _accountPasswordInputSettings(o: any) {
+const _accountPasswordInputSettings = (o: any) => {
   const flags = 
       has(o.new_algo)
     | has(o.new_password_hash)
@@ -1393,43 +1393,43 @@ function _accountPasswordInputSettings(o: any) {
   flag(str, o.hint);
   flag(str, o.email);
   flag(obj, o.new_secure_settings);
-}
+};
 
-function _authPasswordRecovery(o: any) {
+const _authPasswordRecovery = (o: any) => {
   str(o.email_pattern);
-}
+};
 
-function _inputMediaVenue(o: any) {
+const _inputMediaVenue = (o: any) => {
   obj(o.geo_point);
   str(o.title);
   str(o.address);
   str(o.provider);
   str(o.venue_id);
   str(o.venue_type);
-}
+};
 
-function _messageMediaVenue(o: any) {
+const _messageMediaVenue = (o: any) => {
   obj(o.geo);
   str(o.title);
   str(o.address);
   str(o.provider);
   str(o.venue_id);
   str(o.venue_type);
-}
+};
 
-function _receivedNotifyMessage(o: any) {
+const _receivedNotifyMessage = (o: any) => {
   i32(o.id);
-}
+};
 
-function _chatInviteExported(o: any) {
+const _chatInviteExported = (o: any) => {
   str(o.link);
-}
+};
 
-function _chatInviteAlready(o: any) {
+const _chatInviteAlready = (o: any) => {
   obj(o.chat);
-}
+};
 
-function _chatInvite(o: any) {
+const _chatInvite = (o: any) => {
   const flags = 
       has(o.channel)
     | has(o.broadcast) << 1
@@ -1442,28 +1442,28 @@ function _chatInvite(o: any) {
   obj(o.photo);
   i32(o.participants_count);
   flagVector(obj, o.participants);
-}
+};
 
-function _messageActionChatJoinedByLink(o: any) {
+const _messageActionChatJoinedByLink = (o: any) => {
   i32(o.inviter_id);
-}
+};
 
-function _updateReadMessagesContents(o: any) {
+const _updateReadMessagesContents = (o: any) => {
   vector(i32, o.messages);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _inputStickerSetID(o: any) {
+const _inputStickerSetID = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputStickerSetShortName(o: any) {
+const _inputStickerSetShortName = (o: any) => {
   str(o.short_name);
-}
+};
 
-function _stickerSet(o: any) {
+const _stickerSet = (o: any) => {
   const flags = 
       has(o.archived) << 1
     | has(o.official) << 2
@@ -1483,15 +1483,15 @@ function _stickerSet(o: any) {
   flag(i32, o.thumb_dc_id);
   i32(o.count);
   i32(o.hash);
-}
+};
 
-function _messagesStickerSet(o: any) {
+const _messagesStickerSet = (o: any) => {
   obj(o.set);
   vector(obj, o.packs);
   vector(obj, o.documents);
-}
+};
 
-function _user(o: any) {
+const _user = (o: any) => {
   const flags = 
       has(o.self) << 10
     | has(o.contact) << 11
@@ -1531,43 +1531,43 @@ function _user(o: any) {
   flagVector(obj, o.restriction_reason);
   flag(str, o.bot_inline_placeholder);
   flag(str, o.lang_code);
-}
+};
 
-function _botCommand(o: any) {
+const _botCommand = (o: any) => {
   str(o.command);
   str(o.description);
-}
+};
 
-function _botInfo(o: any) {
+const _botInfo = (o: any) => {
   i32(o.user_id);
   str(o.description);
   vector(obj, o.commands);
-}
+};
 
-function _keyboardButton(o: any) {
+const _keyboardButton = (o: any) => {
   str(o.text);
-}
+};
 
-function _keyboardButtonRow(o: any) {
+const _keyboardButtonRow = (o: any) => {
   vector(obj, o.buttons);
-}
+};
 
-function _replyKeyboardHide(o: any) {
+const _replyKeyboardHide = (o: any) => {
   const flags = 
       has(o.selective) << 2;
   i32(flags);
   
-}
+};
 
-function _replyKeyboardForceReply(o: any) {
+const _replyKeyboardForceReply = (o: any) => {
   const flags = 
       has(o.single_use) << 1
     | has(o.selective) << 2;
   i32(flags);
   
-}
+};
 
-function _replyKeyboardMarkup(o: any) {
+const _replyKeyboardMarkup = (o: any) => {
   const flags = 
       has(o.resize)
     | has(o.single_use) << 1
@@ -1575,76 +1575,76 @@ function _replyKeyboardMarkup(o: any) {
   i32(flags);
   
   vector(obj, o.rows);
-}
+};
 
-function _inputPeerUser(o: any) {
+const _inputPeerUser = (o: any) => {
   i32(o.user_id);
   i64(o.access_hash);
-}
+};
 
-function _inputUser(o: any) {
+const _inputUser = (o: any) => {
   i32(o.user_id);
   i64(o.access_hash);
-}
+};
 
-function _messageEntityUnknown(o: any) {
+const _messageEntityUnknown = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityMention(o: any) {
+const _messageEntityMention = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityHashtag(o: any) {
+const _messageEntityHashtag = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityBotCommand(o: any) {
+const _messageEntityBotCommand = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityUrl(o: any) {
+const _messageEntityUrl = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityEmail(o: any) {
+const _messageEntityEmail = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityBold(o: any) {
+const _messageEntityBold = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityItalic(o: any) {
+const _messageEntityItalic = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityCode(o: any) {
+const _messageEntityCode = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityPre(o: any) {
+const _messageEntityPre = (o: any) => {
   i32(o.offset);
   i32(o.length);
   str(o.language);
-}
+};
 
-function _messageEntityTextUrl(o: any) {
+const _messageEntityTextUrl = (o: any) => {
   i32(o.offset);
   i32(o.length);
   str(o.url);
-}
+};
 
-function _updateShortSentMessage(o: any) {
+const _updateShortSentMessage = (o: any) => {
   const flags = 
       has(o.out) << 1
     | has(o.media) << 9
@@ -1657,23 +1657,23 @@ function _updateShortSentMessage(o: any) {
   i32(o.date);
   flag(obj, o.media);
   flagVector(obj, o.entities);
-}
+};
 
-function _inputChannel(o: any) {
+const _inputChannel = (o: any) => {
   i32(o.channel_id);
   i64(o.access_hash);
-}
+};
 
-function _peerChannel(o: any) {
+const _peerChannel = (o: any) => {
   i32(o.channel_id);
-}
+};
 
-function _inputPeerChannel(o: any) {
+const _inputPeerChannel = (o: any) => {
   i32(o.channel_id);
   i64(o.access_hash);
-}
+};
 
-function _channel(o: any) {
+const _channel = (o: any) => {
   const flags = 
       has(o.creator)
     | has(o.left) << 2
@@ -1708,9 +1708,9 @@ function _channel(o: any) {
   flag(obj, o.banned_rights);
   flag(obj, o.default_banned_rights);
   flag(i32, o.participants_count);
-}
+};
 
-function _channelForbidden(o: any) {
+const _channelForbidden = (o: any) => {
   const flags = 
       has(o.broadcast) << 5
     | has(o.megagroup) << 8
@@ -1721,15 +1721,15 @@ function _channelForbidden(o: any) {
   i64(o.access_hash);
   str(o.title);
   flag(i32, o.until_date);
-}
+};
 
-function _contactsResolvedPeer(o: any) {
+const _contactsResolvedPeer = (o: any) => {
   obj(o.peer);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _channelFull(o: any) {
+const _channelFull = (o: any) => {
   const flags = 
       has(o.can_view_participants) << 3
     | has(o.can_set_username) << 6
@@ -1780,14 +1780,14 @@ function _channelFull(o: any) {
   flag(i32, o.slowmode_seconds);
   flag(i32, o.slowmode_next_send_date);
   i32(o.pts);
-}
+};
 
-function _messageRange(o: any) {
+const _messageRange = (o: any) => {
   i32(o.min_id);
   i32(o.max_id);
-}
+};
 
-function _messagesChannelMessages(o: any) {
+const _messagesChannelMessages = (o: any) => {
   const flags = 
       has(o.inexact) << 1
   i32(flags);
@@ -1797,32 +1797,32 @@ function _messagesChannelMessages(o: any) {
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messageActionChannelCreate(o: any) {
+const _messageActionChannelCreate = (o: any) => {
   str(o.title);
-}
+};
 
-function _updateChannelTooLong(o: any) {
+const _updateChannelTooLong = (o: any) => {
   const flags = 
       has(o.pts);
   i32(flags);
   
   i32(o.channel_id);
   flag(i32, o.pts);
-}
+};
 
-function _updateChannel(o: any) {
+const _updateChannel = (o: any) => {
   i32(o.channel_id);
-}
+};
 
-function _updateNewChannelMessage(o: any) {
+const _updateNewChannelMessage = (o: any) => {
   obj(o.message);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateReadChannelInbox(o: any) {
+const _updateReadChannelInbox = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
@@ -1832,22 +1832,22 @@ function _updateReadChannelInbox(o: any) {
   i32(o.max_id);
   i32(o.still_unread_count);
   i32(o.pts);
-}
+};
 
-function _updateDeleteChannelMessages(o: any) {
+const _updateDeleteChannelMessages = (o: any) => {
   i32(o.channel_id);
   vector(i32, o.messages);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateChannelMessageViews(o: any) {
+const _updateChannelMessageViews = (o: any) => {
   i32(o.channel_id);
   i32(o.id);
   i32(o.views);
-}
+};
 
-function _updatesChannelDifferenceEmpty(o: any) {
+const _updatesChannelDifferenceEmpty = (o: any) => {
   const flags = 
       has(o.final)
     | has(o.timeout) << 1;
@@ -1855,9 +1855,9 @@ function _updatesChannelDifferenceEmpty(o: any) {
   
   i32(o.pts);
   flag(i32, o.timeout);
-}
+};
 
-function _updatesChannelDifferenceTooLong(o: any) {
+const _updatesChannelDifferenceTooLong = (o: any) => {
   const flags = 
       has(o.final)
     | has(o.timeout) << 1
@@ -1868,9 +1868,9 @@ function _updatesChannelDifferenceTooLong(o: any) {
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _updatesChannelDifference(o: any) {
+const _updatesChannelDifference = (o: any) => {
   const flags = 
       has(o.final)
     | has(o.timeout) << 1
@@ -1882,78 +1882,78 @@ function _updatesChannelDifference(o: any) {
   vector(obj, o.other_updates);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _channelMessagesFilter(o: any) {
+const _channelMessagesFilter = (o: any) => {
   const flags = 
       has(o.exclude_new_messages) << 1
   i32(flags);
   
   vector(obj, o.ranges);
-}
+};
 
-function _channelParticipant(o: any) {
+const _channelParticipant = (o: any) => {
   i32(o.user_id);
   i32(o.date);
-}
+};
 
-function _channelParticipantSelf(o: any) {
+const _channelParticipantSelf = (o: any) => {
   i32(o.user_id);
   i32(o.inviter_id);
   i32(o.date);
-}
+};
 
-function _channelParticipantCreator(o: any) {
+const _channelParticipantCreator = (o: any) => {
   const flags = 
       has(o.rank);
   i32(flags);
   
   i32(o.user_id);
   flag(str, o.rank);
-}
+};
 
-function _channelParticipantsKicked(o: any) {
+const _channelParticipantsKicked = (o: any) => {
   str(o.q);
-}
+};
 
-function _channelsChannelParticipants(o: any) {
+const _channelsChannelParticipants = (o: any) => {
   i32(o.count);
   vector(obj, o.participants);
   vector(obj, o.users);
-}
+};
 
-function _channelsChannelParticipant(o: any) {
+const _channelsChannelParticipant = (o: any) => {
   obj(o.participant);
   vector(obj, o.users);
-}
+};
 
-function _chatParticipantCreator(o: any) {
+const _chatParticipantCreator = (o: any) => {
   i32(o.user_id);
-}
+};
 
-function _chatParticipantAdmin(o: any) {
+const _chatParticipantAdmin = (o: any) => {
   i32(o.user_id);
   i32(o.inviter_id);
   i32(o.date);
-}
+};
 
-function _updateChatParticipantAdmin(o: any) {
+const _updateChatParticipantAdmin = (o: any) => {
   i32(o.chat_id);
   i32(o.user_id);
   bool(o.is_admin);
   i32(o.version);
-}
+};
 
-function _messageActionChatMigrateTo(o: any) {
+const _messageActionChatMigrateTo = (o: any) => {
   i32(o.channel_id);
-}
+};
 
-function _messageActionChannelMigrateFrom(o: any) {
+const _messageActionChannelMigrateFrom = (o: any) => {
   str(o.title);
   i32(o.chat_id);
-}
+};
 
-function _helpTermsOfService(o: any) {
+const _helpTermsOfService = (o: any) => {
   const flags = 
       has(o.popup)
     | has(o.min_age_confirm) << 1;
@@ -1963,51 +1963,51 @@ function _helpTermsOfService(o: any) {
   str(o.text);
   vector(obj, o.entities);
   flag(i32, o.min_age_confirm);
-}
+};
 
-function _updateNewStickerSet(o: any) {
+const _updateNewStickerSet = (o: any) => {
   obj(o.stickerset);
-}
+};
 
-function _updateStickerSetsOrder(o: any) {
+const _updateStickerSetsOrder = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
   
   vector(i64, o.order);
-}
+};
 
-function _foundGif(o: any) {
+const _foundGif = (o: any) => {
   str(o.url);
   str(o.thumb_url);
   str(o.content_url);
   str(o.content_type);
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _foundGifCached(o: any) {
+const _foundGifCached = (o: any) => {
   str(o.url);
   obj(o.photo);
   obj(o.document);
-}
+};
 
-function _inputMediaGifExternal(o: any) {
+const _inputMediaGifExternal = (o: any) => {
   str(o.url);
   str(o.q);
-}
+};
 
-function _messagesFoundGifs(o: any) {
+const _messagesFoundGifs = (o: any) => {
   i32(o.next_offset);
   vector(obj, o.results);
-}
+};
 
-function _messagesSavedGifs(o: any) {
+const _messagesSavedGifs = (o: any) => {
   i32(o.hash);
   vector(obj, o.gifs);
-}
+};
 
-function _inputBotInlineMessageMediaAuto(o: any) {
+const _inputBotInlineMessageMediaAuto = (o: any) => {
   const flags = 
       has(o.entities) << 1
     | has(o.reply_markup) << 2;
@@ -2016,9 +2016,9 @@ function _inputBotInlineMessageMediaAuto(o: any) {
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
-}
+};
 
-function _inputBotInlineMessageText(o: any) {
+const _inputBotInlineMessageText = (o: any) => {
   const flags = 
       has(o.no_webpage)
     | has(o.entities) << 1
@@ -2028,9 +2028,9 @@ function _inputBotInlineMessageText(o: any) {
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
-}
+};
 
-function _inputBotInlineResult(o: any) {
+const _inputBotInlineResult = (o: any) => {
   const flags = 
       has(o.title) << 1
     | has(o.description) << 2
@@ -2047,9 +2047,9 @@ function _inputBotInlineResult(o: any) {
   flag(obj, o.thumb);
   flag(obj, o.content);
   obj(o.send_message);
-}
+};
 
-function _botInlineMessageMediaAuto(o: any) {
+const _botInlineMessageMediaAuto = (o: any) => {
   const flags = 
       has(o.entities) << 1
     | has(o.reply_markup) << 2;
@@ -2058,9 +2058,9 @@ function _botInlineMessageMediaAuto(o: any) {
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
-}
+};
 
-function _botInlineMessageText(o: any) {
+const _botInlineMessageText = (o: any) => {
   const flags = 
       has(o.no_webpage)
     | has(o.entities) << 1
@@ -2070,9 +2070,9 @@ function _botInlineMessageText(o: any) {
   str(o.message);
   flagVector(obj, o.entities);
   flag(obj, o.reply_markup);
-}
+};
 
-function _botInlineResult(o: any) {
+const _botInlineResult = (o: any) => {
   const flags = 
       has(o.title) << 1
     | has(o.description) << 2
@@ -2089,9 +2089,9 @@ function _botInlineResult(o: any) {
   flag(obj, o.thumb);
   flag(obj, o.content);
   obj(o.send_message);
-}
+};
 
-function _messagesBotResults(o: any) {
+const _messagesBotResults = (o: any) => {
   const flags = 
       has(o.gallery)
     | has(o.next_offset) << 1
@@ -2104,9 +2104,9 @@ function _messagesBotResults(o: any) {
   vector(obj, o.results);
   i32(o.cache_time);
   vector(obj, o.users);
-}
+};
 
-function _updateBotInlineQuery(o: any) {
+const _updateBotInlineQuery = (o: any) => {
   const flags = 
       has(o.geo)
   i32(flags);
@@ -2116,9 +2116,9 @@ function _updateBotInlineQuery(o: any) {
   str(o.query);
   flag(obj, o.geo);
   str(o.offset);
-}
+};
 
-function _updateBotInlineSend(o: any) {
+const _updateBotInlineSend = (o: any) => {
   const flags = 
       has(o.geo)
     | has(o.msg_id) << 1;
@@ -2129,14 +2129,14 @@ function _updateBotInlineSend(o: any) {
   flag(obj, o.geo);
   str(o.id);
   flag(obj, o.msg_id);
-}
+};
 
-function _exportedMessageLink(o: any) {
+const _exportedMessageLink = (o: any) => {
   str(o.link);
   str(o.html);
-}
+};
 
-function _messageFwdHeader(o: any) {
+const _messageFwdHeader = (o: any) => {
   const flags = 
       has(o.from_id)
     | has(o.from_name) << 5
@@ -2155,67 +2155,67 @@ function _messageFwdHeader(o: any) {
   flag(str, o.post_author);
   flag(obj, o.saved_from_peer);
   flag(i32, o.saved_from_msg_id);
-}
+};
 
-function _updateEditChannelMessage(o: any) {
+const _updateEditChannelMessage = (o: any) => {
   obj(o.message);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _updateChannelPinnedMessage(o: any) {
+const _updateChannelPinnedMessage = (o: any) => {
   i32(o.channel_id);
   i32(o.id);
-}
+};
 
-function _authSentCodeTypeApp(o: any) {
+const _authSentCodeTypeApp = (o: any) => {
   i32(o.length);
-}
+};
 
-function _authSentCodeTypeSms(o: any) {
+const _authSentCodeTypeSms = (o: any) => {
   i32(o.length);
-}
+};
 
-function _authSentCodeTypeCall(o: any) {
+const _authSentCodeTypeCall = (o: any) => {
   i32(o.length);
-}
+};
 
-function _authSentCodeTypeFlashCall(o: any) {
+const _authSentCodeTypeFlashCall = (o: any) => {
   str(o.pattern);
-}
+};
 
-function _keyboardButtonUrl(o: any) {
+const _keyboardButtonUrl = (o: any) => {
   str(o.text);
   str(o.url);
-}
+};
 
-function _keyboardButtonCallback(o: any) {
+const _keyboardButtonCallback = (o: any) => {
   str(o.text);
   bytes(o.data);
-}
+};
 
-function _keyboardButtonRequestPhone(o: any) {
+const _keyboardButtonRequestPhone = (o: any) => {
   str(o.text);
-}
+};
 
-function _keyboardButtonRequestGeoLocation(o: any) {
+const _keyboardButtonRequestGeoLocation = (o: any) => {
   str(o.text);
-}
+};
 
-function _keyboardButtonSwitchInline(o: any) {
+const _keyboardButtonSwitchInline = (o: any) => {
   const flags = 
       has(o.same_peer)
   i32(flags);
   
   str(o.text);
   str(o.query);
-}
+};
 
-function _replyInlineMarkup(o: any) {
+const _replyInlineMarkup = (o: any) => {
   vector(obj, o.rows);
-}
+};
 
-function _messagesBotCallbackAnswer(o: any) {
+const _messagesBotCallbackAnswer = (o: any) => {
   const flags = 
       has(o.alert) << 1
     | has(o.has_url) << 3
@@ -2227,9 +2227,9 @@ function _messagesBotCallbackAnswer(o: any) {
   flag(str, o.message);
   flag(str, o.url);
   i32(o.cache_time);
-}
+};
 
-function _updateBotCallbackQuery(o: any) {
+const _updateBotCallbackQuery = (o: any) => {
   const flags = 
       has(o.data)
     | has(o.game_short_name) << 1;
@@ -2242,22 +2242,22 @@ function _updateBotCallbackQuery(o: any) {
   i64(o.chat_instance);
   flag(bytes, o.data);
   flag(str, o.game_short_name);
-}
+};
 
-function _messagesMessageEditData(o: any) {
+const _messagesMessageEditData = (o: any) => {
   const flags = 
       has(o.caption);
   i32(flags);
   
-}
+};
 
-function _updateEditMessage(o: any) {
+const _updateEditMessage = (o: any) => {
   obj(o.message);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _inputBotInlineMessageMediaGeo(o: any) {
+const _inputBotInlineMessageMediaGeo = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2265,9 +2265,9 @@ function _inputBotInlineMessageMediaGeo(o: any) {
   obj(o.geo_point);
   i32(o.period);
   flag(obj, o.reply_markup);
-}
+};
 
-function _inputBotInlineMessageMediaVenue(o: any) {
+const _inputBotInlineMessageMediaVenue = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2279,9 +2279,9 @@ function _inputBotInlineMessageMediaVenue(o: any) {
   str(o.venue_id);
   str(o.venue_type);
   flag(obj, o.reply_markup);
-}
+};
 
-function _inputBotInlineMessageMediaContact(o: any) {
+const _inputBotInlineMessageMediaContact = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2291,9 +2291,9 @@ function _inputBotInlineMessageMediaContact(o: any) {
   str(o.last_name);
   str(o.vcard);
   flag(obj, o.reply_markup);
-}
+};
 
-function _botInlineMessageMediaGeo(o: any) {
+const _botInlineMessageMediaGeo = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2301,9 +2301,9 @@ function _botInlineMessageMediaGeo(o: any) {
   obj(o.geo);
   i32(o.period);
   flag(obj, o.reply_markup);
-}
+};
 
-function _botInlineMessageMediaVenue(o: any) {
+const _botInlineMessageMediaVenue = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2315,9 +2315,9 @@ function _botInlineMessageMediaVenue(o: any) {
   str(o.venue_id);
   str(o.venue_type);
   flag(obj, o.reply_markup);
-}
+};
 
-function _botInlineMessageMediaContact(o: any) {
+const _botInlineMessageMediaContact = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
@@ -2327,16 +2327,16 @@ function _botInlineMessageMediaContact(o: any) {
   str(o.last_name);
   str(o.vcard);
   flag(obj, o.reply_markup);
-}
+};
 
-function _inputBotInlineResultPhoto(o: any) {
+const _inputBotInlineResultPhoto = (o: any) => {
   str(o.id);
   str(o.type);
   obj(o.photo);
   obj(o.send_message);
-}
+};
 
-function _inputBotInlineResultDocument(o: any) {
+const _inputBotInlineResultDocument = (o: any) => {
   const flags = 
       has(o.title) << 1
     | has(o.description) << 2
@@ -2348,9 +2348,9 @@ function _inputBotInlineResultDocument(o: any) {
   flag(str, o.description);
   obj(o.document);
   obj(o.send_message);
-}
+};
 
-function _botInlineMediaResult(o: any) {
+const _botInlineMediaResult = (o: any) => {
   const flags = 
       has(o.photo)
     | has(o.document) << 1
@@ -2365,15 +2365,15 @@ function _botInlineMediaResult(o: any) {
   flag(str, o.title);
   flag(str, o.description);
   obj(o.send_message);
-}
+};
 
-function _inputBotInlineMessageID(o: any) {
+const _inputBotInlineMessageID = (o: any) => {
   i32(o.dc_id);
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _updateInlineBotCallbackQuery(o: any) {
+const _updateInlineBotCallbackQuery = (o: any) => {
   const flags = 
       has(o.data)
     | has(o.game_short_name) << 1;
@@ -2385,69 +2385,69 @@ function _updateInlineBotCallbackQuery(o: any) {
   i64(o.chat_instance);
   flag(bytes, o.data);
   flag(str, o.game_short_name);
-}
+};
 
-function _inlineBotSwitchPM(o: any) {
+const _inlineBotSwitchPM = (o: any) => {
   str(o.text);
   str(o.start_param);
-}
+};
 
-function _messagesPeerDialogs(o: any) {
+const _messagesPeerDialogs = (o: any) => {
   vector(obj, o.dialogs);
   vector(obj, o.messages);
   vector(obj, o.chats);
   vector(obj, o.users);
   obj(o.state);
-}
+};
 
-function _topPeer(o: any) {
+const _topPeer = (o: any) => {
   obj(o.peer);
   f64(o.rating);
-}
+};
 
-function _topPeerCategoryPeers(o: any) {
+const _topPeerCategoryPeers = (o: any) => {
   obj(o.category);
   i32(o.count);
   vector(obj, o.peers);
-}
+};
 
-function _contactsTopPeers(o: any) {
+const _contactsTopPeers = (o: any) => {
   vector(obj, o.categories);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messageEntityMentionName(o: any) {
+const _messageEntityMentionName = (o: any) => {
   i32(o.offset);
   i32(o.length);
   i32(o.user_id);
-}
+};
 
-function _inputMessageEntityMentionName(o: any) {
+const _inputMessageEntityMentionName = (o: any) => {
   i32(o.offset);
   i32(o.length);
   obj(o.user_id);
-}
+};
 
-function _updateReadChannelOutbox(o: any) {
+const _updateReadChannelOutbox = (o: any) => {
   i32(o.channel_id);
   i32(o.max_id);
-}
+};
 
-function _updateDraftMessage(o: any) {
+const _updateDraftMessage = (o: any) => {
   obj(o.peer);
   obj(o.draft);
-}
+};
 
-function _draftMessageEmpty(o: any) {
+const _draftMessageEmpty = (o: any) => {
   const flags = 
       has(o.date);
   i32(flags);
   
   flag(i32, o.date);
-}
+};
 
-function _draftMessage(o: any) {
+const _draftMessage = (o: any) => {
   const flags = 
       has(o.no_webpage) << 1
     | has(o.reply_to_msg_id)
@@ -2458,74 +2458,74 @@ function _draftMessage(o: any) {
   str(o.message);
   flagVector(obj, o.entities);
   i32(o.date);
-}
+};
 
-function _messagesFeaturedStickers(o: any) {
+const _messagesFeaturedStickers = (o: any) => {
   i32(o.hash);
   vector(obj, o.sets);
   vector(i64, o.unread);
-}
+};
 
-function _messagesRecentStickers(o: any) {
+const _messagesRecentStickers = (o: any) => {
   i32(o.hash);
   vector(obj, o.packs);
   vector(obj, o.stickers);
   vector(i32, o.dates);
-}
+};
 
-function _messagesArchivedStickers(o: any) {
+const _messagesArchivedStickers = (o: any) => {
   i32(o.count);
   vector(obj, o.sets);
-}
+};
 
-function _messagesStickerSetInstallResultArchive(o: any) {
+const _messagesStickerSetInstallResultArchive = (o: any) => {
   vector(obj, o.sets);
-}
+};
 
-function _stickerSetCovered(o: any) {
+const _stickerSetCovered = (o: any) => {
   obj(o.set);
   obj(o.cover);
-}
+};
 
-function _inputMediaPhotoExternal(o: any) {
+const _inputMediaPhotoExternal = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
   
   str(o.url);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _inputMediaDocumentExternal(o: any) {
+const _inputMediaDocumentExternal = (o: any) => {
   const flags = 
       has(o.ttl_seconds);
   i32(flags);
   
   str(o.url);
   flag(i32, o.ttl_seconds);
-}
+};
 
-function _stickerSetMultiCovered(o: any) {
+const _stickerSetMultiCovered = (o: any) => {
   obj(o.set);
   vector(obj, o.covers);
-}
+};
 
-function _maskCoords(o: any) {
+const _maskCoords = (o: any) => {
   i32(o.n);
   f64(o.x);
   f64(o.y);
   f64(o.zoom);
-}
+};
 
-function _inputStickeredMediaPhoto(o: any) {
+const _inputStickeredMediaPhoto = (o: any) => {
   obj(o.id);
-}
+};
 
-function _inputStickeredMediaDocument(o: any) {
+const _inputStickeredMediaDocument = (o: any) => {
   obj(o.id);
-}
+};
 
-function _game(o: any) {
+const _game = (o: any) => {
   const flags = 
       has(o.document);
   i32(flags);
@@ -2537,168 +2537,168 @@ function _game(o: any) {
   str(o.description);
   obj(o.photo);
   flag(obj, o.document);
-}
+};
 
-function _inputBotInlineResultGame(o: any) {
+const _inputBotInlineResultGame = (o: any) => {
   str(o.id);
   str(o.short_name);
   obj(o.send_message);
-}
+};
 
-function _inputBotInlineMessageGame(o: any) {
+const _inputBotInlineMessageGame = (o: any) => {
   const flags = 
       has(o.reply_markup) << 2;
   i32(flags);
   
   flag(obj, o.reply_markup);
-}
+};
 
-function _messageMediaGame(o: any) {
+const _messageMediaGame = (o: any) => {
   obj(o.game);
-}
+};
 
-function _inputMediaGame(o: any) {
+const _inputMediaGame = (o: any) => {
   obj(o.id);
-}
+};
 
-function _inputGameID(o: any) {
+const _inputGameID = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputGameShortName(o: any) {
+const _inputGameShortName = (o: any) => {
   obj(o.bot_id);
   str(o.short_name);
-}
+};
 
-function _keyboardButtonGame(o: any) {
+const _keyboardButtonGame = (o: any) => {
   str(o.text);
-}
+};
 
-function _messageActionGameScore(o: any) {
+const _messageActionGameScore = (o: any) => {
   i64(o.game_id);
   i32(o.score);
-}
+};
 
-function _highScore(o: any) {
+const _highScore = (o: any) => {
   i32(o.pos);
   i32(o.user_id);
   i32(o.score);
-}
+};
 
-function _messagesHighScores(o: any) {
+const _messagesHighScores = (o: any) => {
   vector(obj, o.scores);
   vector(obj, o.users);
-}
+};
 
-function _updatesDifferenceTooLong(o: any) {
+const _updatesDifferenceTooLong = (o: any) => {
   i32(o.pts);
-}
+};
 
-function _updateChannelWebPage(o: any) {
+const _updateChannelWebPage = (o: any) => {
   i32(o.channel_id);
   obj(o.webpage);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _messagesChatsSlice(o: any) {
+const _messagesChatsSlice = (o: any) => {
   i32(o.count);
   vector(obj, o.chats);
-}
+};
 
-function _textPlain(o: any) {
+const _textPlain = (o: any) => {
   str(o.text);
-}
+};
 
-function _textBold(o: any) {
+const _textBold = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textItalic(o: any) {
+const _textItalic = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textUnderline(o: any) {
+const _textUnderline = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textStrike(o: any) {
+const _textStrike = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textFixed(o: any) {
+const _textFixed = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textUrl(o: any) {
+const _textUrl = (o: any) => {
   obj(o.text);
   str(o.url);
   i64(o.webpage_id);
-}
+};
 
-function _textEmail(o: any) {
+const _textEmail = (o: any) => {
   obj(o.text);
   str(o.email);
-}
+};
 
-function _textConcat(o: any) {
+const _textConcat = (o: any) => {
   vector(obj, o.texts);
-}
+};
 
-function _pageBlockTitle(o: any) {
+const _pageBlockTitle = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockSubtitle(o: any) {
+const _pageBlockSubtitle = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockAuthorDate(o: any) {
+const _pageBlockAuthorDate = (o: any) => {
   obj(o.author);
   i32(o.published_date);
-}
+};
 
-function _pageBlockHeader(o: any) {
+const _pageBlockHeader = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockSubheader(o: any) {
+const _pageBlockSubheader = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockParagraph(o: any) {
+const _pageBlockParagraph = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockPreformatted(o: any) {
+const _pageBlockPreformatted = (o: any) => {
   obj(o.text);
   str(o.language);
-}
+};
 
-function _pageBlockFooter(o: any) {
+const _pageBlockFooter = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageBlockAnchor(o: any) {
+const _pageBlockAnchor = (o: any) => {
   str(o.name);
-}
+};
 
-function _pageBlockList(o: any) {
+const _pageBlockList = (o: any) => {
   vector(obj, o.items);
-}
+};
 
-function _pageBlockBlockquote(o: any) {
+const _pageBlockBlockquote = (o: any) => {
   obj(o.text);
   obj(o.caption);
-}
+};
 
-function _pageBlockPullquote(o: any) {
+const _pageBlockPullquote = (o: any) => {
   obj(o.text);
   obj(o.caption);
-}
+};
 
-function _pageBlockPhoto(o: any) {
+const _pageBlockPhoto = (o: any) => {
   const flags = 
       has(o.url)
     | has(o.webpage_id);
@@ -2708,9 +2708,9 @@ function _pageBlockPhoto(o: any) {
   obj(o.caption);
   flag(str, o.url);
   flag(i64, o.webpage_id);
-}
+};
 
-function _pageBlockVideo(o: any) {
+const _pageBlockVideo = (o: any) => {
   const flags = 
       has(o.autoplay)
     | has(o.loop) << 1
@@ -2718,13 +2718,13 @@ function _pageBlockVideo(o: any) {
   
   i64(o.video_id);
   obj(o.caption);
-}
+};
 
-function _pageBlockCover(o: any) {
+const _pageBlockCover = (o: any) => {
   obj(o.cover);
-}
+};
 
-function _pageBlockEmbed(o: any) {
+const _pageBlockEmbed = (o: any) => {
   const flags = 
       has(o.full_width)
     | has(o.allow_scrolling) << 3
@@ -2741,9 +2741,9 @@ function _pageBlockEmbed(o: any) {
   flag(i32, o.w);
   flag(i32, o.h);
   obj(o.caption);
-}
+};
 
-function _pageBlockEmbedPost(o: any) {
+const _pageBlockEmbedPost = (o: any) => {
   str(o.url);
   i64(o.webpage_id);
   i64(o.author_photo_id);
@@ -2751,19 +2751,19 @@ function _pageBlockEmbedPost(o: any) {
   i32(o.date);
   vector(obj, o.blocks);
   obj(o.caption);
-}
+};
 
-function _pageBlockCollage(o: any) {
+const _pageBlockCollage = (o: any) => {
   vector(obj, o.items);
   obj(o.caption);
-}
+};
 
-function _pageBlockSlideshow(o: any) {
+const _pageBlockSlideshow = (o: any) => {
   vector(obj, o.items);
   obj(o.caption);
-}
+};
 
-function _updateDialogPinned(o: any) {
+const _updateDialogPinned = (o: any) => {
   const flags = 
       has(o.pinned)
     | has(o.folder_id) << 1
@@ -2771,9 +2771,9 @@ function _updateDialogPinned(o: any) {
   
   flag(i32, o.folder_id);
   obj(o.peer);
-}
+};
 
-function _updatePinnedDialogs(o: any) {
+const _updatePinnedDialogs = (o: any) => {
   const flags = 
       has(o.folder_id) << 1
     | has(o.order);
@@ -2781,28 +2781,28 @@ function _updatePinnedDialogs(o: any) {
   
   flag(i32, o.folder_id);
   flagVector(obj, o.order);
-}
+};
 
-function _dataJSON(o: any) {
+const _dataJSON = (o: any) => {
   str(o.data);
-}
+};
 
-function _updateBotWebhookJSON(o: any) {
+const _updateBotWebhookJSON = (o: any) => {
   obj(o.data);
-}
+};
 
-function _updateBotWebhookJSONQuery(o: any) {
+const _updateBotWebhookJSONQuery = (o: any) => {
   i64(o.query_id);
   obj(o.data);
   i32(o.timeout);
-}
+};
 
-function _labeledPrice(o: any) {
+const _labeledPrice = (o: any) => {
   str(o.label);
   i64(o.amount);
-}
+};
 
-function _invoice(o: any) {
+const _invoice = (o: any) => {
   const flags = 
       has(o.test)
     | has(o.name_requested) << 1
@@ -2816,9 +2816,9 @@ function _invoice(o: any) {
   
   str(o.currency);
   vector(obj, o.prices);
-}
+};
 
-function _inputMediaInvoice(o: any) {
+const _inputMediaInvoice = (o: any) => {
   const flags = 
       has(o.photo)
   i32(flags);
@@ -2831,14 +2831,14 @@ function _inputMediaInvoice(o: any) {
   str(o.provider);
   obj(o.provider_data);
   str(o.start_param);
-}
+};
 
-function _paymentCharge(o: any) {
+const _paymentCharge = (o: any) => {
   str(o.id);
   str(o.provider_charge_id);
-}
+};
 
-function _messageActionPaymentSentMe(o: any) {
+const _messageActionPaymentSentMe = (o: any) => {
   const flags = 
       has(o.info)
     | has(o.shipping_option_id) << 1
@@ -2850,9 +2850,9 @@ function _messageActionPaymentSentMe(o: any) {
   flag(obj, o.info);
   flag(str, o.shipping_option_id);
   obj(o.charge);
-}
+};
 
-function _messageMediaInvoice(o: any) {
+const _messageMediaInvoice = (o: any) => {
   const flags = 
       has(o.shipping_address_requested) << 1
     | has(o.test) << 3
@@ -2867,18 +2867,18 @@ function _messageMediaInvoice(o: any) {
   str(o.currency);
   i64(o.total_amount);
   str(o.start_param);
-}
+};
 
-function _postAddress(o: any) {
+const _postAddress = (o: any) => {
   str(o.street_line1);
   str(o.street_line2);
   str(o.city);
   str(o.state);
   str(o.country_iso2);
   str(o.post_code);
-}
+};
 
-function _paymentRequestedInfo(o: any) {
+const _paymentRequestedInfo = (o: any) => {
   const flags = 
       has(o.name)
     | has(o.phone) << 1
@@ -2890,51 +2890,51 @@ function _paymentRequestedInfo(o: any) {
   flag(str, o.phone);
   flag(str, o.email);
   flag(obj, o.shipping_address);
-}
+};
 
-function _keyboardButtonBuy(o: any) {
+const _keyboardButtonBuy = (o: any) => {
   str(o.text);
-}
+};
 
-function _messageActionPaymentSent(o: any) {
+const _messageActionPaymentSent = (o: any) => {
   str(o.currency);
   i64(o.total_amount);
-}
+};
 
-function _paymentSavedCredentialsCard(o: any) {
+const _paymentSavedCredentialsCard = (o: any) => {
   str(o.id);
   str(o.title);
-}
+};
 
-function _webDocument(o: any) {
+const _webDocument = (o: any) => {
   str(o.url);
   i64(o.access_hash);
   i32(o.size);
   str(o.mime_type);
   vector(obj, o.attributes);
-}
+};
 
-function _inputWebDocument(o: any) {
+const _inputWebDocument = (o: any) => {
   str(o.url);
   i32(o.size);
   str(o.mime_type);
   vector(obj, o.attributes);
-}
+};
 
-function _inputWebFileLocation(o: any) {
+const _inputWebFileLocation = (o: any) => {
   str(o.url);
   i64(o.access_hash);
-}
+};
 
-function _uploadWebFile(o: any) {
+const _uploadWebFile = (o: any) => {
   i32(o.size);
   str(o.mime_type);
   obj(o.file_type);
   i32(o.mtime);
   bytes(o.bytes);
-}
+};
 
-function _paymentsPaymentForm(o: any) {
+const _paymentsPaymentForm = (o: any) => {
   const flags = 
       has(o.can_save_credentials) << 2
     | has(o.password_missing) << 3
@@ -2953,9 +2953,9 @@ function _paymentsPaymentForm(o: any) {
   flag(obj, o.saved_info);
   flag(obj, o.saved_credentials);
   vector(obj, o.users);
-}
+};
 
-function _paymentsValidatedRequestedInfo(o: any) {
+const _paymentsValidatedRequestedInfo = (o: any) => {
   const flags = 
       has(o.id)
     | has(o.shipping_options) << 1;
@@ -2963,13 +2963,13 @@ function _paymentsValidatedRequestedInfo(o: any) {
   
   flag(str, o.id);
   flagVector(obj, o.shipping_options);
-}
+};
 
-function _paymentsPaymentResult(o: any) {
+const _paymentsPaymentResult = (o: any) => {
   obj(o.updates);
-}
+};
 
-function _paymentsPaymentReceipt(o: any) {
+const _paymentsPaymentReceipt = (o: any) => {
   const flags = 
       has(o.info)
     | has(o.shipping) << 1
@@ -2985,49 +2985,49 @@ function _paymentsPaymentReceipt(o: any) {
   i64(o.total_amount);
   str(o.credentials_title);
   vector(obj, o.users);
-}
+};
 
-function _paymentsSavedInfo(o: any) {
+const _paymentsSavedInfo = (o: any) => {
   const flags = 
       has(o.has_saved_credentials) << 1
     | has(o.saved_info);
   i32(flags);
   
   flag(obj, o.saved_info);
-}
+};
 
-function _inputPaymentCredentialsSaved(o: any) {
+const _inputPaymentCredentialsSaved = (o: any) => {
   str(o.id);
   bytes(o.tmp_password);
-}
+};
 
-function _inputPaymentCredentials(o: any) {
+const _inputPaymentCredentials = (o: any) => {
   const flags = 
       has(o.save)
   i32(flags);
   
   obj(o.data);
-}
+};
 
-function _accountTmpPassword(o: any) {
+const _accountTmpPassword = (o: any) => {
   bytes(o.tmp_password);
   i32(o.valid_until);
-}
+};
 
-function _shippingOption(o: any) {
+const _shippingOption = (o: any) => {
   str(o.id);
   str(o.title);
   vector(obj, o.prices);
-}
+};
 
-function _updateBotShippingQuery(o: any) {
+const _updateBotShippingQuery = (o: any) => {
   i64(o.query_id);
   i32(o.user_id);
   bytes(o.payload);
   obj(o.shipping_address);
-}
+};
 
-function _updateBotPrecheckoutQuery(o: any) {
+const _updateBotPrecheckoutQuery = (o: any) => {
   const flags = 
       has(o.info)
     | has(o.shipping_option_id) << 1
@@ -3040,9 +3040,9 @@ function _updateBotPrecheckoutQuery(o: any) {
   flag(str, o.shipping_option_id);
   str(o.currency);
   i64(o.total_amount);
-}
+};
 
-function _inputStickerSetItem(o: any) {
+const _inputStickerSetItem = (o: any) => {
   const flags = 
       has(o.mask_coords);
   i32(flags);
@@ -3050,22 +3050,22 @@ function _inputStickerSetItem(o: any) {
   obj(o.document);
   str(o.emoji);
   flag(obj, o.mask_coords);
-}
+};
 
-function _updatePhoneCall(o: any) {
+const _updatePhoneCall = (o: any) => {
   obj(o.phone_call);
-}
+};
 
-function _inputPhoneCall(o: any) {
+const _inputPhoneCall = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _phoneCallEmpty(o: any) {
+const _phoneCallEmpty = (o: any) => {
   i64(o.id);
-}
+};
 
-function _phoneCallWaiting(o: any) {
+const _phoneCallWaiting = (o: any) => {
   const flags = 
       has(o.video) << 5
     | has(o.receive_date);
@@ -3078,9 +3078,9 @@ function _phoneCallWaiting(o: any) {
   i32(o.participant_id);
   obj(o.protocol);
   flag(i32, o.receive_date);
-}
+};
 
-function _phoneCallRequested(o: any) {
+const _phoneCallRequested = (o: any) => {
   const flags = 
       has(o.video) << 5
   i32(flags);
@@ -3092,9 +3092,9 @@ function _phoneCallRequested(o: any) {
   i32(o.participant_id);
   bytes(o.g_a_hash);
   obj(o.protocol);
-}
+};
 
-function _phoneCallAccepted(o: any) {
+const _phoneCallAccepted = (o: any) => {
   const flags = 
       has(o.video) << 5
   i32(flags);
@@ -3106,9 +3106,9 @@ function _phoneCallAccepted(o: any) {
   i32(o.participant_id);
   bytes(o.g_b);
   obj(o.protocol);
-}
+};
 
-function _phoneCall(o: any) {
+const _phoneCall = (o: any) => {
   const flags = 
       has(o.p2p_allowed) << 5
   i32(flags);
@@ -3123,9 +3123,9 @@ function _phoneCall(o: any) {
   obj(o.protocol);
   vector(obj, o.connections);
   i32(o.start_date);
-}
+};
 
-function _phoneCallDiscarded(o: any) {
+const _phoneCallDiscarded = (o: any) => {
   const flags = 
       has(o.need_rating) << 2
     | has(o.need_debug) << 3
@@ -3137,17 +3137,17 @@ function _phoneCallDiscarded(o: any) {
   i64(o.id);
   flag(obj, o.reason);
   flag(i32, o.duration);
-}
+};
 
-function _phoneConnection(o: any) {
+const _phoneConnection = (o: any) => {
   i64(o.id);
   str(o.ip);
   str(o.ipv6);
   i32(o.port);
   bytes(o.peer_tag);
-}
+};
 
-function _phoneCallProtocol(o: any) {
+const _phoneCallProtocol = (o: any) => {
   const flags = 
       has(o.udp_p2p)
     | has(o.udp_reflector) << 1
@@ -3155,21 +3155,21 @@ function _phoneCallProtocol(o: any) {
   
   i32(o.min_layer);
   i32(o.max_layer);
-}
+};
 
-function _phonePhoneCall(o: any) {
+const _phonePhoneCall = (o: any) => {
   obj(o.phone_call);
   vector(obj, o.users);
-}
+};
 
-function _inputMessagesFilterPhoneCalls(o: any) {
+const _inputMessagesFilterPhoneCalls = (o: any) => {
   const flags = 
       has(o.missed);
   i32(flags);
   
-}
+};
 
-function _messageActionPhoneCall(o: any) {
+const _messageActionPhoneCall = (o: any) => {
   const flags = 
       has(o.video) << 2
     | has(o.reason)
@@ -3179,47 +3179,47 @@ function _messageActionPhoneCall(o: any) {
   i64(o.call_id);
   flag(obj, o.reason);
   flag(i32, o.duration);
-}
+};
 
-function _sendMessageUploadRoundAction(o: any) {
+const _sendMessageUploadRoundAction = (o: any) => {
   i32(o.progress);
-}
+};
 
-function _uploadFileCdnRedirect(o: any) {
+const _uploadFileCdnRedirect = (o: any) => {
   i32(o.dc_id);
   bytes(o.file_token);
   bytes(o.encryption_key);
   bytes(o.encryption_iv);
   vector(obj, o.file_hashes);
-}
+};
 
-function _uploadCdnFileReuploadNeeded(o: any) {
+const _uploadCdnFileReuploadNeeded = (o: any) => {
   bytes(o.request_token);
-}
+};
 
-function _uploadCdnFile(o: any) {
+const _uploadCdnFile = (o: any) => {
   bytes(o.bytes);
-}
+};
 
-function _cdnPublicKey(o: any) {
+const _cdnPublicKey = (o: any) => {
   i32(o.dc_id);
   str(o.public_key);
-}
+};
 
-function _cdnConfig(o: any) {
+const _cdnConfig = (o: any) => {
   vector(obj, o.public_keys);
-}
+};
 
-function _pageBlockChannel(o: any) {
+const _pageBlockChannel = (o: any) => {
   obj(o.channel);
-}
+};
 
-function _langPackString(o: any) {
+const _langPackString = (o: any) => {
   str(o.key);
   str(o.value);
-}
+};
 
-function _langPackStringPluralized(o: any) {
+const _langPackStringPluralized = (o: any) => {
   const flags = 
       has(o.zero_value)
     | has(o.one_value) << 1
@@ -3235,20 +3235,20 @@ function _langPackStringPluralized(o: any) {
   flag(str, o.few_value);
   flag(str, o.many_value);
   str(o.other_value);
-}
+};
 
-function _langPackStringDeleted(o: any) {
+const _langPackStringDeleted = (o: any) => {
   str(o.key);
-}
+};
 
-function _langPackDifference(o: any) {
+const _langPackDifference = (o: any) => {
   str(o.lang_code);
   i32(o.from_version);
   i32(o.version);
   vector(obj, o.strings);
-}
+};
 
-function _langPackLanguage(o: any) {
+const _langPackLanguage = (o: any) => {
   const flags = 
       has(o.official)
     | has(o.rtl) << 2
@@ -3264,17 +3264,17 @@ function _langPackLanguage(o: any) {
   i32(o.strings_count);
   i32(o.translated_count);
   str(o.translations_url);
-}
+};
 
-function _updateLangPackTooLong(o: any) {
+const _updateLangPackTooLong = (o: any) => {
   str(o.lang_code);
-}
+};
 
-function _updateLangPack(o: any) {
+const _updateLangPack = (o: any) => {
   obj(o.difference);
-}
+};
 
-function _channelParticipantAdmin(o: any) {
+const _channelParticipantAdmin = (o: any) => {
   const flags = 
       has(o.can_edit)
     | has(o.self) << 1
@@ -3288,9 +3288,9 @@ function _channelParticipantAdmin(o: any) {
   i32(o.date);
   obj(o.admin_rights);
   flag(str, o.rank);
-}
+};
 
-function _channelParticipantBanned(o: any) {
+const _channelParticipantBanned = (o: any) => {
   const flags = 
       has(o.left)
   i32(flags);
@@ -3299,85 +3299,85 @@ function _channelParticipantBanned(o: any) {
   i32(o.kicked_by);
   i32(o.date);
   obj(o.banned_rights);
-}
+};
 
-function _channelParticipantsBanned(o: any) {
+const _channelParticipantsBanned = (o: any) => {
   str(o.q);
-}
+};
 
-function _channelParticipantsSearch(o: any) {
+const _channelParticipantsSearch = (o: any) => {
   str(o.q);
-}
+};
 
-function _channelAdminLogEventActionChangeTitle(o: any) {
+const _channelAdminLogEventActionChangeTitle = (o: any) => {
   str(o.prev_value);
   str(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionChangeAbout(o: any) {
+const _channelAdminLogEventActionChangeAbout = (o: any) => {
   str(o.prev_value);
   str(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionChangeUsername(o: any) {
+const _channelAdminLogEventActionChangeUsername = (o: any) => {
   str(o.prev_value);
   str(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionChangePhoto(o: any) {
+const _channelAdminLogEventActionChangePhoto = (o: any) => {
   obj(o.prev_photo);
   obj(o.new_photo);
-}
+};
 
-function _channelAdminLogEventActionToggleInvites(o: any) {
+const _channelAdminLogEventActionToggleInvites = (o: any) => {
   bool(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionToggleSignatures(o: any) {
+const _channelAdminLogEventActionToggleSignatures = (o: any) => {
   bool(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionUpdatePinned(o: any) {
+const _channelAdminLogEventActionUpdatePinned = (o: any) => {
   obj(o.message);
-}
+};
 
-function _channelAdminLogEventActionEditMessage(o: any) {
+const _channelAdminLogEventActionEditMessage = (o: any) => {
   obj(o.prev_message);
   obj(o.new_message);
-}
+};
 
-function _channelAdminLogEventActionDeleteMessage(o: any) {
+const _channelAdminLogEventActionDeleteMessage = (o: any) => {
   obj(o.message);
-}
+};
 
-function _channelAdminLogEventActionParticipantInvite(o: any) {
+const _channelAdminLogEventActionParticipantInvite = (o: any) => {
   obj(o.participant);
-}
+};
 
-function _channelAdminLogEventActionParticipantToggleBan(o: any) {
+const _channelAdminLogEventActionParticipantToggleBan = (o: any) => {
   obj(o.prev_participant);
   obj(o.new_participant);
-}
+};
 
-function _channelAdminLogEventActionParticipantToggleAdmin(o: any) {
+const _channelAdminLogEventActionParticipantToggleAdmin = (o: any) => {
   obj(o.prev_participant);
   obj(o.new_participant);
-}
+};
 
-function _channelAdminLogEvent(o: any) {
+const _channelAdminLogEvent = (o: any) => {
   i64(o.id);
   i32(o.date);
   i32(o.user_id);
   obj(o.action);
-}
+};
 
-function _channelsAdminLogResults(o: any) {
+const _channelsAdminLogResults = (o: any) => {
   vector(obj, o.events);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _channelAdminLogEventsFilter(o: any) {
+const _channelAdminLogEventsFilter = (o: any) => {
   const flags = 
       has(o.join)
     | has(o.leave) << 1
@@ -3395,57 +3395,57 @@ function _channelAdminLogEventsFilter(o: any) {
     | has(o.delete) << 13;
   i32(flags);
   
-}
+};
 
-function _pageBlockAudio(o: any) {
+const _pageBlockAudio = (o: any) => {
   i64(o.audio_id);
   obj(o.caption);
-}
+};
 
-function _popularContact(o: any) {
+const _popularContact = (o: any) => {
   i64(o.client_id);
   i32(o.importers);
-}
+};
 
-function _messagesFavedStickers(o: any) {
+const _messagesFavedStickers = (o: any) => {
   i32(o.hash);
   vector(obj, o.packs);
   vector(obj, o.stickers);
-}
+};
 
-function _updateChannelReadMessagesContents(o: any) {
+const _updateChannelReadMessagesContents = (o: any) => {
   i32(o.channel_id);
   vector(i32, o.messages);
-}
+};
 
-function _channelAdminLogEventActionChangeStickerSet(o: any) {
+const _channelAdminLogEventActionChangeStickerSet = (o: any) => {
   obj(o.prev_stickerset);
   obj(o.new_stickerset);
-}
+};
 
-function _messageActionCustomAction(o: any) {
+const _messageActionCustomAction = (o: any) => {
   str(o.message);
-}
+};
 
-function _inputPaymentCredentialsApplePay(o: any) {
+const _inputPaymentCredentialsApplePay = (o: any) => {
   obj(o.payment_data);
-}
+};
 
-function _inputPaymentCredentialsAndroidPay(o: any) {
+const _inputPaymentCredentialsAndroidPay = (o: any) => {
   obj(o.payment_token);
   str(o.google_transaction_id);
-}
+};
 
-function _updateChannelAvailableMessages(o: any) {
+const _updateChannelAvailableMessages = (o: any) => {
   i32(o.channel_id);
   i32(o.available_min_id);
-}
+};
 
-function _channelAdminLogEventActionTogglePreHistoryHidden(o: any) {
+const _channelAdminLogEventActionTogglePreHistoryHidden = (o: any) => {
   bool(o.new_value);
-}
+};
 
-function _inputMediaGeoLive(o: any) {
+const _inputMediaGeoLive = (o: any) => {
   const flags = 
       has(o.stopped)
     | has(o.period) << 1;
@@ -3453,48 +3453,48 @@ function _inputMediaGeoLive(o: any) {
   
   obj(o.geo_point);
   flag(i32, o.period);
-}
+};
 
-function _messageMediaGeoLive(o: any) {
+const _messageMediaGeoLive = (o: any) => {
   obj(o.geo);
   i32(o.period);
-}
+};
 
-function _recentMeUrlUnknown(o: any) {
+const _recentMeUrlUnknown = (o: any) => {
   str(o.url);
-}
+};
 
-function _recentMeUrlUser(o: any) {
+const _recentMeUrlUser = (o: any) => {
   str(o.url);
   i32(o.user_id);
-}
+};
 
-function _recentMeUrlChat(o: any) {
+const _recentMeUrlChat = (o: any) => {
   str(o.url);
   i32(o.chat_id);
-}
+};
 
-function _recentMeUrlChatInvite(o: any) {
+const _recentMeUrlChatInvite = (o: any) => {
   str(o.url);
   obj(o.chat_invite);
-}
+};
 
-function _recentMeUrlStickerSet(o: any) {
+const _recentMeUrlStickerSet = (o: any) => {
   str(o.url);
   obj(o.set);
-}
+};
 
-function _helpRecentMeUrls(o: any) {
+const _helpRecentMeUrls = (o: any) => {
   vector(obj, o.urls);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _messagesMessagesNotModified(o: any) {
+const _messagesMessagesNotModified = (o: any) => {
   i32(o.count);
-}
+};
 
-function _inputSingleMedia(o: any) {
+const _inputSingleMedia = (o: any) => {
   const flags = 
       has(o.entities);
   i32(flags);
@@ -3503,9 +3503,9 @@ function _inputSingleMedia(o: any) {
   i64(o.random_id);
   str(o.message);
   flagVector(obj, o.entities);
-}
+};
 
-function _webAuthorization(o: any) {
+const _webAuthorization = (o: any) => {
   i64(o.hash);
   i32(o.bot_id);
   str(o.domain);
@@ -3515,105 +3515,105 @@ function _webAuthorization(o: any) {
   i32(o.date_active);
   str(o.ip);
   str(o.region);
-}
+};
 
-function _accountWebAuthorizations(o: any) {
+const _accountWebAuthorizations = (o: any) => {
   vector(obj, o.authorizations);
   vector(obj, o.users);
-}
+};
 
-function _inputMessageID(o: any) {
+const _inputMessageID = (o: any) => {
   i32(o.id);
-}
+};
 
-function _inputMessageReplyTo(o: any) {
+const _inputMessageReplyTo = (o: any) => {
   i32(o.id);
-}
+};
 
-function _messageEntityPhone(o: any) {
+const _messageEntityPhone = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityCashtag(o: any) {
+const _messageEntityCashtag = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageActionBotAllowed(o: any) {
+const _messageActionBotAllowed = (o: any) => {
   str(o.domain);
-}
+};
 
-function _inputDialogPeer(o: any) {
+const _inputDialogPeer = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _dialogPeer(o: any) {
+const _dialogPeer = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesFoundStickerSets(o: any) {
+const _messagesFoundStickerSets = (o: any) => {
   i32(o.hash);
   vector(obj, o.sets);
-}
+};
 
-function _fileHash(o: any) {
+const _fileHash = (o: any) => {
   i32(o.offset);
   i32(o.limit);
   bytes(o.hash);
-}
+};
 
-function _webDocumentNoProxy(o: any) {
+const _webDocumentNoProxy = (o: any) => {
   str(o.url);
   i32(o.size);
   str(o.mime_type);
   vector(obj, o.attributes);
-}
+};
 
-function _inputClientProxy(o: any) {
+const _inputClientProxy = (o: any) => {
   str(o.address);
   i32(o.port);
-}
+};
 
-function _helpProxyDataEmpty(o: any) {
+const _helpProxyDataEmpty = (o: any) => {
   i32(o.expires);
-}
+};
 
-function _helpProxyDataPromo(o: any) {
+const _helpProxyDataPromo = (o: any) => {
   i32(o.expires);
   obj(o.peer);
   vector(obj, o.chats);
   vector(obj, o.users);
-}
+};
 
-function _helpTermsOfServiceUpdateEmpty(o: any) {
+const _helpTermsOfServiceUpdateEmpty = (o: any) => {
   i32(o.expires);
-}
+};
 
-function _helpTermsOfServiceUpdate(o: any) {
+const _helpTermsOfServiceUpdate = (o: any) => {
   i32(o.expires);
   obj(o.terms_of_service);
-}
+};
 
-function _inputSecureFileUploaded(o: any) {
+const _inputSecureFileUploaded = (o: any) => {
   i64(o.id);
   i32(o.parts);
   str(o.md5_checksum);
   bytes(o.file_hash);
   bytes(o.secret);
-}
+};
 
-function _inputSecureFile(o: any) {
+const _inputSecureFile = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputSecureFileLocation(o: any) {
+const _inputSecureFileLocation = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _secureFile(o: any) {
+const _secureFile = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   i32(o.size);
@@ -3621,23 +3621,23 @@ function _secureFile(o: any) {
   i32(o.date);
   bytes(o.file_hash);
   bytes(o.secret);
-}
+};
 
-function _secureData(o: any) {
+const _secureData = (o: any) => {
   bytes(o.data);
   bytes(o.data_hash);
   bytes(o.secret);
-}
+};
 
-function _securePlainPhone(o: any) {
+const _securePlainPhone = (o: any) => {
   str(o.phone);
-}
+};
 
-function _securePlainEmail(o: any) {
+const _securePlainEmail = (o: any) => {
   str(o.email);
-}
+};
 
-function _secureValue(o: any) {
+const _secureValue = (o: any) => {
   const flags = 
       has(o.data)
     | has(o.front_side) << 1
@@ -3657,9 +3657,9 @@ function _secureValue(o: any) {
   flagVector(obj, o.files);
   flag(obj, o.plain_data);
   bytes(o.hash);
-}
+};
 
-function _inputSecureValue(o: any) {
+const _inputSecureValue = (o: any) => {
   const flags = 
       has(o.data)
     | has(o.front_side) << 1
@@ -3678,57 +3678,57 @@ function _inputSecureValue(o: any) {
   flagVector(obj, o.translation);
   flagVector(obj, o.files);
   flag(obj, o.plain_data);
-}
+};
 
-function _secureValueHash(o: any) {
+const _secureValueHash = (o: any) => {
   obj(o.type);
   bytes(o.hash);
-}
+};
 
-function _secureValueErrorData(o: any) {
+const _secureValueErrorData = (o: any) => {
   obj(o.type);
   bytes(o.data_hash);
   str(o.field);
   str(o.text);
-}
+};
 
-function _secureValueErrorFrontSide(o: any) {
+const _secureValueErrorFrontSide = (o: any) => {
   obj(o.type);
   bytes(o.file_hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorReverseSide(o: any) {
+const _secureValueErrorReverseSide = (o: any) => {
   obj(o.type);
   bytes(o.file_hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorSelfie(o: any) {
+const _secureValueErrorSelfie = (o: any) => {
   obj(o.type);
   bytes(o.file_hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorFile(o: any) {
+const _secureValueErrorFile = (o: any) => {
   obj(o.type);
   bytes(o.file_hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorFiles(o: any) {
+const _secureValueErrorFiles = (o: any) => {
   obj(o.type);
   vector(bytes, o.file_hash);
   str(o.text);
-}
+};
 
-function _secureCredentialsEncrypted(o: any) {
+const _secureCredentialsEncrypted = (o: any) => {
   bytes(o.data);
   bytes(o.hash);
   bytes(o.secret);
-}
+};
 
-function _accountAuthorizationForm(o: any) {
+const _accountAuthorizationForm = (o: any) => {
   const flags = 
       has(o.privacy_policy_url);
   i32(flags);
@@ -3738,23 +3738,23 @@ function _accountAuthorizationForm(o: any) {
   vector(obj, o.errors);
   vector(obj, o.users);
   flag(str, o.privacy_policy_url);
-}
+};
 
-function _accountSentEmailCode(o: any) {
+const _accountSentEmailCode = (o: any) => {
   str(o.email_pattern);
   i32(o.length);
-}
+};
 
-function _messageActionSecureValuesSentMe(o: any) {
+const _messageActionSecureValuesSentMe = (o: any) => {
   vector(obj, o.values);
   obj(o.credentials);
-}
+};
 
-function _messageActionSecureValuesSent(o: any) {
+const _messageActionSecureValuesSent = (o: any) => {
   vector(obj, o.types);
-}
+};
 
-function _helpDeepLinkInfo(o: any) {
+const _helpDeepLinkInfo = (o: any) => {
   const flags = 
       has(o.update_app)
     | has(o.entities) << 1;
@@ -3762,86 +3762,86 @@ function _helpDeepLinkInfo(o: any) {
   
   str(o.message);
   flagVector(obj, o.entities);
-}
+};
 
-function _savedPhoneContact(o: any) {
+const _savedPhoneContact = (o: any) => {
   str(o.phone);
   str(o.first_name);
   str(o.last_name);
   i32(o.date);
-}
+};
 
-function _accountTakeout(o: any) {
+const _accountTakeout = (o: any) => {
   i64(o.id);
-}
+};
 
-function _updateDialogUnreadMark(o: any) {
+const _updateDialogUnreadMark = (o: any) => {
   const flags = 
       has(o.unread)
   i32(flags);
   
   obj(o.peer);
-}
+};
 
-function _messagesDialogsNotModified(o: any) {
+const _messagesDialogsNotModified = (o: any) => {
   i32(o.count);
-}
+};
 
-function _inputWebFileGeoPointLocation(o: any) {
+const _inputWebFileGeoPointLocation = (o: any) => {
   obj(o.geo_point);
   i64(o.access_hash);
   i32(o.w);
   i32(o.h);
   i32(o.zoom);
   i32(o.scale);
-}
+};
 
-function _securePasswordKdfAlgoPBKDF2HMACSHA512iter100000(o: any) {
+const _securePasswordKdfAlgoPBKDF2HMACSHA512iter100000 = (o: any) => {
   bytes(o.salt);
-}
+};
 
-function _securePasswordKdfAlgoSHA512(o: any) {
+const _securePasswordKdfAlgoSHA512 = (o: any) => {
   bytes(o.salt);
-}
+};
 
-function _secureSecretSettings(o: any) {
+const _secureSecretSettings = (o: any) => {
   obj(o.secure_algo);
   bytes(o.secure_secret);
   i64(o.secure_secret_id);
-}
+};
 
-function _passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow(o: any) {
+const _passwordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow = (o: any) => {
   bytes(o.salt1);
   bytes(o.salt2);
   i32(o.g);
   bytes(o.p);
-}
+};
 
-function _inputCheckPasswordSRP(o: any) {
+const _inputCheckPasswordSRP = (o: any) => {
   i64(o.srp_id);
   bytes(o.A);
   bytes(o.M1);
-}
+};
 
-function _secureValueError(o: any) {
+const _secureValueError = (o: any) => {
   obj(o.type);
   bytes(o.hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorTranslationFile(o: any) {
+const _secureValueErrorTranslationFile = (o: any) => {
   obj(o.type);
   bytes(o.file_hash);
   str(o.text);
-}
+};
 
-function _secureValueErrorTranslationFiles(o: any) {
+const _secureValueErrorTranslationFiles = (o: any) => {
   obj(o.type);
   vector(bytes, o.file_hash);
   str(o.text);
-}
+};
 
-function _secureRequiredType(o: any) {
+const _secureRequiredType = (o: any) => {
   const flags = 
       has(o.native_names)
     | has(o.selfie_required) << 1
@@ -3849,88 +3849,88 @@ function _secureRequiredType(o: any) {
   i32(flags);
   
   obj(o.type);
-}
+};
 
-function _secureRequiredTypeOneOf(o: any) {
+const _secureRequiredTypeOneOf = (o: any) => {
   vector(obj, o.types);
-}
+};
 
-function _helpPassportConfig(o: any) {
+const _helpPassportConfig = (o: any) => {
   i32(o.hash);
   obj(o.countries_langs);
-}
+};
 
-function _inputAppEvent(o: any) {
+const _inputAppEvent = (o: any) => {
   f64(o.time);
   str(o.type);
   i64(o.peer);
   obj(o.data);
-}
+};
 
-function _jsonObjectValue(o: any) {
+const _jsonObjectValue = (o: any) => {
   str(o.key);
   obj(o.value);
-}
+};
 
-function _jsonBool(o: any) {
+const _jsonBool = (o: any) => {
   bool(o.value);
-}
+};
 
-function _jsonNumber(o: any) {
+const _jsonNumber = (o: any) => {
   f64(o.value);
-}
+};
 
-function _jsonString(o: any) {
+const _jsonString = (o: any) => {
   str(o.value);
-}
+};
 
-function _jsonArray(o: any) {
+const _jsonArray = (o: any) => {
   vector(obj, o.value);
-}
+};
 
-function _jsonObject(o: any) {
+const _jsonObject = (o: any) => {
   vector(obj, o.value);
-}
+};
 
-function _updateUserPinnedMessage(o: any) {
+const _updateUserPinnedMessage = (o: any) => {
   i32(o.user_id);
   i32(o.id);
-}
+};
 
-function _updateChatPinnedMessage(o: any) {
+const _updateChatPinnedMessage = (o: any) => {
   i32(o.chat_id);
   i32(o.id);
   i32(o.version);
-}
+};
 
-function _textSubscript(o: any) {
+const _textSubscript = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textSuperscript(o: any) {
+const _textSuperscript = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textMarked(o: any) {
+const _textMarked = (o: any) => {
   obj(o.text);
-}
+};
 
-function _textPhone(o: any) {
+const _textPhone = (o: any) => {
   obj(o.text);
   str(o.phone);
-}
+};
 
-function _textImage(o: any) {
+const _textImage = (o: any) => {
   i64(o.document_id);
   i32(o.w);
   i32(o.h);
-}
+};
 
-function _pageBlockKicker(o: any) {
+const _pageBlockKicker = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageTableCell(o: any) {
+const _pageTableCell = (o: any) => {
   const flags = 
       has(o.header)
     | has(o.align_center) << 3
@@ -3945,13 +3945,13 @@ function _pageTableCell(o: any) {
   flag(obj, o.text);
   flag(i32, o.colspan);
   flag(i32, o.rowspan);
-}
+};
 
-function _pageTableRow(o: any) {
+const _pageTableRow = (o: any) => {
   vector(obj, o.cells);
-}
+};
 
-function _pageBlockTable(o: any) {
+const _pageBlockTable = (o: any) => {
   const flags = 
       has(o.bordered)
     | has(o.striped) << 1
@@ -3959,45 +3959,45 @@ function _pageBlockTable(o: any) {
   
   obj(o.title);
   vector(obj, o.rows);
-}
+};
 
-function _pageCaption(o: any) {
+const _pageCaption = (o: any) => {
   obj(o.text);
   obj(o.credit);
-}
+};
 
-function _pageListItemText(o: any) {
+const _pageListItemText = (o: any) => {
   obj(o.text);
-}
+};
 
-function _pageListItemBlocks(o: any) {
+const _pageListItemBlocks = (o: any) => {
   vector(obj, o.blocks);
-}
+};
 
-function _pageListOrderedItemText(o: any) {
+const _pageListOrderedItemText = (o: any) => {
   str(o.num);
   obj(o.text);
-}
+};
 
-function _pageListOrderedItemBlocks(o: any) {
+const _pageListOrderedItemBlocks = (o: any) => {
   str(o.num);
   vector(obj, o.blocks);
-}
+};
 
-function _pageBlockOrderedList(o: any) {
+const _pageBlockOrderedList = (o: any) => {
   vector(obj, o.items);
-}
+};
 
-function _pageBlockDetails(o: any) {
+const _pageBlockDetails = (o: any) => {
   const flags = 
       has(o.open)
   i32(flags);
   
   vector(obj, o.blocks);
   obj(o.title);
-}
+};
 
-function _pageRelatedArticle(o: any) {
+const _pageRelatedArticle = (o: any) => {
   const flags = 
       has(o.title)
     | has(o.description) << 1
@@ -4013,22 +4013,22 @@ function _pageRelatedArticle(o: any) {
   flag(i64, o.photo_id);
   flag(str, o.author);
   flag(i32, o.published_date);
-}
+};
 
-function _pageBlockRelatedArticles(o: any) {
+const _pageBlockRelatedArticles = (o: any) => {
   obj(o.title);
   vector(obj, o.articles);
-}
+};
 
-function _pageBlockMap(o: any) {
+const _pageBlockMap = (o: any) => {
   obj(o.geo);
   i32(o.zoom);
   i32(o.w);
   i32(o.h);
   obj(o.caption);
-}
+};
 
-function _page(o: any) {
+const _page = (o: any) => {
   const flags = 
       has(o.part)
     | has(o.rtl) << 1
@@ -4039,25 +4039,25 @@ function _page(o: any) {
   vector(obj, o.blocks);
   vector(obj, o.photos);
   vector(obj, o.documents);
-}
+};
 
-function _textAnchor(o: any) {
+const _textAnchor = (o: any) => {
   obj(o.text);
   str(o.name);
-}
+};
 
-function _helpSupportName(o: any) {
+const _helpSupportName = (o: any) => {
   str(o.name);
-}
+};
 
-function _helpUserInfo(o: any) {
+const _helpUserInfo = (o: any) => {
   str(o.message);
   vector(obj, o.entities);
   str(o.author);
   i32(o.date);
-}
+};
 
-function _updateMessagePoll(o: any) {
+const _updateMessagePoll = (o: any) => {
   const flags = 
       has(o.poll)
   i32(flags);
@@ -4065,14 +4065,14 @@ function _updateMessagePoll(o: any) {
   i64(o.poll_id);
   flag(obj, o.poll);
   obj(o.results);
-}
+};
 
-function _pollAnswer(o: any) {
+const _pollAnswer = (o: any) => {
   str(o.text);
   bytes(o.option);
-}
+};
 
-function _poll(o: any) {
+const _poll = (o: any) => {
   const flags = 
       has(o.closed)
   i32(flags);
@@ -4080,18 +4080,18 @@ function _poll(o: any) {
   i64(o.id);
   str(o.question);
   vector(obj, o.answers);
-}
+};
 
-function _pollAnswerVoters(o: any) {
+const _pollAnswerVoters = (o: any) => {
   const flags = 
       has(o.chosen)
   i32(flags);
   
   bytes(o.option);
   i32(o.voters);
-}
+};
 
-function _pollResults(o: any) {
+const _pollResults = (o: any) => {
   const flags = 
       has(o.min)
     | has(o.results) << 1
@@ -4100,31 +4100,31 @@ function _pollResults(o: any) {
   
   flagVector(obj, o.results);
   flag(i32, o.total_voters);
-}
+};
 
-function _inputMediaPoll(o: any) {
+const _inputMediaPoll = (o: any) => {
   obj(o.poll);
-}
+};
 
-function _messageMediaPoll(o: any) {
+const _messageMediaPoll = (o: any) => {
   obj(o.poll);
   obj(o.results);
-}
+};
 
-function _chatOnlines(o: any) {
+const _chatOnlines = (o: any) => {
   i32(o.onlines);
-}
+};
 
-function _statsURL(o: any) {
+const _statsURL = (o: any) => {
   str(o.url);
-}
+};
 
-function _photoStrippedSize(o: any) {
+const _photoStrippedSize = (o: any) => {
   str(o.type);
   bytes(o.bytes);
-}
+};
 
-function _chatAdminRights(o: any) {
+const _chatAdminRights = (o: any) => {
   const flags = 
       has(o.change_info)
     | has(o.post_messages) << 1
@@ -4136,9 +4136,9 @@ function _chatAdminRights(o: any) {
     | has(o.add_admins) << 9;
   i32(flags);
   
-}
+};
 
-function _chatBannedRights(o: any) {
+const _chatBannedRights = (o: any) => {
   const flags = 
       has(o.view_messages)
     | has(o.send_messages) << 1
@@ -4155,51 +4155,51 @@ function _chatBannedRights(o: any) {
   i32(flags);
   
   i32(o.until_date);
-}
+};
 
-function _updateChatDefaultBannedRights(o: any) {
+const _updateChatDefaultBannedRights = (o: any) => {
   obj(o.peer);
   obj(o.default_banned_rights);
   i32(o.version);
-}
+};
 
-function _inputWallPaper(o: any) {
+const _inputWallPaper = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputWallPaperSlug(o: any) {
+const _inputWallPaperSlug = (o: any) => {
   str(o.slug);
-}
+};
 
-function _channelParticipantsContacts(o: any) {
+const _channelParticipantsContacts = (o: any) => {
   str(o.q);
-}
+};
 
-function _channelAdminLogEventActionDefaultBannedRights(o: any) {
+const _channelAdminLogEventActionDefaultBannedRights = (o: any) => {
   obj(o.prev_banned_rights);
   obj(o.new_banned_rights);
-}
+};
 
-function _channelAdminLogEventActionStopPoll(o: any) {
+const _channelAdminLogEventActionStopPoll = (o: any) => {
   obj(o.message);
-}
+};
 
-function _accountWallPapers(o: any) {
+const _accountWallPapers = (o: any) => {
   i32(o.hash);
   vector(obj, o.wallpapers);
-}
+};
 
-function _codeSettings(o: any) {
+const _codeSettings = (o: any) => {
   const flags = 
       has(o.allow_flashcall)
     | has(o.current_number) << 1
     | has(o.allow_app_hash) << 4;
   i32(flags);
   
-}
+};
 
-function _wallPaperSettings(o: any) {
+const _wallPaperSettings = (o: any) => {
   const flags = 
       has(o.blur) << 1
     | has(o.motion) << 2
@@ -4209,9 +4209,9 @@ function _wallPaperSettings(o: any) {
   
   flag(i32, o.background_color);
   flag(i32, o.intensity);
-}
+};
 
-function _autoDownloadSettings(o: any) {
+const _autoDownloadSettings = (o: any) => {
   const flags = 
       has(o.disabled)
     | has(o.video_preload_large) << 1
@@ -4222,52 +4222,52 @@ function _autoDownloadSettings(o: any) {
   i32(o.photo_size_max);
   i32(o.video_size_max);
   i32(o.file_size_max);
-}
+};
 
-function _accountAutoDownloadSettings(o: any) {
+const _accountAutoDownloadSettings = (o: any) => {
   obj(o.low);
   obj(o.medium);
   obj(o.high);
-}
+};
 
-function _emojiKeyword(o: any) {
+const _emojiKeyword = (o: any) => {
   str(o.keyword);
   vector(str, o.emoticons);
-}
+};
 
-function _emojiKeywordDeleted(o: any) {
+const _emojiKeywordDeleted = (o: any) => {
   str(o.keyword);
   vector(str, o.emoticons);
-}
+};
 
-function _emojiKeywordsDifference(o: any) {
+const _emojiKeywordsDifference = (o: any) => {
   str(o.lang_code);
   i32(o.from_version);
   i32(o.version);
   vector(obj, o.keywords);
-}
+};
 
-function _emojiURL(o: any) {
+const _emojiURL = (o: any) => {
   str(o.url);
-}
+};
 
-function _emojiLanguage(o: any) {
+const _emojiLanguage = (o: any) => {
   str(o.lang_code);
-}
+};
 
-function _fileLocationToBeDeprecated(o: any) {
+const _fileLocationToBeDeprecated = (o: any) => {
   i64(o.volume_id);
   i32(o.local_id);
-}
+};
 
-function _inputPhotoFileLocation(o: any) {
+const _inputPhotoFileLocation = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
   bytes(o.file_reference);
   str(o.thumb_size);
-}
+};
 
-function _inputPeerPhotoFileLocation(o: any) {
+const _inputPeerPhotoFileLocation = (o: any) => {
   const flags = 
       has(o.big)
   i32(flags);
@@ -4275,15 +4275,15 @@ function _inputPeerPhotoFileLocation(o: any) {
   obj(o.peer);
   i64(o.volume_id);
   i32(o.local_id);
-}
+};
 
-function _inputStickerSetThumb(o: any) {
+const _inputStickerSetThumb = (o: any) => {
   obj(o.stickerset);
   i64(o.volume_id);
   i32(o.local_id);
-}
+};
 
-function _folder(o: any) {
+const _folder = (o: any) => {
   const flags = 
       has(o.autofill_new_broadcasts)
     | has(o.autofill_public_groups) << 1
@@ -4294,9 +4294,9 @@ function _folder(o: any) {
   i32(o.id);
   str(o.title);
   flag(obj, o.photo);
-}
+};
 
-function _dialogFolder(o: any) {
+const _dialogFolder = (o: any) => {
   const flags = 
       has(o.pinned) << 2
   i32(flags);
@@ -4308,71 +4308,71 @@ function _dialogFolder(o: any) {
   i32(o.unread_unmuted_peers_count);
   i32(o.unread_muted_messages_count);
   i32(o.unread_unmuted_messages_count);
-}
+};
 
-function _inputDialogPeerFolder(o: any) {
+const _inputDialogPeerFolder = (o: any) => {
   i32(o.folder_id);
-}
+};
 
-function _dialogPeerFolder(o: any) {
+const _dialogPeerFolder = (o: any) => {
   i32(o.folder_id);
-}
+};
 
-function _inputFolderPeer(o: any) {
+const _inputFolderPeer = (o: any) => {
   obj(o.peer);
   i32(o.folder_id);
-}
+};
 
-function _folderPeer(o: any) {
+const _folderPeer = (o: any) => {
   obj(o.peer);
   i32(o.folder_id);
-}
+};
 
-function _updateFolderPeers(o: any) {
+const _updateFolderPeers = (o: any) => {
   vector(obj, o.folder_peers);
   i32(o.pts);
   i32(o.pts_count);
-}
+};
 
-function _inputUserFromMessage(o: any) {
+const _inputUserFromMessage = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.user_id);
-}
+};
 
-function _inputChannelFromMessage(o: any) {
+const _inputChannelFromMessage = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.channel_id);
-}
+};
 
-function _inputPeerUserFromMessage(o: any) {
+const _inputPeerUserFromMessage = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.user_id);
-}
+};
 
-function _inputPeerChannelFromMessage(o: any) {
+const _inputPeerChannelFromMessage = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.channel_id);
-}
+};
 
-function _channelAdminLogEventActionChangeLinkedChat(o: any) {
+const _channelAdminLogEventActionChangeLinkedChat = (o: any) => {
   i32(o.prev_value);
   i32(o.new_value);
-}
+};
 
-function _messagesSearchCounter(o: any) {
+const _messagesSearchCounter = (o: any) => {
   const flags = 
       has(o.inexact) << 1
   i32(flags);
   
   obj(o.filter);
   i32(o.count);
-}
+};
 
-function _keyboardButtonUrlAuth(o: any) {
+const _keyboardButtonUrlAuth = (o: any) => {
   const flags = 
       has(o.fwd_text)
   i32(flags);
@@ -4381,9 +4381,9 @@ function _keyboardButtonUrlAuth(o: any) {
   flag(str, o.fwd_text);
   str(o.url);
   i32(o.button_id);
-}
+};
 
-function _inputKeyboardButtonUrlAuth(o: any) {
+const _inputKeyboardButtonUrlAuth = (o: any) => {
   const flags = 
       has(o.request_write_access)
     | has(o.fwd_text) << 1
@@ -4393,119 +4393,119 @@ function _inputKeyboardButtonUrlAuth(o: any) {
   flag(str, o.fwd_text);
   str(o.url);
   obj(o.bot);
-}
+};
 
-function _urlAuthResultRequest(o: any) {
+const _urlAuthResultRequest = (o: any) => {
   const flags = 
       has(o.request_write_access)
   i32(flags);
   
   obj(o.bot);
   str(o.domain);
-}
+};
 
-function _urlAuthResultAccepted(o: any) {
+const _urlAuthResultAccepted = (o: any) => {
   str(o.url);
-}
+};
 
-function _inputPrivacyValueAllowChatParticipants(o: any) {
+const _inputPrivacyValueAllowChatParticipants = (o: any) => {
   vector(i32, o.chats);
-}
+};
 
-function _inputPrivacyValueDisallowChatParticipants(o: any) {
+const _inputPrivacyValueDisallowChatParticipants = (o: any) => {
   vector(i32, o.chats);
-}
+};
 
-function _privacyValueAllowChatParticipants(o: any) {
+const _privacyValueAllowChatParticipants = (o: any) => {
   vector(i32, o.chats);
-}
+};
 
-function _privacyValueDisallowChatParticipants(o: any) {
+const _privacyValueDisallowChatParticipants = (o: any) => {
   vector(i32, o.chats);
-}
+};
 
-function _messageEntityUnderline(o: any) {
+const _messageEntityUnderline = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityStrike(o: any) {
+const _messageEntityStrike = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _messageEntityBlockquote(o: any) {
+const _messageEntityBlockquote = (o: any) => {
   i32(o.offset);
   i32(o.length);
-}
+};
 
-function _updatePeerSettings(o: any) {
+const _updatePeerSettings = (o: any) => {
   obj(o.peer);
   obj(o.settings);
-}
+};
 
-function _channelLocation(o: any) {
+const _channelLocation = (o: any) => {
   obj(o.geo_point);
   str(o.address);
-}
+};
 
-function _peerLocated(o: any) {
+const _peerLocated = (o: any) => {
   obj(o.peer);
   i32(o.expires);
   i32(o.distance);
-}
+};
 
-function _updatePeerLocated(o: any) {
+const _updatePeerLocated = (o: any) => {
   vector(obj, o.peers);
-}
+};
 
-function _channelAdminLogEventActionChangeLocation(o: any) {
+const _channelAdminLogEventActionChangeLocation = (o: any) => {
   obj(o.prev_value);
   obj(o.new_value);
-}
+};
 
-function _channelAdminLogEventActionToggleSlowMode(o: any) {
+const _channelAdminLogEventActionToggleSlowMode = (o: any) => {
   i32(o.prev_value);
   i32(o.new_value);
-}
+};
 
-function _authAuthorizationSignUpRequired(o: any) {
+const _authAuthorizationSignUpRequired = (o: any) => {
   const flags = 
       has(o.terms_of_service);
   i32(flags);
   
   flag(obj, o.terms_of_service);
-}
+};
 
-function _paymentsPaymentVerificationNeeded(o: any) {
+const _paymentsPaymentVerificationNeeded = (o: any) => {
   str(o.url);
-}
+};
 
-function _updateNewScheduledMessage(o: any) {
+const _updateNewScheduledMessage = (o: any) => {
   obj(o.message);
-}
+};
 
-function _updateDeleteScheduledMessages(o: any) {
+const _updateDeleteScheduledMessages = (o: any) => {
   obj(o.peer);
   vector(i32, o.messages);
-}
+};
 
-function _restrictionReason(o: any) {
+const _restrictionReason = (o: any) => {
   str(o.platform);
   str(o.reason);
   str(o.text);
-}
+};
 
-function _inputTheme(o: any) {
+const _inputTheme = (o: any) => {
   i64(o.id);
   i64(o.access_hash);
-}
+};
 
-function _inputThemeSlug(o: any) {
+const _inputThemeSlug = (o: any) => {
   str(o.slug);
-}
+};
 
-function _theme(o: any) {
+const _theme = (o: any) => {
   const flags = 
       has(o.creator)
     | has(o.default) << 1
@@ -4518,64 +4518,64 @@ function _theme(o: any) {
   str(o.title);
   flag(obj, o.document);
   i32(o.installs_count);
-}
+};
 
-function _accountThemes(o: any) {
+const _accountThemes = (o: any) => {
   i32(o.hash);
   vector(obj, o.themes);
-}
+};
 
-function _updateTheme(o: any) {
+const _updateTheme = (o: any) => {
   obj(o.theme);
-}
+};
 
-function _invokeAfterMsg(o: any) {
+const _invokeAfterMsg = (o: any) => {
   i64(o.msg_id);
   obj(o.query);
-}
+};
 
-function _invokeAfterMsgs(o: any) {
+const _invokeAfterMsgs = (o: any) => {
   vector(i64, o.msg_ids);
   obj(o.query);
-}
+};
 
-function _authSendCode(o: any) {
+const _authSendCode = (o: any) => {
   str(o.phone_number);
   i32(o.api_id);
   str(o.api_hash);
   obj(o.settings);
-}
+};
 
-function _authSignUp(o: any) {
+const _authSignUp = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
   str(o.first_name);
   str(o.last_name);
-}
+};
 
-function _authSignIn(o: any) {
+const _authSignIn = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
   str(o.phone_code);
-}
+};
 
-function _authExportAuthorization(o: any) {
+const _authExportAuthorization = (o: any) => {
   i32(o.dc_id);
-}
+};
 
-function _authImportAuthorization(o: any) {
+const _authImportAuthorization = (o: any) => {
   i32(o.id);
   bytes(o.bytes);
-}
+};
 
-function _authBindTempAuthKey(o: any) {
+const _authBindTempAuthKey = (o: any) => {
   i64(o.perm_auth_key_id);
   i64(o.nonce);
   i32(o.expires_at);
   bytes(o.encrypted_message);
-}
+};
 
-function _accountRegisterDevice(o: any) {
+const _accountRegisterDevice = (o: any) => {
   const flags = 
       has(o.no_muted)
   i32(flags);
@@ -4585,24 +4585,24 @@ function _accountRegisterDevice(o: any) {
   bool(o.app_sandbox);
   bytes(o.secret);
   vector(i32, o.other_uids);
-}
+};
 
-function _accountUnregisterDevice(o: any) {
+const _accountUnregisterDevice = (o: any) => {
   i32(o.token_type);
   str(o.token);
   vector(i32, o.other_uids);
-}
+};
 
-function _accountUpdateNotifySettings(o: any) {
+const _accountUpdateNotifySettings = (o: any) => {
   obj(o.peer);
   obj(o.settings);
-}
+};
 
-function _accountGetNotifySettings(o: any) {
+const _accountGetNotifySettings = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _accountUpdateProfile(o: any) {
+const _accountUpdateProfile = (o: any) => {
   const flags = 
       has(o.first_name)
     | has(o.last_name) << 1
@@ -4612,67 +4612,67 @@ function _accountUpdateProfile(o: any) {
   flag(str, o.first_name);
   flag(str, o.last_name);
   flag(str, o.about);
-}
+};
 
-function _accountUpdateStatus(o: any) {
+const _accountUpdateStatus = (o: any) => {
   bool(o.offline);
-}
+};
 
-function _accountGetWallPapers(o: any) {
+const _accountGetWallPapers = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _accountReportPeer(o: any) {
+const _accountReportPeer = (o: any) => {
   obj(o.peer);
   obj(o.reason);
-}
+};
 
-function _usersGetUsers(o: any) {
+const _usersGetUsers = (o: any) => {
   vector(obj, o.id);
-}
+};
 
-function _usersGetFullUser(o: any) {
+const _usersGetFullUser = (o: any) => {
   obj(o.id);
-}
+};
 
-function _contactsGetContactIDs(o: any) {
+const _contactsGetContactIDs = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _contactsGetContacts(o: any) {
+const _contactsGetContacts = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _contactsImportContacts(o: any) {
+const _contactsImportContacts = (o: any) => {
   vector(obj, o.contacts);
-}
+};
 
-function _contactsDeleteContacts(o: any) {
+const _contactsDeleteContacts = (o: any) => {
   vector(obj, o.id);
-}
+};
 
-function _contactsDeleteByPhones(o: any) {
+const _contactsDeleteByPhones = (o: any) => {
   vector(str, o.phones);
-}
+};
 
-function _contactsBlock(o: any) {
+const _contactsBlock = (o: any) => {
   obj(o.id);
-}
+};
 
-function _contactsUnblock(o: any) {
+const _contactsUnblock = (o: any) => {
   obj(o.id);
-}
+};
 
-function _contactsGetBlocked(o: any) {
+const _contactsGetBlocked = (o: any) => {
   i32(o.offset);
   i32(o.limit);
-}
+};
 
-function _messagesGetMessages(o: any) {
+const _messagesGetMessages = (o: any) => {
   vector(obj, o.id);
-}
+};
 
-function _messagesGetDialogs(o: any) {
+const _messagesGetDialogs = (o: any) => {
   const flags = 
       has(o.exclude_pinned)
     | has(o.folder_id) << 1
@@ -4684,9 +4684,9 @@ function _messagesGetDialogs(o: any) {
   obj(o.offset_peer);
   i32(o.limit);
   i32(o.hash);
-}
+};
 
-function _messagesGetHistory(o: any) {
+const _messagesGetHistory = (o: any) => {
   obj(o.peer);
   i32(o.offset_id);
   i32(o.offset_date);
@@ -4695,9 +4695,9 @@ function _messagesGetHistory(o: any) {
   i32(o.max_id);
   i32(o.min_id);
   i32(o.hash);
-}
+};
 
-function _messagesSearch(o: any) {
+const _messagesSearch = (o: any) => {
   const flags = 
       has(o.from_id)
   i32(flags);
@@ -4714,14 +4714,14 @@ function _messagesSearch(o: any) {
   i32(o.max_id);
   i32(o.min_id);
   i32(o.hash);
-}
+};
 
-function _messagesReadHistory(o: any) {
+const _messagesReadHistory = (o: any) => {
   obj(o.peer);
   i32(o.max_id);
-}
+};
 
-function _messagesDeleteHistory(o: any) {
+const _messagesDeleteHistory = (o: any) => {
   const flags = 
       has(o.just_clear)
     | has(o.revoke) << 1
@@ -4729,26 +4729,26 @@ function _messagesDeleteHistory(o: any) {
   
   obj(o.peer);
   i32(o.max_id);
-}
+};
 
-function _messagesDeleteMessages(o: any) {
+const _messagesDeleteMessages = (o: any) => {
   const flags = 
       has(o.revoke)
   i32(flags);
   
   vector(i32, o.id);
-}
+};
 
-function _messagesReceivedMessages(o: any) {
+const _messagesReceivedMessages = (o: any) => {
   i32(o.max_id);
-}
+};
 
-function _messagesSetTyping(o: any) {
+const _messagesSetTyping = (o: any) => {
   obj(o.peer);
   obj(o.action);
-}
+};
 
-function _messagesSendMessage(o: any) {
+const _messagesSendMessage = (o: any) => {
   const flags = 
       has(o.no_webpage) << 1
     | has(o.silent) << 5
@@ -4767,9 +4767,9 @@ function _messagesSendMessage(o: any) {
   flag(obj, o.reply_markup);
   flagVector(obj, o.entities);
   flag(i32, o.schedule_date);
-}
+};
 
-function _messagesSendMedia(o: any) {
+const _messagesSendMedia = (o: any) => {
   const flags = 
       has(o.silent) << 5
     | has(o.background) << 6
@@ -4788,9 +4788,9 @@ function _messagesSendMedia(o: any) {
   flag(obj, o.reply_markup);
   flagVector(obj, o.entities);
   flag(i32, o.schedule_date);
-}
+};
 
-function _messagesForwardMessages(o: any) {
+const _messagesForwardMessages = (o: any) => {
   const flags = 
       has(o.silent) << 5
     | has(o.background) << 6
@@ -4804,57 +4804,57 @@ function _messagesForwardMessages(o: any) {
   vector(i64, o.random_id);
   obj(o.to_peer);
   flag(i32, o.schedule_date);
-}
+};
 
-function _messagesReportSpam(o: any) {
+const _messagesReportSpam = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesGetPeerSettings(o: any) {
+const _messagesGetPeerSettings = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesReport(o: any) {
+const _messagesReport = (o: any) => {
   obj(o.peer);
   vector(i32, o.id);
   obj(o.reason);
-}
+};
 
-function _messagesGetChats(o: any) {
+const _messagesGetChats = (o: any) => {
   vector(i32, o.id);
-}
+};
 
-function _messagesGetFullChat(o: any) {
+const _messagesGetFullChat = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _messagesEditChatTitle(o: any) {
+const _messagesEditChatTitle = (o: any) => {
   i32(o.chat_id);
   str(o.title);
-}
+};
 
-function _messagesEditChatPhoto(o: any) {
+const _messagesEditChatPhoto = (o: any) => {
   i32(o.chat_id);
   obj(o.photo);
-}
+};
 
-function _messagesAddChatUser(o: any) {
+const _messagesAddChatUser = (o: any) => {
   i32(o.chat_id);
   obj(o.user_id);
   i32(o.fwd_limit);
-}
+};
 
-function _messagesDeleteChatUser(o: any) {
+const _messagesDeleteChatUser = (o: any) => {
   i32(o.chat_id);
   obj(o.user_id);
-}
+};
 
-function _messagesCreateChat(o: any) {
+const _messagesCreateChat = (o: any) => {
   vector(obj, o.users);
   str(o.title);
-}
+};
 
-function _updatesGetDifference(o: any) {
+const _updatesGetDifference = (o: any) => {
   const flags = 
       has(o.pts_total_limit)
   i32(flags);
@@ -4863,27 +4863,27 @@ function _updatesGetDifference(o: any) {
   flag(i32, o.pts_total_limit);
   i32(o.date);
   i32(o.qts);
-}
+};
 
-function _photosUpdateProfilePhoto(o: any) {
+const _photosUpdateProfilePhoto = (o: any) => {
   obj(o.id);
-}
+};
 
-function _photosUploadProfilePhoto(o: any) {
+const _photosUploadProfilePhoto = (o: any) => {
   obj(o.file);
-}
+};
 
-function _photosDeletePhotos(o: any) {
+const _photosDeletePhotos = (o: any) => {
   vector(obj, o.id);
-}
+};
 
-function _uploadSaveFilePart(o: any) {
+const _uploadSaveFilePart = (o: any) => {
   i64(o.file_id);
   i32(o.file_part);
   bytes(o.bytes);
-}
+};
 
-function _uploadGetFile(o: any) {
+const _uploadGetFile = (o: any) => {
   const flags = 
       has(o.precise)
   i32(flags);
@@ -4891,85 +4891,85 @@ function _uploadGetFile(o: any) {
   obj(o.location);
   i32(o.offset);
   i32(o.limit);
-}
+};
 
-function _helpGetAppUpdate(o: any) {
+const _helpGetAppUpdate = (o: any) => {
   str(o.source);
-}
+};
 
-function _photosGetUserPhotos(o: any) {
+const _photosGetUserPhotos = (o: any) => {
   obj(o.user_id);
   i32(o.offset);
   i64(o.max_id);
   i32(o.limit);
-}
+};
 
-function _messagesGetDhConfig(o: any) {
+const _messagesGetDhConfig = (o: any) => {
   i32(o.version);
   i32(o.random_length);
-}
+};
 
-function _messagesRequestEncryption(o: any) {
+const _messagesRequestEncryption = (o: any) => {
   obj(o.user_id);
   i32(o.random_id);
   bytes(o.g_a);
-}
+};
 
-function _messagesAcceptEncryption(o: any) {
+const _messagesAcceptEncryption = (o: any) => {
   obj(o.peer);
   bytes(o.g_b);
   i64(o.key_fingerprint);
-}
+};
 
-function _messagesDiscardEncryption(o: any) {
+const _messagesDiscardEncryption = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _messagesSetEncryptedTyping(o: any) {
+const _messagesSetEncryptedTyping = (o: any) => {
   obj(o.peer);
   bool(o.typing);
-}
+};
 
-function _messagesReadEncryptedHistory(o: any) {
+const _messagesReadEncryptedHistory = (o: any) => {
   obj(o.peer);
   i32(o.max_date);
-}
+};
 
-function _messagesSendEncrypted(o: any) {
+const _messagesSendEncrypted = (o: any) => {
   obj(o.peer);
   i64(o.random_id);
   bytes(o.data);
-}
+};
 
-function _messagesSendEncryptedFile(o: any) {
+const _messagesSendEncryptedFile = (o: any) => {
   obj(o.peer);
   i64(o.random_id);
   bytes(o.data);
   obj(o.file);
-}
+};
 
-function _messagesSendEncryptedService(o: any) {
+const _messagesSendEncryptedService = (o: any) => {
   obj(o.peer);
   i64(o.random_id);
   bytes(o.data);
-}
+};
 
-function _messagesReceivedQueue(o: any) {
+const _messagesReceivedQueue = (o: any) => {
   i32(o.max_qts);
-}
+};
 
-function _messagesReportEncryptedSpam(o: any) {
+const _messagesReportEncryptedSpam = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _uploadSaveBigFilePart(o: any) {
+const _uploadSaveBigFilePart = (o: any) => {
   i64(o.file_id);
   i32(o.file_part);
   i32(o.file_total_parts);
   bytes(o.bytes);
-}
+};
 
-function _initConnection(o: any) {
+const _initConnection = (o: any) => {
   const flags = 
       has(o.proxy)
   i32(flags);
@@ -4983,205 +4983,205 @@ function _initConnection(o: any) {
   str(o.lang_code);
   flag(obj, o.proxy);
   obj(o.query);
-}
+};
 
-function _messagesReadMessageContents(o: any) {
+const _messagesReadMessageContents = (o: any) => {
   vector(i32, o.id);
-}
+};
 
-function _accountCheckUsername(o: any) {
+const _accountCheckUsername = (o: any) => {
   str(o.username);
-}
+};
 
-function _accountUpdateUsername(o: any) {
+const _accountUpdateUsername = (o: any) => {
   str(o.username);
-}
+};
 
-function _contactsSearch(o: any) {
+const _contactsSearch = (o: any) => {
   str(o.q);
   i32(o.limit);
-}
+};
 
-function _accountGetPrivacy(o: any) {
+const _accountGetPrivacy = (o: any) => {
   obj(o.key);
-}
+};
 
-function _accountSetPrivacy(o: any) {
+const _accountSetPrivacy = (o: any) => {
   obj(o.key);
   vector(obj, o.rules);
-}
+};
 
-function _accountDeleteAccount(o: any) {
+const _accountDeleteAccount = (o: any) => {
   str(o.reason);
-}
+};
 
-function _accountSetAccountTTL(o: any) {
+const _accountSetAccountTTL = (o: any) => {
   obj(o.ttl);
-}
+};
 
-function _invokeWithLayer(o: any) {
+const _invokeWithLayer = (o: any) => {
   i32(o.layer);
   obj(o.query);
-}
+};
 
-function _contactsResolveUsername(o: any) {
+const _contactsResolveUsername = (o: any) => {
   str(o.username);
-}
+};
 
-function _accountSendChangePhoneCode(o: any) {
+const _accountSendChangePhoneCode = (o: any) => {
   str(o.phone_number);
   obj(o.settings);
-}
+};
 
-function _accountChangePhone(o: any) {
+const _accountChangePhone = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
   str(o.phone_code);
-}
+};
 
-function _messagesGetStickers(o: any) {
+const _messagesGetStickers = (o: any) => {
   str(o.emoticon);
   i32(o.hash);
-}
+};
 
-function _messagesGetAllStickers(o: any) {
+const _messagesGetAllStickers = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _accountUpdateDeviceLocked(o: any) {
+const _accountUpdateDeviceLocked = (o: any) => {
   i32(o.period);
-}
+};
 
-function _authImportBotAuthorization(o: any) {
+const _authImportBotAuthorization = (o: any) => {
   i32(o.api_id);
   str(o.api_hash);
   str(o.bot_auth_token);
-}
+};
 
-function _messagesGetWebPagePreview(o: any) {
+const _messagesGetWebPagePreview = (o: any) => {
   const flags = 
       has(o.entities) << 3;
   i32(flags);
   
   str(o.message);
   flagVector(obj, o.entities);
-}
+};
 
-function _accountResetAuthorization(o: any) {
+const _accountResetAuthorization = (o: any) => {
   i64(o.hash);
-}
+};
 
-function _accountGetPasswordSettings(o: any) {
+const _accountGetPasswordSettings = (o: any) => {
   obj(o.password);
-}
+};
 
-function _accountUpdatePasswordSettings(o: any) {
+const _accountUpdatePasswordSettings = (o: any) => {
   obj(o.password);
   obj(o.new_settings);
-}
+};
 
-function _authCheckPassword(o: any) {
+const _authCheckPassword = (o: any) => {
   obj(o.password);
-}
+};
 
-function _authRecoverPassword(o: any) {
+const _authRecoverPassword = (o: any) => {
   str(o.code);
-}
+};
 
-function _invokeWithoutUpdates(o: any) {
+const _invokeWithoutUpdates = (o: any) => {
   obj(o.query);
-}
+};
 
-function _messagesExportChatInvite(o: any) {
+const _messagesExportChatInvite = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesCheckChatInvite(o: any) {
+const _messagesCheckChatInvite = (o: any) => {
   str(o.hash);
-}
+};
 
-function _messagesImportChatInvite(o: any) {
+const _messagesImportChatInvite = (o: any) => {
   str(o.hash);
-}
+};
 
-function _messagesGetStickerSet(o: any) {
+const _messagesGetStickerSet = (o: any) => {
   obj(o.stickerset);
-}
+};
 
-function _messagesInstallStickerSet(o: any) {
+const _messagesInstallStickerSet = (o: any) => {
   obj(o.stickerset);
   bool(o.archived);
-}
+};
 
-function _messagesUninstallStickerSet(o: any) {
+const _messagesUninstallStickerSet = (o: any) => {
   obj(o.stickerset);
-}
+};
 
-function _messagesStartBot(o: any) {
+const _messagesStartBot = (o: any) => {
   obj(o.bot);
   obj(o.peer);
   i64(o.random_id);
   str(o.start_param);
-}
+};
 
-function _helpGetAppChangelog(o: any) {
+const _helpGetAppChangelog = (o: any) => {
   str(o.prev_app_version);
-}
+};
 
-function _messagesGetMessagesViews(o: any) {
+const _messagesGetMessagesViews = (o: any) => {
   obj(o.peer);
   vector(i32, o.id);
   bool(o.increment);
-}
+};
 
-function _channelsReadHistory(o: any) {
+const _channelsReadHistory = (o: any) => {
   obj(o.channel);
   i32(o.max_id);
-}
+};
 
-function _channelsDeleteMessages(o: any) {
+const _channelsDeleteMessages = (o: any) => {
   obj(o.channel);
   vector(i32, o.id);
-}
+};
 
-function _channelsDeleteUserHistory(o: any) {
+const _channelsDeleteUserHistory = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
-}
+};
 
-function _channelsReportSpam(o: any) {
+const _channelsReportSpam = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
   vector(i32, o.id);
-}
+};
 
-function _channelsGetMessages(o: any) {
+const _channelsGetMessages = (o: any) => {
   obj(o.channel);
   vector(obj, o.id);
-}
+};
 
-function _channelsGetParticipants(o: any) {
+const _channelsGetParticipants = (o: any) => {
   obj(o.channel);
   obj(o.filter);
   i32(o.offset);
   i32(o.limit);
   i32(o.hash);
-}
+};
 
-function _channelsGetParticipant(o: any) {
+const _channelsGetParticipant = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
-}
+};
 
-function _channelsGetChannels(o: any) {
+const _channelsGetChannels = (o: any) => {
   vector(obj, o.id);
-}
+};
 
-function _channelsGetFullChannel(o: any) {
+const _channelsGetFullChannel = (o: any) => {
   obj(o.channel);
-}
+};
 
-function _channelsCreateChannel(o: any) {
+const _channelsCreateChannel = (o: any) => {
   const flags = 
       has(o.broadcast)
     | has(o.megagroup) << 1
@@ -5193,53 +5193,53 @@ function _channelsCreateChannel(o: any) {
   str(o.about);
   flag(obj, o.geo_point);
   flag(str, o.address);
-}
+};
 
-function _channelsEditAdmin(o: any) {
+const _channelsEditAdmin = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
   obj(o.admin_rights);
   str(o.rank);
-}
+};
 
-function _channelsEditTitle(o: any) {
+const _channelsEditTitle = (o: any) => {
   obj(o.channel);
   str(o.title);
-}
+};
 
-function _channelsEditPhoto(o: any) {
+const _channelsEditPhoto = (o: any) => {
   obj(o.channel);
   obj(o.photo);
-}
+};
 
-function _channelsCheckUsername(o: any) {
+const _channelsCheckUsername = (o: any) => {
   obj(o.channel);
   str(o.username);
-}
+};
 
-function _channelsUpdateUsername(o: any) {
+const _channelsUpdateUsername = (o: any) => {
   obj(o.channel);
   str(o.username);
-}
+};
 
-function _channelsJoinChannel(o: any) {
+const _channelsJoinChannel = (o: any) => {
   obj(o.channel);
-}
+};
 
-function _channelsLeaveChannel(o: any) {
+const _channelsLeaveChannel = (o: any) => {
   obj(o.channel);
-}
+};
 
-function _channelsInviteToChannel(o: any) {
+const _channelsInviteToChannel = (o: any) => {
   obj(o.channel);
   vector(obj, o.users);
-}
+};
 
-function _channelsDeleteChannel(o: any) {
+const _channelsDeleteChannel = (o: any) => {
   obj(o.channel);
-}
+};
 
-function _updatesGetChannelDifference(o: any) {
+const _updatesGetChannelDifference = (o: any) => {
   const flags = 
       has(o.force)
   i32(flags);
@@ -5248,19 +5248,19 @@ function _updatesGetChannelDifference(o: any) {
   obj(o.filter);
   i32(o.pts);
   i32(o.limit);
-}
+};
 
-function _messagesEditChatAdmin(o: any) {
+const _messagesEditChatAdmin = (o: any) => {
   i32(o.chat_id);
   obj(o.user_id);
   bool(o.is_admin);
-}
+};
 
-function _messagesMigrateChat(o: any) {
+const _messagesMigrateChat = (o: any) => {
   i32(o.chat_id);
-}
+};
 
-function _messagesSearchGlobal(o: any) {
+const _messagesSearchGlobal = (o: any) => {
   const flags = 
       has(o.folder_id)
   i32(flags);
@@ -5271,37 +5271,37 @@ function _messagesSearchGlobal(o: any) {
   obj(o.offset_peer);
   i32(o.offset_id);
   i32(o.limit);
-}
+};
 
-function _messagesReorderStickerSets(o: any) {
+const _messagesReorderStickerSets = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
   
   vector(i64, o.order);
-}
+};
 
-function _messagesGetDocumentByHash(o: any) {
+const _messagesGetDocumentByHash = (o: any) => {
   bytes(o.sha256);
   i32(o.size);
   str(o.mime_type);
-}
+};
 
-function _messagesSearchGifs(o: any) {
+const _messagesSearchGifs = (o: any) => {
   str(o.q);
   i32(o.offset);
-}
+};
 
-function _messagesGetSavedGifs(o: any) {
+const _messagesGetSavedGifs = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _messagesSaveGif(o: any) {
+const _messagesSaveGif = (o: any) => {
   obj(o.id);
   bool(o.unsave);
-}
+};
 
-function _messagesGetInlineBotResults(o: any) {
+const _messagesGetInlineBotResults = (o: any) => {
   const flags = 
       has(o.geo_point)
   i32(flags);
@@ -5311,9 +5311,9 @@ function _messagesGetInlineBotResults(o: any) {
   flag(obj, o.geo_point);
   str(o.query);
   str(o.offset);
-}
+};
 
-function _messagesSetInlineBotResults(o: any) {
+const _messagesSetInlineBotResults = (o: any) => {
   const flags = 
       has(o.gallery)
     | has(o.private) << 1
@@ -5326,9 +5326,9 @@ function _messagesSetInlineBotResults(o: any) {
   i32(o.cache_time);
   flag(str, o.next_offset);
   flag(obj, o.switch_pm);
-}
+};
 
-function _messagesSendInlineBotResult(o: any) {
+const _messagesSendInlineBotResult = (o: any) => {
   const flags = 
       has(o.silent) << 5
     | has(o.background) << 6
@@ -5344,35 +5344,35 @@ function _messagesSendInlineBotResult(o: any) {
   i64(o.query_id);
   str(o.id);
   flag(i32, o.schedule_date);
-}
+};
 
-function _channelsExportMessageLink(o: any) {
+const _channelsExportMessageLink = (o: any) => {
   obj(o.channel);
   i32(o.id);
   bool(o.grouped);
-}
+};
 
-function _channelsToggleSignatures(o: any) {
+const _channelsToggleSignatures = (o: any) => {
   obj(o.channel);
   bool(o.enabled);
-}
+};
 
-function _authResendCode(o: any) {
+const _authResendCode = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
-}
+};
 
-function _authCancelCode(o: any) {
+const _authCancelCode = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
-}
+};
 
-function _messagesGetMessageEditData(o: any) {
+const _messagesGetMessageEditData = (o: any) => {
   obj(o.peer);
   i32(o.id);
-}
+};
 
-function _messagesEditMessage(o: any) {
+const _messagesEditMessage = (o: any) => {
   const flags = 
       has(o.no_webpage) << 1
     | has(o.message) << 11
@@ -5389,9 +5389,9 @@ function _messagesEditMessage(o: any) {
   flag(obj, o.reply_markup);
   flagVector(obj, o.entities);
   flag(i32, o.schedule_date);
-}
+};
 
-function _messagesEditInlineBotMessage(o: any) {
+const _messagesEditInlineBotMessage = (o: any) => {
   const flags = 
       has(o.no_webpage) << 1
     | has(o.message) << 11
@@ -5405,9 +5405,9 @@ function _messagesEditInlineBotMessage(o: any) {
   flag(obj, o.media);
   flag(obj, o.reply_markup);
   flagVector(obj, o.entities);
-}
+};
 
-function _messagesGetBotCallbackAnswer(o: any) {
+const _messagesGetBotCallbackAnswer = (o: any) => {
   const flags = 
       has(o.game) << 1
     | has(o.data);
@@ -5416,9 +5416,9 @@ function _messagesGetBotCallbackAnswer(o: any) {
   obj(o.peer);
   i32(o.msg_id);
   flag(bytes, o.data);
-}
+};
 
-function _messagesSetBotCallbackAnswer(o: any) {
+const _messagesSetBotCallbackAnswer = (o: any) => {
   const flags = 
       has(o.alert) << 1
     | has(o.message)
@@ -5429,9 +5429,9 @@ function _messagesSetBotCallbackAnswer(o: any) {
   flag(str, o.message);
   flag(str, o.url);
   i32(o.cache_time);
-}
+};
 
-function _contactsGetTopPeers(o: any) {
+const _contactsGetTopPeers = (o: any) => {
   const flags = 
       has(o.correspondents)
     | has(o.bots_pm) << 1
@@ -5446,18 +5446,18 @@ function _contactsGetTopPeers(o: any) {
   i32(o.offset);
   i32(o.limit);
   i32(o.hash);
-}
+};
 
-function _contactsResetTopPeerRating(o: any) {
+const _contactsResetTopPeerRating = (o: any) => {
   obj(o.category);
   obj(o.peer);
-}
+};
 
-function _messagesGetPeerDialogs(o: any) {
+const _messagesGetPeerDialogs = (o: any) => {
   vector(obj, o.peers);
-}
+};
 
-function _messagesSaveDraft(o: any) {
+const _messagesSaveDraft = (o: any) => {
   const flags = 
       has(o.no_webpage) << 1
     | has(o.reply_to_msg_id)
@@ -5468,80 +5468,80 @@ function _messagesSaveDraft(o: any) {
   obj(o.peer);
   str(o.message);
   flagVector(obj, o.entities);
-}
+};
 
-function _messagesGetFeaturedStickers(o: any) {
+const _messagesGetFeaturedStickers = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _messagesReadFeaturedStickers(o: any) {
+const _messagesReadFeaturedStickers = (o: any) => {
   vector(i64, o.id);
-}
+};
 
-function _messagesGetRecentStickers(o: any) {
+const _messagesGetRecentStickers = (o: any) => {
   const flags = 
       has(o.attached)
   i32(flags);
   
   i32(o.hash);
-}
+};
 
-function _messagesSaveRecentSticker(o: any) {
+const _messagesSaveRecentSticker = (o: any) => {
   const flags = 
       has(o.attached)
   i32(flags);
   
   obj(o.id);
   bool(o.unsave);
-}
+};
 
-function _messagesClearRecentStickers(o: any) {
+const _messagesClearRecentStickers = (o: any) => {
   const flags = 
       has(o.attached);
   i32(flags);
   
-}
+};
 
-function _messagesGetArchivedStickers(o: any) {
+const _messagesGetArchivedStickers = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
   
   i64(o.offset_id);
   i32(o.limit);
-}
+};
 
-function _accountSendConfirmPhoneCode(o: any) {
+const _accountSendConfirmPhoneCode = (o: any) => {
   str(o.hash);
   obj(o.settings);
-}
+};
 
-function _accountConfirmPhone(o: any) {
+const _accountConfirmPhone = (o: any) => {
   str(o.phone_code_hash);
   str(o.phone_code);
-}
+};
 
-function _channelsGetAdminedPublicChannels(o: any) {
+const _channelsGetAdminedPublicChannels = (o: any) => {
   const flags = 
       has(o.by_location)
     | has(o.check_limit) << 1;
   i32(flags);
   
-}
+};
 
-function _messagesGetMaskStickers(o: any) {
+const _messagesGetMaskStickers = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _messagesGetAttachedStickers(o: any) {
+const _messagesGetAttachedStickers = (o: any) => {
   obj(o.media);
-}
+};
 
-function _authDropTempAuthKeys(o: any) {
+const _authDropTempAuthKeys = (o: any) => {
   vector(i64, o.except_auth_keys);
-}
+};
 
-function _messagesSetGameScore(o: any) {
+const _messagesSetGameScore = (o: any) => {
   const flags = 
       has(o.edit_message)
     | has(o.force) << 1
@@ -5551,9 +5551,9 @@ function _messagesSetGameScore(o: any) {
   i32(o.id);
   obj(o.user_id);
   i32(o.score);
-}
+};
 
-function _messagesSetInlineGameScore(o: any) {
+const _messagesSetInlineGameScore = (o: any) => {
   const flags = 
       has(o.edit_message)
     | has(o.force) << 1
@@ -5562,94 +5562,94 @@ function _messagesSetInlineGameScore(o: any) {
   obj(o.id);
   obj(o.user_id);
   i32(o.score);
-}
+};
 
-function _messagesGetGameHighScores(o: any) {
+const _messagesGetGameHighScores = (o: any) => {
   obj(o.peer);
   i32(o.id);
   obj(o.user_id);
-}
+};
 
-function _messagesGetInlineGameHighScores(o: any) {
+const _messagesGetInlineGameHighScores = (o: any) => {
   obj(o.id);
   obj(o.user_id);
-}
+};
 
-function _messagesGetCommonChats(o: any) {
+const _messagesGetCommonChats = (o: any) => {
   obj(o.user_id);
   i32(o.max_id);
   i32(o.limit);
-}
+};
 
-function _messagesGetAllChats(o: any) {
+const _messagesGetAllChats = (o: any) => {
   vector(i32, o.except_ids);
-}
+};
 
-function _helpSetBotUpdatesStatus(o: any) {
+const _helpSetBotUpdatesStatus = (o: any) => {
   i32(o.pending_updates_count);
   str(o.message);
-}
+};
 
-function _messagesGetWebPage(o: any) {
+const _messagesGetWebPage = (o: any) => {
   str(o.url);
   i32(o.hash);
-}
+};
 
-function _messagesToggleDialogPin(o: any) {
+const _messagesToggleDialogPin = (o: any) => {
   const flags = 
       has(o.pinned)
   i32(flags);
   
   obj(o.peer);
-}
+};
 
-function _messagesReorderPinnedDialogs(o: any) {
+const _messagesReorderPinnedDialogs = (o: any) => {
   const flags = 
       has(o.force)
   i32(flags);
   
   i32(o.folder_id);
   vector(obj, o.order);
-}
+};
 
-function _messagesGetPinnedDialogs(o: any) {
+const _messagesGetPinnedDialogs = (o: any) => {
   i32(o.folder_id);
-}
+};
 
-function _botsSendCustomRequest(o: any) {
+const _botsSendCustomRequest = (o: any) => {
   str(o.custom_method);
   obj(o.params);
-}
+};
 
-function _botsAnswerWebhookJSONQuery(o: any) {
+const _botsAnswerWebhookJSONQuery = (o: any) => {
   i64(o.query_id);
   obj(o.data);
-}
+};
 
-function _uploadGetWebFile(o: any) {
+const _uploadGetWebFile = (o: any) => {
   obj(o.location);
   i32(o.offset);
   i32(o.limit);
-}
+};
 
-function _paymentsGetPaymentForm(o: any) {
+const _paymentsGetPaymentForm = (o: any) => {
   i32(o.msg_id);
-}
+};
 
-function _paymentsGetPaymentReceipt(o: any) {
+const _paymentsGetPaymentReceipt = (o: any) => {
   i32(o.msg_id);
-}
+};
 
-function _paymentsValidateRequestedInfo(o: any) {
+const _paymentsValidateRequestedInfo = (o: any) => {
   const flags = 
       has(o.save)
   i32(flags);
   
   i32(o.msg_id);
   obj(o.info);
-}
+};
 
-function _paymentsSendPaymentForm(o: any) {
+const _paymentsSendPaymentForm = (o: any) => {
   const flags = 
       has(o.requested_info_id)
     | has(o.shipping_option_id) << 1
@@ -5659,22 +5659,22 @@ function _paymentsSendPaymentForm(o: any) {
   flag(str, o.requested_info_id);
   flag(str, o.shipping_option_id);
   obj(o.credentials);
-}
+};
 
-function _accountGetTmpPassword(o: any) {
+const _accountGetTmpPassword = (o: any) => {
   obj(o.password);
   i32(o.period);
-}
+};
 
-function _paymentsClearSavedInfo(o: any) {
+const _paymentsClearSavedInfo = (o: any) => {
   const flags = 
       has(o.credentials)
     | has(o.info) << 1;
   i32(flags);
   
-}
+};
 
-function _messagesSetBotShippingResults(o: any) {
+const _messagesSetBotShippingResults = (o: any) => {
   const flags = 
       has(o.error)
     | has(o.shipping_options) << 1;
@@ -5683,9 +5683,9 @@ function _messagesSetBotShippingResults(o: any) {
   i64(o.query_id);
   flag(str, o.error);
   flagVector(obj, o.shipping_options);
-}
+};
 
-function _messagesSetBotPrecheckoutResults(o: any) {
+const _messagesSetBotPrecheckoutResults = (o: any) => {
   const flags = 
       has(o.success) << 1
     | has(o.error);
@@ -5693,9 +5693,9 @@ function _messagesSetBotPrecheckoutResults(o: any) {
   
   i64(o.query_id);
   flag(str, o.error);
-}
+};
 
-function _stickersCreateStickerSet(o: any) {
+const _stickersCreateStickerSet = (o: any) => {
   const flags = 
       has(o.masks)
   i32(flags);
@@ -5704,28 +5704,28 @@ function _stickersCreateStickerSet(o: any) {
   str(o.title);
   str(o.short_name);
   vector(obj, o.stickers);
-}
+};
 
-function _stickersRemoveStickerFromSet(o: any) {
+const _stickersRemoveStickerFromSet = (o: any) => {
   obj(o.sticker);
-}
+};
 
-function _stickersChangeStickerPosition(o: any) {
+const _stickersChangeStickerPosition = (o: any) => {
   obj(o.sticker);
   i32(o.position);
-}
+};
 
-function _stickersAddStickerToSet(o: any) {
+const _stickersAddStickerToSet = (o: any) => {
   obj(o.stickerset);
   obj(o.sticker);
-}
+};
 
-function _messagesUploadMedia(o: any) {
+const _messagesUploadMedia = (o: any) => {
   obj(o.peer);
   obj(o.media);
-}
+};
 
-function _phoneRequestCall(o: any) {
+const _phoneRequestCall = (o: any) => {
   const flags = 
       has(o.video)
   i32(flags);
@@ -5734,26 +5734,26 @@ function _phoneRequestCall(o: any) {
   i32(o.random_id);
   bytes(o.g_a_hash);
   obj(o.protocol);
-}
+};
 
-function _phoneAcceptCall(o: any) {
+const _phoneAcceptCall = (o: any) => {
   obj(o.peer);
   bytes(o.g_b);
   obj(o.protocol);
-}
+};
 
-function _phoneConfirmCall(o: any) {
+const _phoneConfirmCall = (o: any) => {
   obj(o.peer);
   bytes(o.g_a);
   i64(o.key_fingerprint);
   obj(o.protocol);
-}
+};
 
-function _phoneReceivedCall(o: any) {
+const _phoneReceivedCall = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _phoneDiscardCall(o: any) {
+const _phoneDiscardCall = (o: any) => {
   const flags = 
       has(o.video)
   i32(flags);
@@ -5762,9 +5762,9 @@ function _phoneDiscardCall(o: any) {
   i32(o.duration);
   obj(o.reason);
   i64(o.connection_id);
-}
+};
 
-function _phoneSetCallRating(o: any) {
+const _phoneSetCallRating = (o: any) => {
   const flags = 
       has(o.user_initiative)
   i32(flags);
@@ -5772,52 +5772,52 @@ function _phoneSetCallRating(o: any) {
   obj(o.peer);
   i32(o.rating);
   str(o.comment);
-}
+};
 
-function _phoneSaveCallDebug(o: any) {
+const _phoneSaveCallDebug = (o: any) => {
   obj(o.peer);
   obj(o.debug);
-}
+};
 
-function _uploadGetCdnFile(o: any) {
+const _uploadGetCdnFile = (o: any) => {
   bytes(o.file_token);
   i32(o.offset);
   i32(o.limit);
-}
+};
 
-function _uploadReuploadCdnFile(o: any) {
+const _uploadReuploadCdnFile = (o: any) => {
   bytes(o.file_token);
   bytes(o.request_token);
-}
+};
 
-function _langpackGetLangPack(o: any) {
+const _langpackGetLangPack = (o: any) => {
   str(o.lang_pack);
   str(o.lang_code);
-}
+};
 
-function _langpackGetStrings(o: any) {
+const _langpackGetStrings = (o: any) => {
   str(o.lang_pack);
   str(o.lang_code);
   vector(str, o.keys);
-}
+};
 
-function _langpackGetDifference(o: any) {
+const _langpackGetDifference = (o: any) => {
   str(o.lang_pack);
   str(o.lang_code);
   i32(o.from_version);
-}
+};
 
-function _langpackGetLanguages(o: any) {
+const _langpackGetLanguages = (o: any) => {
   str(o.lang_pack);
-}
+};
 
-function _channelsEditBanned(o: any) {
+const _channelsEditBanned = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
   obj(o.banned_rights);
-}
+};
 
-function _channelsGetAdminLog(o: any) {
+const _channelsGetAdminLog = (o: any) => {
   const flags = 
       has(o.events_filter)
     | has(o.admins) << 1
@@ -5830,72 +5830,72 @@ function _channelsGetAdminLog(o: any) {
   i64(o.max_id);
   i64(o.min_id);
   i32(o.limit);
-}
+};
 
-function _uploadGetCdnFileHashes(o: any) {
+const _uploadGetCdnFileHashes = (o: any) => {
   bytes(o.file_token);
   i32(o.offset);
-}
+};
 
-function _messagesSendScreenshotNotification(o: any) {
+const _messagesSendScreenshotNotification = (o: any) => {
   obj(o.peer);
   i32(o.reply_to_msg_id);
   i64(o.random_id);
-}
+};
 
-function _channelsSetStickers(o: any) {
+const _channelsSetStickers = (o: any) => {
   obj(o.channel);
   obj(o.stickerset);
-}
+};
 
-function _messagesGetFavedStickers(o: any) {
+const _messagesGetFavedStickers = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _messagesFaveSticker(o: any) {
+const _messagesFaveSticker = (o: any) => {
   obj(o.id);
   bool(o.unfave);
-}
+};
 
-function _channelsReadMessageContents(o: any) {
+const _channelsReadMessageContents = (o: any) => {
   obj(o.channel);
   vector(i32, o.id);
-}
+};
 
-function _messagesGetUnreadMentions(o: any) {
+const _messagesGetUnreadMentions = (o: any) => {
   obj(o.peer);
   i32(o.offset_id);
   i32(o.add_offset);
   i32(o.limit);
   i32(o.max_id);
   i32(o.min_id);
-}
+};
 
-function _channelsDeleteHistory(o: any) {
+const _channelsDeleteHistory = (o: any) => {
   obj(o.channel);
   i32(o.max_id);
-}
+};
 
-function _helpGetRecentMeUrls(o: any) {
+const _helpGetRecentMeUrls = (o: any) => {
   str(o.referer);
-}
+};
 
-function _channelsTogglePreHistoryHidden(o: any) {
+const _channelsTogglePreHistoryHidden = (o: any) => {
   obj(o.channel);
   bool(o.enabled);
-}
+};
 
-function _messagesReadMentions(o: any) {
+const _messagesReadMentions = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesGetRecentLocations(o: any) {
+const _messagesGetRecentLocations = (o: any) => {
   obj(o.peer);
   i32(o.limit);
   i32(o.hash);
-}
+};
 
-function _messagesSendMultiMedia(o: any) {
+const _messagesSendMultiMedia = (o: any) => {
   const flags = 
       has(o.silent) << 5
     | has(o.background) << 6
@@ -5908,96 +5908,96 @@ function _messagesSendMultiMedia(o: any) {
   flag(i32, o.reply_to_msg_id);
   vector(obj, o.multi_media);
   flag(i32, o.schedule_date);
-}
+};
 
-function _messagesUploadEncryptedFile(o: any) {
+const _messagesUploadEncryptedFile = (o: any) => {
   obj(o.peer);
   obj(o.file);
-}
+};
 
-function _accountResetWebAuthorization(o: any) {
+const _accountResetWebAuthorization = (o: any) => {
   i64(o.hash);
-}
+};
 
-function _messagesSearchStickerSets(o: any) {
+const _messagesSearchStickerSets = (o: any) => {
   const flags = 
       has(o.exclude_featured)
   i32(flags);
   
   str(o.q);
   i32(o.hash);
-}
+};
 
-function _uploadGetFileHashes(o: any) {
+const _uploadGetFileHashes = (o: any) => {
   obj(o.location);
   i32(o.offset);
-}
+};
 
-function _helpAcceptTermsOfService(o: any) {
+const _helpAcceptTermsOfService = (o: any) => {
   obj(o.id);
-}
+};
 
-function _accountGetSecureValue(o: any) {
+const _accountGetSecureValue = (o: any) => {
   vector(obj, o.types);
-}
+};
 
-function _accountSaveSecureValue(o: any) {
+const _accountSaveSecureValue = (o: any) => {
   obj(o.value);
   i64(o.secure_secret_id);
-}
+};
 
-function _accountDeleteSecureValue(o: any) {
+const _accountDeleteSecureValue = (o: any) => {
   vector(obj, o.types);
-}
+};
 
-function _usersSetSecureValueErrors(o: any) {
+const _usersSetSecureValueErrors = (o: any) => {
   obj(o.id);
   vector(obj, o.errors);
-}
+};
 
-function _accountGetAuthorizationForm(o: any) {
+const _accountGetAuthorizationForm = (o: any) => {
   i32(o.bot_id);
   str(o.scope);
   str(o.public_key);
-}
+};
 
-function _accountAcceptAuthorization(o: any) {
+const _accountAcceptAuthorization = (o: any) => {
   i32(o.bot_id);
   str(o.scope);
   str(o.public_key);
   vector(obj, o.value_hashes);
   obj(o.credentials);
-}
+};
 
-function _accountSendVerifyPhoneCode(o: any) {
+const _accountSendVerifyPhoneCode = (o: any) => {
   str(o.phone_number);
   obj(o.settings);
-}
+};
 
-function _accountVerifyPhone(o: any) {
+const _accountVerifyPhone = (o: any) => {
   str(o.phone_number);
   str(o.phone_code_hash);
   str(o.phone_code);
-}
+};
 
-function _accountSendVerifyEmailCode(o: any) {
+const _accountSendVerifyEmailCode = (o: any) => {
   str(o.email);
-}
+};
 
-function _accountVerifyEmail(o: any) {
+const _accountVerifyEmail = (o: any) => {
   str(o.email);
   str(o.code);
-}
+};
 
-function _helpGetDeepLinkInfo(o: any) {
+const _helpGetDeepLinkInfo = (o: any) => {
   str(o.path);
-}
+};
 
-function _channelsGetLeftChannels(o: any) {
+const _channelsGetLeftChannels = (o: any) => {
   i32(o.offset);
-}
+};
 
-function _accountInitTakeoutSession(o: any) {
+const _accountInitTakeoutSession = (o: any) => {
   const flags = 
       has(o.contacts)
     | has(o.message_users) << 1
@@ -6009,192 +6009,192 @@ function _accountInitTakeoutSession(o: any) {
   i32(flags);
   
   flag(i32, o.file_max_size);
-}
+};
 
-function _accountFinishTakeoutSession(o: any) {
+const _accountFinishTakeoutSession = (o: any) => {
   const flags = 
       has(o.success);
   i32(flags);
   
-}
+};
 
-function _invokeWithMessagesRange(o: any) {
+const _invokeWithMessagesRange = (o: any) => {
   obj(o.range);
   obj(o.query);
-}
+};
 
-function _invokeWithTakeout(o: any) {
+const _invokeWithTakeout = (o: any) => {
   i64(o.takeout_id);
   obj(o.query);
-}
+};
 
-function _messagesMarkDialogUnread(o: any) {
+const _messagesMarkDialogUnread = (o: any) => {
   const flags = 
       has(o.unread)
   i32(flags);
   
   obj(o.peer);
-}
+};
 
-function _contactsToggleTopPeers(o: any) {
+const _contactsToggleTopPeers = (o: any) => {
   bool(o.enabled);
-}
+};
 
-function _helpSaveAppLog(o: any) {
+const _helpSaveAppLog = (o: any) => {
   vector(obj, o.events);
-}
+};
 
-function _helpGetPassportConfig(o: any) {
+const _helpGetPassportConfig = (o: any) => {
   i32(o.hash);
-}
+};
 
-function _langpackGetLanguage(o: any) {
+const _langpackGetLanguage = (o: any) => {
   str(o.lang_pack);
   str(o.lang_code);
-}
+};
 
-function _messagesUpdatePinnedMessage(o: any) {
+const _messagesUpdatePinnedMessage = (o: any) => {
   const flags = 
       has(o.silent)
   i32(flags);
   
   obj(o.peer);
   i32(o.id);
-}
+};
 
-function _accountConfirmPasswordEmail(o: any) {
+const _accountConfirmPasswordEmail = (o: any) => {
   str(o.code);
-}
+};
 
-function _helpGetUserInfo(o: any) {
+const _helpGetUserInfo = (o: any) => {
   obj(o.user_id);
-}
+};
 
-function _helpEditUserInfo(o: any) {
+const _helpEditUserInfo = (o: any) => {
   obj(o.user_id);
   str(o.message);
   vector(obj, o.entities);
-}
+};
 
-function _accountSetContactSignUpNotification(o: any) {
+const _accountSetContactSignUpNotification = (o: any) => {
   bool(o.silent);
-}
+};
 
-function _accountGetNotifyExceptions(o: any) {
+const _accountGetNotifyExceptions = (o: any) => {
   const flags = 
       has(o.compare_sound) << 1
     | has(o.peer);
   i32(flags);
   
   flag(obj, o.peer);
-}
+};
 
-function _messagesSendVote(o: any) {
+const _messagesSendVote = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   vector(bytes, o.options);
-}
+};
 
-function _messagesGetPollResults(o: any) {
+const _messagesGetPollResults = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
-}
+};
 
-function _messagesGetOnlines(o: any) {
+const _messagesGetOnlines = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _messagesGetStatsURL(o: any) {
+const _messagesGetStatsURL = (o: any) => {
   const flags = 
       has(o.dark)
   i32(flags);
   
   obj(o.peer);
   str(o.params);
-}
+};
 
-function _messagesEditChatAbout(o: any) {
+const _messagesEditChatAbout = (o: any) => {
   obj(o.peer);
   str(o.about);
-}
+};
 
-function _messagesEditChatDefaultBannedRights(o: any) {
+const _messagesEditChatDefaultBannedRights = (o: any) => {
   obj(o.peer);
   obj(o.banned_rights);
-}
+};
 
-function _accountGetWallPaper(o: any) {
+const _accountGetWallPaper = (o: any) => {
   obj(o.wallpaper);
-}
+};
 
-function _accountUploadWallPaper(o: any) {
+const _accountUploadWallPaper = (o: any) => {
   obj(o.file);
   str(o.mime_type);
   obj(o.settings);
-}
+};
 
-function _accountSaveWallPaper(o: any) {
+const _accountSaveWallPaper = (o: any) => {
   obj(o.wallpaper);
   bool(o.unsave);
   obj(o.settings);
-}
+};
 
-function _accountInstallWallPaper(o: any) {
+const _accountInstallWallPaper = (o: any) => {
   obj(o.wallpaper);
   obj(o.settings);
-}
+};
 
-function _accountSaveAutoDownloadSettings(o: any) {
+const _accountSaveAutoDownloadSettings = (o: any) => {
   const flags = 
       has(o.low)
     | has(o.high) << 1
   i32(flags);
   
   obj(o.settings);
-}
+};
 
-function _messagesGetEmojiKeywords(o: any) {
+const _messagesGetEmojiKeywords = (o: any) => {
   str(o.lang_code);
-}
+};
 
-function _messagesGetEmojiKeywordsDifference(o: any) {
+const _messagesGetEmojiKeywordsDifference = (o: any) => {
   str(o.lang_code);
   i32(o.from_version);
-}
+};
 
-function _messagesGetEmojiKeywordsLanguages(o: any) {
+const _messagesGetEmojiKeywordsLanguages = (o: any) => {
   vector(str, o.lang_codes);
-}
+};
 
-function _messagesGetEmojiURL(o: any) {
+const _messagesGetEmojiURL = (o: any) => {
   str(o.lang_code);
-}
+};
 
-function _foldersEditPeerFolders(o: any) {
+const _foldersEditPeerFolders = (o: any) => {
   vector(obj, o.folder_peers);
-}
+};
 
-function _foldersDeleteFolder(o: any) {
+const _foldersDeleteFolder = (o: any) => {
   i32(o.folder_id);
-}
+};
 
-function _messagesGetSearchCounters(o: any) {
+const _messagesGetSearchCounters = (o: any) => {
   obj(o.peer);
   vector(obj, o.filters);
-}
+};
 
-function _channelsSetDiscussionGroup(o: any) {
+const _channelsSetDiscussionGroup = (o: any) => {
   obj(o.broadcast);
   obj(o.group);
-}
+};
 
-function _messagesRequestUrlAuth(o: any) {
+const _messagesRequestUrlAuth = (o: any) => {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.button_id);
-}
+};
 
-function _messagesAcceptUrlAuth(o: any) {
+const _messagesAcceptUrlAuth = (o: any) => {
   const flags = 
       has(o.write_allowed)
   i32(flags);
@@ -6202,13 +6202,13 @@ function _messagesAcceptUrlAuth(o: any) {
   obj(o.peer);
   i32(o.msg_id);
   i32(o.button_id);
-}
+};
 
-function _messagesHidePeerSettingsBar(o: any) {
+const _messagesHidePeerSettingsBar = (o: any) => {
   obj(o.peer);
-}
+};
 
-function _contactsAddContact(o: any) {
+const _contactsAddContact = (o: any) => {
   const flags = 
       has(o.add_phone_privacy_exception)
   i32(flags);
@@ -6217,54 +6217,54 @@ function _contactsAddContact(o: any) {
   str(o.first_name);
   str(o.last_name);
   str(o.phone);
-}
+};
 
-function _contactsAcceptContact(o: any) {
+const _contactsAcceptContact = (o: any) => {
   obj(o.id);
-}
+};
 
-function _channelsEditCreator(o: any) {
+const _channelsEditCreator = (o: any) => {
   obj(o.channel);
   obj(o.user_id);
   obj(o.password);
-}
+};
 
-function _contactsGetLocated(o: any) {
+const _contactsGetLocated = (o: any) => {
   obj(o.geo_point);
-}
+};
 
-function _channelsEditLocation(o: any) {
+const _channelsEditLocation = (o: any) => {
   obj(o.channel);
   obj(o.geo_point);
   str(o.address);
-}
+};
 
-function _channelsToggleSlowMode(o: any) {
+const _channelsToggleSlowMode = (o: any) => {
   obj(o.channel);
   i32(o.seconds);
-}
+};
 
-function _messagesGetScheduledHistory(o: any) {
+const _messagesGetScheduledHistory = (o: any) => {
   obj(o.peer);
   i32(o.hash);
-}
+};
 
-function _messagesGetScheduledMessages(o: any) {
+const _messagesGetScheduledMessages = (o: any) => {
   obj(o.peer);
   vector(i32, o.id);
-}
+};
 
-function _messagesSendScheduledMessages(o: any) {
+const _messagesSendScheduledMessages = (o: any) => {
   obj(o.peer);
   vector(i32, o.id);
-}
+};
 
-function _messagesDeleteScheduledMessages(o: any) {
+const _messagesDeleteScheduledMessages = (o: any) => {
   obj(o.peer);
   vector(i32, o.id);
-}
+};
 
-function _accountUploadTheme(o: any) {
+const _accountUploadTheme = (o: any) => {
   const flags = 
       has(o.thumb)
   i32(flags);
@@ -6273,15 +6273,15 @@ function _accountUploadTheme(o: any) {
   flag(obj, o.thumb);
   str(o.file_name);
   str(o.mime_type);
-}
+};
 
-function _accountCreateTheme(o: any) {
+const _accountCreateTheme = (o: any) => {
   str(o.slug);
   str(o.title);
   obj(o.document);
-}
+};
 
-function _accountUpdateTheme(o: any) {
+const _accountUpdateTheme = (o: any) => {
   const flags = 
       has(o.slug)
     | has(o.title) << 1
@@ -6293,14 +6293,14 @@ function _accountUpdateTheme(o: any) {
   flag(str, o.slug);
   flag(str, o.title);
   flag(obj, o.document);
-}
+};
 
-function _accountSaveTheme(o: any) {
+const _accountSaveTheme = (o: any) => {
   obj(o.theme);
   bool(o.unsave);
-}
+};
 
-function _accountInstallTheme(o: any) {
+const _accountInstallTheme = (o: any) => {
   const flags = 
       has(o.dark)
     | has(o.format) << 1
@@ -6309,18 +6309,18 @@ function _accountInstallTheme(o: any) {
   
   flag(str, o.format);
   flag(obj, o.theme);
-}
+};
 
-function _accountGetTheme(o: any) {
+const _accountGetTheme = (o: any) => {
   str(o.format);
   obj(o.theme);
   i64(o.document_id);
-}
+};
 
-function _accountGetThemes(o: any) {
+const _accountGetThemes = (o: any) => {
   str(o.format);
   i32(o.hash);
-}
+};
 
 
 const builderMap: Record<string, [number, ((o: any) => void)?]> = {
