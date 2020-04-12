@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
+/* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
+
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
 /*                                                                                         */
@@ -5,26 +12,26 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: end-to-end.json (md5: 8996a33c4b128078a454aaa749900956)                         */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
-interface ByteStream {
-  writeInt32(value: number) : void;
-  writeInt64(value: string): void;
-  writeInt128(value: string): void;
-  writeInt256(value: string): void;
-  writeDouble(value: number): void;
-  writeString(value: string): void;
-  writeBytes(value: ArrayBuffer): void;
+interface Writer {
+  int32(value: number) : void;
+  long(value: string): void;
+  int128(value: Uint32Array): void;
+  int256(value: Uint32Array): void;
+  double(value: number): void;
+  string(value: string): void;
+  bytes(value: ArrayBuffer | SharedArrayBuffer | Uint8Array): void;
 }
 
-let s: ByteStream;
+let w: Writer;
 let l = 0;
-let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
+let fallbackBuilder: ((stream: Writer, o: any) => void) | undefined;
 
-export default function build(stream: ByteStream, o: any, layer: number, fallback?: (stream: ByteStream, o: any) => void) {
-  s = stream;
+export default function build(writer: Writer, o: any, layer: number, fallback?: (stream: Writer, o: any) => void) {
+  w = writer;
   fallbackBuilder = fallback;
   l = layer;
   return obj(o);
@@ -45,11 +52,11 @@ const _decryptedMessage17 = (o: any) => {
 };
 
 const _decryptedMessage45 = (o: any) => {
-  const flags = 
-      has(o.media) << 9
-    | has(o.entities) << 7
-    | has(o.via_bot_name) << 11
-    | has(o.reply_to_random_id) << 3;
+  const flags =
+      (has(o.media) << 9)
+    | (has(o.entities) << 7)
+    | (has(o.via_bot_name) << 11)
+    | (has(o.reply_to_random_id) << 3);
   i32(flags);
   i64(o.random_id);
   i32(o.ttl);
@@ -61,12 +68,12 @@ const _decryptedMessage45 = (o: any) => {
 };
 
 const _decryptedMessage73 = (o: any) => {
-  const flags = 
-      has(o.media) << 9
-    | has(o.entities) << 7
-    | has(o.via_bot_name) << 11
-    | has(o.reply_to_random_id) << 3
-    | has(o.grouped_id) << 17;
+  const flags =
+      (has(o.media) << 9)
+    | (has(o.entities) << 7)
+    | (has(o.via_bot_name) << 11)
+    | (has(o.reply_to_random_id) << 3)
+    | (has(o.grouped_id) << 17);
   i32(flags);
   i64(o.random_id);
   i32(o.ttl);
@@ -275,7 +282,7 @@ const _documentAttributeVideo23 = (o: any) => {
 };
 
 const _documentAttributeVideo66 = (o: any) => {
-  const flags = 
+  const flags =;
     0;
   i32(flags);
   i32(o.duration);
@@ -294,10 +301,10 @@ const _documentAttributeAudio45 = (o: any) => {
 };
 
 const _documentAttributeAudio46 = (o: any) => {
-  const flags = 
+  const flags =
       has(o.title)
-    | has(o.performer) << 1
-    | has(o.waveform) << 2;
+    | (has(o.performer) << 1)
+    | (has(o.waveform) << 2);
   i32(flags);
   i32(o.duration);
   flag(str, o.title);
@@ -443,7 +450,7 @@ const builderMap8: Record<string, [number, ((o: any) => void)?]> = {
   'decryptedMessageActionDeleteMessages': [0x65614304, _decryptedMessageActionDeleteMessages8],
   'decryptedMessageActionScreenshotMessages': [0x8ac1f475, _decryptedMessageActionScreenshotMessages8],
   'decryptedMessageActionFlushHistory': [0x6719e45c],
-}
+};
 
 const builderMap17: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap8,
@@ -465,7 +472,7 @@ const builderMap17: Record<string, [number, ((o: any) => void)?]> = {
   'decryptedMessageActionResend': [0x511110b0, _decryptedMessageActionResend17],
   'decryptedMessageActionNotifyLayer': [0xf3048883, _decryptedMessageActionNotifyLayer17],
   'decryptedMessageActionTyping': [0xccb27641, _decryptedMessageActionTyping17],
-}
+};
 
 const builderMap20: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap17,
@@ -474,7 +481,7 @@ const builderMap20: Record<string, [number, ((o: any) => void)?]> = {
   'decryptedMessageActionAbortKey': [0xdd05ec6b, _decryptedMessageActionAbortKey20],
   'decryptedMessageActionCommitKey': [0xec2e0b9b, _decryptedMessageActionCommitKey20],
   'decryptedMessageActionNoop': [0xa82fdd63],
-}
+};
 
 const builderMap23: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap20,
@@ -490,7 +497,7 @@ const builderMap23: Record<string, [number, ((o: any) => void)?]> = {
   'fileLocationUnavailable': [0x7c596b46, _fileLocationUnavailable23],
   'fileLocation': [0x53d69076, _fileLocation23],
   'decryptedMessageMediaExternalDocument': [0xfa95b0dd, _decryptedMessageMediaExternalDocument23],
-}
+};
 
 const builderMap45: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap23,
@@ -515,24 +522,24 @@ const builderMap45: Record<string, [number, ((o: any) => void)?]> = {
   'inputStickerSetEmpty': [0xffb62b95],
   'decryptedMessageMediaVenue': [0x8a0df56f, _decryptedMessageMediaVenue45],
   'decryptedMessageMediaWebPage': [0xe50511d8, _decryptedMessageMediaWebPage45],
-}
+};
 
 const builderMap46: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap45,
   'documentAttributeAudio': [0x9852f9c6, _documentAttributeAudio46],
-}
+};
 
 const builderMap66: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap46,
   'documentAttributeVideo': [0xef02ce6, _documentAttributeVideo66],
   'sendMessageRecordRoundAction': [0x88f27fbc],
   'sendMessageUploadRoundAction': [0xbb718624],
-}
+};
 
 const builderMap73: Record<string, [number, ((o: any) => void)?]> = {
   ...builderMap66,
   'decryptedMessage': [0x91cc4674, _decryptedMessage73],
-}
+};
 
 const builderMaps = new Map<number, Record<string, [number, ((o: any) => void)?]>>([
   [8, builderMap8],
@@ -545,11 +552,11 @@ const builderMaps = new Map<number, Record<string, [number, ((o: any) => void)?]
   [46, builderMap46],
 ]);
 
-const i32 = (value: number) => s.writeInt32(value);
-const i64 = (value: string) => s.writeInt64(value);
-const f64 = (value: number) => s.writeDouble(value);
-const str = (value: string) => s.writeString(value);
-const bytes = (value: ArrayBuffer) => s.writeBytes(value);
+const i32 = (value: number) => w.int32(value);
+const i64 = (value: string) => w.long(value);
+const f64 = (value: number) => w.double(value);
+const str = (value: string) => w.string(value);
+const bytes = (value: ArrayBuffer) => w.bytes(value);
 
 function flagVector(fn: (value: any) => void, value: Array<any>) {
   if (value === undefined || value.length === 0) return;
@@ -571,8 +578,8 @@ const obj = (o: any, bare = false) => {
     if (!bare) i32(id);
     if (fn) fn(o);
   } else if (fallbackBuilder) {
-    fallbackBuilder(s, o);
+    fallbackBuilder(w, o);
   } else {
-    console.error('Cannot serialize object', o);
+    console.error(`Cannot serialize object ${JSON.stringify(o)}`);
   }
-}
+};

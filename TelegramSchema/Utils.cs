@@ -46,7 +46,7 @@ namespace TelegramSchema
                 : (type, bare: false);
         }
 
-        public static string FixTypeName(string type)
+        public static string FixTypeName(string type, bool any = true)
         {
             if (type.StartsWith('%'))
             {
@@ -58,8 +58,8 @@ namespace TelegramSchema
                 "int" => "number",
                 "int64" => "string",
                 "long" => "string",
-                "int128" => "string",
-                "int256" => "string",
+                "int128" => "Uint32Array",
+                "int256" => "Uint32Array",
                 "double" => "number",
                 "Bool" => "boolean",
                 "false" => "boolean",
@@ -67,8 +67,9 @@ namespace TelegramSchema
                 "Null" => "null",
                 "string" => "string",
                 "bytes" => "ArrayBuffer",
-                "!X" => "any",
-                "X" => "any",
+                "!X" when any => "any",
+                "X" when any  => "any",
+                "Object" when any => "any",
                 _ => (char.ToUpper(type[0]) + type.Substring(1)).Replace(".", "")
             };
         }

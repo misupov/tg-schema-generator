@@ -1,6 +1,9 @@
-/* eslint-disable max-len */
-/* eslint-disable semi-style */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
 /* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
 
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
@@ -9,7 +12,7 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -22,8 +25,8 @@ export type ResPQ =
 export namespace ResPQ {
   export type resPQ = {
     _: 'resPQ',
-    nonce: string,
-    server_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
     pq: ArrayBuffer,
     server_public_key_fingerprints: string[],
   };
@@ -41,18 +44,18 @@ export namespace P_Q_inner_data {
     pq: ArrayBuffer,
     p: ArrayBuffer,
     q: ArrayBuffer,
-    nonce: string,
-    server_nonce: string,
-    new_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce: Uint32Array,
   };
   export type p_q_inner_data_dc = {
     _: 'p_q_inner_data_dc',
     pq: ArrayBuffer,
     p: ArrayBuffer,
     q: ArrayBuffer,
-    nonce: string,
-    server_nonce: string,
-    new_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce: Uint32Array,
     dc: number,
   };
   export type p_q_inner_data_temp = {
@@ -60,9 +63,9 @@ export namespace P_Q_inner_data {
     pq: ArrayBuffer,
     p: ArrayBuffer,
     q: ArrayBuffer,
-    nonce: string,
-    server_nonce: string,
-    new_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce: Uint32Array,
     expires_in: number,
   };
 }
@@ -77,9 +80,9 @@ export namespace P_Q_inner_d {
     pq: ArrayBuffer,
     p: ArrayBuffer,
     q: ArrayBuffer,
-    nonce: string,
-    server_nonce: string,
-    new_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce: Uint32Array,
     dc: number,
     expires_in: number,
   };
@@ -93,14 +96,14 @@ export type Server_DH_Params =
 export namespace Server_DH_Params {
   export type server_DH_params_fail = {
     _: 'server_DH_params_fail',
-    nonce: string,
-    server_nonce: string,
-    new_nonce_hash: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce_hash: Uint32Array,
   };
   export type server_DH_params_ok = {
     _: 'server_DH_params_ok',
-    nonce: string,
-    server_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
     encrypted_answer: ArrayBuffer,
   };
 }
@@ -112,8 +115,8 @@ export type Server_DH_inner_data =
 export namespace Server_DH_inner_data {
   export type server_DH_inner_data = {
     _: 'server_DH_inner_data',
-    nonce: string,
-    server_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
     g: number,
     dh_prime: ArrayBuffer,
     g_a: ArrayBuffer,
@@ -128,8 +131,8 @@ export type Client_DH_Inner_Data =
 export namespace Client_DH_Inner_Data {
   export type client_DH_inner_data = {
     _: 'client_DH_inner_data',
-    nonce: string,
-    server_nonce: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
     retry_id: string,
     g_b: ArrayBuffer,
   };
@@ -144,21 +147,21 @@ export type Set_client_DH_params_answer =
 export namespace Set_client_DH_params_answer {
   export type dh_gen_ok = {
     _: 'dh_gen_ok',
-    nonce: string,
-    server_nonce: string,
-    new_nonce_hash1: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce_hash1: Uint32Array,
   };
   export type dh_gen_retry = {
     _: 'dh_gen_retry',
-    nonce: string,
-    server_nonce: string,
-    new_nonce_hash2: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce_hash2: Uint32Array,
   };
   export type dh_gen_fail = {
     _: 'dh_gen_fail',
-    nonce: string,
-    server_nonce: string,
-    new_nonce_hash3: string,
+    nonce: Uint32Array,
+    server_nonce: Uint32Array,
+    new_nonce_hash3: Uint32Array,
   };
 }
 
@@ -170,7 +173,7 @@ export namespace RpcResult {
   export type rpc_result = {
     _: 'rpc_result',
     req_msg_id: string,
-    result: Object,
+    result: any,
   };
 }
 
@@ -279,7 +282,7 @@ export namespace Message {
     msg_id: string,
     seqno: number,
     bytes: number,
-    body: Object,
+    body: any,
   };
 }
 
@@ -505,16 +508,16 @@ export interface ConstructorDeclMap {
 /* METHODS */
 
 export type Req_pq = {
-  nonce: string,
+  nonce: Uint32Array,
 };
 
 export type Req_pq_multi = {
-  nonce: string,
+  nonce: Uint32Array,
 };
 
 export type Req_DH_params = {
-  nonce: string,
-  server_nonce: string,
+  nonce: Uint32Array,
+  server_nonce: Uint32Array,
   p: ArrayBuffer,
   q: ArrayBuffer,
   public_key_fingerprint: string,
@@ -522,8 +525,8 @@ export type Req_DH_params = {
 };
 
 export type Set_client_DH_params = {
-  nonce: string,
-  server_nonce: string,
+  nonce: Uint32Array,
+  server_nonce: Uint32Array,
   encrypted_data: ArrayBuffer,
 };
 

@@ -30,27 +30,27 @@ namespace TelegramSchema
             var isMultilayer = IsMultiLayer(schema);
 
             GeneratedFileNotice.Write(writer, schemaName);
-            writer.WriteLine("interface ByteStream {");
+            writer.WriteLine("interface Writer {");
             using (Indent(writer))
             {
-                writer.WriteLine("writeInt32(value: number) : void;");
-                writer.WriteLine("writeInt64(value: string): void;");
-                writer.WriteLine("writeInt128(value: string): void;");
-                writer.WriteLine("writeInt256(value: string): void;");
-                writer.WriteLine("writeDouble(value: number): void;");
-                writer.WriteLine("writeString(value: string): void;");
-                writer.WriteLine("writeBytes(value: ArrayBuffer): void;");
+                writer.WriteLine("int32(value: number) : void;");
+                writer.WriteLine("long(value: string): void;");
+                writer.WriteLine("int128(value: Uint32Array): void;");
+                writer.WriteLine("int256(value: Uint32Array): void;");
+                writer.WriteLine("double(value: number): void;");
+                writer.WriteLine("string(value: string): void;");
+                writer.WriteLine("bytes(value: ArrayBuffer | SharedArrayBuffer | Uint8Array): void;");
             }
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("let s: ByteStream;");
+            writer.WriteLine("let w: Writer;");
             if (isMultilayer) writer.WriteLine("let l = 0;");
-            writer.WriteLine("let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;");
+            writer.WriteLine("let fallbackBuilder: ((stream: Writer, o: any) => void) | undefined;");
             writer.WriteLine();
-            writer.WriteLine($"export default function build(stream: ByteStream, o: any, {(isMultilayer ? "layer: number, " : "")}fallback?: (stream: ByteStream, o: any) => void) {{");
+            writer.WriteLine($"export default function build(writer: Writer, o: any{(isMultilayer ? ", layer: number" : "")}, fallback?: (stream: Writer, o: any) => void) {{");
             using (Indent(writer))
             {
-                writer.WriteLine("s = stream;");
+                writer.WriteLine("w = writer;");
                 writer.WriteLine("fallbackBuilder = fallback;");
                 if (isMultilayer) writer.WriteLine("l = layer;");
                 writer.WriteLine("return obj(o);");
@@ -89,13 +89,13 @@ namespace TelegramSchema
                 writer.WriteLine("]);");
                 writer.WriteLine();
             } 
-            if (ops.Contains("i32")) writer.WriteLine("const i32 = (value: number) => s.writeInt32(value);");
-            if (ops.Contains("i64")) writer.WriteLine("const i64 = (value: string) => s.writeInt64(value);");
-            if (ops.Contains("i128")) writer.WriteLine("const i128 = (value: string) => s.writeInt128(value);");
-            if (ops.Contains("i256")) writer.WriteLine("const i256 = (value: string) => s.writeInt256(value);");
-            if (ops.Contains("f64")) writer.WriteLine("const f64 = (value: number) => s.writeDouble(value);");
-            if (ops.Contains("str")) writer.WriteLine("const str = (value: string) => s.writeString(value);");
-            if (ops.Contains("bytes")) writer.WriteLine("const bytes = (value: ArrayBuffer) => s.writeBytes(value);");
+            if (ops.Contains("i32")) writer.WriteLine("const i32 = (value: number) => w.int32(value);");
+            if (ops.Contains("i64")) writer.WriteLine("const i64 = (value: string) => w.long(value);");
+            if (ops.Contains("i128")) writer.WriteLine("const i128 = (value: Uint32Array) => w.int128(value);");
+            if (ops.Contains("i256")) writer.WriteLine("const i256 = (value: Uint32Array) => w.int256(value);");
+            if (ops.Contains("f64")) writer.WriteLine("const f64 = (value: number) => w.double(value);");
+            if (ops.Contains("str")) writer.WriteLine("const str = (value: string) => w.string(value);");
+            if (ops.Contains("bytes")) writer.WriteLine("const bytes = (value: ArrayBuffer) => w.bytes(value);");
             if (ops.Contains("bool")) writer.WriteLine("const bool = (value: boolean) => i32(builderMap[value ? 'boolTrue' : 'boolFalse'][0]);");
             writer.WriteLine();
             var vectorConstructor = schema.constructors.FirstOrDefault(c => c.predicate == "vector");
@@ -110,7 +110,7 @@ namespace TelegramSchema
                     using (Indent(writer)) writer.WriteLine("fn(value[i]);");
                     writer.WriteLine("}");
                 }
-                writer.WriteLine("}");
+                writer.WriteLine("};");
                 writer.WriteLine();
             }
 
@@ -155,12 +155,12 @@ namespace TelegramSchema
                 }
 
                 writer.WriteLine("} else if (fallbackBuilder) {");
-                using (Indent(writer)) writer.WriteLine("fallbackBuilder(s, o);");
+                using (Indent(writer)) writer.WriteLine("fallbackBuilder(w, o);");
                 writer.WriteLine("} else {");
-                using (Indent(writer)) writer.WriteLine("console.error('Cannot serialize object', o);");
+                using (Indent(writer)) writer.WriteLine("console.error(`Cannot serialize object ${JSON.stringify(o)}`);");
                 writer.WriteLine("}");
             }
-            writer.WriteLine("}");
+            writer.WriteLine("};");
         }
 
         private static bool IsMultiLayer(Schema schema)
@@ -192,7 +192,7 @@ namespace TelegramSchema
                 }
             }
 
-            writer.WriteLine("}");
+            writer.WriteLine("};");
             writer.WriteLine();
         }
 
@@ -204,7 +204,7 @@ namespace TelegramSchema
                 if (HasFlags(entity))
                 {
                     ops.Add("flag");
-                    writer.WriteLine("const flags = ");
+                    writer.Write("const flags =");
                     using (Indent(writer))
                     {
                         var first = true;
@@ -213,17 +213,16 @@ namespace TelegramSchema
                             var (flag, _, _) = ParseType(param.type);
                             if (flag.HasValue)
                             {
+                                writer.WriteLine();
                                 writer.Write(first ? "  " : "| ");
-                                writer.Write($"has(o.{param.name})");
-                                if (flag.Value > 0)
-                                {
-                                    writer.Write($" << {flag.Value}");
-                                }
+                                writer.Write(flag.Value > 0
+                                    ? $"(has(o.{param.name}) << {flag.Value})"
+                                    : $"has(o.{param.name})");
 
-                                writer.WriteLine(param != entity.@params.Last() ? "" : ";");
                                 first = false;
                             }
                         }
+                        writer.WriteLine(";");
 
                         if (first)
                         {

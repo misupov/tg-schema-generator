@@ -24,27 +24,27 @@ namespace TelegramSchema
             var ops = new HashSet<string>();
 
             GeneratedFileNotice.Write(writer, schemaName);
-            writer.WriteLine("interface ByteStream {");
+            writer.WriteLine("interface Reader {");
             using (Indent(writer))
             {
-                writer.WriteLine("readInt32(): number;");
-                writer.WriteLine("readInt64(): string;");
-                writer.WriteLine("readInt128(): string;");
-                writer.WriteLine("readInt256(): string;");
-                writer.WriteLine("readDouble(): number;");
-                writer.WriteLine("readString(): string;");
-                writer.WriteLine("readBytes(): ArrayBuffer;");
-                writer.WriteLine("revert(bytes: number): void;");
+                writer.WriteLine("int32(): number;");
+                writer.WriteLine("long(): string;");
+                writer.WriteLine("int128(): Uint32Array;");
+                writer.WriteLine("int256(): Uint32Array;");
+                writer.WriteLine("double(): number;");
+                writer.WriteLine("string(): string;");
+                writer.WriteLine("bytes(): ArrayBuffer;");
+                writer.WriteLine("rollback(): void;");
             }
             writer.WriteLine("}");
             writer.WriteLine();
-            writer.WriteLine("let s: ByteStream;");
-            writer.WriteLine("let fallbackParse: ((stream: ByteStream) => any) | undefined;");
+            writer.WriteLine("let r: Reader;");
+            writer.WriteLine("let fallbackParse: ((stream: Reader) => any) | undefined;");
             writer.WriteLine();
-            writer.WriteLine("export default function parse(stream: ByteStream, fallback?: (stream: ByteStream) => any) {");
+            writer.WriteLine("export default function parse(reader: Reader, fallback?: (stream: Reader) => any) {");
             using (Indent(writer))
             {
-                writer.WriteLine("s = stream;");
+                writer.WriteLine("r = reader;");
                 writer.WriteLine("fallbackParse = fallback;");
                 writer.WriteLine("return obj();");
             }
@@ -90,13 +90,13 @@ namespace TelegramSchema
             writer.WriteLine("]);");
             writer.WriteLine();
             if (ops.Contains("u")) writer.WriteLine("const u = undefined;");
-            if (ops.Contains("i32")) writer.WriteLine("const i32 = () => s.readInt32();");
-            if (ops.Contains("i64")) writer.WriteLine("const i64 = () => s.readInt64();");
-            if (ops.Contains("i128")) writer.WriteLine("const i128 = () => s.readInt128();");
-            if (ops.Contains("i256")) writer.WriteLine("const i256 = () => s.readInt256();");
-            if (ops.Contains("f64")) writer.WriteLine("const f64 = () => s.readDouble();");
-            if (ops.Contains("str")) writer.WriteLine("const str = () => s.readString();");
-            if (ops.Contains("bytes")) writer.WriteLine("const bytes = () => s.readBytes();");
+            if (ops.Contains("i32")) writer.WriteLine("const i32 = () => r.int32();");
+            if (ops.Contains("i64")) writer.WriteLine("const i64 = () => r.long();");
+            if (ops.Contains("i128")) writer.WriteLine("const i128 = () => r.int128();");
+            if (ops.Contains("i256")) writer.WriteLine("const i256 = () => r.int256();");
+            if (ops.Contains("f64")) writer.WriteLine("const f64 = () => r.double();");
+            if (ops.Contains("str")) writer.WriteLine("const str = () => r.string();");
+            if (ops.Contains("bytes")) writer.WriteLine("const bytes = () => r.bytes();");
             writer.WriteLine();
             if (ops.Contains("vector"))
             {
@@ -118,24 +118,16 @@ namespace TelegramSchema
             {
                 writer.WriteLine("const c = i32() >>> 0;");
                 writer.WriteLine("const f = parserMap.get(c);");
-                writer.WriteLine("if (f) {");
-                using (Indent(writer))
-                    writer.WriteLine("return f();");
-                writer.WriteLine("} else if (fallbackParse) {");
+                writer.WriteLine("if (f) return f();");
+                writer.WriteLine("if (fallbackParse) {");
                 using (Indent(writer))
                 {
-                    writer.WriteLine("s.revert(4);");
-                    writer.WriteLine("return fallbackParse(s);");
+                    writer.WriteLine("r.rollback();");
+                    writer.WriteLine("return fallbackParse(r);");
                 }
-
-                writer.WriteLine("} else {");
-                using (Indent(writer))
-                {
-                    writer.WriteLine("console.error(`Unknown constructor 0x${c.toString(16)}.`);");
-                    writer.WriteLine("return undefined;");
-                }
-
                 writer.WriteLine("}");
+                writer.WriteLine("console.error(`Unknown constructor 0x${c.toString(16)}.`);");
+                writer.WriteLine("return undefined;");
             }
             writer.WriteLine("}");
         }
@@ -148,10 +140,15 @@ namespace TelegramSchema
         {
             writer.Write($"const _{FixEntityName(constructor)}: any = () => ({{ ");
             writer.Write($"_: '{constructor.predicate}'");
+            if (constructor.type == "Update" || constructor.type == "Updates")
+            {
+                writer.Write($", _update: true");
+            }
             foreach (var param in constructor.@params)
             {
                 writer.Write($", {param.name}: {FormatAccessor(types, param.type, ops)}");
             }
+
             writer.WriteLine(" });");
         }
 
@@ -172,6 +169,10 @@ namespace TelegramSchema
                 using (Indent(writer))
                 {
                     writer.WriteLine("_: '" + constructor.predicate + "',");
+                    if (constructor.type == "Update" || constructor.type == "Updates")
+                    {
+                        writer.WriteLine($"_update: true,");
+                    }
                     foreach (var param in constructor.@params)
                     {
                         if (param.type != "#")
@@ -180,7 +181,7 @@ namespace TelegramSchema
                         }
                     }
                 }
-                writer.WriteLine("}");
+                writer.WriteLine("};");
             }
             writer.WriteLine("};");
         }

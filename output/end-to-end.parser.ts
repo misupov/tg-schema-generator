@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
+/* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
+
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
 /*                                                                                         */
@@ -5,26 +12,26 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: end-to-end.json (md5: 8996a33c4b128078a454aaa749900956)                         */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
-interface ByteStream {
-  readInt32(): number;
-  readInt64(): string;
-  readInt128(): string;
-  readInt256(): string;
-  readDouble(): number;
-  readString(): string;
-  readBytes(): ArrayBuffer;
-  revert(bytes: number): void;
+interface Reader {
+  int32(): number;
+  long(): string;
+  int128(): Uint32Array;
+  int256(): Uint32Array;
+  double(): number;
+  string(): string;
+  bytes(): ArrayBuffer;
+  rollback(): void;
 }
 
-let s: ByteStream;
-let fallbackParse: ((stream: ByteStream) => any) | undefined;
+let r: Reader;
+let fallbackParse: ((stream: Reader) => any) | undefined;
 
-export default function parse(stream: ByteStream, fallback?: (stream: ByteStream) => any) {
-  s = stream;
+export default function parse(reader: Reader, fallback?: (stream: Reader) => any) {
+  r = reader;
   fallbackParse = fallback;
   return obj();
 }
@@ -42,7 +49,7 @@ const _decryptedMessage45 = (): any => {
     entities: flags & 0x80 ? vector(obj) : u,
     via_bot_name: flags & 0x800 ? str() : u,
     reply_to_random_id: flags & 0x8 ? i64() : u,
-  }
+  };
 };
 const _decryptedMessage73 = (): any => {
   const flags = i32();
@@ -56,7 +63,7 @@ const _decryptedMessage73 = (): any => {
     via_bot_name: flags & 0x800 ? str() : u,
     reply_to_random_id: flags & 0x8 ? i64() : u,
     grouped_id: flags & 0x20000 ? i64() : u,
-  }
+  };
 };
 const _decryptedMessageService8: any = () => ({ _: 'decryptedMessageService', random_id: i64(), random_bytes: bytes(), action: obj() });
 const _decryptedMessageService17: any = () => ({ _: 'decryptedMessageService', random_id: i64(), action: obj() });
@@ -108,7 +115,7 @@ const _documentAttributeVideo66 = (): any => {
     duration: i32(),
     w: i32(),
     h: i32(),
-  }
+  };
 };
 const _documentAttributeAudio23: any = () => ({ _: 'documentAttributeAudio', duration: i32() });
 const _documentAttributeAudio45: any = () => ({ _: 'documentAttributeAudio', duration: i32(), title: str(), performer: str() });
@@ -120,7 +127,7 @@ const _documentAttributeAudio46 = (): any => {
     title: flags & 0x1 ? str() : u,
     performer: flags & 0x2 ? str() : u,
     waveform: flags & 0x4 ? bytes() : u,
-  }
+  };
 };
 const _documentAttributeFilename23: any = () => ({ _: 'documentAttributeFilename', file_name: str() });
 const _photoSizeEmpty23: any = () => ({ _: 'photoSizeEmpty', type: str() });
@@ -226,11 +233,11 @@ const parserMap = new Map<number, () => any>([
 ]);
 
 const u = undefined;
-const i32 = () => s.readInt32();
-const i64 = () => s.readInt64();
-const f64 = () => s.readDouble();
-const str = () => s.readString();
-const bytes = () => s.readBytes();
+const i32 = () => r.int32();
+const i64 = () => r.long();
+const f64 = () => r.double();
+const str = () => r.string();
+const bytes = () => r.bytes();
 
 function vector(t: () => any, bare = false) {
   if (!bare) { i32(); /* ignoring constructor id. */ }
@@ -243,13 +250,11 @@ function vector(t: () => any, bare = false) {
 function obj() {
   const c = i32() >>> 0;
   const f = parserMap.get(c);
-  if (f) {
-    return f();
-  } else if (fallbackParse) {
-    s.revert(4);
-    return fallbackParse(s);
-  } else {
-    console.error(`Unknown constructor 0x${c.toString(16)}.`);
-    return undefined;
+  if (f) return f();
+  if (fallbackParse) {
+    r.rollback();
+    return fallbackParse(r);
   }
+  console.error(`Unknown constructor 0x${c.toString(16)}.`);
+  return undefined;
 }

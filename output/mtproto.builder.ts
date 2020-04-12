@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
+/* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
+
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
 /*                                                                                         */
@@ -5,25 +12,25 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
-interface ByteStream {
-  writeInt32(value: number) : void;
-  writeInt64(value: string): void;
-  writeInt128(value: string): void;
-  writeInt256(value: string): void;
-  writeDouble(value: number): void;
-  writeString(value: string): void;
-  writeBytes(value: ArrayBuffer): void;
+interface Writer {
+  int32(value: number) : void;
+  long(value: string): void;
+  int128(value: Uint32Array): void;
+  int256(value: Uint32Array): void;
+  double(value: number): void;
+  string(value: string): void;
+  bytes(value: ArrayBuffer | SharedArrayBuffer | Uint8Array): void;
 }
 
-let s: ByteStream;
-let fallbackBuilder: ((stream: ByteStream, o: any) => void) | undefined;
+let w: Writer;
+let fallbackBuilder: ((stream: Writer, o: any) => void) | undefined;
 
-export default function build(stream: ByteStream, o: any, fallback?: (stream: ByteStream, o: any) => void) {
-  s = stream;
+export default function build(writer: Writer, o: any, fallback?: (stream: Writer, o: any) => void) {
+  w = writer;
   fallbackBuilder = fallback;
   return obj(o);
 }
@@ -352,14 +359,14 @@ const builderMap: Record<string, [number, ((o: any) => void)?]> = {
   'http_wait': [0x9299359f, _http_wait],
   'destroy_auth_key': [0xd1435160],
   'destroy_session': [0xe7512126, _destroy_session],
-}
+};
 
-const i32 = (value: number) => s.writeInt32(value);
-const i64 = (value: string) => s.writeInt64(value);
-const i128 = (value: string) => s.writeInt128(value);
-const i256 = (value: string) => s.writeInt256(value);
-const str = (value: string) => s.writeString(value);
-const bytes = (value: ArrayBuffer) => s.writeBytes(value);
+const i32 = (value: number) => w.int32(value);
+const i64 = (value: string) => w.long(value);
+const i128 = (value: Uint32Array) => w.int128(value);
+const i256 = (value: Uint32Array) => w.int256(value);
+const str = (value: string) => w.string(value);
+const bytes = (value: ArrayBuffer) => w.bytes(value);
 
 const vector = (fn: (value: any) => void, value: Array<any>) => {
   i32(0x1cb5c415);
@@ -367,7 +374,7 @@ const vector = (fn: (value: any) => void, value: Array<any>) => {
   for (let i = 0; i < value.length; i++) {
     fn(value[i]);
   }
-}
+};
 
 const obj = (o: any, bare = false) => {
   const descriptor = builderMap[o._];
@@ -376,8 +383,8 @@ const obj = (o: any, bare = false) => {
     if (!bare) i32(id);
     if (fn) fn(o);
   } else if (fallbackBuilder) {
-    fallbackBuilder(s, o);
+    fallbackBuilder(w, o);
   } else {
-    console.error('Cannot serialize object', o);
+    console.error(`Cannot serialize object ${JSON.stringify(o)}`);
   }
-}
+};

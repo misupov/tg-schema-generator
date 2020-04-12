@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
+/* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
+
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
 /*                                                                                         */
@@ -5,26 +12,26 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: mtproto.json (md5: 1ef25a905cf20e6819483f8234f36b6b)                            */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
-interface ByteStream {
-  readInt32(): number;
-  readInt64(): string;
-  readInt128(): string;
-  readInt256(): string;
-  readDouble(): number;
-  readString(): string;
-  readBytes(): ArrayBuffer;
-  revert(bytes: number): void;
+interface Reader {
+  int32(): number;
+  long(): string;
+  int128(): Uint32Array;
+  int256(): Uint32Array;
+  double(): number;
+  string(): string;
+  bytes(): ArrayBuffer;
+  rollback(): void;
 }
 
-let s: ByteStream;
-let fallbackParse: ((stream: ByteStream) => any) | undefined;
+let r: Reader;
+let fallbackParse: ((stream: Reader) => any) | undefined;
 
-export default function parse(stream: ByteStream, fallback?: (stream: ByteStream) => any) {
-  s = stream;
+export default function parse(reader: Reader, fallback?: (stream: Reader) => any) {
+  r = reader;
   fallbackParse = fallback;
   return obj();
 }
@@ -117,12 +124,12 @@ const parserMap = new Map<number, () => any>([
   [0x62d350c9, _destroy_session_none],
 ]);
 
-const i32 = () => s.readInt32();
-const i64 = () => s.readInt64();
-const i128 = () => s.readInt128();
-const i256 = () => s.readInt256();
-const str = () => s.readString();
-const bytes = () => s.readBytes();
+const i32 = () => r.int32();
+const i64 = () => r.long();
+const i128 = () => r.int128();
+const i256 = () => r.int256();
+const str = () => r.string();
+const bytes = () => r.bytes();
 
 function vector(t: () => any, bare = false) {
   if (!bare) { i32(); /* ignoring constructor id. */ }
@@ -135,13 +142,11 @@ function vector(t: () => any, bare = false) {
 function obj() {
   const c = i32() >>> 0;
   const f = parserMap.get(c);
-  if (f) {
-    return f();
-  } else if (fallbackParse) {
-    s.revert(4);
-    return fallbackParse(s);
-  } else {
-    console.error(`Unknown constructor 0x${c.toString(16)}.`);
-    return undefined;
+  if (f) return f();
+  if (fallbackParse) {
+    r.rollback();
+    return fallbackParse(r);
   }
+  console.error(`Unknown constructor 0x${c.toString(16)}.`);
+  return undefined;
 }

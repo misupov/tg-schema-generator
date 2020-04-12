@@ -13,6 +13,13 @@ namespace TelegramSchema
             var hash = md5.ComputeHash(stream);
             var checksum = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
 
+            writer.WriteLine("/* eslint-disable @typescript-eslint/no-use-before-define */");
+            writer.WriteLine("/* eslint-disable quote-props */");
+            writer.WriteLine("/* eslint-disable spaced-comment */");
+            writer.WriteLine("/* eslint-disable max-len */");
+            writer.WriteLine("/* eslint-disable operator-linebreak */");
+            writer.WriteLine("/* eslint-disable semi-style */");
+            writer.WriteLine();
             writer.WriteLine("/*******************************************************************************************/");
             writer.WriteLine("/* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */");
             writer.WriteLine("/*                                                                                         */");

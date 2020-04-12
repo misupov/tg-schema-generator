@@ -1,6 +1,9 @@
-/* eslint-disable max-len */
-/* eslint-disable semi-style */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable quote-props */
 /* eslint-disable spaced-comment */
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
+/* eslint-disable semi-style */
 
 /*******************************************************************************************/
 /* This file was automatically generated (https://github.com/misupov/tg-schema-generator). */
@@ -9,7 +12,7 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: layer108.json (md5: bdf0ea24160d359aa4ab85a8ce6d52f8)                           */
-/* Time: Wednesday, 11 March 2020 21:54:25 (UTC)                                           */
+/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 

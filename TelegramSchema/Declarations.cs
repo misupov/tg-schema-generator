@@ -21,10 +21,6 @@ namespace TelegramSchema
             using var streamWriter = new StreamWriter(fileStream);
             using var writer = new IndentedTextWriter(streamWriter, "  ") {NewLine = "\n"};
 
-            writer.WriteLine("/* eslint-disable max-len */");
-            writer.WriteLine("/* eslint-disable semi-style */");
-            writer.WriteLine("/* eslint-disable spaced-comment */");
-            writer.WriteLine();
             GeneratedFileNotice.Write(writer, schemaName);
 
             WriteConstructors(writer, genRefs, typeOrder, types, schema.constructors);
@@ -43,7 +39,7 @@ namespace TelegramSchema
             
             foreach (var type in typeOrder.Where(t => !IsPrimitiveType(t)))
             {
-                var typeName = FixTypeName(type);
+                var typeName = FixTypeName(type, false);
 
                 if (genRefs)
                 {
@@ -106,7 +102,7 @@ namespace TelegramSchema
                     var first = group.First();
                     if (!IsPrimitiveType(first.type))
                     {
-                        var decls = group.Select(c => $"{FixTypeName(c.type)}.{FixEntityName(c)}").ToArray();
+                        var decls = group.Select(c => $"{FixTypeName(c.type, false)}.{FixEntityName(c)}").ToArray();
                         writer.WriteLine($"'{first.predicate}': {string.Join(" | ", decls)},");
                     }
                 }
