@@ -12,7 +12,7 @@
 /* the tool instead.                                                                       */
 /*                                                                                         */
 /* Source: end-to-end.json (md5: 8996a33c4b128078a454aaa749900956)                         */
-/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
+/* Time: Thursday, 07 May 2020 06:31:44 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -39,31 +39,29 @@ export default function parse(reader: Reader, fallback?: (stream: Reader) => any
 const _decryptedMessage8: any = () => ({ _: 'decryptedMessage', random_id: i64(), random_bytes: bytes(), message: str(), media: obj() });
 const _decryptedMessage17: any = () => ({ _: 'decryptedMessage', random_id: i64(), ttl: i32(), message: str(), media: obj() });
 const _decryptedMessage45 = (): any => {
+  const result: Record<string, unknown> = { _: 'decryptedMessage' };
   const flags = i32();
-  return {
-    _: 'decryptedMessage',
-    random_id: i64(),
-    ttl: i32(),
-    message: str(),
-    media: flags & 0x200 ? obj() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-    via_bot_name: flags & 0x800 ? str() : u,
-    reply_to_random_id: flags & 0x8 ? i64() : u,
-  };
+  result.random_id = i64();
+  result.ttl = i32();
+  result.message = str();
+  if (flags & 0x200) result.media = obj();
+  if (flags & 0x80) result.entities = vector(obj);
+  if (flags & 0x800) result.via_bot_name = str();
+  if (flags & 0x8) result.reply_to_random_id = i64();
+  return result;
 };
 const _decryptedMessage73 = (): any => {
+  const result: Record<string, unknown> = { _: 'decryptedMessage' };
   const flags = i32();
-  return {
-    _: 'decryptedMessage',
-    random_id: i64(),
-    ttl: i32(),
-    message: str(),
-    media: flags & 0x200 ? obj() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-    via_bot_name: flags & 0x800 ? str() : u,
-    reply_to_random_id: flags & 0x8 ? i64() : u,
-    grouped_id: flags & 0x20000 ? i64() : u,
-  };
+  result.random_id = i64();
+  result.ttl = i32();
+  result.message = str();
+  if (flags & 0x200) result.media = obj();
+  if (flags & 0x80) result.entities = vector(obj);
+  if (flags & 0x800) result.via_bot_name = str();
+  if (flags & 0x8) result.reply_to_random_id = i64();
+  if (flags & 0x20000) result.grouped_id = i64();
+  return result;
 };
 const _decryptedMessageService8: any = () => ({ _: 'decryptedMessageService', random_id: i64(), random_bytes: bytes(), action: obj() });
 const _decryptedMessageService17: any = () => ({ _: 'decryptedMessageService', random_id: i64(), action: obj() });
@@ -109,25 +107,23 @@ const _documentAttributeSticker23: any = () => ({ _: 'documentAttributeSticker' 
 const _documentAttributeSticker45: any = () => ({ _: 'documentAttributeSticker', alt: str(), stickerset: obj() });
 const _documentAttributeVideo23: any = () => ({ _: 'documentAttributeVideo', duration: i32(), w: i32(), h: i32() });
 const _documentAttributeVideo66 = (): any => {
+  const result: Record<string, unknown> = { _: 'documentAttributeVideo' };
   const flags = i32();
-  return {
-    _: 'documentAttributeVideo',
-    duration: i32(),
-    w: i32(),
-    h: i32(),
-  };
+  result.duration = i32();
+  result.w = i32();
+  result.h = i32();
+  return result;
 };
 const _documentAttributeAudio23: any = () => ({ _: 'documentAttributeAudio', duration: i32() });
 const _documentAttributeAudio45: any = () => ({ _: 'documentAttributeAudio', duration: i32(), title: str(), performer: str() });
 const _documentAttributeAudio46 = (): any => {
+  const result: Record<string, unknown> = { _: 'documentAttributeAudio' };
   const flags = i32();
-  return {
-    _: 'documentAttributeAudio',
-    duration: i32(),
-    title: flags & 0x1 ? str() : u,
-    performer: flags & 0x2 ? str() : u,
-    waveform: flags & 0x4 ? bytes() : u,
-  };
+  result.duration = i32();
+  if (flags & 0x1) result.title = str();
+  if (flags & 0x2) result.performer = str();
+  if (flags & 0x4) result.waveform = bytes();
+  return result;
 };
 const _documentAttributeFilename23: any = () => ({ _: 'documentAttributeFilename', file_name: str() });
 const _photoSizeEmpty23: any = () => ({ _: 'photoSizeEmpty', type: str() });
@@ -232,7 +228,6 @@ const parserMap = new Map<number, () => any>([
   [0xbb718624, _sendMessageUploadRoundAction66],
 ]);
 
-const u = undefined;
 const i32 = () => r.int32();
 const i64 = () => r.long();
 const f64 = () => r.double();

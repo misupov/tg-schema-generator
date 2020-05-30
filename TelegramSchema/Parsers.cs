@@ -83,7 +83,8 @@ namespace TelegramSchema
             {
                 foreach (var constructor in schema.constructors)
                 {
-                    var constructorId = int.Parse(constructor.id);
+                    var constructorIdLong = long.Parse(constructor.id);
+                    var constructorId = (uint) constructorIdLong;
                     writer.WriteLine($"[0x{constructorId:x}, _{FixEntityName(constructor)}],");
                 }
             }
@@ -146,7 +147,7 @@ namespace TelegramSchema
             }
             foreach (var param in constructor.@params)
             {
-                writer.Write($", {param.name}: {FormatAccessor(types, param.type, ops)}");
+                writer.Write($", {param.name}: {FormatAccessorMandatory(types, param.type, ops)}");
             }
 
             writer.WriteLine(" });");
@@ -161,33 +162,44 @@ namespace TelegramSchema
             writer.WriteLine($"const _{FixEntityName(constructor)} = (): any => {{");
             using (Indent(writer))
             {
-                if (HasFlags(constructor))
+                // if (HasFlags(constructor))
+                // {
+                //     writer.WriteLine("const flags = i32();");
+                // }
+                // writer.WriteLine("return {");
+                // using (Indent(writer))
+                // {
+                //     writer.WriteLine("_: '" + constructor.predicate + "',");
+                //     if (constructor.type == "Update" || constructor.type == "Updates")
+                //     {
+                //         writer.WriteLine($"_update: true,");
+                //     }
+                //     foreach (var param in constructor.@params)
+                //     {
+                //         if (param.type != "#")
+                //         {
+                //             writer.WriteLine($"{param.name}: {FormatAccessor(types, param.type, ops)},");
+                //         }
+                //     }
+                // }
+                // writer.WriteLine("};");
+                writer.WriteLine($"const result: Record<string, unknown> = {{ _: '{constructor.predicate}' }};");
+                if (constructor.type == "Update" || constructor.type == "Updates")
                 {
-                    writer.WriteLine("const flags = i32();");
+                    writer.WriteLine("result._update = true;");
                 }
-                writer.WriteLine("return {");
-                using (Indent(writer))
+                foreach (var param in constructor.@params)
                 {
-                    writer.WriteLine("_: '" + constructor.predicate + "',");
-                    if (constructor.type == "Update" || constructor.type == "Updates")
-                    {
-                        writer.WriteLine($"_update: true,");
-                    }
-                    foreach (var param in constructor.@params)
-                    {
-                        if (param.type != "#")
-                        {
-                            writer.WriteLine($"{param.name}: {FormatAccessor(types, param.type, ops)},");
-                        }
-                    }
+                    writer.WriteLine(param.type == "#" ? "const flags = i32();" : FormatAccessor(types, param, ops));
                 }
-                writer.WriteLine("};");
+                writer.WriteLine("return result;");
             }
             writer.WriteLine("};");
         }
         
-        private static string FormatAccessor(IReadOnlyDictionary<string, HashSet<Constructor>> types, string paramType, ISet<string> ops)
+        private static string FormatAccessor(IReadOnlyDictionary<string, HashSet<Constructor>> types, Parameter param, ISet<string> ops)
         {
+            var paramType = param.type;
             var flagsMatch = Regex.Match(paramType, @"flags\.(.+)\?(.*)");
             var bit = -1;
             if (flagsMatch.Success)
@@ -197,12 +209,18 @@ namespace TelegramSchema
             }
             switch (paramType)
             {
-                case "true": return bit >= 0 ? ("!!(flags & 0x" + Convert.ToString(1 << bit, 16) + ")") : FormatAccessorMandatory(types, paramType, ops); 
+                case "true": return bit >= 0
+                    ? ($"result.{param.name} = !!(flags & 0x" + Convert.ToString(1 << bit, 16) + ");")
+                    : ($"result.{param.name} = {FormatAccessorMandatory(types, paramType, ops)};"); 
                 default:
-                    if (bit >= 0) ops.Add("u");
-                    return bit >= 0 
-                    ? ("flags & 0x" + Convert.ToString(1 << bit, 16) + " ? " + FormatAccessorMandatory(types, paramType, ops) + " : u")
-                    : FormatAccessorMandatory(types, paramType, ops); 
+                    if (bit >= 0)
+                    {
+                        return $"if (flags & 0x{Convert.ToString(1 << bit, 16)}) result.{param.name} = " + FormatAccessorMandatory(types, paramType, ops) + ";";
+                    }
+                    else
+                    {
+                        return $"result.{param.name} = " + FormatAccessorMandatory(types, paramType, ops) + ";";
+                    }
             }
         }
         

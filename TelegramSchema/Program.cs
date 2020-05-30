@@ -14,6 +14,8 @@ namespace TelegramSchema
             const string outputFolder = "../../../../output";
             GenerateTs(outputFolder, "layer105", true);
             GenerateTs(outputFolder, "layer108", true);
+            GenerateTs(outputFolder, "layer112", true);
+            GenerateTs(outputFolder, "layer113", true);
             GenerateTs(outputFolder, "mtproto", false);
             GenerateTs(outputFolder, "end-to-end", false);
         }

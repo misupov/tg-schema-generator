@@ -11,8 +11,8 @@
 /* Do not make changes to this file unless you know what you are doing -- modify           */
 /* the tool instead.                                                                       */
 /*                                                                                         */
-/* Source: layer108.json (md5: bdf0ea24160d359aa4ab85a8ce6d52f8)                           */
-/* Time: Sunday, 12 April 2020 20:28:59 (UTC)                                              */
+/* Source: layer108.json (md5: 9431f1dc1891a136cdfd92f98481a1a6)                           */
+/* Time: Thursday, 07 May 2020 06:31:44 (UTC)                                              */
 /*                                                                                         */
 /*******************************************************************************************/
 
@@ -51,21 +51,19 @@ const _inputPhoneContact: any = () => ({ _: 'inputPhoneContact', client_id: i64(
 const _inputFile: any = () => ({ _: 'inputFile', id: i64(), parts: i32(), name: str(), md5_checksum: str() });
 const _inputMediaEmpty: any = () => ({ _: 'inputMediaEmpty' });
 const _inputMediaUploadedPhoto = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaUploadedPhoto' };
   const flags = i32();
-  return {
-    _: 'inputMediaUploadedPhoto',
-    file: obj(),
-    stickers: flags & 0x1 ? vector(obj) : u,
-    ttl_seconds: flags & 0x2 ? i32() : u,
-  };
+  result.file = obj();
+  if (flags & 0x1) result.stickers = vector(obj);
+  if (flags & 0x2) result.ttl_seconds = i32();
+  return result;
 };
 const _inputMediaPhoto = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaPhoto' };
   const flags = i32();
-  return {
-    _: 'inputMediaPhoto',
-    id: obj(),
-    ttl_seconds: flags & 0x1 ? i32() : u,
-  };
+  result.id = obj();
+  if (flags & 0x1) result.ttl_seconds = i32();
+  return result;
 };
 const _inputMediaGeoPoint: any = () => ({ _: 'inputMediaGeoPoint', geo_point: obj() });
 const _inputMediaContact: any = () => ({ _: 'inputMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str() });
@@ -97,111 +95,105 @@ const _userStatusOnline: any = () => ({ _: 'userStatusOnline', expires: i32() })
 const _userStatusOffline: any = () => ({ _: 'userStatusOffline', was_online: i32() });
 const _chatEmpty: any = () => ({ _: 'chatEmpty', id: i32() });
 const _chat = (): any => {
+  const result: Record<string, unknown> = { _: 'chat' };
   const flags = i32();
-  return {
-    _: 'chat',
-    creator: !!(flags & 0x1),
-    kicked: !!(flags & 0x2),
-    left: !!(flags & 0x4),
-    deactivated: !!(flags & 0x20),
-    id: i32(),
-    title: str(),
-    photo: obj(),
-    participants_count: i32(),
-    date: i32(),
-    version: i32(),
-    migrated_to: flags & 0x40 ? obj() : u,
-    admin_rights: flags & 0x4000 ? obj() : u,
-    default_banned_rights: flags & 0x40000 ? obj() : u,
-  };
+  result.creator = !!(flags & 0x1);
+  result.kicked = !!(flags & 0x2);
+  result.left = !!(flags & 0x4);
+  result.deactivated = !!(flags & 0x20);
+  result.id = i32();
+  result.title = str();
+  result.photo = obj();
+  result.participants_count = i32();
+  result.date = i32();
+  result.version = i32();
+  if (flags & 0x40) result.migrated_to = obj();
+  if (flags & 0x4000) result.admin_rights = obj();
+  if (flags & 0x40000) result.default_banned_rights = obj();
+  return result;
 };
 const _chatForbidden: any = () => ({ _: 'chatForbidden', id: i32(), title: str() });
 const _chatFull = (): any => {
+  const result: Record<string, unknown> = { _: 'chatFull' };
   const flags = i32();
-  return {
-    _: 'chatFull',
-    can_set_username: !!(flags & 0x80),
-    has_scheduled: !!(flags & 0x100),
-    id: i32(),
-    about: str(),
-    participants: obj(),
-    chat_photo: flags & 0x4 ? obj() : u,
-    notify_settings: obj(),
-    exported_invite: obj(),
-    bot_info: flags & 0x8 ? vector(obj) : u,
-    pinned_msg_id: flags & 0x40 ? i32() : u,
-    folder_id: flags & 0x800 ? i32() : u,
-  };
+  result.can_set_username = !!(flags & 0x80);
+  result.has_scheduled = !!(flags & 0x100);
+  result.id = i32();
+  result.about = str();
+  result.participants = obj();
+  if (flags & 0x4) result.chat_photo = obj();
+  result.notify_settings = obj();
+  result.exported_invite = obj();
+  if (flags & 0x8) result.bot_info = vector(obj);
+  if (flags & 0x40) result.pinned_msg_id = i32();
+  if (flags & 0x800) result.folder_id = i32();
+  return result;
 };
 const _chatParticipant: any = () => ({ _: 'chatParticipant', user_id: i32(), inviter_id: i32(), date: i32() });
 const _chatParticipantsForbidden = (): any => {
+  const result: Record<string, unknown> = { _: 'chatParticipantsForbidden' };
   const flags = i32();
-  return {
-    _: 'chatParticipantsForbidden',
-    chat_id: i32(),
-    self_participant: flags & 0x1 ? obj() : u,
-  };
+  result.chat_id = i32();
+  if (flags & 0x1) result.self_participant = obj();
+  return result;
 };
 const _chatParticipants: any = () => ({ _: 'chatParticipants', chat_id: i32(), participants: vector(obj), version: i32() });
 const _chatPhotoEmpty: any = () => ({ _: 'chatPhotoEmpty' });
 const _chatPhoto: any = () => ({ _: 'chatPhoto', photo_small: obj(), photo_big: obj(), dc_id: i32() });
 const _messageEmpty: any = () => ({ _: 'messageEmpty', id: i32() });
 const _message = (): any => {
+  const result: Record<string, unknown> = { _: 'message' };
   const flags = i32();
-  return {
-    _: 'message',
-    out: !!(flags & 0x2),
-    mentioned: !!(flags & 0x10),
-    media_unread: !!(flags & 0x20),
-    silent: !!(flags & 0x2000),
-    post: !!(flags & 0x4000),
-    from_scheduled: !!(flags & 0x40000),
-    legacy: !!(flags & 0x80000),
-    edit_hide: !!(flags & 0x200000),
-    id: i32(),
-    from_id: flags & 0x100 ? i32() : u,
-    to_id: obj(),
-    fwd_from: flags & 0x4 ? obj() : u,
-    via_bot_id: flags & 0x800 ? i32() : u,
-    reply_to_msg_id: flags & 0x8 ? i32() : u,
-    date: i32(),
-    message: str(),
-    media: flags & 0x200 ? obj() : u,
-    reply_markup: flags & 0x40 ? obj() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-    views: flags & 0x400 ? i32() : u,
-    edit_date: flags & 0x8000 ? i32() : u,
-    post_author: flags & 0x10000 ? str() : u,
-    grouped_id: flags & 0x20000 ? i64() : u,
-    restriction_reason: flags & 0x400000 ? vector(obj) : u,
-  };
+  result.out = !!(flags & 0x2);
+  result.mentioned = !!(flags & 0x10);
+  result.media_unread = !!(flags & 0x20);
+  result.silent = !!(flags & 0x2000);
+  result.post = !!(flags & 0x4000);
+  result.from_scheduled = !!(flags & 0x40000);
+  result.legacy = !!(flags & 0x80000);
+  result.edit_hide = !!(flags & 0x200000);
+  result.id = i32();
+  if (flags & 0x100) result.from_id = i32();
+  result.to_id = obj();
+  if (flags & 0x4) result.fwd_from = obj();
+  if (flags & 0x800) result.via_bot_id = i32();
+  if (flags & 0x8) result.reply_to_msg_id = i32();
+  result.date = i32();
+  result.message = str();
+  if (flags & 0x200) result.media = obj();
+  if (flags & 0x40) result.reply_markup = obj();
+  if (flags & 0x80) result.entities = vector(obj);
+  if (flags & 0x400) result.views = i32();
+  if (flags & 0x8000) result.edit_date = i32();
+  if (flags & 0x10000) result.post_author = str();
+  if (flags & 0x20000) result.grouped_id = i64();
+  if (flags & 0x400000) result.restriction_reason = vector(obj);
+  return result;
 };
 const _messageService = (): any => {
+  const result: Record<string, unknown> = { _: 'messageService' };
   const flags = i32();
-  return {
-    _: 'messageService',
-    out: !!(flags & 0x2),
-    mentioned: !!(flags & 0x10),
-    media_unread: !!(flags & 0x20),
-    silent: !!(flags & 0x2000),
-    post: !!(flags & 0x4000),
-    legacy: !!(flags & 0x80000),
-    id: i32(),
-    from_id: flags & 0x100 ? i32() : u,
-    to_id: obj(),
-    reply_to_msg_id: flags & 0x8 ? i32() : u,
-    date: i32(),
-    action: obj(),
-  };
+  result.out = !!(flags & 0x2);
+  result.mentioned = !!(flags & 0x10);
+  result.media_unread = !!(flags & 0x20);
+  result.silent = !!(flags & 0x2000);
+  result.post = !!(flags & 0x4000);
+  result.legacy = !!(flags & 0x80000);
+  result.id = i32();
+  if (flags & 0x100) result.from_id = i32();
+  result.to_id = obj();
+  if (flags & 0x8) result.reply_to_msg_id = i32();
+  result.date = i32();
+  result.action = obj();
+  return result;
 };
 const _messageMediaEmpty: any = () => ({ _: 'messageMediaEmpty' });
 const _messageMediaPhoto = (): any => {
+  const result: Record<string, unknown> = { _: 'messageMediaPhoto' };
   const flags = i32();
-  return {
-    _: 'messageMediaPhoto',
-    photo: flags & 0x1 ? obj() : u,
-    ttl_seconds: flags & 0x4 ? i32() : u,
-  };
+  if (flags & 0x1) result.photo = obj();
+  if (flags & 0x4) result.ttl_seconds = i32();
+  return result;
 };
 const _messageMediaGeo: any = () => ({ _: 'messageMediaGeo', geo: obj() });
 const _messageMediaContact: any = () => ({ _: 'messageMediaContact', phone_number: str(), first_name: str(), last_name: str(), vcard: str(), user_id: i32() });
@@ -214,36 +206,34 @@ const _messageActionChatDeletePhoto: any = () => ({ _: 'messageActionChatDeleteP
 const _messageActionChatAddUser: any = () => ({ _: 'messageActionChatAddUser', users: vector(i32) });
 const _messageActionChatDeleteUser: any = () => ({ _: 'messageActionChatDeleteUser', user_id: i32() });
 const _dialog = (): any => {
+  const result: Record<string, unknown> = { _: 'dialog' };
   const flags = i32();
-  return {
-    _: 'dialog',
-    pinned: !!(flags & 0x4),
-    unread_mark: !!(flags & 0x8),
-    peer: obj(),
-    top_message: i32(),
-    read_inbox_max_id: i32(),
-    read_outbox_max_id: i32(),
-    unread_count: i32(),
-    unread_mentions_count: i32(),
-    notify_settings: obj(),
-    pts: flags & 0x1 ? i32() : u,
-    draft: flags & 0x2 ? obj() : u,
-    folder_id: flags & 0x10 ? i32() : u,
-  };
+  result.pinned = !!(flags & 0x4);
+  result.unread_mark = !!(flags & 0x8);
+  result.peer = obj();
+  result.top_message = i32();
+  result.read_inbox_max_id = i32();
+  result.read_outbox_max_id = i32();
+  result.unread_count = i32();
+  result.unread_mentions_count = i32();
+  result.notify_settings = obj();
+  if (flags & 0x1) result.pts = i32();
+  if (flags & 0x2) result.draft = obj();
+  if (flags & 0x10) result.folder_id = i32();
+  return result;
 };
 const _photoEmpty: any = () => ({ _: 'photoEmpty', id: i64() });
 const _photo = (): any => {
+  const result: Record<string, unknown> = { _: 'photo' };
   const flags = i32();
-  return {
-    _: 'photo',
-    has_stickers: !!(flags & 0x1),
-    id: i64(),
-    access_hash: i64(),
-    file_reference: bytes(),
-    date: i32(),
-    sizes: vector(obj),
-    dc_id: i32(),
-  };
+  result.has_stickers = !!(flags & 0x1);
+  result.id = i64();
+  result.access_hash = i64();
+  result.file_reference = bytes();
+  result.date = i32();
+  result.sizes = vector(obj);
+  result.dc_id = i32();
+  return result;
 };
 const _photoSizeEmpty: any = () => ({ _: 'photoSizeEmpty', type: str() });
 const _photoSize: any = () => ({ _: 'photoSize', type: str(), location: obj(), w: i32(), h: i32(), size: i32() });
@@ -251,73 +241,67 @@ const _photoCachedSize: any = () => ({ _: 'photoCachedSize', type: str(), locati
 const _geoPointEmpty: any = () => ({ _: 'geoPointEmpty' });
 const _geoPoint: any = () => ({ _: 'geoPoint', long: f64(), lat: f64(), access_hash: i64() });
 const _authSentCode = (): any => {
+  const result: Record<string, unknown> = { _: 'auth.sentCode' };
   const flags = i32();
-  return {
-    _: 'auth.sentCode',
-    type: obj(),
-    phone_code_hash: str(),
-    next_type: flags & 0x2 ? obj() : u,
-    timeout: flags & 0x4 ? i32() : u,
-  };
+  result.type = obj();
+  result.phone_code_hash = str();
+  if (flags & 0x2) result.next_type = obj();
+  if (flags & 0x4) result.timeout = i32();
+  return result;
 };
 const _authAuthorization = (): any => {
+  const result: Record<string, unknown> = { _: 'auth.authorization' };
   const flags = i32();
-  return {
-    _: 'auth.authorization',
-    tmp_sessions: flags & 0x1 ? i32() : u,
-    user: obj(),
-  };
+  if (flags & 0x1) result.tmp_sessions = i32();
+  result.user = obj();
+  return result;
 };
 const _authExportedAuthorization: any = () => ({ _: 'auth.exportedAuthorization', id: i32(), bytes: bytes() });
 const _inputNotifyPeer: any = () => ({ _: 'inputNotifyPeer', peer: obj() });
 const _inputNotifyUsers: any = () => ({ _: 'inputNotifyUsers' });
 const _inputNotifyChats: any = () => ({ _: 'inputNotifyChats' });
 const _inputPeerNotifySettings = (): any => {
+  const result: Record<string, unknown> = { _: 'inputPeerNotifySettings' };
   const flags = i32();
-  return {
-    _: 'inputPeerNotifySettings',
-    show_previews: flags & 0x1 ? obj() : u,
-    silent: flags & 0x2 ? obj() : u,
-    mute_until: flags & 0x4 ? i32() : u,
-    sound: flags & 0x8 ? str() : u,
-  };
+  if (flags & 0x1) result.show_previews = obj();
+  if (flags & 0x2) result.silent = obj();
+  if (flags & 0x4) result.mute_until = i32();
+  if (flags & 0x8) result.sound = str();
+  return result;
 };
 const _peerNotifySettings = (): any => {
+  const result: Record<string, unknown> = { _: 'peerNotifySettings' };
   const flags = i32();
-  return {
-    _: 'peerNotifySettings',
-    show_previews: flags & 0x1 ? obj() : u,
-    silent: flags & 0x2 ? obj() : u,
-    mute_until: flags & 0x4 ? i32() : u,
-    sound: flags & 0x8 ? str() : u,
-  };
+  if (flags & 0x1) result.show_previews = obj();
+  if (flags & 0x2) result.silent = obj();
+  if (flags & 0x4) result.mute_until = i32();
+  if (flags & 0x8) result.sound = str();
+  return result;
 };
 const _peerSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'peerSettings' };
   const flags = i32();
-  return {
-    _: 'peerSettings',
-    report_spam: !!(flags & 0x1),
-    add_contact: !!(flags & 0x2),
-    block_contact: !!(flags & 0x4),
-    share_contact: !!(flags & 0x8),
-    need_contacts_exception: !!(flags & 0x10),
-    report_geo: !!(flags & 0x20),
-  };
+  result.report_spam = !!(flags & 0x1);
+  result.add_contact = !!(flags & 0x2);
+  result.block_contact = !!(flags & 0x4);
+  result.share_contact = !!(flags & 0x8);
+  result.need_contacts_exception = !!(flags & 0x10);
+  result.report_geo = !!(flags & 0x20);
+  return result;
 };
 const _wallPaper = (): any => {
+  const result: Record<string, unknown> = { _: 'wallPaper' };
+  result.id = i64();
   const flags = i32();
-  return {
-    _: 'wallPaper',
-    id: i64(),
-    creator: !!(flags & 0x1),
-    default: !!(flags & 0x2),
-    pattern: !!(flags & 0x8),
-    dark: !!(flags & 0x10),
-    access_hash: i64(),
-    slug: str(),
-    document: obj(),
-    settings: flags & 0x4 ? obj() : u,
-  };
+  result.creator = !!(flags & 0x1);
+  result.default = !!(flags & 0x2);
+  result.pattern = !!(flags & 0x8);
+  result.dark = !!(flags & 0x10);
+  result.access_hash = i64();
+  result.slug = str();
+  result.document = obj();
+  if (flags & 0x4) result.settings = obj();
+  return result;
 };
 const _inputReportReasonSpam: any = () => ({ _: 'inputReportReasonSpam' });
 const _inputReportReasonViolence: any = () => ({ _: 'inputReportReasonViolence' });
@@ -325,24 +309,23 @@ const _inputReportReasonPornography: any = () => ({ _: 'inputReportReasonPornogr
 const _inputReportReasonChildAbuse: any = () => ({ _: 'inputReportReasonChildAbuse' });
 const _inputReportReasonOther: any = () => ({ _: 'inputReportReasonOther', text: str() });
 const _userFull = (): any => {
+  const result: Record<string, unknown> = { _: 'userFull' };
   const flags = i32();
-  return {
-    _: 'userFull',
-    blocked: !!(flags & 0x1),
-    phone_calls_available: !!(flags & 0x10),
-    phone_calls_private: !!(flags & 0x20),
-    can_pin_message: !!(flags & 0x80),
-    has_scheduled: !!(flags & 0x1000),
-    user: obj(),
-    about: flags & 0x2 ? str() : u,
-    settings: obj(),
-    profile_photo: flags & 0x4 ? obj() : u,
-    notify_settings: obj(),
-    bot_info: flags & 0x8 ? obj() : u,
-    pinned_msg_id: flags & 0x40 ? i32() : u,
-    common_chats_count: i32(),
-    folder_id: flags & 0x800 ? i32() : u,
-  };
+  result.blocked = !!(flags & 0x1);
+  result.phone_calls_available = !!(flags & 0x10);
+  result.phone_calls_private = !!(flags & 0x20);
+  result.can_pin_message = !!(flags & 0x80);
+  result.has_scheduled = !!(flags & 0x1000);
+  result.user = obj();
+  if (flags & 0x2) result.about = str();
+  result.settings = obj();
+  if (flags & 0x4) result.profile_photo = obj();
+  result.notify_settings = obj();
+  if (flags & 0x8) result.bot_info = obj();
+  if (flags & 0x40) result.pinned_msg_id = i32();
+  result.common_chats_count = i32();
+  if (flags & 0x800) result.folder_id = i32();
+  return result;
 };
 const _contact: any = () => ({ _: 'contact', user_id: i32(), mutual: obj() });
 const _importedContact: any = () => ({ _: 'importedContact', user_id: i32(), client_id: i64() });
@@ -357,16 +340,15 @@ const _messagesDialogs: any = () => ({ _: 'messages.dialogs', dialogs: vector(ob
 const _messagesDialogsSlice: any = () => ({ _: 'messages.dialogsSlice', count: i32(), dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj) });
 const _messagesMessages: any = () => ({ _: 'messages.messages', messages: vector(obj), chats: vector(obj), users: vector(obj) });
 const _messagesMessagesSlice = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.messagesSlice' };
   const flags = i32();
-  return {
-    _: 'messages.messagesSlice',
-    inexact: !!(flags & 0x2),
-    count: i32(),
-    next_rate: flags & 0x1 ? i32() : u,
-    messages: vector(obj),
-    chats: vector(obj),
-    users: vector(obj),
-  };
+  result.inexact = !!(flags & 0x2);
+  result.count = i32();
+  if (flags & 0x1) result.next_rate = i32();
+  result.messages = vector(obj);
+  result.chats = vector(obj);
+  result.users = vector(obj);
+  return result;
 };
 const _messagesChats: any = () => ({ _: 'messages.chats', chats: vector(obj) });
 const _messagesChatFull: any = () => ({ _: 'messages.chatFull', full_chat: obj(), chats: vector(obj), users: vector(obj) });
@@ -393,47 +375,45 @@ const _updatesDifference: any = () => ({ _: 'updates.difference', new_messages: 
 const _updatesDifferenceSlice: any = () => ({ _: 'updates.differenceSlice', new_messages: vector(obj), new_encrypted_messages: vector(obj), other_updates: vector(obj), chats: vector(obj), users: vector(obj), intermediate_state: obj() });
 const _updatesTooLong: any = () => ({ _: 'updatesTooLong', _update: true });
 const _updateShortMessage = (): any => {
+  const result: Record<string, unknown> = { _: 'updateShortMessage' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateShortMessage',
-    _update: true,
-    out: !!(flags & 0x2),
-    mentioned: !!(flags & 0x10),
-    media_unread: !!(flags & 0x20),
-    silent: !!(flags & 0x2000),
-    id: i32(),
-    user_id: i32(),
-    message: str(),
-    pts: i32(),
-    pts_count: i32(),
-    date: i32(),
-    fwd_from: flags & 0x4 ? obj() : u,
-    via_bot_id: flags & 0x800 ? i32() : u,
-    reply_to_msg_id: flags & 0x8 ? i32() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-  };
+  result.out = !!(flags & 0x2);
+  result.mentioned = !!(flags & 0x10);
+  result.media_unread = !!(flags & 0x20);
+  result.silent = !!(flags & 0x2000);
+  result.id = i32();
+  result.user_id = i32();
+  result.message = str();
+  result.pts = i32();
+  result.pts_count = i32();
+  result.date = i32();
+  if (flags & 0x4) result.fwd_from = obj();
+  if (flags & 0x800) result.via_bot_id = i32();
+  if (flags & 0x8) result.reply_to_msg_id = i32();
+  if (flags & 0x80) result.entities = vector(obj);
+  return result;
 };
 const _updateShortChatMessage = (): any => {
+  const result: Record<string, unknown> = { _: 'updateShortChatMessage' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateShortChatMessage',
-    _update: true,
-    out: !!(flags & 0x2),
-    mentioned: !!(flags & 0x10),
-    media_unread: !!(flags & 0x20),
-    silent: !!(flags & 0x2000),
-    id: i32(),
-    from_id: i32(),
-    chat_id: i32(),
-    message: str(),
-    pts: i32(),
-    pts_count: i32(),
-    date: i32(),
-    fwd_from: flags & 0x4 ? obj() : u,
-    via_bot_id: flags & 0x800 ? i32() : u,
-    reply_to_msg_id: flags & 0x8 ? i32() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-  };
+  result.out = !!(flags & 0x2);
+  result.mentioned = !!(flags & 0x10);
+  result.media_unread = !!(flags & 0x20);
+  result.silent = !!(flags & 0x2000);
+  result.id = i32();
+  result.from_id = i32();
+  result.chat_id = i32();
+  result.message = str();
+  result.pts = i32();
+  result.pts_count = i32();
+  result.date = i32();
+  if (flags & 0x4) result.fwd_from = obj();
+  if (flags & 0x800) result.via_bot_id = i32();
+  if (flags & 0x8) result.reply_to_msg_id = i32();
+  if (flags & 0x80) result.entities = vector(obj);
+  return result;
 };
 const _updateShort: any = () => ({ _: 'updateShort', _update: true, update: obj(), date: i32() });
 const _updatesCombined: any = () => ({ _: 'updatesCombined', _update: true, updates: vector(obj), users: vector(obj), chats: vector(obj), date: i32(), seq_start: i32(), seq: i32() });
@@ -443,90 +423,87 @@ const _photosPhotosSlice: any = () => ({ _: 'photos.photosSlice', count: i32(), 
 const _photosPhoto: any = () => ({ _: 'photos.photo', photo: obj(), users: vector(obj) });
 const _uploadFile: any = () => ({ _: 'upload.file', type: obj(), mtime: i32(), bytes: bytes() });
 const _dcOption = (): any => {
+  const result: Record<string, unknown> = { _: 'dcOption' };
   const flags = i32();
-  return {
-    _: 'dcOption',
-    ipv6: !!(flags & 0x1),
-    media_only: !!(flags & 0x2),
-    tcpo_only: !!(flags & 0x4),
-    cdn: !!(flags & 0x8),
-    static: !!(flags & 0x10),
-    id: i32(),
-    ip_address: str(),
-    port: i32(),
-    secret: flags & 0x400 ? bytes() : u,
-  };
+  result.ipv6 = !!(flags & 0x1);
+  result.media_only = !!(flags & 0x2);
+  result.tcpo_only = !!(flags & 0x4);
+  result.cdn = !!(flags & 0x8);
+  result.static = !!(flags & 0x10);
+  result.id = i32();
+  result.ip_address = str();
+  result.port = i32();
+  if (flags & 0x400) result.secret = bytes();
+  return result;
 };
 const _config = (): any => {
+  const result: Record<string, unknown> = { _: 'config' };
   const flags = i32();
-  return {
-    _: 'config',
-    phonecalls_enabled: !!(flags & 0x2),
-    default_p2p_contacts: !!(flags & 0x8),
-    preload_featured_stickers: !!(flags & 0x10),
-    ignore_phone_entities: !!(flags & 0x20),
-    revoke_pm_inbox: !!(flags & 0x40),
-    blocked_mode: !!(flags & 0x100),
-    pfs_enabled: !!(flags & 0x2000),
-    date: i32(),
-    expires: i32(),
-    test_mode: obj(),
-    this_dc: i32(),
-    dc_options: vector(obj),
-    dc_txt_domain_name: str(),
-    chat_size_max: i32(),
-    megagroup_size_max: i32(),
-    forwarded_count_max: i32(),
-    online_update_period_ms: i32(),
-    offline_blur_timeout_ms: i32(),
-    offline_idle_timeout_ms: i32(),
-    online_cloud_timeout_ms: i32(),
-    notify_cloud_delay_ms: i32(),
-    notify_default_delay_ms: i32(),
-    push_chat_period_ms: i32(),
-    push_chat_limit: i32(),
-    saved_gifs_limit: i32(),
-    edit_time_limit: i32(),
-    revoke_time_limit: i32(),
-    revoke_pm_time_limit: i32(),
-    rating_e_decay: i32(),
-    stickers_recent_limit: i32(),
-    stickers_faved_limit: i32(),
-    channels_read_media_period: i32(),
-    tmp_sessions: flags & 0x1 ? i32() : u,
-    pinned_dialogs_count_max: i32(),
-    pinned_infolder_count_max: i32(),
-    call_receive_timeout_ms: i32(),
-    call_ring_timeout_ms: i32(),
-    call_connect_timeout_ms: i32(),
-    call_packet_timeout_ms: i32(),
-    me_url_prefix: str(),
-    autoupdate_url_prefix: flags & 0x80 ? str() : u,
-    gif_search_username: flags & 0x200 ? str() : u,
-    venue_search_username: flags & 0x400 ? str() : u,
-    img_search_username: flags & 0x800 ? str() : u,
-    static_maps_provider: flags & 0x1000 ? str() : u,
-    caption_length_max: i32(),
-    message_length_max: i32(),
-    webfile_dc_id: i32(),
-    suggested_lang_code: flags & 0x4 ? str() : u,
-    lang_pack_version: flags & 0x4 ? i32() : u,
-    base_lang_pack_version: flags & 0x4 ? i32() : u,
-  };
+  result.phonecalls_enabled = !!(flags & 0x2);
+  result.default_p2p_contacts = !!(flags & 0x8);
+  result.preload_featured_stickers = !!(flags & 0x10);
+  result.ignore_phone_entities = !!(flags & 0x20);
+  result.revoke_pm_inbox = !!(flags & 0x40);
+  result.blocked_mode = !!(flags & 0x100);
+  result.pfs_enabled = !!(flags & 0x2000);
+  result.date = i32();
+  result.expires = i32();
+  result.test_mode = obj();
+  result.this_dc = i32();
+  result.dc_options = vector(obj);
+  result.dc_txt_domain_name = str();
+  result.chat_size_max = i32();
+  result.megagroup_size_max = i32();
+  result.forwarded_count_max = i32();
+  result.online_update_period_ms = i32();
+  result.offline_blur_timeout_ms = i32();
+  result.offline_idle_timeout_ms = i32();
+  result.online_cloud_timeout_ms = i32();
+  result.notify_cloud_delay_ms = i32();
+  result.notify_default_delay_ms = i32();
+  result.push_chat_period_ms = i32();
+  result.push_chat_limit = i32();
+  result.saved_gifs_limit = i32();
+  result.edit_time_limit = i32();
+  result.revoke_time_limit = i32();
+  result.revoke_pm_time_limit = i32();
+  result.rating_e_decay = i32();
+  result.stickers_recent_limit = i32();
+  result.stickers_faved_limit = i32();
+  result.channels_read_media_period = i32();
+  if (flags & 0x1) result.tmp_sessions = i32();
+  result.pinned_dialogs_count_max = i32();
+  result.pinned_infolder_count_max = i32();
+  result.call_receive_timeout_ms = i32();
+  result.call_ring_timeout_ms = i32();
+  result.call_connect_timeout_ms = i32();
+  result.call_packet_timeout_ms = i32();
+  result.me_url_prefix = str();
+  if (flags & 0x80) result.autoupdate_url_prefix = str();
+  if (flags & 0x200) result.gif_search_username = str();
+  if (flags & 0x400) result.venue_search_username = str();
+  if (flags & 0x800) result.img_search_username = str();
+  if (flags & 0x1000) result.static_maps_provider = str();
+  result.caption_length_max = i32();
+  result.message_length_max = i32();
+  result.webfile_dc_id = i32();
+  if (flags & 0x4) result.suggested_lang_code = str();
+  if (flags & 0x4) result.lang_pack_version = i32();
+  if (flags & 0x4) result.base_lang_pack_version = i32();
+  return result;
 };
 const _nearestDc: any = () => ({ _: 'nearestDc', country: str(), this_dc: i32(), nearest_dc: i32() });
 const _helpAppUpdate = (): any => {
+  const result: Record<string, unknown> = { _: 'help.appUpdate' };
   const flags = i32();
-  return {
-    _: 'help.appUpdate',
-    can_not_skip: !!(flags & 0x1),
-    id: i32(),
-    version: str(),
-    text: str(),
-    entities: vector(obj),
-    document: flags & 0x2 ? obj() : u,
-    url: flags & 0x4 ? str() : u,
-  };
+  result.can_not_skip = !!(flags & 0x1);
+  result.id = i32();
+  result.version = str();
+  result.text = str();
+  result.entities = vector(obj);
+  if (flags & 0x2) result.document = obj();
+  if (flags & 0x4) result.url = str();
+  return result;
 };
 const _helpNoAppUpdate: any = () => ({ _: 'help.noAppUpdate' });
 const _helpInviteText: any = () => ({ _: 'help.inviteText', message: str() });
@@ -558,52 +535,48 @@ const _updateChatParticipantAdd: any = () => ({ _: 'updateChatParticipantAdd', _
 const _updateChatParticipantDelete: any = () => ({ _: 'updateChatParticipantDelete', _update: true, chat_id: i32(), user_id: i32(), version: i32() });
 const _updateDcOptions: any = () => ({ _: 'updateDcOptions', _update: true, dc_options: vector(obj) });
 const _inputMediaUploadedDocument = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaUploadedDocument' };
   const flags = i32();
-  return {
-    _: 'inputMediaUploadedDocument',
-    nosound_video: !!(flags & 0x8),
-    file: obj(),
-    thumb: flags & 0x4 ? obj() : u,
-    mime_type: str(),
-    attributes: vector(obj),
-    stickers: flags & 0x1 ? vector(obj) : u,
-    ttl_seconds: flags & 0x2 ? i32() : u,
-  };
+  result.nosound_video = !!(flags & 0x8);
+  result.file = obj();
+  if (flags & 0x4) result.thumb = obj();
+  result.mime_type = str();
+  result.attributes = vector(obj);
+  if (flags & 0x1) result.stickers = vector(obj);
+  if (flags & 0x2) result.ttl_seconds = i32();
+  return result;
 };
 const _inputMediaDocument = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaDocument' };
   const flags = i32();
-  return {
-    _: 'inputMediaDocument',
-    id: obj(),
-    ttl_seconds: flags & 0x1 ? i32() : u,
-  };
+  result.id = obj();
+  if (flags & 0x1) result.ttl_seconds = i32();
+  return result;
 };
 const _messageMediaDocument = (): any => {
+  const result: Record<string, unknown> = { _: 'messageMediaDocument' };
   const flags = i32();
-  return {
-    _: 'messageMediaDocument',
-    document: flags & 0x1 ? obj() : u,
-    ttl_seconds: flags & 0x4 ? i32() : u,
-  };
+  if (flags & 0x1) result.document = obj();
+  if (flags & 0x4) result.ttl_seconds = i32();
+  return result;
 };
 const _inputDocumentEmpty: any = () => ({ _: 'inputDocumentEmpty' });
 const _inputDocument: any = () => ({ _: 'inputDocument', id: i64(), access_hash: i64(), file_reference: bytes() });
 const _inputDocumentFileLocation: any = () => ({ _: 'inputDocumentFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str() });
 const _documentEmpty: any = () => ({ _: 'documentEmpty', id: i64() });
 const _document = (): any => {
+  const result: Record<string, unknown> = { _: 'document' };
   const flags = i32();
-  return {
-    _: 'document',
-    id: i64(),
-    access_hash: i64(),
-    file_reference: bytes(),
-    date: i32(),
-    mime_type: str(),
-    size: i32(),
-    thumbs: flags & 0x1 ? vector(obj) : u,
-    dc_id: i32(),
-    attributes: vector(obj),
-  };
+  result.id = i64();
+  result.access_hash = i64();
+  result.file_reference = bytes();
+  result.date = i32();
+  result.mime_type = str();
+  result.size = i32();
+  if (flags & 0x1) result.thumbs = vector(obj);
+  result.dc_id = i32();
+  result.attributes = vector(obj);
+  return result;
 };
 const _helpSupport: any = () => ({ _: 'help.support', phone_number: str(), user: obj() });
 const _notifyPeer: any = () => ({ _: 'notifyPeer', peer: obj() });
@@ -623,17 +596,16 @@ const _sendMessageGeoLocationAction: any = () => ({ _: 'sendMessageGeoLocationAc
 const _sendMessageChooseContactAction: any = () => ({ _: 'sendMessageChooseContactAction' });
 const _contactsFound: any = () => ({ _: 'contacts.found', my_results: vector(obj), results: vector(obj), chats: vector(obj), users: vector(obj) });
 const _updateServiceNotification = (): any => {
+  const result: Record<string, unknown> = { _: 'updateServiceNotification' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateServiceNotification',
-    _update: true,
-    popup: !!(flags & 0x1),
-    inbox_date: flags & 0x2 ? i32() : u,
-    type: str(),
-    message: str(),
-    media: obj(),
-    entities: vector(obj),
-  };
+  result.popup = !!(flags & 0x1);
+  if (flags & 0x2) result.inbox_date = i32();
+  result.type = str();
+  result.message = str();
+  result.media = obj();
+  result.entities = vector(obj);
+  return result;
 };
 const _userStatusRecently: any = () => ({ _: 'userStatusRecently' });
 const _userStatusLastWeek: any = () => ({ _: 'userStatusLastWeek' });
@@ -659,36 +631,33 @@ const _updateUserPhone: any = () => ({ _: 'updateUserPhone', _update: true, user
 const _documentAttributeImageSize: any = () => ({ _: 'documentAttributeImageSize', w: i32(), h: i32() });
 const _documentAttributeAnimated: any = () => ({ _: 'documentAttributeAnimated' });
 const _documentAttributeSticker = (): any => {
+  const result: Record<string, unknown> = { _: 'documentAttributeSticker' };
   const flags = i32();
-  return {
-    _: 'documentAttributeSticker',
-    mask: !!(flags & 0x2),
-    alt: str(),
-    stickerset: obj(),
-    mask_coords: flags & 0x1 ? obj() : u,
-  };
+  result.mask = !!(flags & 0x2);
+  result.alt = str();
+  result.stickerset = obj();
+  if (flags & 0x1) result.mask_coords = obj();
+  return result;
 };
 const _documentAttributeVideo = (): any => {
+  const result: Record<string, unknown> = { _: 'documentAttributeVideo' };
   const flags = i32();
-  return {
-    _: 'documentAttributeVideo',
-    round_message: !!(flags & 0x1),
-    supports_streaming: !!(flags & 0x2),
-    duration: i32(),
-    w: i32(),
-    h: i32(),
-  };
+  result.round_message = !!(flags & 0x1);
+  result.supports_streaming = !!(flags & 0x2);
+  result.duration = i32();
+  result.w = i32();
+  result.h = i32();
+  return result;
 };
 const _documentAttributeAudio = (): any => {
+  const result: Record<string, unknown> = { _: 'documentAttributeAudio' };
   const flags = i32();
-  return {
-    _: 'documentAttributeAudio',
-    voice: !!(flags & 0x400),
-    duration: i32(),
-    title: flags & 0x1 ? str() : u,
-    performer: flags & 0x2 ? str() : u,
-    waveform: flags & 0x4 ? bytes() : u,
-  };
+  result.voice = !!(flags & 0x400);
+  result.duration = i32();
+  if (flags & 0x1) result.title = str();
+  if (flags & 0x2) result.performer = str();
+  if (flags & 0x4) result.waveform = bytes();
+  return result;
 };
 const _documentAttributeFilename: any = () => ({ _: 'documentAttributeFilename', file_name: str() });
 const _messagesStickersNotModified: any = () => ({ _: 'messages.stickersNotModified' });
@@ -697,17 +666,16 @@ const _stickerPack: any = () => ({ _: 'stickerPack', emoticon: str(), documents:
 const _messagesAllStickersNotModified: any = () => ({ _: 'messages.allStickersNotModified' });
 const _messagesAllStickers: any = () => ({ _: 'messages.allStickers', hash: i32(), sets: vector(obj) });
 const _updateReadHistoryInbox = (): any => {
+  const result: Record<string, unknown> = { _: 'updateReadHistoryInbox' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateReadHistoryInbox',
-    _update: true,
-    folder_id: flags & 0x1 ? i32() : u,
-    peer: obj(),
-    max_id: i32(),
-    still_unread_count: i32(),
-    pts: i32(),
-    pts_count: i32(),
-  };
+  if (flags & 0x1) result.folder_id = i32();
+  result.peer = obj();
+  result.max_id = i32();
+  result.still_unread_count = i32();
+  result.pts = i32();
+  result.pts_count = i32();
+  return result;
 };
 const _updateReadHistoryOutbox: any = () => ({ _: 'updateReadHistoryOutbox', _update: true, peer: obj(), max_id: i32(), pts: i32(), pts_count: i32() });
 const _messagesAffectedMessages: any = () => ({ _: 'messages.affectedMessages', pts: i32(), pts_count: i32() });
@@ -715,87 +683,82 @@ const _updateWebPage: any = () => ({ _: 'updateWebPage', _update: true, webpage:
 const _webPageEmpty: any = () => ({ _: 'webPageEmpty', id: i64() });
 const _webPagePending: any = () => ({ _: 'webPagePending', id: i64(), date: i32() });
 const _webPage = (): any => {
+  const result: Record<string, unknown> = { _: 'webPage' };
   const flags = i32();
-  return {
-    _: 'webPage',
-    id: i64(),
-    url: str(),
-    display_url: str(),
-    hash: i32(),
-    type: flags & 0x1 ? str() : u,
-    site_name: flags & 0x2 ? str() : u,
-    title: flags & 0x4 ? str() : u,
-    description: flags & 0x8 ? str() : u,
-    photo: flags & 0x10 ? obj() : u,
-    embed_url: flags & 0x20 ? str() : u,
-    embed_type: flags & 0x20 ? str() : u,
-    embed_width: flags & 0x40 ? i32() : u,
-    embed_height: flags & 0x40 ? i32() : u,
-    duration: flags & 0x80 ? i32() : u,
-    author: flags & 0x100 ? str() : u,
-    document: flags & 0x200 ? obj() : u,
-    cached_page: flags & 0x400 ? obj() : u,
-    attributes: flags & 0x1000 ? vector(obj) : u,
-  };
+  result.id = i64();
+  result.url = str();
+  result.display_url = str();
+  result.hash = i32();
+  if (flags & 0x1) result.type = str();
+  if (flags & 0x2) result.site_name = str();
+  if (flags & 0x4) result.title = str();
+  if (flags & 0x8) result.description = str();
+  if (flags & 0x10) result.photo = obj();
+  if (flags & 0x20) result.embed_url = str();
+  if (flags & 0x20) result.embed_type = str();
+  if (flags & 0x40) result.embed_width = i32();
+  if (flags & 0x40) result.embed_height = i32();
+  if (flags & 0x80) result.duration = i32();
+  if (flags & 0x100) result.author = str();
+  if (flags & 0x200) result.document = obj();
+  if (flags & 0x400) result.cached_page = obj();
+  if (flags & 0x1000) result.attributes = vector(obj);
+  return result;
 };
 const _messageMediaWebPage: any = () => ({ _: 'messageMediaWebPage', webpage: obj() });
 const _authorization = (): any => {
+  const result: Record<string, unknown> = { _: 'authorization' };
   const flags = i32();
-  return {
-    _: 'authorization',
-    current: !!(flags & 0x1),
-    official_app: !!(flags & 0x2),
-    password_pending: !!(flags & 0x4),
-    hash: i64(),
-    device_model: str(),
-    platform: str(),
-    system_version: str(),
-    api_id: i32(),
-    app_name: str(),
-    app_version: str(),
-    date_created: i32(),
-    date_active: i32(),
-    ip: str(),
-    country: str(),
-    region: str(),
-  };
+  result.current = !!(flags & 0x1);
+  result.official_app = !!(flags & 0x2);
+  result.password_pending = !!(flags & 0x4);
+  result.hash = i64();
+  result.device_model = str();
+  result.platform = str();
+  result.system_version = str();
+  result.api_id = i32();
+  result.app_name = str();
+  result.app_version = str();
+  result.date_created = i32();
+  result.date_active = i32();
+  result.ip = str();
+  result.country = str();
+  result.region = str();
+  return result;
 };
 const _accountAuthorizations: any = () => ({ _: 'account.authorizations', authorizations: vector(obj) });
 const _accountPassword = (): any => {
+  const result: Record<string, unknown> = { _: 'account.password' };
   const flags = i32();
-  return {
-    _: 'account.password',
-    has_recovery: !!(flags & 0x1),
-    has_secure_values: !!(flags & 0x2),
-    has_password: !!(flags & 0x4),
-    current_algo: flags & 0x4 ? obj() : u,
-    srp_B: flags & 0x4 ? bytes() : u,
-    srp_id: flags & 0x4 ? i64() : u,
-    hint: flags & 0x8 ? str() : u,
-    email_unconfirmed_pattern: flags & 0x10 ? str() : u,
-    new_algo: obj(),
-    new_secure_algo: obj(),
-    secure_random: bytes(),
-  };
+  result.has_recovery = !!(flags & 0x1);
+  result.has_secure_values = !!(flags & 0x2);
+  result.has_password = !!(flags & 0x4);
+  if (flags & 0x4) result.current_algo = obj();
+  if (flags & 0x4) result.srp_B = bytes();
+  if (flags & 0x4) result.srp_id = i64();
+  if (flags & 0x8) result.hint = str();
+  if (flags & 0x10) result.email_unconfirmed_pattern = str();
+  result.new_algo = obj();
+  result.new_secure_algo = obj();
+  result.secure_random = bytes();
+  return result;
 };
 const _accountPasswordSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'account.passwordSettings' };
   const flags = i32();
-  return {
-    _: 'account.passwordSettings',
-    email: flags & 0x1 ? str() : u,
-    secure_settings: flags & 0x2 ? obj() : u,
-  };
+  if (flags & 0x1) result.email = str();
+  if (flags & 0x2) result.secure_settings = obj();
+  return result;
 };
 const _accountPasswordInputSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'account.passwordInputSettings' };
   const flags = i32();
-  return {
-    _: 'account.passwordInputSettings',
-    new_algo: flags & 0x1 ? obj() : u,
-    new_password_hash: flags & 0x1 ? bytes() : u,
-    hint: flags & 0x1 ? str() : u,
-    email: flags & 0x2 ? str() : u,
-    new_secure_settings: flags & 0x4 ? obj() : u,
-  };
+  if (flags & 0x1) result.new_algo = obj();
+  if (flags & 0x1) result.new_password_hash = bytes();
+  if (flags & 0x1) result.hint = str();
+  if (flags & 0x2) result.email = str();
+  if (flags & 0x4) result.new_secure_settings = obj();
+  return result;
 };
 const _authPasswordRecovery: any = () => ({ _: 'auth.passwordRecovery', email_pattern: str() });
 const _inputMediaVenue: any = () => ({ _: 'inputMediaVenue', geo_point: obj(), title: str(), address: str(), provider: str(), venue_id: str(), venue_type: str() });
@@ -805,18 +768,17 @@ const _chatInviteEmpty: any = () => ({ _: 'chatInviteEmpty' });
 const _chatInviteExported: any = () => ({ _: 'chatInviteExported', link: str() });
 const _chatInviteAlready: any = () => ({ _: 'chatInviteAlready', chat: obj() });
 const _chatInvite = (): any => {
+  const result: Record<string, unknown> = { _: 'chatInvite' };
   const flags = i32();
-  return {
-    _: 'chatInvite',
-    channel: !!(flags & 0x1),
-    broadcast: !!(flags & 0x2),
-    public: !!(flags & 0x4),
-    megagroup: !!(flags & 0x8),
-    title: str(),
-    photo: obj(),
-    participants_count: i32(),
-    participants: flags & 0x10 ? vector(obj) : u,
-  };
+  result.channel = !!(flags & 0x1);
+  result.broadcast = !!(flags & 0x2);
+  result.public = !!(flags & 0x4);
+  result.megagroup = !!(flags & 0x8);
+  result.title = str();
+  result.photo = obj();
+  result.participants_count = i32();
+  if (flags & 0x10) result.participants = vector(obj);
+  return result;
 };
 const _messageActionChatJoinedByLink: any = () => ({ _: 'messageActionChatJoinedByLink', inviter_id: i32() });
 const _updateReadMessagesContents: any = () => ({ _: 'updateReadMessagesContents', _update: true, messages: vector(i32), pts: i32(), pts_count: i32() });
@@ -824,84 +786,79 @@ const _inputStickerSetEmpty: any = () => ({ _: 'inputStickerSetEmpty' });
 const _inputStickerSetID: any = () => ({ _: 'inputStickerSetID', id: i64(), access_hash: i64() });
 const _inputStickerSetShortName: any = () => ({ _: 'inputStickerSetShortName', short_name: str() });
 const _stickerSet = (): any => {
+  const result: Record<string, unknown> = { _: 'stickerSet' };
   const flags = i32();
-  return {
-    _: 'stickerSet',
-    archived: !!(flags & 0x2),
-    official: !!(flags & 0x4),
-    masks: !!(flags & 0x8),
-    animated: !!(flags & 0x20),
-    installed_date: flags & 0x1 ? i32() : u,
-    id: i64(),
-    access_hash: i64(),
-    title: str(),
-    short_name: str(),
-    thumb: flags & 0x10 ? obj() : u,
-    thumb_dc_id: flags & 0x10 ? i32() : u,
-    count: i32(),
-    hash: i32(),
-  };
+  result.archived = !!(flags & 0x2);
+  result.official = !!(flags & 0x4);
+  result.masks = !!(flags & 0x8);
+  result.animated = !!(flags & 0x20);
+  if (flags & 0x1) result.installed_date = i32();
+  result.id = i64();
+  result.access_hash = i64();
+  result.title = str();
+  result.short_name = str();
+  if (flags & 0x10) result.thumb = obj();
+  if (flags & 0x10) result.thumb_dc_id = i32();
+  result.count = i32();
+  result.hash = i32();
+  return result;
 };
 const _messagesStickerSet: any = () => ({ _: 'messages.stickerSet', set: obj(), packs: vector(obj), documents: vector(obj) });
 const _user = (): any => {
+  const result: Record<string, unknown> = { _: 'user' };
   const flags = i32();
-  return {
-    _: 'user',
-    self: !!(flags & 0x400),
-    contact: !!(flags & 0x800),
-    mutual_contact: !!(flags & 0x1000),
-    deleted: !!(flags & 0x2000),
-    bot: !!(flags & 0x4000),
-    bot_chat_history: !!(flags & 0x8000),
-    bot_nochats: !!(flags & 0x10000),
-    verified: !!(flags & 0x20000),
-    restricted: !!(flags & 0x40000),
-    min: !!(flags & 0x100000),
-    bot_inline_geo: !!(flags & 0x200000),
-    support: !!(flags & 0x800000),
-    scam: !!(flags & 0x1000000),
-    id: i32(),
-    access_hash: flags & 0x1 ? i64() : u,
-    first_name: flags & 0x2 ? str() : u,
-    last_name: flags & 0x4 ? str() : u,
-    username: flags & 0x8 ? str() : u,
-    phone: flags & 0x10 ? str() : u,
-    photo: flags & 0x20 ? obj() : u,
-    status: flags & 0x40 ? obj() : u,
-    bot_info_version: flags & 0x4000 ? i32() : u,
-    restriction_reason: flags & 0x40000 ? vector(obj) : u,
-    bot_inline_placeholder: flags & 0x80000 ? str() : u,
-    lang_code: flags & 0x400000 ? str() : u,
-  };
+  result.self = !!(flags & 0x400);
+  result.contact = !!(flags & 0x800);
+  result.mutual_contact = !!(flags & 0x1000);
+  result.deleted = !!(flags & 0x2000);
+  result.bot = !!(flags & 0x4000);
+  result.bot_chat_history = !!(flags & 0x8000);
+  result.bot_nochats = !!(flags & 0x10000);
+  result.verified = !!(flags & 0x20000);
+  result.restricted = !!(flags & 0x40000);
+  result.min = !!(flags & 0x100000);
+  result.bot_inline_geo = !!(flags & 0x200000);
+  result.support = !!(flags & 0x800000);
+  result.scam = !!(flags & 0x1000000);
+  result.id = i32();
+  if (flags & 0x1) result.access_hash = i64();
+  if (flags & 0x2) result.first_name = str();
+  if (flags & 0x4) result.last_name = str();
+  if (flags & 0x8) result.username = str();
+  if (flags & 0x10) result.phone = str();
+  if (flags & 0x20) result.photo = obj();
+  if (flags & 0x40) result.status = obj();
+  if (flags & 0x4000) result.bot_info_version = i32();
+  if (flags & 0x40000) result.restriction_reason = vector(obj);
+  if (flags & 0x80000) result.bot_inline_placeholder = str();
+  if (flags & 0x400000) result.lang_code = str();
+  return result;
 };
 const _botCommand: any = () => ({ _: 'botCommand', command: str(), description: str() });
 const _botInfo: any = () => ({ _: 'botInfo', user_id: i32(), description: str(), commands: vector(obj) });
 const _keyboardButton: any = () => ({ _: 'keyboardButton', text: str() });
 const _keyboardButtonRow: any = () => ({ _: 'keyboardButtonRow', buttons: vector(obj) });
 const _replyKeyboardHide = (): any => {
+  const result: Record<string, unknown> = { _: 'replyKeyboardHide' };
   const flags = i32();
-  return {
-    _: 'replyKeyboardHide',
-    selective: !!(flags & 0x4),
-  };
+  result.selective = !!(flags & 0x4);
+  return result;
 };
 const _replyKeyboardForceReply = (): any => {
+  const result: Record<string, unknown> = { _: 'replyKeyboardForceReply' };
   const flags = i32();
-  return {
-    _: 'replyKeyboardForceReply',
-    single_use: !!(flags & 0x2),
-    selective: !!(flags & 0x4),
-  };
+  result.single_use = !!(flags & 0x2);
+  result.selective = !!(flags & 0x4);
+  return result;
 };
 const _replyKeyboardMarkup = (): any => {
+  const result: Record<string, unknown> = { _: 'replyKeyboardMarkup' };
   const flags = i32();
-  return {
-    _: 'replyKeyboardMarkup',
-    resize: !!(flags & 0x1),
-    single_use: !!(flags & 0x2),
-    selective: !!(flags & 0x4),
-    rows: vector(obj),
-  };
+  result.resize = !!(flags & 0x1);
+  result.single_use = !!(flags & 0x2);
+  result.selective = !!(flags & 0x4);
+  result.rows = vector(obj);
+  return result;
 };
 const _inputPeerUser: any = () => ({ _: 'inputPeerUser', user_id: i32(), access_hash: i64() });
 const _inputUser: any = () => ({ _: 'inputUser', user_id: i32(), access_hash: i64() });
@@ -917,195 +874,183 @@ const _messageEntityCode: any = () => ({ _: 'messageEntityCode', offset: i32(), 
 const _messageEntityPre: any = () => ({ _: 'messageEntityPre', offset: i32(), length: i32(), language: str() });
 const _messageEntityTextUrl: any = () => ({ _: 'messageEntityTextUrl', offset: i32(), length: i32(), url: str() });
 const _updateShortSentMessage = (): any => {
+  const result: Record<string, unknown> = { _: 'updateShortSentMessage' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateShortSentMessage',
-    _update: true,
-    out: !!(flags & 0x2),
-    id: i32(),
-    pts: i32(),
-    pts_count: i32(),
-    date: i32(),
-    media: flags & 0x200 ? obj() : u,
-    entities: flags & 0x80 ? vector(obj) : u,
-  };
+  result.out = !!(flags & 0x2);
+  result.id = i32();
+  result.pts = i32();
+  result.pts_count = i32();
+  result.date = i32();
+  if (flags & 0x200) result.media = obj();
+  if (flags & 0x80) result.entities = vector(obj);
+  return result;
 };
 const _inputChannelEmpty: any = () => ({ _: 'inputChannelEmpty' });
 const _inputChannel: any = () => ({ _: 'inputChannel', channel_id: i32(), access_hash: i64() });
 const _peerChannel: any = () => ({ _: 'peerChannel', channel_id: i32() });
 const _inputPeerChannel: any = () => ({ _: 'inputPeerChannel', channel_id: i32(), access_hash: i64() });
 const _channel = (): any => {
+  const result: Record<string, unknown> = { _: 'channel' };
   const flags = i32();
-  return {
-    _: 'channel',
-    creator: !!(flags & 0x1),
-    left: !!(flags & 0x4),
-    broadcast: !!(flags & 0x20),
-    verified: !!(flags & 0x80),
-    megagroup: !!(flags & 0x100),
-    restricted: !!(flags & 0x200),
-    signatures: !!(flags & 0x800),
-    min: !!(flags & 0x1000),
-    scam: !!(flags & 0x80000),
-    has_link: !!(flags & 0x100000),
-    has_geo: !!(flags & 0x200000),
-    slowmode_enabled: !!(flags & 0x400000),
-    id: i32(),
-    access_hash: flags & 0x2000 ? i64() : u,
-    title: str(),
-    username: flags & 0x40 ? str() : u,
-    photo: obj(),
-    date: i32(),
-    version: i32(),
-    restriction_reason: flags & 0x200 ? vector(obj) : u,
-    admin_rights: flags & 0x4000 ? obj() : u,
-    banned_rights: flags & 0x8000 ? obj() : u,
-    default_banned_rights: flags & 0x40000 ? obj() : u,
-    participants_count: flags & 0x20000 ? i32() : u,
-  };
+  result.creator = !!(flags & 0x1);
+  result.left = !!(flags & 0x4);
+  result.broadcast = !!(flags & 0x20);
+  result.verified = !!(flags & 0x80);
+  result.megagroup = !!(flags & 0x100);
+  result.restricted = !!(flags & 0x200);
+  result.signatures = !!(flags & 0x800);
+  result.min = !!(flags & 0x1000);
+  result.scam = !!(flags & 0x80000);
+  result.has_link = !!(flags & 0x100000);
+  result.has_geo = !!(flags & 0x200000);
+  result.slowmode_enabled = !!(flags & 0x400000);
+  result.id = i32();
+  if (flags & 0x2000) result.access_hash = i64();
+  result.title = str();
+  if (flags & 0x40) result.username = str();
+  result.photo = obj();
+  result.date = i32();
+  result.version = i32();
+  if (flags & 0x200) result.restriction_reason = vector(obj);
+  if (flags & 0x4000) result.admin_rights = obj();
+  if (flags & 0x8000) result.banned_rights = obj();
+  if (flags & 0x40000) result.default_banned_rights = obj();
+  if (flags & 0x20000) result.participants_count = i32();
+  return result;
 };
 const _channelForbidden = (): any => {
+  const result: Record<string, unknown> = { _: 'channelForbidden' };
   const flags = i32();
-  return {
-    _: 'channelForbidden',
-    broadcast: !!(flags & 0x20),
-    megagroup: !!(flags & 0x100),
-    id: i32(),
-    access_hash: i64(),
-    title: str(),
-    until_date: flags & 0x10000 ? i32() : u,
-  };
+  result.broadcast = !!(flags & 0x20);
+  result.megagroup = !!(flags & 0x100);
+  result.id = i32();
+  result.access_hash = i64();
+  result.title = str();
+  if (flags & 0x10000) result.until_date = i32();
+  return result;
 };
 const _contactsResolvedPeer: any = () => ({ _: 'contacts.resolvedPeer', peer: obj(), chats: vector(obj), users: vector(obj) });
 const _channelFull = (): any => {
+  const result: Record<string, unknown> = { _: 'channelFull' };
   const flags = i32();
-  return {
-    _: 'channelFull',
-    can_view_participants: !!(flags & 0x8),
-    can_set_username: !!(flags & 0x40),
-    can_set_stickers: !!(flags & 0x80),
-    hidden_prehistory: !!(flags & 0x400),
-    can_view_stats: !!(flags & 0x1000),
-    can_set_location: !!(flags & 0x10000),
-    has_scheduled: !!(flags & 0x80000),
-    id: i32(),
-    about: str(),
-    participants_count: flags & 0x1 ? i32() : u,
-    admins_count: flags & 0x2 ? i32() : u,
-    kicked_count: flags & 0x4 ? i32() : u,
-    banned_count: flags & 0x4 ? i32() : u,
-    online_count: flags & 0x2000 ? i32() : u,
-    read_inbox_max_id: i32(),
-    read_outbox_max_id: i32(),
-    unread_count: i32(),
-    chat_photo: obj(),
-    notify_settings: obj(),
-    exported_invite: obj(),
-    bot_info: vector(obj),
-    migrated_from_chat_id: flags & 0x10 ? i32() : u,
-    migrated_from_max_id: flags & 0x10 ? i32() : u,
-    pinned_msg_id: flags & 0x20 ? i32() : u,
-    stickerset: flags & 0x100 ? obj() : u,
-    available_min_id: flags & 0x200 ? i32() : u,
-    folder_id: flags & 0x800 ? i32() : u,
-    linked_chat_id: flags & 0x4000 ? i32() : u,
-    location: flags & 0x8000 ? obj() : u,
-    slowmode_seconds: flags & 0x20000 ? i32() : u,
-    slowmode_next_send_date: flags & 0x40000 ? i32() : u,
-    pts: i32(),
-  };
+  result.can_view_participants = !!(flags & 0x8);
+  result.can_set_username = !!(flags & 0x40);
+  result.can_set_stickers = !!(flags & 0x80);
+  result.hidden_prehistory = !!(flags & 0x400);
+  result.can_view_stats = !!(flags & 0x1000);
+  result.can_set_location = !!(flags & 0x10000);
+  result.has_scheduled = !!(flags & 0x80000);
+  result.id = i32();
+  result.about = str();
+  if (flags & 0x1) result.participants_count = i32();
+  if (flags & 0x2) result.admins_count = i32();
+  if (flags & 0x4) result.kicked_count = i32();
+  if (flags & 0x4) result.banned_count = i32();
+  if (flags & 0x2000) result.online_count = i32();
+  result.read_inbox_max_id = i32();
+  result.read_outbox_max_id = i32();
+  result.unread_count = i32();
+  result.chat_photo = obj();
+  result.notify_settings = obj();
+  result.exported_invite = obj();
+  result.bot_info = vector(obj);
+  if (flags & 0x10) result.migrated_from_chat_id = i32();
+  if (flags & 0x10) result.migrated_from_max_id = i32();
+  if (flags & 0x20) result.pinned_msg_id = i32();
+  if (flags & 0x100) result.stickerset = obj();
+  if (flags & 0x200) result.available_min_id = i32();
+  if (flags & 0x800) result.folder_id = i32();
+  if (flags & 0x4000) result.linked_chat_id = i32();
+  if (flags & 0x8000) result.location = obj();
+  if (flags & 0x20000) result.slowmode_seconds = i32();
+  if (flags & 0x40000) result.slowmode_next_send_date = i32();
+  result.pts = i32();
+  return result;
 };
 const _messageRange: any = () => ({ _: 'messageRange', min_id: i32(), max_id: i32() });
 const _messagesChannelMessages = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.channelMessages' };
   const flags = i32();
-  return {
-    _: 'messages.channelMessages',
-    inexact: !!(flags & 0x2),
-    pts: i32(),
-    count: i32(),
-    messages: vector(obj),
-    chats: vector(obj),
-    users: vector(obj),
-  };
+  result.inexact = !!(flags & 0x2);
+  result.pts = i32();
+  result.count = i32();
+  result.messages = vector(obj);
+  result.chats = vector(obj);
+  result.users = vector(obj);
+  return result;
 };
 const _messageActionChannelCreate: any = () => ({ _: 'messageActionChannelCreate', title: str() });
 const _updateChannelTooLong = (): any => {
+  const result: Record<string, unknown> = { _: 'updateChannelTooLong' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateChannelTooLong',
-    _update: true,
-    channel_id: i32(),
-    pts: flags & 0x1 ? i32() : u,
-  };
+  result.channel_id = i32();
+  if (flags & 0x1) result.pts = i32();
+  return result;
 };
 const _updateChannel: any = () => ({ _: 'updateChannel', _update: true, channel_id: i32() });
 const _updateNewChannelMessage: any = () => ({ _: 'updateNewChannelMessage', _update: true, message: obj(), pts: i32(), pts_count: i32() });
 const _updateReadChannelInbox = (): any => {
+  const result: Record<string, unknown> = { _: 'updateReadChannelInbox' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateReadChannelInbox',
-    _update: true,
-    folder_id: flags & 0x1 ? i32() : u,
-    channel_id: i32(),
-    max_id: i32(),
-    still_unread_count: i32(),
-    pts: i32(),
-  };
+  if (flags & 0x1) result.folder_id = i32();
+  result.channel_id = i32();
+  result.max_id = i32();
+  result.still_unread_count = i32();
+  result.pts = i32();
+  return result;
 };
 const _updateDeleteChannelMessages: any = () => ({ _: 'updateDeleteChannelMessages', _update: true, channel_id: i32(), messages: vector(i32), pts: i32(), pts_count: i32() });
 const _updateChannelMessageViews: any = () => ({ _: 'updateChannelMessageViews', _update: true, channel_id: i32(), id: i32(), views: i32() });
 const _updatesChannelDifferenceEmpty = (): any => {
+  const result: Record<string, unknown> = { _: 'updates.channelDifferenceEmpty' };
   const flags = i32();
-  return {
-    _: 'updates.channelDifferenceEmpty',
-    final: !!(flags & 0x1),
-    pts: i32(),
-    timeout: flags & 0x2 ? i32() : u,
-  };
+  result.final = !!(flags & 0x1);
+  result.pts = i32();
+  if (flags & 0x2) result.timeout = i32();
+  return result;
 };
 const _updatesChannelDifferenceTooLong = (): any => {
+  const result: Record<string, unknown> = { _: 'updates.channelDifferenceTooLong' };
   const flags = i32();
-  return {
-    _: 'updates.channelDifferenceTooLong',
-    final: !!(flags & 0x1),
-    timeout: flags & 0x2 ? i32() : u,
-    dialog: obj(),
-    messages: vector(obj),
-    chats: vector(obj),
-    users: vector(obj),
-  };
+  result.final = !!(flags & 0x1);
+  if (flags & 0x2) result.timeout = i32();
+  result.dialog = obj();
+  result.messages = vector(obj);
+  result.chats = vector(obj);
+  result.users = vector(obj);
+  return result;
 };
 const _updatesChannelDifference = (): any => {
+  const result: Record<string, unknown> = { _: 'updates.channelDifference' };
   const flags = i32();
-  return {
-    _: 'updates.channelDifference',
-    final: !!(flags & 0x1),
-    pts: i32(),
-    timeout: flags & 0x2 ? i32() : u,
-    new_messages: vector(obj),
-    other_updates: vector(obj),
-    chats: vector(obj),
-    users: vector(obj),
-  };
+  result.final = !!(flags & 0x1);
+  result.pts = i32();
+  if (flags & 0x2) result.timeout = i32();
+  result.new_messages = vector(obj);
+  result.other_updates = vector(obj);
+  result.chats = vector(obj);
+  result.users = vector(obj);
+  return result;
 };
 const _channelMessagesFilterEmpty: any = () => ({ _: 'channelMessagesFilterEmpty' });
 const _channelMessagesFilter = (): any => {
+  const result: Record<string, unknown> = { _: 'channelMessagesFilter' };
   const flags = i32();
-  return {
-    _: 'channelMessagesFilter',
-    exclude_new_messages: !!(flags & 0x2),
-    ranges: vector(obj),
-  };
+  result.exclude_new_messages = !!(flags & 0x2);
+  result.ranges = vector(obj);
+  return result;
 };
 const _channelParticipant: any = () => ({ _: 'channelParticipant', user_id: i32(), date: i32() });
 const _channelParticipantSelf: any = () => ({ _: 'channelParticipantSelf', user_id: i32(), inviter_id: i32(), date: i32() });
 const _channelParticipantCreator = (): any => {
+  const result: Record<string, unknown> = { _: 'channelParticipantCreator' };
   const flags = i32();
-  return {
-    _: 'channelParticipantCreator',
-    user_id: i32(),
-    rank: flags & 0x1 ? str() : u,
-  };
+  result.user_id = i32();
+  if (flags & 0x1) result.rank = str();
+  return result;
 };
 const _channelParticipantsRecent: any = () => ({ _: 'channelParticipantsRecent' });
 const _channelParticipantsAdmins: any = () => ({ _: 'channelParticipantsAdmins' });
@@ -1119,25 +1064,23 @@ const _messageActionChatMigrateTo: any = () => ({ _: 'messageActionChatMigrateTo
 const _messageActionChannelMigrateFrom: any = () => ({ _: 'messageActionChannelMigrateFrom', title: str(), chat_id: i32() });
 const _channelParticipantsBots: any = () => ({ _: 'channelParticipantsBots' });
 const _helpTermsOfService = (): any => {
+  const result: Record<string, unknown> = { _: 'help.termsOfService' };
   const flags = i32();
-  return {
-    _: 'help.termsOfService',
-    popup: !!(flags & 0x1),
-    id: obj(),
-    text: str(),
-    entities: vector(obj),
-    min_age_confirm: flags & 0x2 ? i32() : u,
-  };
+  result.popup = !!(flags & 0x1);
+  result.id = obj();
+  result.text = str();
+  result.entities = vector(obj);
+  if (flags & 0x2) result.min_age_confirm = i32();
+  return result;
 };
 const _updateNewStickerSet: any = () => ({ _: 'updateNewStickerSet', _update: true, stickerset: obj() });
 const _updateStickerSetsOrder = (): any => {
+  const result: Record<string, unknown> = { _: 'updateStickerSetsOrder' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateStickerSetsOrder',
-    _update: true,
-    masks: !!(flags & 0x1),
-    order: vector(i64),
-  };
+  result.masks = !!(flags & 0x1);
+  result.order = vector(i64);
+  return result;
 };
 const _updateStickerSets: any = () => ({ _: 'updateStickerSets', _update: true });
 const _foundGif: any = () => ({ _: 'foundGif', url: str(), thumb_url: str(), content_url: str(), content_type: str(), w: i32(), h: i32() });
@@ -1148,107 +1091,98 @@ const _messagesSavedGifsNotModified: any = () => ({ _: 'messages.savedGifsNotMod
 const _messagesSavedGifs: any = () => ({ _: 'messages.savedGifs', hash: i32(), gifs: vector(obj) });
 const _updateSavedGifs: any = () => ({ _: 'updateSavedGifs', _update: true });
 const _inputBotInlineMessageMediaAuto = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageMediaAuto' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageMediaAuto',
-    message: str(),
-    entities: flags & 0x2 ? vector(obj) : u,
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.message = str();
+  if (flags & 0x2) result.entities = vector(obj);
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _inputBotInlineMessageText = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageText' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageText',
-    no_webpage: !!(flags & 0x1),
-    message: str(),
-    entities: flags & 0x2 ? vector(obj) : u,
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.no_webpage = !!(flags & 0x1);
+  result.message = str();
+  if (flags & 0x2) result.entities = vector(obj);
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _inputBotInlineResult = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineResult' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineResult',
-    id: str(),
-    type: str(),
-    title: flags & 0x2 ? str() : u,
-    description: flags & 0x4 ? str() : u,
-    url: flags & 0x8 ? str() : u,
-    thumb: flags & 0x10 ? obj() : u,
-    content: flags & 0x20 ? obj() : u,
-    send_message: obj(),
-  };
+  result.id = str();
+  result.type = str();
+  if (flags & 0x2) result.title = str();
+  if (flags & 0x4) result.description = str();
+  if (flags & 0x8) result.url = str();
+  if (flags & 0x10) result.thumb = obj();
+  if (flags & 0x20) result.content = obj();
+  result.send_message = obj();
+  return result;
 };
 const _botInlineMessageMediaAuto = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMessageMediaAuto' };
   const flags = i32();
-  return {
-    _: 'botInlineMessageMediaAuto',
-    message: str(),
-    entities: flags & 0x2 ? vector(obj) : u,
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.message = str();
+  if (flags & 0x2) result.entities = vector(obj);
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _botInlineMessageText = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMessageText' };
   const flags = i32();
-  return {
-    _: 'botInlineMessageText',
-    no_webpage: !!(flags & 0x1),
-    message: str(),
-    entities: flags & 0x2 ? vector(obj) : u,
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.no_webpage = !!(flags & 0x1);
+  result.message = str();
+  if (flags & 0x2) result.entities = vector(obj);
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _botInlineResult = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineResult' };
   const flags = i32();
-  return {
-    _: 'botInlineResult',
-    id: str(),
-    type: str(),
-    title: flags & 0x2 ? str() : u,
-    description: flags & 0x4 ? str() : u,
-    url: flags & 0x8 ? str() : u,
-    thumb: flags & 0x10 ? obj() : u,
-    content: flags & 0x20 ? obj() : u,
-    send_message: obj(),
-  };
+  result.id = str();
+  result.type = str();
+  if (flags & 0x2) result.title = str();
+  if (flags & 0x4) result.description = str();
+  if (flags & 0x8) result.url = str();
+  if (flags & 0x10) result.thumb = obj();
+  if (flags & 0x20) result.content = obj();
+  result.send_message = obj();
+  return result;
 };
 const _messagesBotResults = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.botResults' };
   const flags = i32();
-  return {
-    _: 'messages.botResults',
-    gallery: !!(flags & 0x1),
-    query_id: i64(),
-    next_offset: flags & 0x2 ? str() : u,
-    switch_pm: flags & 0x4 ? obj() : u,
-    results: vector(obj),
-    cache_time: i32(),
-    users: vector(obj),
-  };
+  result.gallery = !!(flags & 0x1);
+  result.query_id = i64();
+  if (flags & 0x2) result.next_offset = str();
+  if (flags & 0x4) result.switch_pm = obj();
+  result.results = vector(obj);
+  result.cache_time = i32();
+  result.users = vector(obj);
+  return result;
 };
 const _updateBotInlineQuery = (): any => {
+  const result: Record<string, unknown> = { _: 'updateBotInlineQuery' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateBotInlineQuery',
-    _update: true,
-    query_id: i64(),
-    user_id: i32(),
-    query: str(),
-    geo: flags & 0x1 ? obj() : u,
-    offset: str(),
-  };
+  result.query_id = i64();
+  result.user_id = i32();
+  result.query = str();
+  if (flags & 0x1) result.geo = obj();
+  result.offset = str();
+  return result;
 };
 const _updateBotInlineSend = (): any => {
+  const result: Record<string, unknown> = { _: 'updateBotInlineSend' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateBotInlineSend',
-    _update: true,
-    user_id: i32(),
-    query: str(),
-    geo: flags & 0x1 ? obj() : u,
-    id: str(),
-    msg_id: flags & 0x2 ? obj() : u,
-  };
+  result.user_id = i32();
+  result.query = str();
+  if (flags & 0x1) result.geo = obj();
+  result.id = str();
+  if (flags & 0x2) result.msg_id = obj();
+  return result;
 };
 const _inputMessagesFilterVoice: any = () => ({ _: 'inputMessagesFilterVoice' });
 const _inputMessagesFilterMusic: any = () => ({ _: 'inputMessagesFilterMusic' });
@@ -1256,18 +1190,17 @@ const _inputPrivacyKeyChatInvite: any = () => ({ _: 'inputPrivacyKeyChatInvite' 
 const _privacyKeyChatInvite: any = () => ({ _: 'privacyKeyChatInvite' });
 const _exportedMessageLink: any = () => ({ _: 'exportedMessageLink', link: str(), html: str() });
 const _messageFwdHeader = (): any => {
+  const result: Record<string, unknown> = { _: 'messageFwdHeader' };
   const flags = i32();
-  return {
-    _: 'messageFwdHeader',
-    from_id: flags & 0x1 ? i32() : u,
-    from_name: flags & 0x20 ? str() : u,
-    date: i32(),
-    channel_id: flags & 0x2 ? i32() : u,
-    channel_post: flags & 0x4 ? i32() : u,
-    post_author: flags & 0x8 ? str() : u,
-    saved_from_peer: flags & 0x10 ? obj() : u,
-    saved_from_msg_id: flags & 0x10 ? i32() : u,
-  };
+  if (flags & 0x1) result.from_id = i32();
+  if (flags & 0x20) result.from_name = str();
+  result.date = i32();
+  if (flags & 0x2) result.channel_id = i32();
+  if (flags & 0x4) result.channel_post = i32();
+  if (flags & 0x8) result.post_author = str();
+  if (flags & 0x10) result.saved_from_peer = obj();
+  if (flags & 0x10) result.saved_from_msg_id = i32();
+  return result;
 };
 const _updateEditChannelMessage: any = () => ({ _: 'updateEditChannelMessage', _update: true, message: obj(), pts: i32(), pts_count: i32() });
 const _updateChannelPinnedMessage: any = () => ({ _: 'updateChannelPinnedMessage', _update: true, channel_id: i32(), id: i32() });
@@ -1284,154 +1217,141 @@ const _keyboardButtonCallback: any = () => ({ _: 'keyboardButtonCallback', text:
 const _keyboardButtonRequestPhone: any = () => ({ _: 'keyboardButtonRequestPhone', text: str() });
 const _keyboardButtonRequestGeoLocation: any = () => ({ _: 'keyboardButtonRequestGeoLocation', text: str() });
 const _keyboardButtonSwitchInline = (): any => {
+  const result: Record<string, unknown> = { _: 'keyboardButtonSwitchInline' };
   const flags = i32();
-  return {
-    _: 'keyboardButtonSwitchInline',
-    same_peer: !!(flags & 0x1),
-    text: str(),
-    query: str(),
-  };
+  result.same_peer = !!(flags & 0x1);
+  result.text = str();
+  result.query = str();
+  return result;
 };
 const _replyInlineMarkup: any = () => ({ _: 'replyInlineMarkup', rows: vector(obj) });
 const _messagesBotCallbackAnswer = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.botCallbackAnswer' };
   const flags = i32();
-  return {
-    _: 'messages.botCallbackAnswer',
-    alert: !!(flags & 0x2),
-    has_url: !!(flags & 0x8),
-    native_ui: !!(flags & 0x10),
-    message: flags & 0x1 ? str() : u,
-    url: flags & 0x4 ? str() : u,
-    cache_time: i32(),
-  };
+  result.alert = !!(flags & 0x2);
+  result.has_url = !!(flags & 0x8);
+  result.native_ui = !!(flags & 0x10);
+  if (flags & 0x1) result.message = str();
+  if (flags & 0x4) result.url = str();
+  result.cache_time = i32();
+  return result;
 };
 const _updateBotCallbackQuery = (): any => {
+  const result: Record<string, unknown> = { _: 'updateBotCallbackQuery' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateBotCallbackQuery',
-    _update: true,
-    query_id: i64(),
-    user_id: i32(),
-    peer: obj(),
-    msg_id: i32(),
-    chat_instance: i64(),
-    data: flags & 0x1 ? bytes() : u,
-    game_short_name: flags & 0x2 ? str() : u,
-  };
+  result.query_id = i64();
+  result.user_id = i32();
+  result.peer = obj();
+  result.msg_id = i32();
+  result.chat_instance = i64();
+  if (flags & 0x1) result.data = bytes();
+  if (flags & 0x2) result.game_short_name = str();
+  return result;
 };
 const _messagesMessageEditData = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.messageEditData' };
   const flags = i32();
-  return {
-    _: 'messages.messageEditData',
-    caption: !!(flags & 0x1),
-  };
+  result.caption = !!(flags & 0x1);
+  return result;
 };
 const _updateEditMessage: any = () => ({ _: 'updateEditMessage', _update: true, message: obj(), pts: i32(), pts_count: i32() });
 const _inputBotInlineMessageMediaGeo = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageMediaGeo' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageMediaGeo',
-    geo_point: obj(),
-    period: i32(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.geo_point = obj();
+  result.period = i32();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _inputBotInlineMessageMediaVenue = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageMediaVenue' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageMediaVenue',
-    geo_point: obj(),
-    title: str(),
-    address: str(),
-    provider: str(),
-    venue_id: str(),
-    venue_type: str(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.geo_point = obj();
+  result.title = str();
+  result.address = str();
+  result.provider = str();
+  result.venue_id = str();
+  result.venue_type = str();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _inputBotInlineMessageMediaContact = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageMediaContact' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageMediaContact',
-    phone_number: str(),
-    first_name: str(),
-    last_name: str(),
-    vcard: str(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.phone_number = str();
+  result.first_name = str();
+  result.last_name = str();
+  result.vcard = str();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _botInlineMessageMediaGeo = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMessageMediaGeo' };
   const flags = i32();
-  return {
-    _: 'botInlineMessageMediaGeo',
-    geo: obj(),
-    period: i32(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.geo = obj();
+  result.period = i32();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _botInlineMessageMediaVenue = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMessageMediaVenue' };
   const flags = i32();
-  return {
-    _: 'botInlineMessageMediaVenue',
-    geo: obj(),
-    title: str(),
-    address: str(),
-    provider: str(),
-    venue_id: str(),
-    venue_type: str(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.geo = obj();
+  result.title = str();
+  result.address = str();
+  result.provider = str();
+  result.venue_id = str();
+  result.venue_type = str();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _botInlineMessageMediaContact = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMessageMediaContact' };
   const flags = i32();
-  return {
-    _: 'botInlineMessageMediaContact',
-    phone_number: str(),
-    first_name: str(),
-    last_name: str(),
-    vcard: str(),
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  result.phone_number = str();
+  result.first_name = str();
+  result.last_name = str();
+  result.vcard = str();
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _inputBotInlineResultPhoto: any = () => ({ _: 'inputBotInlineResultPhoto', id: str(), type: str(), photo: obj(), send_message: obj() });
 const _inputBotInlineResultDocument = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineResultDocument' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineResultDocument',
-    id: str(),
-    type: str(),
-    title: flags & 0x2 ? str() : u,
-    description: flags & 0x4 ? str() : u,
-    document: obj(),
-    send_message: obj(),
-  };
+  result.id = str();
+  result.type = str();
+  if (flags & 0x2) result.title = str();
+  if (flags & 0x4) result.description = str();
+  result.document = obj();
+  result.send_message = obj();
+  return result;
 };
 const _botInlineMediaResult = (): any => {
+  const result: Record<string, unknown> = { _: 'botInlineMediaResult' };
   const flags = i32();
-  return {
-    _: 'botInlineMediaResult',
-    id: str(),
-    type: str(),
-    photo: flags & 0x1 ? obj() : u,
-    document: flags & 0x2 ? obj() : u,
-    title: flags & 0x4 ? str() : u,
-    description: flags & 0x8 ? str() : u,
-    send_message: obj(),
-  };
+  result.id = str();
+  result.type = str();
+  if (flags & 0x1) result.photo = obj();
+  if (flags & 0x2) result.document = obj();
+  if (flags & 0x4) result.title = str();
+  if (flags & 0x8) result.description = str();
+  result.send_message = obj();
+  return result;
 };
 const _inputBotInlineMessageID: any = () => ({ _: 'inputBotInlineMessageID', dc_id: i32(), id: i64(), access_hash: i64() });
 const _updateInlineBotCallbackQuery = (): any => {
+  const result: Record<string, unknown> = { _: 'updateInlineBotCallbackQuery' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateInlineBotCallbackQuery',
-    _update: true,
-    query_id: i64(),
-    user_id: i32(),
-    msg_id: obj(),
-    chat_instance: i64(),
-    data: flags & 0x1 ? bytes() : u,
-    game_short_name: flags & 0x2 ? str() : u,
-  };
+  result.query_id = i64();
+  result.user_id = i32();
+  result.msg_id = obj();
+  result.chat_instance = i64();
+  if (flags & 0x1) result.data = bytes();
+  if (flags & 0x2) result.game_short_name = str();
+  return result;
 };
 const _inlineBotSwitchPM: any = () => ({ _: 'inlineBotSwitchPM', text: str(), start_param: str() });
 const _messagesPeerDialogs: any = () => ({ _: 'messages.peerDialogs', dialogs: vector(obj), messages: vector(obj), chats: vector(obj), users: vector(obj), state: obj() });
@@ -1450,22 +1370,20 @@ const _inputMessagesFilterChatPhotos: any = () => ({ _: 'inputMessagesFilterChat
 const _updateReadChannelOutbox: any = () => ({ _: 'updateReadChannelOutbox', _update: true, channel_id: i32(), max_id: i32() });
 const _updateDraftMessage: any = () => ({ _: 'updateDraftMessage', _update: true, peer: obj(), draft: obj() });
 const _draftMessageEmpty = (): any => {
+  const result: Record<string, unknown> = { _: 'draftMessageEmpty' };
   const flags = i32();
-  return {
-    _: 'draftMessageEmpty',
-    date: flags & 0x1 ? i32() : u,
-  };
+  if (flags & 0x1) result.date = i32();
+  return result;
 };
 const _draftMessage = (): any => {
+  const result: Record<string, unknown> = { _: 'draftMessage' };
   const flags = i32();
-  return {
-    _: 'draftMessage',
-    no_webpage: !!(flags & 0x2),
-    reply_to_msg_id: flags & 0x1 ? i32() : u,
-    message: str(),
-    entities: flags & 0x8 ? vector(obj) : u,
-    date: i32(),
-  };
+  result.no_webpage = !!(flags & 0x2);
+  if (flags & 0x1) result.reply_to_msg_id = i32();
+  result.message = str();
+  if (flags & 0x8) result.entities = vector(obj);
+  result.date = i32();
+  return result;
 };
 const _messageActionHistoryClear: any = () => ({ _: 'messageActionHistoryClear' });
 const _messagesFeaturedStickersNotModified: any = () => ({ _: 'messages.featuredStickersNotModified' });
@@ -1481,20 +1399,18 @@ const _stickerSetCovered: any = () => ({ _: 'stickerSetCovered', set: obj(), cov
 const _updateConfig: any = () => ({ _: 'updateConfig', _update: true });
 const _updatePtsChanged: any = () => ({ _: 'updatePtsChanged', _update: true });
 const _inputMediaPhotoExternal = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaPhotoExternal' };
   const flags = i32();
-  return {
-    _: 'inputMediaPhotoExternal',
-    url: str(),
-    ttl_seconds: flags & 0x1 ? i32() : u,
-  };
+  result.url = str();
+  if (flags & 0x1) result.ttl_seconds = i32();
+  return result;
 };
 const _inputMediaDocumentExternal = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaDocumentExternal' };
   const flags = i32();
-  return {
-    _: 'inputMediaDocumentExternal',
-    url: str(),
-    ttl_seconds: flags & 0x1 ? i32() : u,
-  };
+  result.url = str();
+  if (flags & 0x1) result.ttl_seconds = i32();
+  return result;
 };
 const _stickerSetMultiCovered: any = () => ({ _: 'stickerSetMultiCovered', set: obj(), covers: vector(obj) });
 const _maskCoords: any = () => ({ _: 'maskCoords', n: i32(), x: f64(), y: f64(), zoom: f64() });
@@ -1502,25 +1418,23 @@ const _documentAttributeHasStickers: any = () => ({ _: 'documentAttributeHasStic
 const _inputStickeredMediaPhoto: any = () => ({ _: 'inputStickeredMediaPhoto', id: obj() });
 const _inputStickeredMediaDocument: any = () => ({ _: 'inputStickeredMediaDocument', id: obj() });
 const _game = (): any => {
+  const result: Record<string, unknown> = { _: 'game' };
   const flags = i32();
-  return {
-    _: 'game',
-    id: i64(),
-    access_hash: i64(),
-    short_name: str(),
-    title: str(),
-    description: str(),
-    photo: obj(),
-    document: flags & 0x1 ? obj() : u,
-  };
+  result.id = i64();
+  result.access_hash = i64();
+  result.short_name = str();
+  result.title = str();
+  result.description = str();
+  result.photo = obj();
+  if (flags & 0x1) result.document = obj();
+  return result;
 };
 const _inputBotInlineResultGame: any = () => ({ _: 'inputBotInlineResultGame', id: str(), short_name: str(), send_message: obj() });
 const _inputBotInlineMessageGame = (): any => {
+  const result: Record<string, unknown> = { _: 'inputBotInlineMessageGame' };
   const flags = i32();
-  return {
-    _: 'inputBotInlineMessageGame',
-    reply_markup: flags & 0x4 ? obj() : u,
-  };
+  if (flags & 0x4) result.reply_markup = obj();
+  return result;
 };
 const _messageMediaGame: any = () => ({ _: 'messageMediaGame', game: obj() });
 const _inputMediaGame: any = () => ({ _: 'inputMediaGame', id: obj() });
@@ -1558,39 +1472,36 @@ const _pageBlockList: any = () => ({ _: 'pageBlockList', items: vector(obj) });
 const _pageBlockBlockquote: any = () => ({ _: 'pageBlockBlockquote', text: obj(), caption: obj() });
 const _pageBlockPullquote: any = () => ({ _: 'pageBlockPullquote', text: obj(), caption: obj() });
 const _pageBlockPhoto = (): any => {
+  const result: Record<string, unknown> = { _: 'pageBlockPhoto' };
   const flags = i32();
-  return {
-    _: 'pageBlockPhoto',
-    photo_id: i64(),
-    caption: obj(),
-    url: flags & 0x1 ? str() : u,
-    webpage_id: flags & 0x1 ? i64() : u,
-  };
+  result.photo_id = i64();
+  result.caption = obj();
+  if (flags & 0x1) result.url = str();
+  if (flags & 0x1) result.webpage_id = i64();
+  return result;
 };
 const _pageBlockVideo = (): any => {
+  const result: Record<string, unknown> = { _: 'pageBlockVideo' };
   const flags = i32();
-  return {
-    _: 'pageBlockVideo',
-    autoplay: !!(flags & 0x1),
-    loop: !!(flags & 0x2),
-    video_id: i64(),
-    caption: obj(),
-  };
+  result.autoplay = !!(flags & 0x1);
+  result.loop = !!(flags & 0x2);
+  result.video_id = i64();
+  result.caption = obj();
+  return result;
 };
 const _pageBlockCover: any = () => ({ _: 'pageBlockCover', cover: obj() });
 const _pageBlockEmbed = (): any => {
+  const result: Record<string, unknown> = { _: 'pageBlockEmbed' };
   const flags = i32();
-  return {
-    _: 'pageBlockEmbed',
-    full_width: !!(flags & 0x1),
-    allow_scrolling: !!(flags & 0x8),
-    url: flags & 0x2 ? str() : u,
-    html: flags & 0x4 ? str() : u,
-    poster_photo_id: flags & 0x10 ? i64() : u,
-    w: flags & 0x20 ? i32() : u,
-    h: flags & 0x20 ? i32() : u,
-    caption: obj(),
-  };
+  result.full_width = !!(flags & 0x1);
+  result.allow_scrolling = !!(flags & 0x8);
+  if (flags & 0x2) result.url = str();
+  if (flags & 0x4) result.html = str();
+  if (flags & 0x10) result.poster_photo_id = i64();
+  if (flags & 0x20) result.w = i32();
+  if (flags & 0x20) result.h = i32();
+  result.caption = obj();
+  return result;
 };
 const _pageBlockEmbedPost: any = () => ({ _: 'pageBlockEmbedPost', url: str(), webpage_id: i64(), author_photo_id: i64(), author: str(), date: i32(), blocks: vector(obj), caption: obj() });
 const _pageBlockCollage: any = () => ({ _: 'pageBlockCollage', items: vector(obj), caption: obj() });
@@ -1604,96 +1515,89 @@ const _phoneCallDiscardReasonDisconnect: any = () => ({ _: 'phoneCallDiscardReas
 const _phoneCallDiscardReasonHangup: any = () => ({ _: 'phoneCallDiscardReasonHangup' });
 const _phoneCallDiscardReasonBusy: any = () => ({ _: 'phoneCallDiscardReasonBusy' });
 const _updateDialogPinned = (): any => {
+  const result: Record<string, unknown> = { _: 'updateDialogPinned' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateDialogPinned',
-    _update: true,
-    pinned: !!(flags & 0x1),
-    folder_id: flags & 0x2 ? i32() : u,
-    peer: obj(),
-  };
+  result.pinned = !!(flags & 0x1);
+  if (flags & 0x2) result.folder_id = i32();
+  result.peer = obj();
+  return result;
 };
 const _updatePinnedDialogs = (): any => {
+  const result: Record<string, unknown> = { _: 'updatePinnedDialogs' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updatePinnedDialogs',
-    _update: true,
-    folder_id: flags & 0x2 ? i32() : u,
-    order: flags & 0x1 ? vector(obj) : u,
-  };
+  if (flags & 0x2) result.folder_id = i32();
+  if (flags & 0x1) result.order = vector(obj);
+  return result;
 };
 const _dataJSON: any = () => ({ _: 'dataJSON', data: str() });
 const _updateBotWebhookJSON: any = () => ({ _: 'updateBotWebhookJSON', _update: true, data: obj() });
 const _updateBotWebhookJSONQuery: any = () => ({ _: 'updateBotWebhookJSONQuery', _update: true, query_id: i64(), data: obj(), timeout: i32() });
 const _labeledPrice: any = () => ({ _: 'labeledPrice', label: str(), amount: i64() });
 const _invoice = (): any => {
+  const result: Record<string, unknown> = { _: 'invoice' };
   const flags = i32();
-  return {
-    _: 'invoice',
-    test: !!(flags & 0x1),
-    name_requested: !!(flags & 0x2),
-    phone_requested: !!(flags & 0x4),
-    email_requested: !!(flags & 0x8),
-    shipping_address_requested: !!(flags & 0x10),
-    flexible: !!(flags & 0x20),
-    phone_to_provider: !!(flags & 0x40),
-    email_to_provider: !!(flags & 0x80),
-    currency: str(),
-    prices: vector(obj),
-  };
+  result.test = !!(flags & 0x1);
+  result.name_requested = !!(flags & 0x2);
+  result.phone_requested = !!(flags & 0x4);
+  result.email_requested = !!(flags & 0x8);
+  result.shipping_address_requested = !!(flags & 0x10);
+  result.flexible = !!(flags & 0x20);
+  result.phone_to_provider = !!(flags & 0x40);
+  result.email_to_provider = !!(flags & 0x80);
+  result.currency = str();
+  result.prices = vector(obj);
+  return result;
 };
 const _inputMediaInvoice = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaInvoice' };
   const flags = i32();
-  return {
-    _: 'inputMediaInvoice',
-    title: str(),
-    description: str(),
-    photo: flags & 0x1 ? obj() : u,
-    invoice: obj(),
-    payload: bytes(),
-    provider: str(),
-    provider_data: obj(),
-    start_param: str(),
-  };
+  result.title = str();
+  result.description = str();
+  if (flags & 0x1) result.photo = obj();
+  result.invoice = obj();
+  result.payload = bytes();
+  result.provider = str();
+  result.provider_data = obj();
+  result.start_param = str();
+  return result;
 };
 const _paymentCharge: any = () => ({ _: 'paymentCharge', id: str(), provider_charge_id: str() });
 const _messageActionPaymentSentMe = (): any => {
+  const result: Record<string, unknown> = { _: 'messageActionPaymentSentMe' };
   const flags = i32();
-  return {
-    _: 'messageActionPaymentSentMe',
-    currency: str(),
-    total_amount: i64(),
-    payload: bytes(),
-    info: flags & 0x1 ? obj() : u,
-    shipping_option_id: flags & 0x2 ? str() : u,
-    charge: obj(),
-  };
+  result.currency = str();
+  result.total_amount = i64();
+  result.payload = bytes();
+  if (flags & 0x1) result.info = obj();
+  if (flags & 0x2) result.shipping_option_id = str();
+  result.charge = obj();
+  return result;
 };
 const _messageMediaInvoice = (): any => {
+  const result: Record<string, unknown> = { _: 'messageMediaInvoice' };
   const flags = i32();
-  return {
-    _: 'messageMediaInvoice',
-    shipping_address_requested: !!(flags & 0x2),
-    test: !!(flags & 0x8),
-    title: str(),
-    description: str(),
-    photo: flags & 0x1 ? obj() : u,
-    receipt_msg_id: flags & 0x4 ? i32() : u,
-    currency: str(),
-    total_amount: i64(),
-    start_param: str(),
-  };
+  result.shipping_address_requested = !!(flags & 0x2);
+  result.test = !!(flags & 0x8);
+  result.title = str();
+  result.description = str();
+  if (flags & 0x1) result.photo = obj();
+  if (flags & 0x4) result.receipt_msg_id = i32();
+  result.currency = str();
+  result.total_amount = i64();
+  result.start_param = str();
+  return result;
 };
 const _postAddress: any = () => ({ _: 'postAddress', street_line1: str(), street_line2: str(), city: str(), state: str(), country_iso2: str(), post_code: str() });
 const _paymentRequestedInfo = (): any => {
+  const result: Record<string, unknown> = { _: 'paymentRequestedInfo' };
   const flags = i32();
-  return {
-    _: 'paymentRequestedInfo',
-    name: flags & 0x1 ? str() : u,
-    phone: flags & 0x2 ? str() : u,
-    email: flags & 0x4 ? str() : u,
-    shipping_address: flags & 0x8 ? obj() : u,
-  };
+  if (flags & 0x1) result.name = str();
+  if (flags & 0x2) result.phone = str();
+  if (flags & 0x4) result.email = str();
+  if (flags & 0x8) result.shipping_address = obj();
+  return result;
 };
 const _keyboardButtonBuy: any = () => ({ _: 'keyboardButtonBuy', text: str() });
 const _messageActionPaymentSent: any = () => ({ _: 'messageActionPaymentSent', currency: str(), total_amount: i64() });
@@ -1703,192 +1607,177 @@ const _inputWebDocument: any = () => ({ _: 'inputWebDocument', url: str(), size:
 const _inputWebFileLocation: any = () => ({ _: 'inputWebFileLocation', url: str(), access_hash: i64() });
 const _uploadWebFile: any = () => ({ _: 'upload.webFile', size: i32(), mime_type: str(), file_type: obj(), mtime: i32(), bytes: bytes() });
 const _paymentsPaymentForm = (): any => {
+  const result: Record<string, unknown> = { _: 'payments.paymentForm' };
   const flags = i32();
-  return {
-    _: 'payments.paymentForm',
-    can_save_credentials: !!(flags & 0x4),
-    password_missing: !!(flags & 0x8),
-    bot_id: i32(),
-    invoice: obj(),
-    provider_id: i32(),
-    url: str(),
-    native_provider: flags & 0x10 ? str() : u,
-    native_params: flags & 0x10 ? obj() : u,
-    saved_info: flags & 0x1 ? obj() : u,
-    saved_credentials: flags & 0x2 ? obj() : u,
-    users: vector(obj),
-  };
+  result.can_save_credentials = !!(flags & 0x4);
+  result.password_missing = !!(flags & 0x8);
+  result.bot_id = i32();
+  result.invoice = obj();
+  result.provider_id = i32();
+  result.url = str();
+  if (flags & 0x10) result.native_provider = str();
+  if (flags & 0x10) result.native_params = obj();
+  if (flags & 0x1) result.saved_info = obj();
+  if (flags & 0x2) result.saved_credentials = obj();
+  result.users = vector(obj);
+  return result;
 };
 const _paymentsValidatedRequestedInfo = (): any => {
+  const result: Record<string, unknown> = { _: 'payments.validatedRequestedInfo' };
   const flags = i32();
-  return {
-    _: 'payments.validatedRequestedInfo',
-    id: flags & 0x1 ? str() : u,
-    shipping_options: flags & 0x2 ? vector(obj) : u,
-  };
+  if (flags & 0x1) result.id = str();
+  if (flags & 0x2) result.shipping_options = vector(obj);
+  return result;
 };
 const _paymentsPaymentResult: any = () => ({ _: 'payments.paymentResult', updates: obj() });
 const _paymentsPaymentReceipt = (): any => {
+  const result: Record<string, unknown> = { _: 'payments.paymentReceipt' };
   const flags = i32();
-  return {
-    _: 'payments.paymentReceipt',
-    date: i32(),
-    bot_id: i32(),
-    invoice: obj(),
-    provider_id: i32(),
-    info: flags & 0x1 ? obj() : u,
-    shipping: flags & 0x2 ? obj() : u,
-    currency: str(),
-    total_amount: i64(),
-    credentials_title: str(),
-    users: vector(obj),
-  };
+  result.date = i32();
+  result.bot_id = i32();
+  result.invoice = obj();
+  result.provider_id = i32();
+  if (flags & 0x1) result.info = obj();
+  if (flags & 0x2) result.shipping = obj();
+  result.currency = str();
+  result.total_amount = i64();
+  result.credentials_title = str();
+  result.users = vector(obj);
+  return result;
 };
 const _paymentsSavedInfo = (): any => {
+  const result: Record<string, unknown> = { _: 'payments.savedInfo' };
   const flags = i32();
-  return {
-    _: 'payments.savedInfo',
-    has_saved_credentials: !!(flags & 0x2),
-    saved_info: flags & 0x1 ? obj() : u,
-  };
+  result.has_saved_credentials = !!(flags & 0x2);
+  if (flags & 0x1) result.saved_info = obj();
+  return result;
 };
 const _inputPaymentCredentialsSaved: any = () => ({ _: 'inputPaymentCredentialsSaved', id: str(), tmp_password: bytes() });
 const _inputPaymentCredentials = (): any => {
+  const result: Record<string, unknown> = { _: 'inputPaymentCredentials' };
   const flags = i32();
-  return {
-    _: 'inputPaymentCredentials',
-    save: !!(flags & 0x1),
-    data: obj(),
-  };
+  result.save = !!(flags & 0x1);
+  result.data = obj();
+  return result;
 };
 const _accountTmpPassword: any = () => ({ _: 'account.tmpPassword', tmp_password: bytes(), valid_until: i32() });
 const _shippingOption: any = () => ({ _: 'shippingOption', id: str(), title: str(), prices: vector(obj) });
 const _updateBotShippingQuery: any = () => ({ _: 'updateBotShippingQuery', _update: true, query_id: i64(), user_id: i32(), payload: bytes(), shipping_address: obj() });
 const _updateBotPrecheckoutQuery = (): any => {
+  const result: Record<string, unknown> = { _: 'updateBotPrecheckoutQuery' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateBotPrecheckoutQuery',
-    _update: true,
-    query_id: i64(),
-    user_id: i32(),
-    payload: bytes(),
-    info: flags & 0x1 ? obj() : u,
-    shipping_option_id: flags & 0x2 ? str() : u,
-    currency: str(),
-    total_amount: i64(),
-  };
+  result.query_id = i64();
+  result.user_id = i32();
+  result.payload = bytes();
+  if (flags & 0x1) result.info = obj();
+  if (flags & 0x2) result.shipping_option_id = str();
+  result.currency = str();
+  result.total_amount = i64();
+  return result;
 };
 const _inputStickerSetItem = (): any => {
+  const result: Record<string, unknown> = { _: 'inputStickerSetItem' };
   const flags = i32();
-  return {
-    _: 'inputStickerSetItem',
-    document: obj(),
-    emoji: str(),
-    mask_coords: flags & 0x1 ? obj() : u,
-  };
+  result.document = obj();
+  result.emoji = str();
+  if (flags & 0x1) result.mask_coords = obj();
+  return result;
 };
 const _updatePhoneCall: any = () => ({ _: 'updatePhoneCall', _update: true, phone_call: obj() });
 const _inputPhoneCall: any = () => ({ _: 'inputPhoneCall', id: i64(), access_hash: i64() });
 const _phoneCallEmpty: any = () => ({ _: 'phoneCallEmpty', id: i64() });
 const _phoneCallWaiting = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCallWaiting' };
   const flags = i32();
-  return {
-    _: 'phoneCallWaiting',
-    video: !!(flags & 0x20),
-    id: i64(),
-    access_hash: i64(),
-    date: i32(),
-    admin_id: i32(),
-    participant_id: i32(),
-    protocol: obj(),
-    receive_date: flags & 0x1 ? i32() : u,
-  };
+  result.video = !!(flags & 0x20);
+  result.id = i64();
+  result.access_hash = i64();
+  result.date = i32();
+  result.admin_id = i32();
+  result.participant_id = i32();
+  result.protocol = obj();
+  if (flags & 0x1) result.receive_date = i32();
+  return result;
 };
 const _phoneCallRequested = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCallRequested' };
   const flags = i32();
-  return {
-    _: 'phoneCallRequested',
-    video: !!(flags & 0x20),
-    id: i64(),
-    access_hash: i64(),
-    date: i32(),
-    admin_id: i32(),
-    participant_id: i32(),
-    g_a_hash: bytes(),
-    protocol: obj(),
-  };
+  result.video = !!(flags & 0x20);
+  result.id = i64();
+  result.access_hash = i64();
+  result.date = i32();
+  result.admin_id = i32();
+  result.participant_id = i32();
+  result.g_a_hash = bytes();
+  result.protocol = obj();
+  return result;
 };
 const _phoneCallAccepted = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCallAccepted' };
   const flags = i32();
-  return {
-    _: 'phoneCallAccepted',
-    video: !!(flags & 0x20),
-    id: i64(),
-    access_hash: i64(),
-    date: i32(),
-    admin_id: i32(),
-    participant_id: i32(),
-    g_b: bytes(),
-    protocol: obj(),
-  };
+  result.video = !!(flags & 0x20);
+  result.id = i64();
+  result.access_hash = i64();
+  result.date = i32();
+  result.admin_id = i32();
+  result.participant_id = i32();
+  result.g_b = bytes();
+  result.protocol = obj();
+  return result;
 };
 const _phoneCall = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCall' };
   const flags = i32();
-  return {
-    _: 'phoneCall',
-    p2p_allowed: !!(flags & 0x20),
-    id: i64(),
-    access_hash: i64(),
-    date: i32(),
-    admin_id: i32(),
-    participant_id: i32(),
-    g_a_or_b: bytes(),
-    key_fingerprint: i64(),
-    protocol: obj(),
-    connections: vector(obj),
-    start_date: i32(),
-  };
+  result.p2p_allowed = !!(flags & 0x20);
+  result.id = i64();
+  result.access_hash = i64();
+  result.date = i32();
+  result.admin_id = i32();
+  result.participant_id = i32();
+  result.g_a_or_b = bytes();
+  result.key_fingerprint = i64();
+  result.protocol = obj();
+  result.connections = vector(obj);
+  result.start_date = i32();
+  return result;
 };
 const _phoneCallDiscarded = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCallDiscarded' };
   const flags = i32();
-  return {
-    _: 'phoneCallDiscarded',
-    need_rating: !!(flags & 0x4),
-    need_debug: !!(flags & 0x8),
-    video: !!(flags & 0x20),
-    id: i64(),
-    reason: flags & 0x1 ? obj() : u,
-    duration: flags & 0x2 ? i32() : u,
-  };
+  result.need_rating = !!(flags & 0x4);
+  result.need_debug = !!(flags & 0x8);
+  result.video = !!(flags & 0x20);
+  result.id = i64();
+  if (flags & 0x1) result.reason = obj();
+  if (flags & 0x2) result.duration = i32();
+  return result;
 };
 const _phoneConnection: any = () => ({ _: 'phoneConnection', id: i64(), ip: str(), ipv6: str(), port: i32(), peer_tag: bytes() });
 const _phoneCallProtocol = (): any => {
+  const result: Record<string, unknown> = { _: 'phoneCallProtocol' };
   const flags = i32();
-  return {
-    _: 'phoneCallProtocol',
-    udp_p2p: !!(flags & 0x1),
-    udp_reflector: !!(flags & 0x2),
-    min_layer: i32(),
-    max_layer: i32(),
-  };
+  result.udp_p2p = !!(flags & 0x1);
+  result.udp_reflector = !!(flags & 0x2);
+  result.min_layer = i32();
+  result.max_layer = i32();
+  return result;
 };
 const _phonePhoneCall: any = () => ({ _: 'phone.phoneCall', phone_call: obj(), users: vector(obj) });
 const _inputMessagesFilterPhoneCalls = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMessagesFilterPhoneCalls' };
   const flags = i32();
-  return {
-    _: 'inputMessagesFilterPhoneCalls',
-    missed: !!(flags & 0x1),
-  };
+  result.missed = !!(flags & 0x1);
+  return result;
 };
 const _messageActionPhoneCall = (): any => {
+  const result: Record<string, unknown> = { _: 'messageActionPhoneCall' };
   const flags = i32();
-  return {
-    _: 'messageActionPhoneCall',
-    video: !!(flags & 0x4),
-    call_id: i64(),
-    reason: flags & 0x1 ? obj() : u,
-    duration: flags & 0x2 ? i32() : u,
-  };
+  result.video = !!(flags & 0x4);
+  result.call_id = i64();
+  if (flags & 0x1) result.reason = obj();
+  if (flags & 0x2) result.duration = i32();
+  return result;
 };
 const _inputMessagesFilterRoundVoice: any = () => ({ _: 'inputMessagesFilterRoundVoice' });
 const _inputMessagesFilterRoundVideo: any = () => ({ _: 'inputMessagesFilterRoundVideo' });
@@ -1902,63 +1791,59 @@ const _cdnConfig: any = () => ({ _: 'cdnConfig', public_keys: vector(obj) });
 const _pageBlockChannel: any = () => ({ _: 'pageBlockChannel', channel: obj() });
 const _langPackString: any = () => ({ _: 'langPackString', key: str(), value: str() });
 const _langPackStringPluralized = (): any => {
+  const result: Record<string, unknown> = { _: 'langPackStringPluralized' };
   const flags = i32();
-  return {
-    _: 'langPackStringPluralized',
-    key: str(),
-    zero_value: flags & 0x1 ? str() : u,
-    one_value: flags & 0x2 ? str() : u,
-    two_value: flags & 0x4 ? str() : u,
-    few_value: flags & 0x8 ? str() : u,
-    many_value: flags & 0x10 ? str() : u,
-    other_value: str(),
-  };
+  result.key = str();
+  if (flags & 0x1) result.zero_value = str();
+  if (flags & 0x2) result.one_value = str();
+  if (flags & 0x4) result.two_value = str();
+  if (flags & 0x8) result.few_value = str();
+  if (flags & 0x10) result.many_value = str();
+  result.other_value = str();
+  return result;
 };
 const _langPackStringDeleted: any = () => ({ _: 'langPackStringDeleted', key: str() });
 const _langPackDifference: any = () => ({ _: 'langPackDifference', lang_code: str(), from_version: i32(), version: i32(), strings: vector(obj) });
 const _langPackLanguage = (): any => {
+  const result: Record<string, unknown> = { _: 'langPackLanguage' };
   const flags = i32();
-  return {
-    _: 'langPackLanguage',
-    official: !!(flags & 0x1),
-    rtl: !!(flags & 0x4),
-    beta: !!(flags & 0x8),
-    name: str(),
-    native_name: str(),
-    lang_code: str(),
-    base_lang_code: flags & 0x2 ? str() : u,
-    plural_code: str(),
-    strings_count: i32(),
-    translated_count: i32(),
-    translations_url: str(),
-  };
+  result.official = !!(flags & 0x1);
+  result.rtl = !!(flags & 0x4);
+  result.beta = !!(flags & 0x8);
+  result.name = str();
+  result.native_name = str();
+  result.lang_code = str();
+  if (flags & 0x2) result.base_lang_code = str();
+  result.plural_code = str();
+  result.strings_count = i32();
+  result.translated_count = i32();
+  result.translations_url = str();
+  return result;
 };
 const _updateLangPackTooLong: any = () => ({ _: 'updateLangPackTooLong', _update: true, lang_code: str() });
 const _updateLangPack: any = () => ({ _: 'updateLangPack', _update: true, difference: obj() });
 const _channelParticipantAdmin = (): any => {
+  const result: Record<string, unknown> = { _: 'channelParticipantAdmin' };
   const flags = i32();
-  return {
-    _: 'channelParticipantAdmin',
-    can_edit: !!(flags & 0x1),
-    self: !!(flags & 0x2),
-    user_id: i32(),
-    inviter_id: flags & 0x2 ? i32() : u,
-    promoted_by: i32(),
-    date: i32(),
-    admin_rights: obj(),
-    rank: flags & 0x4 ? str() : u,
-  };
+  result.can_edit = !!(flags & 0x1);
+  result.self = !!(flags & 0x2);
+  result.user_id = i32();
+  if (flags & 0x2) result.inviter_id = i32();
+  result.promoted_by = i32();
+  result.date = i32();
+  result.admin_rights = obj();
+  if (flags & 0x4) result.rank = str();
+  return result;
 };
 const _channelParticipantBanned = (): any => {
+  const result: Record<string, unknown> = { _: 'channelParticipantBanned' };
   const flags = i32();
-  return {
-    _: 'channelParticipantBanned',
-    left: !!(flags & 0x1),
-    user_id: i32(),
-    kicked_by: i32(),
-    date: i32(),
-    banned_rights: obj(),
-  };
+  result.left = !!(flags & 0x1);
+  result.user_id = i32();
+  result.kicked_by = i32();
+  result.date = i32();
+  result.banned_rights = obj();
+  return result;
 };
 const _channelParticipantsBanned: any = () => ({ _: 'channelParticipantsBanned', q: str() });
 const _channelParticipantsSearch: any = () => ({ _: 'channelParticipantsSearch', q: str() });
@@ -1979,24 +1864,23 @@ const _channelAdminLogEventActionParticipantToggleAdmin: any = () => ({ _: 'chan
 const _channelAdminLogEvent: any = () => ({ _: 'channelAdminLogEvent', id: i64(), date: i32(), user_id: i32(), action: obj() });
 const _channelsAdminLogResults: any = () => ({ _: 'channels.adminLogResults', events: vector(obj), chats: vector(obj), users: vector(obj) });
 const _channelAdminLogEventsFilter = (): any => {
+  const result: Record<string, unknown> = { _: 'channelAdminLogEventsFilter' };
   const flags = i32();
-  return {
-    _: 'channelAdminLogEventsFilter',
-    join: !!(flags & 0x1),
-    leave: !!(flags & 0x2),
-    invite: !!(flags & 0x4),
-    ban: !!(flags & 0x8),
-    unban: !!(flags & 0x10),
-    kick: !!(flags & 0x20),
-    unkick: !!(flags & 0x40),
-    promote: !!(flags & 0x80),
-    demote: !!(flags & 0x100),
-    info: !!(flags & 0x200),
-    settings: !!(flags & 0x400),
-    pinned: !!(flags & 0x800),
-    edit: !!(flags & 0x1000),
-    delete: !!(flags & 0x2000),
-  };
+  result.join = !!(flags & 0x1);
+  result.leave = !!(flags & 0x2);
+  result.invite = !!(flags & 0x4);
+  result.ban = !!(flags & 0x8);
+  result.unban = !!(flags & 0x10);
+  result.kick = !!(flags & 0x20);
+  result.unkick = !!(flags & 0x40);
+  result.promote = !!(flags & 0x80);
+  result.demote = !!(flags & 0x100);
+  result.info = !!(flags & 0x200);
+  result.settings = !!(flags & 0x400);
+  result.pinned = !!(flags & 0x800);
+  result.edit = !!(flags & 0x1000);
+  result.delete = !!(flags & 0x2000);
+  return result;
 };
 const _topPeerCategoryPhoneCalls: any = () => ({ _: 'topPeerCategoryPhoneCalls' });
 const _pageBlockAudio: any = () => ({ _: 'pageBlockAudio', audio_id: i64(), caption: obj() });
@@ -2017,13 +1901,12 @@ const _inputMessagesFilterContacts: any = () => ({ _: 'inputMessagesFilterContac
 const _updateChannelAvailableMessages: any = () => ({ _: 'updateChannelAvailableMessages', _update: true, channel_id: i32(), available_min_id: i32() });
 const _channelAdminLogEventActionTogglePreHistoryHidden: any = () => ({ _: 'channelAdminLogEventActionTogglePreHistoryHidden', new_value: obj() });
 const _inputMediaGeoLive = (): any => {
+  const result: Record<string, unknown> = { _: 'inputMediaGeoLive' };
   const flags = i32();
-  return {
-    _: 'inputMediaGeoLive',
-    stopped: !!(flags & 0x1),
-    geo_point: obj(),
-    period: flags & 0x2 ? i32() : u,
-  };
+  result.stopped = !!(flags & 0x1);
+  result.geo_point = obj();
+  if (flags & 0x2) result.period = i32();
+  return result;
 };
 const _messageMediaGeoLive: any = () => ({ _: 'messageMediaGeoLive', geo: obj(), period: i32() });
 const _recentMeUrlUnknown: any = () => ({ _: 'recentMeUrlUnknown', url: str() });
@@ -2035,14 +1918,13 @@ const _helpRecentMeUrls: any = () => ({ _: 'help.recentMeUrls', urls: vector(obj
 const _channelsChannelParticipantsNotModified: any = () => ({ _: 'channels.channelParticipantsNotModified' });
 const _messagesMessagesNotModified: any = () => ({ _: 'messages.messagesNotModified', count: i32() });
 const _inputSingleMedia = (): any => {
+  const result: Record<string, unknown> = { _: 'inputSingleMedia' };
   const flags = i32();
-  return {
-    _: 'inputSingleMedia',
-    media: obj(),
-    random_id: i64(),
-    message: str(),
-    entities: flags & 0x1 ? vector(obj) : u,
-  };
+  result.media = obj();
+  result.random_id = i64();
+  result.message = str();
+  if (flags & 0x1) result.entities = vector(obj);
+  return result;
 };
 const _webAuthorization: any = () => ({ _: 'webAuthorization', hash: i64(), bot_id: i32(), domain: str(), browser: str(), platform: str(), date_created: i32(), date_active: i32(), ip: str(), region: str() });
 const _accountWebAuthorizations: any = () => ({ _: 'account.webAuthorizations', authorizations: vector(obj), users: vector(obj) });
@@ -2085,33 +1967,31 @@ const _secureValueTypeTemporaryRegistration: any = () => ({ _: 'secureValueTypeT
 const _secureValueTypePhone: any = () => ({ _: 'secureValueTypePhone' });
 const _secureValueTypeEmail: any = () => ({ _: 'secureValueTypeEmail' });
 const _secureValue = (): any => {
+  const result: Record<string, unknown> = { _: 'secureValue' };
   const flags = i32();
-  return {
-    _: 'secureValue',
-    type: obj(),
-    data: flags & 0x1 ? obj() : u,
-    front_side: flags & 0x2 ? obj() : u,
-    reverse_side: flags & 0x4 ? obj() : u,
-    selfie: flags & 0x8 ? obj() : u,
-    translation: flags & 0x40 ? vector(obj) : u,
-    files: flags & 0x10 ? vector(obj) : u,
-    plain_data: flags & 0x20 ? obj() : u,
-    hash: bytes(),
-  };
+  result.type = obj();
+  if (flags & 0x1) result.data = obj();
+  if (flags & 0x2) result.front_side = obj();
+  if (flags & 0x4) result.reverse_side = obj();
+  if (flags & 0x8) result.selfie = obj();
+  if (flags & 0x40) result.translation = vector(obj);
+  if (flags & 0x10) result.files = vector(obj);
+  if (flags & 0x20) result.plain_data = obj();
+  result.hash = bytes();
+  return result;
 };
 const _inputSecureValue = (): any => {
+  const result: Record<string, unknown> = { _: 'inputSecureValue' };
   const flags = i32();
-  return {
-    _: 'inputSecureValue',
-    type: obj(),
-    data: flags & 0x1 ? obj() : u,
-    front_side: flags & 0x2 ? obj() : u,
-    reverse_side: flags & 0x4 ? obj() : u,
-    selfie: flags & 0x8 ? obj() : u,
-    translation: flags & 0x40 ? vector(obj) : u,
-    files: flags & 0x10 ? vector(obj) : u,
-    plain_data: flags & 0x20 ? obj() : u,
-  };
+  result.type = obj();
+  if (flags & 0x1) result.data = obj();
+  if (flags & 0x2) result.front_side = obj();
+  if (flags & 0x4) result.reverse_side = obj();
+  if (flags & 0x8) result.selfie = obj();
+  if (flags & 0x40) result.translation = vector(obj);
+  if (flags & 0x10) result.files = vector(obj);
+  if (flags & 0x20) result.plain_data = obj();
+  return result;
 };
 const _secureValueHash: any = () => ({ _: 'secureValueHash', type: obj(), hash: bytes() });
 const _secureValueErrorData: any = () => ({ _: 'secureValueErrorData', type: obj(), data_hash: bytes(), field: str(), text: str() });
@@ -2122,40 +2002,37 @@ const _secureValueErrorFile: any = () => ({ _: 'secureValueErrorFile', type: obj
 const _secureValueErrorFiles: any = () => ({ _: 'secureValueErrorFiles', type: obj(), file_hash: vector(bytes), text: str() });
 const _secureCredentialsEncrypted: any = () => ({ _: 'secureCredentialsEncrypted', data: bytes(), hash: bytes(), secret: bytes() });
 const _accountAuthorizationForm = (): any => {
+  const result: Record<string, unknown> = { _: 'account.authorizationForm' };
   const flags = i32();
-  return {
-    _: 'account.authorizationForm',
-    required_types: vector(obj),
-    values: vector(obj),
-    errors: vector(obj),
-    users: vector(obj),
-    privacy_policy_url: flags & 0x1 ? str() : u,
-  };
+  result.required_types = vector(obj);
+  result.values = vector(obj);
+  result.errors = vector(obj);
+  result.users = vector(obj);
+  if (flags & 0x1) result.privacy_policy_url = str();
+  return result;
 };
 const _accountSentEmailCode: any = () => ({ _: 'account.sentEmailCode', email_pattern: str(), length: i32() });
 const _messageActionSecureValuesSentMe: any = () => ({ _: 'messageActionSecureValuesSentMe', values: vector(obj), credentials: obj() });
 const _messageActionSecureValuesSent: any = () => ({ _: 'messageActionSecureValuesSent', types: vector(obj) });
 const _helpDeepLinkInfoEmpty: any = () => ({ _: 'help.deepLinkInfoEmpty' });
 const _helpDeepLinkInfo = (): any => {
+  const result: Record<string, unknown> = { _: 'help.deepLinkInfo' };
   const flags = i32();
-  return {
-    _: 'help.deepLinkInfo',
-    update_app: !!(flags & 0x1),
-    message: str(),
-    entities: flags & 0x2 ? vector(obj) : u,
-  };
+  result.update_app = !!(flags & 0x1);
+  result.message = str();
+  if (flags & 0x2) result.entities = vector(obj);
+  return result;
 };
 const _savedPhoneContact: any = () => ({ _: 'savedPhoneContact', phone: str(), first_name: str(), last_name: str(), date: i32() });
 const _accountTakeout: any = () => ({ _: 'account.takeout', id: i64() });
 const _inputTakeoutFileLocation: any = () => ({ _: 'inputTakeoutFileLocation' });
 const _updateDialogUnreadMark = (): any => {
+  const result: Record<string, unknown> = { _: 'updateDialogUnreadMark' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateDialogUnreadMark',
-    _update: true,
-    unread: !!(flags & 0x1),
-    peer: obj(),
-  };
+  result.unread = !!(flags & 0x1);
+  result.peer = obj();
+  return result;
 };
 const _messagesDialogsNotModified: any = () => ({ _: 'messages.dialogsNotModified', count: i32() });
 const _inputWebFileGeoPointLocation: any = () => ({ _: 'inputWebFileGeoPointLocation', geo_point: obj(), access_hash: i64(), w: i32(), h: i32(), zoom: i32(), scale: i32() });
@@ -2173,14 +2050,13 @@ const _secureValueError: any = () => ({ _: 'secureValueError', type: obj(), hash
 const _secureValueErrorTranslationFile: any = () => ({ _: 'secureValueErrorTranslationFile', type: obj(), file_hash: bytes(), text: str() });
 const _secureValueErrorTranslationFiles: any = () => ({ _: 'secureValueErrorTranslationFiles', type: obj(), file_hash: vector(bytes), text: str() });
 const _secureRequiredType = (): any => {
+  const result: Record<string, unknown> = { _: 'secureRequiredType' };
   const flags = i32();
-  return {
-    _: 'secureRequiredType',
-    native_names: !!(flags & 0x1),
-    selfie_required: !!(flags & 0x2),
-    translation_required: !!(flags & 0x4),
-    type: obj(),
-  };
+  result.native_names = !!(flags & 0x1);
+  result.selfie_required = !!(flags & 0x2);
+  result.translation_required = !!(flags & 0x4);
+  result.type = obj();
+  return result;
 };
 const _secureRequiredTypeOneOf: any = () => ({ _: 'secureRequiredTypeOneOf', types: vector(obj) });
 const _helpPassportConfigNotModified: any = () => ({ _: 'help.passportConfigNotModified' });
@@ -2204,29 +2080,27 @@ const _textPhone: any = () => ({ _: 'textPhone', text: obj(), phone: str() });
 const _textImage: any = () => ({ _: 'textImage', document_id: i64(), w: i32(), h: i32() });
 const _pageBlockKicker: any = () => ({ _: 'pageBlockKicker', text: obj() });
 const _pageTableCell = (): any => {
+  const result: Record<string, unknown> = { _: 'pageTableCell' };
   const flags = i32();
-  return {
-    _: 'pageTableCell',
-    header: !!(flags & 0x1),
-    align_center: !!(flags & 0x8),
-    align_right: !!(flags & 0x10),
-    valign_middle: !!(flags & 0x20),
-    valign_bottom: !!(flags & 0x40),
-    text: flags & 0x80 ? obj() : u,
-    colspan: flags & 0x2 ? i32() : u,
-    rowspan: flags & 0x4 ? i32() : u,
-  };
+  result.header = !!(flags & 0x1);
+  result.align_center = !!(flags & 0x8);
+  result.align_right = !!(flags & 0x10);
+  result.valign_middle = !!(flags & 0x20);
+  result.valign_bottom = !!(flags & 0x40);
+  if (flags & 0x80) result.text = obj();
+  if (flags & 0x2) result.colspan = i32();
+  if (flags & 0x4) result.rowspan = i32();
+  return result;
 };
 const _pageTableRow: any = () => ({ _: 'pageTableRow', cells: vector(obj) });
 const _pageBlockTable = (): any => {
+  const result: Record<string, unknown> = { _: 'pageBlockTable' };
   const flags = i32();
-  return {
-    _: 'pageBlockTable',
-    bordered: !!(flags & 0x1),
-    striped: !!(flags & 0x2),
-    title: obj(),
-    rows: vector(obj),
-  };
+  result.bordered = !!(flags & 0x1);
+  result.striped = !!(flags & 0x2);
+  result.title = obj();
+  result.rows = vector(obj);
+  return result;
 };
 const _pageCaption: any = () => ({ _: 'pageCaption', text: obj(), credit: obj() });
 const _pageListItemText: any = () => ({ _: 'pageListItemText', text: obj() });
@@ -2235,41 +2109,38 @@ const _pageListOrderedItemText: any = () => ({ _: 'pageListOrderedItemText', num
 const _pageListOrderedItemBlocks: any = () => ({ _: 'pageListOrderedItemBlocks', num: str(), blocks: vector(obj) });
 const _pageBlockOrderedList: any = () => ({ _: 'pageBlockOrderedList', items: vector(obj) });
 const _pageBlockDetails = (): any => {
+  const result: Record<string, unknown> = { _: 'pageBlockDetails' };
   const flags = i32();
-  return {
-    _: 'pageBlockDetails',
-    open: !!(flags & 0x1),
-    blocks: vector(obj),
-    title: obj(),
-  };
+  result.open = !!(flags & 0x1);
+  result.blocks = vector(obj);
+  result.title = obj();
+  return result;
 };
 const _pageRelatedArticle = (): any => {
+  const result: Record<string, unknown> = { _: 'pageRelatedArticle' };
   const flags = i32();
-  return {
-    _: 'pageRelatedArticle',
-    url: str(),
-    webpage_id: i64(),
-    title: flags & 0x1 ? str() : u,
-    description: flags & 0x2 ? str() : u,
-    photo_id: flags & 0x4 ? i64() : u,
-    author: flags & 0x8 ? str() : u,
-    published_date: flags & 0x10 ? i32() : u,
-  };
+  result.url = str();
+  result.webpage_id = i64();
+  if (flags & 0x1) result.title = str();
+  if (flags & 0x2) result.description = str();
+  if (flags & 0x4) result.photo_id = i64();
+  if (flags & 0x8) result.author = str();
+  if (flags & 0x10) result.published_date = i32();
+  return result;
 };
 const _pageBlockRelatedArticles: any = () => ({ _: 'pageBlockRelatedArticles', title: obj(), articles: vector(obj) });
 const _pageBlockMap: any = () => ({ _: 'pageBlockMap', geo: obj(), zoom: i32(), w: i32(), h: i32(), caption: obj() });
 const _page = (): any => {
+  const result: Record<string, unknown> = { _: 'page' };
   const flags = i32();
-  return {
-    _: 'page',
-    part: !!(flags & 0x1),
-    rtl: !!(flags & 0x2),
-    v2: !!(flags & 0x4),
-    url: str(),
-    blocks: vector(obj),
-    photos: vector(obj),
-    documents: vector(obj),
-  };
+  result.part = !!(flags & 0x1);
+  result.rtl = !!(flags & 0x2);
+  result.v2 = !!(flags & 0x4);
+  result.url = str();
+  result.blocks = vector(obj);
+  result.photos = vector(obj);
+  result.documents = vector(obj);
+  return result;
 };
 const _inputPrivacyKeyPhoneP2P: any = () => ({ _: 'inputPrivacyKeyPhoneP2P' });
 const _privacyKeyPhoneP2P: any = () => ({ _: 'privacyKeyPhoneP2P' });
@@ -2279,47 +2150,43 @@ const _helpUserInfoEmpty: any = () => ({ _: 'help.userInfoEmpty' });
 const _helpUserInfo: any = () => ({ _: 'help.userInfo', message: str(), entities: vector(obj), author: str(), date: i32() });
 const _messageActionContactSignUp: any = () => ({ _: 'messageActionContactSignUp' });
 const _updateMessagePoll = (): any => {
+  const result: Record<string, unknown> = { _: 'updateMessagePoll' };
+  result._update = true;
   const flags = i32();
-  return {
-    _: 'updateMessagePoll',
-    _update: true,
-    poll_id: i64(),
-    poll: flags & 0x1 ? obj() : u,
-    results: obj(),
-  };
+  result.poll_id = i64();
+  if (flags & 0x1) result.poll = obj();
+  result.results = obj();
+  return result;
 };
 const _pollAnswer: any = () => ({ _: 'pollAnswer', text: str(), option: bytes() });
 const _poll = (): any => {
+  const result: Record<string, unknown> = { _: 'poll' };
+  result.id = i64();
   const flags = i32();
-  return {
-    _: 'poll',
-    id: i64(),
-    closed: !!(flags & 0x1),
-    public_voters: !!(flags & 0x2),
-    multiple_choice: !!(flags & 0x4),
-    quiz: !!(flags & 0x8),
-    question: str(),
-    answers: vector(obj),
-  };
+  result.closed = !!(flags & 0x1);
+  result.public_voters = !!(flags & 0x2);
+  result.multiple_choice = !!(flags & 0x4);
+  result.quiz = !!(flags & 0x8);
+  result.question = str();
+  result.answers = vector(obj);
+  return result;
 };
 const _pollAnswerVoters = (): any => {
+  const result: Record<string, unknown> = { _: 'pollAnswerVoters' };
   const flags = i32();
-  return {
-    _: 'pollAnswerVoters',
-    chosen: !!(flags & 0x1),
-    correct: !!(flags & 0x2),
-    option: bytes(),
-    voters: i32(),
-  };
+  result.chosen = !!(flags & 0x1);
+  result.correct = !!(flags & 0x2);
+  result.option = bytes();
+  result.voters = i32();
+  return result;
 };
 const _pollResults = (): any => {
+  const result: Record<string, unknown> = { _: 'pollResults' };
   const flags = i32();
-  return {
-    _: 'pollResults',
-    min: !!(flags & 0x1),
-    results: flags & 0x2 ? vector(obj) : u,
-    total_voters: flags & 0x4 ? i32() : u,
-  };
+  result.min = !!(flags & 0x1);
+  if (flags & 0x2) result.results = vector(obj);
+  if (flags & 0x4) result.total_voters = i32();
+  return result;
 };
 const _inputMediaPoll: any = () => ({ _: 'inputMediaPoll', poll: obj() });
 const _messageMediaPoll: any = () => ({ _: 'messageMediaPoll', poll: obj(), results: obj() });
@@ -2327,37 +2194,35 @@ const _chatOnlines: any = () => ({ _: 'chatOnlines', onlines: i32() });
 const _statsURL: any = () => ({ _: 'statsURL', url: str() });
 const _photoStrippedSize: any = () => ({ _: 'photoStrippedSize', type: str(), bytes: bytes() });
 const _chatAdminRights = (): any => {
+  const result: Record<string, unknown> = { _: 'chatAdminRights' };
   const flags = i32();
-  return {
-    _: 'chatAdminRights',
-    change_info: !!(flags & 0x1),
-    post_messages: !!(flags & 0x2),
-    edit_messages: !!(flags & 0x4),
-    delete_messages: !!(flags & 0x8),
-    ban_users: !!(flags & 0x10),
-    invite_users: !!(flags & 0x20),
-    pin_messages: !!(flags & 0x80),
-    add_admins: !!(flags & 0x200),
-  };
+  result.change_info = !!(flags & 0x1);
+  result.post_messages = !!(flags & 0x2);
+  result.edit_messages = !!(flags & 0x4);
+  result.delete_messages = !!(flags & 0x8);
+  result.ban_users = !!(flags & 0x10);
+  result.invite_users = !!(flags & 0x20);
+  result.pin_messages = !!(flags & 0x80);
+  result.add_admins = !!(flags & 0x200);
+  return result;
 };
 const _chatBannedRights = (): any => {
+  const result: Record<string, unknown> = { _: 'chatBannedRights' };
   const flags = i32();
-  return {
-    _: 'chatBannedRights',
-    view_messages: !!(flags & 0x1),
-    send_messages: !!(flags & 0x2),
-    send_media: !!(flags & 0x4),
-    send_stickers: !!(flags & 0x8),
-    send_gifs: !!(flags & 0x10),
-    send_games: !!(flags & 0x20),
-    send_inline: !!(flags & 0x40),
-    embed_links: !!(flags & 0x80),
-    send_polls: !!(flags & 0x100),
-    change_info: !!(flags & 0x400),
-    invite_users: !!(flags & 0x8000),
-    pin_messages: !!(flags & 0x20000),
-    until_date: i32(),
-  };
+  result.view_messages = !!(flags & 0x1);
+  result.send_messages = !!(flags & 0x2);
+  result.send_media = !!(flags & 0x4);
+  result.send_stickers = !!(flags & 0x8);
+  result.send_gifs = !!(flags & 0x10);
+  result.send_games = !!(flags & 0x20);
+  result.send_inline = !!(flags & 0x40);
+  result.embed_links = !!(flags & 0x80);
+  result.send_polls = !!(flags & 0x100);
+  result.change_info = !!(flags & 0x400);
+  result.invite_users = !!(flags & 0x8000);
+  result.pin_messages = !!(flags & 0x20000);
+  result.until_date = i32();
+  return result;
 };
 const _updateChatDefaultBannedRights: any = () => ({ _: 'updateChatDefaultBannedRights', _update: true, peer: obj(), default_banned_rights: obj(), version: i32() });
 const _inputWallPaper: any = () => ({ _: 'inputWallPaper', id: i64(), access_hash: i64() });
@@ -2368,39 +2233,36 @@ const _channelAdminLogEventActionStopPoll: any = () => ({ _: 'channelAdminLogEve
 const _accountWallPapersNotModified: any = () => ({ _: 'account.wallPapersNotModified' });
 const _accountWallPapers: any = () => ({ _: 'account.wallPapers', hash: i32(), wallpapers: vector(obj) });
 const _codeSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'codeSettings' };
   const flags = i32();
-  return {
-    _: 'codeSettings',
-    allow_flashcall: !!(flags & 0x1),
-    current_number: !!(flags & 0x2),
-    allow_app_hash: !!(flags & 0x10),
-  };
+  result.allow_flashcall = !!(flags & 0x1);
+  result.current_number = !!(flags & 0x2);
+  result.allow_app_hash = !!(flags & 0x10);
+  return result;
 };
 const _wallPaperSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'wallPaperSettings' };
   const flags = i32();
-  return {
-    _: 'wallPaperSettings',
-    blur: !!(flags & 0x2),
-    motion: !!(flags & 0x4),
-    background_color: flags & 0x1 ? i32() : u,
-    second_background_color: flags & 0x10 ? i32() : u,
-    intensity: flags & 0x8 ? i32() : u,
-    rotation: flags & 0x10 ? i32() : u,
-  };
+  result.blur = !!(flags & 0x2);
+  result.motion = !!(flags & 0x4);
+  if (flags & 0x1) result.background_color = i32();
+  if (flags & 0x10) result.second_background_color = i32();
+  if (flags & 0x8) result.intensity = i32();
+  if (flags & 0x10) result.rotation = i32();
+  return result;
 };
 const _autoDownloadSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'autoDownloadSettings' };
   const flags = i32();
-  return {
-    _: 'autoDownloadSettings',
-    disabled: !!(flags & 0x1),
-    video_preload_large: !!(flags & 0x2),
-    audio_preload_next: !!(flags & 0x4),
-    phonecalls_less_data: !!(flags & 0x8),
-    photo_size_max: i32(),
-    video_size_max: i32(),
-    file_size_max: i32(),
-    video_upload_maxbitrate: i32(),
-  };
+  result.disabled = !!(flags & 0x1);
+  result.video_preload_large = !!(flags & 0x2);
+  result.audio_preload_next = !!(flags & 0x4);
+  result.phonecalls_less_data = !!(flags & 0x8);
+  result.photo_size_max = i32();
+  result.video_size_max = i32();
+  result.file_size_max = i32();
+  result.video_upload_maxbitrate = i32();
+  return result;
 };
 const _accountAutoDownloadSettings: any = () => ({ _: 'account.autoDownloadSettings', low: obj(), medium: obj(), high: obj() });
 const _emojiKeyword: any = () => ({ _: 'emojiKeyword', keyword: str(), emoticons: vector(str) });
@@ -2416,41 +2278,38 @@ const _fileLocationToBeDeprecated: any = () => ({ _: 'fileLocationToBeDeprecated
 const _inputPhotoFileLocation: any = () => ({ _: 'inputPhotoFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), thumb_size: str() });
 const _inputPhotoLegacyFileLocation: any = () => ({ _: 'inputPhotoLegacyFileLocation', id: i64(), access_hash: i64(), file_reference: bytes(), volume_id: i64(), local_id: i32(), secret: i64() });
 const _inputPeerPhotoFileLocation = (): any => {
+  const result: Record<string, unknown> = { _: 'inputPeerPhotoFileLocation' };
   const flags = i32();
-  return {
-    _: 'inputPeerPhotoFileLocation',
-    big: !!(flags & 0x1),
-    peer: obj(),
-    volume_id: i64(),
-    local_id: i32(),
-  };
+  result.big = !!(flags & 0x1);
+  result.peer = obj();
+  result.volume_id = i64();
+  result.local_id = i32();
+  return result;
 };
 const _inputStickerSetThumb: any = () => ({ _: 'inputStickerSetThumb', stickerset: obj(), volume_id: i64(), local_id: i32() });
 const _folder = (): any => {
+  const result: Record<string, unknown> = { _: 'folder' };
   const flags = i32();
-  return {
-    _: 'folder',
-    autofill_new_broadcasts: !!(flags & 0x1),
-    autofill_public_groups: !!(flags & 0x2),
-    autofill_new_correspondents: !!(flags & 0x4),
-    id: i32(),
-    title: str(),
-    photo: flags & 0x8 ? obj() : u,
-  };
+  result.autofill_new_broadcasts = !!(flags & 0x1);
+  result.autofill_public_groups = !!(flags & 0x2);
+  result.autofill_new_correspondents = !!(flags & 0x4);
+  result.id = i32();
+  result.title = str();
+  if (flags & 0x8) result.photo = obj();
+  return result;
 };
 const _dialogFolder = (): any => {
+  const result: Record<string, unknown> = { _: 'dialogFolder' };
   const flags = i32();
-  return {
-    _: 'dialogFolder',
-    pinned: !!(flags & 0x4),
-    folder: obj(),
-    peer: obj(),
-    top_message: i32(),
-    unread_muted_peers_count: i32(),
-    unread_unmuted_peers_count: i32(),
-    unread_muted_messages_count: i32(),
-    unread_unmuted_messages_count: i32(),
-  };
+  result.pinned = !!(flags & 0x4);
+  result.folder = obj();
+  result.peer = obj();
+  result.top_message = i32();
+  result.unread_muted_peers_count = i32();
+  result.unread_unmuted_peers_count = i32();
+  result.unread_muted_messages_count = i32();
+  result.unread_unmuted_messages_count = i32();
+  return result;
 };
 const _inputDialogPeerFolder: any = () => ({ _: 'inputDialogPeerFolder', folder_id: i32() });
 const _dialogPeerFolder: any = () => ({ _: 'dialogPeerFolder', folder_id: i32() });
@@ -2467,43 +2326,39 @@ const _topPeerCategoryForwardUsers: any = () => ({ _: 'topPeerCategoryForwardUse
 const _topPeerCategoryForwardChats: any = () => ({ _: 'topPeerCategoryForwardChats' });
 const _channelAdminLogEventActionChangeLinkedChat: any = () => ({ _: 'channelAdminLogEventActionChangeLinkedChat', prev_value: i32(), new_value: i32() });
 const _messagesSearchCounter = (): any => {
+  const result: Record<string, unknown> = { _: 'messages.searchCounter' };
   const flags = i32();
-  return {
-    _: 'messages.searchCounter',
-    inexact: !!(flags & 0x2),
-    filter: obj(),
-    count: i32(),
-  };
+  result.inexact = !!(flags & 0x2);
+  result.filter = obj();
+  result.count = i32();
+  return result;
 };
 const _keyboardButtonUrlAuth = (): any => {
+  const result: Record<string, unknown> = { _: 'keyboardButtonUrlAuth' };
   const flags = i32();
-  return {
-    _: 'keyboardButtonUrlAuth',
-    text: str(),
-    fwd_text: flags & 0x1 ? str() : u,
-    url: str(),
-    button_id: i32(),
-  };
+  result.text = str();
+  if (flags & 0x1) result.fwd_text = str();
+  result.url = str();
+  result.button_id = i32();
+  return result;
 };
 const _inputKeyboardButtonUrlAuth = (): any => {
+  const result: Record<string, unknown> = { _: 'inputKeyboardButtonUrlAuth' };
   const flags = i32();
-  return {
-    _: 'inputKeyboardButtonUrlAuth',
-    request_write_access: !!(flags & 0x1),
-    text: str(),
-    fwd_text: flags & 0x2 ? str() : u,
-    url: str(),
-    bot: obj(),
-  };
+  result.request_write_access = !!(flags & 0x1);
+  result.text = str();
+  if (flags & 0x2) result.fwd_text = str();
+  result.url = str();
+  result.bot = obj();
+  return result;
 };
 const _urlAuthResultRequest = (): any => {
+  const result: Record<string, unknown> = { _: 'urlAuthResultRequest' };
   const flags = i32();
-  return {
-    _: 'urlAuthResultRequest',
-    request_write_access: !!(flags & 0x1),
-    bot: obj(),
-    domain: str(),
-  };
+  result.request_write_access = !!(flags & 0x1);
+  result.bot = obj();
+  result.domain = str();
+  return result;
 };
 const _urlAuthResultAccepted: any = () => ({ _: 'urlAuthResultAccepted', url: str() });
 const _urlAuthResultDefault: any = () => ({ _: 'urlAuthResultDefault' });
@@ -2523,11 +2378,10 @@ const _channelAdminLogEventActionChangeLocation: any = () => ({ _: 'channelAdmin
 const _inputReportReasonGeoIrrelevant: any = () => ({ _: 'inputReportReasonGeoIrrelevant' });
 const _channelAdminLogEventActionToggleSlowMode: any = () => ({ _: 'channelAdminLogEventActionToggleSlowMode', prev_value: i32(), new_value: i32() });
 const _authAuthorizationSignUpRequired = (): any => {
+  const result: Record<string, unknown> = { _: 'auth.authorizationSignUpRequired' };
   const flags = i32();
-  return {
-    _: 'auth.authorizationSignUpRequired',
-    terms_of_service: flags & 0x1 ? obj() : u,
-  };
+  if (flags & 0x1) result.terms_of_service = obj();
+  return result;
 };
 const _paymentsPaymentVerificationNeeded: any = () => ({ _: 'payments.paymentVerificationNeeded', url: str() });
 const _inputStickerSetAnimatedEmoji: any = () => ({ _: 'inputStickerSetAnimatedEmoji' });
@@ -2537,19 +2391,18 @@ const _restrictionReason: any = () => ({ _: 'restrictionReason', platform: str()
 const _inputTheme: any = () => ({ _: 'inputTheme', id: i64(), access_hash: i64() });
 const _inputThemeSlug: any = () => ({ _: 'inputThemeSlug', slug: str() });
 const _theme = (): any => {
+  const result: Record<string, unknown> = { _: 'theme' };
   const flags = i32();
-  return {
-    _: 'theme',
-    creator: !!(flags & 0x1),
-    default: !!(flags & 0x2),
-    id: i64(),
-    access_hash: i64(),
-    slug: str(),
-    title: str(),
-    document: flags & 0x4 ? obj() : u,
-    settings: flags & 0x8 ? obj() : u,
-    installs_count: i32(),
-  };
+  result.creator = !!(flags & 0x1);
+  result.default = !!(flags & 0x2);
+  result.id = i64();
+  result.access_hash = i64();
+  result.slug = str();
+  result.title = str();
+  if (flags & 0x4) result.document = obj();
+  if (flags & 0x8) result.settings = obj();
+  result.installs_count = i32();
+  return result;
 };
 const _accountThemesNotModified: any = () => ({ _: 'account.themesNotModified' });
 const _accountThemes: any = () => ({ _: 'account.themes', hash: i32(), themes: vector(obj) });
@@ -2562,12 +2415,11 @@ const _authLoginToken: any = () => ({ _: 'auth.loginToken', expires: i32(), toke
 const _authLoginTokenMigrateTo: any = () => ({ _: 'auth.loginTokenMigrateTo', dc_id: i32(), token: bytes() });
 const _authLoginTokenSuccess: any = () => ({ _: 'auth.loginTokenSuccess', authorization: obj() });
 const _accountContentSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'account.contentSettings' };
   const flags = i32();
-  return {
-    _: 'account.contentSettings',
-    sensitive_enabled: !!(flags & 0x1),
-    sensitive_can_change: !!(flags & 0x2),
-  };
+  result.sensitive_enabled = !!(flags & 0x1);
+  result.sensitive_can_change = !!(flags & 0x2);
+  return result;
 };
 const _messagesInactiveChats: any = () => ({ _: 'messages.inactiveChats', dates: vector(i32), chats: vector(obj), users: vector(obj) });
 const _baseThemeClassic: any = () => ({ _: 'baseThemeClassic' });
@@ -2577,44 +2429,40 @@ const _baseThemeTinted: any = () => ({ _: 'baseThemeTinted' });
 const _baseThemeArctic: any = () => ({ _: 'baseThemeArctic' });
 const _inputWallPaperNoFile: any = () => ({ _: 'inputWallPaperNoFile' });
 const _wallPaperNoFile = (): any => {
+  const result: Record<string, unknown> = { _: 'wallPaperNoFile' };
   const flags = i32();
-  return {
-    _: 'wallPaperNoFile',
-    default: !!(flags & 0x2),
-    dark: !!(flags & 0x10),
-    settings: flags & 0x4 ? obj() : u,
-  };
+  result.default = !!(flags & 0x2);
+  result.dark = !!(flags & 0x10);
+  if (flags & 0x4) result.settings = obj();
+  return result;
 };
 const _inputThemeSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'inputThemeSettings' };
   const flags = i32();
-  return {
-    _: 'inputThemeSettings',
-    base_theme: obj(),
-    accent_color: i32(),
-    message_top_color: flags & 0x1 ? i32() : u,
-    message_bottom_color: flags & 0x1 ? i32() : u,
-    wallpaper: flags & 0x2 ? obj() : u,
-    wallpaper_settings: flags & 0x2 ? obj() : u,
-  };
+  result.base_theme = obj();
+  result.accent_color = i32();
+  if (flags & 0x1) result.message_top_color = i32();
+  if (flags & 0x1) result.message_bottom_color = i32();
+  if (flags & 0x2) result.wallpaper = obj();
+  if (flags & 0x2) result.wallpaper_settings = obj();
+  return result;
 };
 const _themeSettings = (): any => {
+  const result: Record<string, unknown> = { _: 'themeSettings' };
   const flags = i32();
-  return {
-    _: 'themeSettings',
-    base_theme: obj(),
-    accent_color: i32(),
-    message_top_color: flags & 0x1 ? i32() : u,
-    message_bottom_color: flags & 0x1 ? i32() : u,
-    wallpaper: flags & 0x2 ? obj() : u,
-  };
+  result.base_theme = obj();
+  result.accent_color = i32();
+  if (flags & 0x1) result.message_top_color = i32();
+  if (flags & 0x1) result.message_bottom_color = i32();
+  if (flags & 0x2) result.wallpaper = obj();
+  return result;
 };
 const _webPageAttributeTheme = (): any => {
+  const result: Record<string, unknown> = { _: 'webPageAttributeTheme' };
   const flags = i32();
-  return {
-    _: 'webPageAttributeTheme',
-    documents: flags & 0x1 ? vector(obj) : u,
-    settings: flags & 0x2 ? obj() : u,
-  };
+  if (flags & 0x1) result.documents = vector(obj);
+  if (flags & 0x2) result.settings = obj();
+  return result;
 };
 
 const parserMap = new Map<number, () => any>([
@@ -3419,7 +3267,6 @@ const parserMap = new Map<number, () => any>([
   [0x54b56617, _webPageAttributeTheme],
 ]);
 
-const u = undefined;
 const i32 = () => r.int32();
 const i64 = () => r.long();
 const f64 = () => r.double();

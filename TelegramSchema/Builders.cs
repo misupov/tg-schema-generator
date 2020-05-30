@@ -13,6 +13,11 @@ namespace TelegramSchema
     {
         private static string ToHex(string i)
         {
+            if (long.Parse(i) > int.MaxValue)
+            {
+                return "0x" + Convert.ToString(uint.Parse(i), 16);
+            }
+
             return "0x" + Convert.ToString(int.Parse(i), 16);
         }
         

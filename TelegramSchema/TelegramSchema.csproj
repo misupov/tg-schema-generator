@@ -16,6 +16,12 @@
       <Content Include="layer108.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <Content Include="layer112.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="layer113.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="mtproto.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
